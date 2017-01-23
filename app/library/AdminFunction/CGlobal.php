@@ -16,11 +16,11 @@ class CGlobal{
     public static $pageAdminTitle = 'Dashboard Admin';
     public static $pageShopTitle = 'Shop Admin';
 
-    const code_shop_share = 'laostyleadv.com';
-    const web_name = 'laostyleadv.com';
-    const web_keywords= 'laostyleadv.com';
-    const web_description= 'laostyleadv.com';
-    public static $pageTitle = 'laostyleadv.com';
+    const code_shop_share = 'CMS Admin';
+    const web_name = 'CMS Admin';
+    const web_keywords= 'CMS Admin';
+    const web_description= 'CMS Admin';
+    public static $pageTitle = 'CMS Admin';
 
     const TYPE_LANGUAGE_VIET = 1;
     const TYPE_LANGUAGE_LAO = 2;

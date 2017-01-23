@@ -1,6 +1,6 @@
 <?php
 class Memcache{
-    const CACHE_ON = 1 ;// 0: khong dung qua cache, 1: dung qua cache
+    const CACHE_ON = 0 ;// 0: khong dung qua cache, 1: dung qua cache
     const CACHE_TIME_TO_LIVE_5 = 300; //Time cache 5 phut
     const CACHE_TIME_TO_LIVE_15 = 900; //Time cache 15 phut
     const CACHE_TIME_TO_LIVE_30 = 1800; //Time cache 30 phut
