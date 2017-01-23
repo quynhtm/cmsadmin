@@ -1,0 +1,87 @@
+/*print*/
+#print-page{
+    margin: 0 auto;
+    width: 480px;
+}
+.logo {
+    border-radius: 2px;
+    display: inline-block;
+    float: left;
+    margin-top: 18px;
+    padding: 5px;
+}
+.logo a{
+    background: rgba(0, 0, 0, 0) url("../img/logo-mobile.png") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 42px;
+    text-indent: -9999em;
+    width: 100px;
+}
+.right-print {
+    margin: 45px 0 0;
+    float: right;
+    color: #666;
+    font: 400 11px/15px Arial;
+    margin: 40px 0 0;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.right-print span {
+    margin: 0 0 0 5px;
+    text-decoration: underline;
+}
+.detail-page{
+    border-top: 1px solid #cccccc;
+    margin: 20px 0 0;
+    padding: 10px 0 0;
+    margin-bottom: 20px;
+    clear: both;
+    display: inline-block;
+    width: 100%;
+}
+.block-timer{
+    font: 400 12px arial;
+    padding: 5px 0 0;
+    white-space: nowrap;
+    font-style: italic;
+}
+.title-news {
+    color: #333;
+    float: left;
+    padding-bottom: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+.title-news h1 {
+    font: 400 25px/30px arial;
+    text-rendering: geometricprecision;
+}
+.short-intro {
+    color: #444;
+    font: 700 14px/18px arial;
+    padding-bottom: 10px;
+    text-rendering: geometricprecision;
+    padding: 0 2% 0 0;
+    width: 98%;
+}
+.content-common {
+    width: 100%;
+    margin-bottom: 20px;
+    color: #333;
+    float: left;
+    font: 400 14px/24px arial;
+    overflow: hidden;
+    padding: 0 2% 0 0;
+    width: 98%;
+}
+img {
+    border: 0 none;
+    font-size: 0;
+    line-height: 0;
+    max-width: 100%;
+}
+.content-common p{
+    display: inline-block;
+    margin-bottom: 5px;
+    width: 100%;
+}
