@@ -60,8 +60,9 @@ class BaseAdminController extends BaseController
             'name'=>'QL thông tin site',
             'link'=>'javascript:void(0)',
             'icon'=>'fa fa-cogs',
-            'arr_link_sub'=>array('admin.info','admin.contract','admin.category_list'),
+            'arr_link_sub'=>array('admin.info','admin.contract','admin.category_list','admin.sizeImageView'),
             'sub'=>array(
+                array('name'=>'Size ảnh', 'RouteName'=>'admin.sizeImageView', 'icon'=>'fa fa-camera icon-4x', 'showcontent'=>1,'showMenu'=>1, 'permission'=>'sizeImage_full'),
                 array('name'=>'Danh mục', 'RouteName'=>'admin.category_list', 'icon'=>'fa fa-indent icon-4x', 'showcontent'=>1,'showMenu'=>1, 'permission'=>'category_full'),
                 array('name'=>'Thông tin site', 'RouteName'=>'admin.info', 'icon'=>'fa fa-cogs icon-4x', 'showcontent'=>1,'showMenu'=>1, 'permission'=>'infor_full'),
             	array('name'=>'Language static', 'RouteName'=>'admin.lang', 'icon'=>'fa fa-language icon-4x', 'showcontent'=>1,'showMenu'=>1, 'permission'=>'infor_full'),

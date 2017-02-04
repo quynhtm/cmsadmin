@@ -5,7 +5,7 @@
  */
 class Category extends Eloquent
 {
-    protected $table = 'w_category';
+    protected $table = 'cms_category';
     protected $primaryKey = 'category_id';
     public $timestamps = false;
 

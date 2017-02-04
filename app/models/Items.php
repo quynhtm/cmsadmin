@@ -5,7 +5,7 @@
  */
 class Items extends Eloquent
 {
-    protected $table = 'web_items';
+    protected $table = 'cms_items';
     protected $primaryKey = 'item_id';
     public $timestamps = false;
 

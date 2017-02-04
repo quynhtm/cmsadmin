@@ -127,6 +127,14 @@ Route::group(array('prefix' => 'admin', 'before' => ''), function()
     Route::post('banner/copy/{id?}', array('as' => 'admin.bannerCopy','uses' => 'BannerController@postBanner'))->where('id', '[0-9]+');
     Route::post('banner/deleteBanner', array('as' => 'admin.deleteBanner','uses' => 'BannerController@deleteBanner'));//ajax
 
+    ///*Quản lý Size image*/
+    Route::any('sizeImage/view',array('as' => 'admin.sizeImageView','uses' => 'SizeImageController@view'));
+    Route::get('sizeImage/edit/{id?}', array('as' => 'admin.sizeImageEdit','uses' => 'SizeImageController@getItem'))->where('id', '[0-9]+');
+    Route::post('sizeImage/edit/{id?}', array('as' => 'admin.sizeImageEdit','uses' => 'SizeImageController@postItem'))->where('id', '[0-9]+');
+    Route::get('sizeImage/copy/{id?}', array('as' => 'admin.sizeImageCopy','uses' => 'SizeImageController@getItem'))->where('id', '[0-9]+');
+    Route::post('sizeImage/copy/{id?}', array('as' => 'admin.sizeImageCopy','uses' => 'SizeImageController@postItem'))->where('id', '[0-9]+');
+    Route::post('sizeImage/deleteSizeImage', array('as' => 'admin.deleteSizeImage','uses' => 'SizeImageController@deleteSizeImage'));//ajax
+
     //Thong tin cau hinh chung: hotline, thong tin chan trang...
     Route::get('info/view', array('as' => 'admin.info','uses' => 'InfoController@listView'));
     Route::get('info/edit/{id?}', array('as' => 'admin.infoEdit','uses' => 'InfoController@getItem'))->where('id', '[0-9]+');

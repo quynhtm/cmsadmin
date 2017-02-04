@@ -9,7 +9,7 @@ use Illuminate\Cache\MemcachedStore;
 
 class Info extends Eloquent {
     
-    protected $table = 'w_info';
+    protected $table = 'cms_info';
     protected $primaryKey = 'info_id';
     public  $timestamps = false;
 

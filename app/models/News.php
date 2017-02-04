@@ -5,7 +5,7 @@
  */
 class News extends Eloquent
 {
-    protected $table = 'w_news';
+    protected $table = 'cms_news';
     protected $primaryKey = 'news_id';
     public $timestamps = false;
 

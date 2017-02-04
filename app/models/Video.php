@@ -5,7 +5,7 @@
  */
 class Video extends Eloquent
 {
-    protected $table = 'w_video';
+    protected $table = 'cms_video';
     protected $primaryKey = 'video_id';
     public $timestamps = false;
 

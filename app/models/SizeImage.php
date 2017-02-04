@@ -3,34 +3,59 @@
  * Created by JetBrains PhpStorm.
  * User: Quynhtm
  */
-class Contact extends Eloquent
+class SizeImage extends Eloquent
 {
-    protected $table = 'cms_contact';
-    protected $primaryKey = 'contact_id';
+    protected $table = 'cms_size_image';
+    protected $primaryKey = 'size_img_id';
     public $timestamps = false;
 
     //cac truong trong DB
-    protected $fillable = array('contact_id','contact_title', 'contact_content','contact_content_reply','contact_user_id_send',
-        'contact_user_name_send','contact_phone_send','contact_email_send',
-        'contact_status','contact_time_creater','contact_user_id_update','contact_user_name_update',
-        'contact_type', 'contact_reason', 'contact_time_update');
+    protected $fillable = array('size_img_id','size_img_name','size_img_width', 'size_img_height','size_img_status');
 
+    public static function getSizeImage(){
+        $key_cache = Memcache::CACHE_SIZE_IMAGE;
+        $data = (Memcache::CACHE_ON)? Cache::get($key_cache) : array();
+        if (sizeof($data) == 0) {
+            $search = SizeImage::where('size_img_id' ,'>', 0);
+            $search->where('size_img_status',CGlobal::status_show);
+            $result = $search->orderBy('size_img_id','desc')->get();
+            if($result){
+                foreach($result as $itm) {
+                    $key = $itm->size_img_width.'x'.$itm->size_img_height;
+                    $data[$key]['w'] = $itm->size_img_width;
+                    $data[$key]['h'] = $itm->size_img_height;
+                }
+            }
+            if($data && Memcache::CACHE_ON){
+                Cache::put($key_cache, $data, Memcache::CACHE_TIME_TO_LIVE_ONE_MONTH);
+            }
+        }
+        return $data;
+    }
+	
     public static function getByID($id) {
-        $contact = Contact::where('contact_id', $id)->first();
-        return $contact;
+        $new = (Memcache::CACHE_ON)? Cache::get(Memcache::CACHE_SIZE_IMAGE_ID.$id) : array();
+        if (sizeof($new) == 0) {
+            $new = SizeImage::where('size_img_id', $id)->first();
+            if($new && Memcache::CACHE_ON){
+                Cache::put(Memcache::CACHE_SIZE_IMAGE_ID.$id, $new, Memcache::CACHE_TIME_TO_LIVE_ONE_MONTH);
+            }
+        }
+        return $new;
     }
 
     public static function searchByCondition($dataSearch = array(), $limit =0, $offset=0, &$total){
         try{
-            $query = Contact::where('contact_id','>',0);
-            if (isset($dataSearch['contact_title']) && $dataSearch['contact_title'] != '') {
-                $query->where('contact_title','LIKE', '%' . $dataSearch['contact_title'] . '%');
+            $query = SizeImage::where('size_img_id','>',0);
+            if (isset($dataSearch['size_img_name']) && $dataSearch['size_img_name'] != '') {
+                $query->where('size_img_name','LIKE', '%' . $dataSearch['size_img_name'] . '%');
             }
-            if (isset($dataSearch['contact_user_name_send']) && $dataSearch['contact_user_name_send'] != '') {
-                $query->where('contact_user_name_send','LIKE', '%' . $dataSearch['contact_user_name_send'] . '%');
+            if (isset($dataSearch['size_img_status']) && $dataSearch['size_img_status'] != -1) {
+                $query->where('size_img_status', $dataSearch['size_img_status']);
             }
+
             $total = $query->count();
-            $query->orderBy('contact_time_creater', 'desc');
+            $query->orderBy('size_img_id', 'desc');
 
             //get field can lay du lieu
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',',trim($dataSearch['field_get'])): array();
@@ -56,7 +81,7 @@ class Contact extends Eloquent
     {
         try {
             DB::connection()->getPdo()->beginTransaction();
-            $data = new Contact();
+            $data = new SizeImage();
             if (is_array($dataInput) && count($dataInput) > 0) {
                 foreach ($dataInput as $k => $v) {
                     $data->$k = $v;
@@ -64,7 +89,10 @@ class Contact extends Eloquent
             }
             if ($data->save()) {
                 DB::connection()->getPdo()->commit();
-                return $data->contact_id;
+                if(isset($data->size_img_id) && $data->size_img_id > 0){
+                    self::removeCache($data->size_img_id);
+                }
+                return $data->size_img_id;
             }
             DB::connection()->getPdo()->commit();
             return false;
@@ -85,9 +113,12 @@ class Contact extends Eloquent
     {
         try {
             DB::connection()->getPdo()->beginTransaction();
-            $dataSave = Contact::find($id);
+            $dataSave = SizeImage::find($id);
             if (!empty($dataInput)){
                 $dataSave->update($dataInput);
+                if(isset($dataSave->size_img_id) && $dataSave->size_img_id > 0){
+                    self::removeCache($dataSave->size_img_id);
+                }
             }
             DB::connection()->getPdo()->commit();
             return true;
@@ -96,7 +127,6 @@ class Contact extends Eloquent
             throw new PDOException();
         }
     }
-
 
     /**
      * @desc: Update Data.
@@ -108,8 +138,11 @@ class Contact extends Eloquent
     public static function deleteData($id){
         try {
             DB::connection()->getPdo()->beginTransaction();
-            $dataSave = Contact::find($id);
+            $dataSave = SizeImage::find($id);
             $dataSave->delete();
+            if(isset($dataSave->size_img_id) && $dataSave->size_img_id > 0){
+                self::removeCache($dataSave->size_img_id);
+            }
             DB::connection()->getPdo()->commit();
             return true;
         } catch (PDOException $e) {
@@ -118,14 +151,10 @@ class Contact extends Eloquent
         }
     }
 
-    /**
-     * @param int $id
-     */
     public static function removeCache($id = 0){
-        /*if($id > 0){
-            Cache::forget(Memcache::CACHE_PROVIDER_ID.$id);
+        if($id > 0){
+            Cache::forget(Memcache::CACHE_SIZE_IMAGE_ID.$id);
+            Cache::forget(Memcache::CACHE_SIZE_IMAGE);
         }
-        Cache::forget(Memcache::CACHE_ALL_PROVIDER);*/
     }
-
 }

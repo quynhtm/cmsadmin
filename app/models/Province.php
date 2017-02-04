@@ -5,7 +5,7 @@
  */
 class Province extends Eloquent
 {
-    protected $table = 'web_province';
+    protected $table = 'cms_province';
     protected $primaryKey = 'province_id';
     public $timestamps = false;
 

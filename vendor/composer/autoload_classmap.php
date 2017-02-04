@@ -333,6 +333,8 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'SingularValueDecomposition' => $baseDir . '/app/library/class_phpexcel/PHPExcel/Shared/JAMA/SingularValueDecomposition.php',
     'SiteHomeController' => $baseDir . '/app/controllers/site/SiteHomeController.php',
+    'SizeImage' => $baseDir . '/app/models/SizeImage.php',
+    'SizeImageController' => $baseDir . '/app/controllers/admin/SizeImageController.php',
     'Style' => $vendorDir . '/dompdf/dompdf/include/style.cls.php',
     'Stylesheet' => $vendorDir . '/dompdf/dompdf/include/stylesheet.cls.php',
     'TCPDF' => $baseDir . '/app/library/PDF/tcpdf.php',

@@ -5,7 +5,7 @@
  */
 class Banner extends Eloquent
 {
-    protected $table = 'w_banner';
+    protected $table = 'cms_banner';
     protected $primaryKey = 'banner_id';
     public $timestamps = false;
 

@@ -37,6 +37,10 @@ class Memcache{
     const CACHE_BANNER_ID    = 'cache_banner_id_';
     const CACHE_BANNER_ADVANCED    = 'cache_banner_advanced';
 
+    //size image
+    const CACHE_SIZE_IMAGE_ID    = 'cache_size_image_id_';
+    const CACHE_SIZE_IMAGE    = 'cache_list_size_image';
+
     //banner
     const CACHE_VIDEO_ID    = 'cache_video_id_';
 

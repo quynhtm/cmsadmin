@@ -5,7 +5,7 @@
  */
 class LibraryImage extends Eloquent
 {
-    protected $table = 'w_images';
+    protected $table = 'cms_library_images';
     protected $primaryKey = 'image_id';
     public $timestamps = false;
 

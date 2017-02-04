@@ -5,7 +5,7 @@
  */
 class Districts extends Eloquent
 {
-    protected $table = 'web_districts';
+    protected $table = 'cms_districts';
     protected $primaryKey = 'district_id';
     public $timestamps = false;
 

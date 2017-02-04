@@ -7,7 +7,7 @@
 */
 class Langs extends Eloquent {
     
-    protected $table = 'w_language';
+    protected $table = 'cms_language';
     protected $primaryKey = 'language_id';
     public  $timestamps = false;
 
