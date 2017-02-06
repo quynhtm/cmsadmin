@@ -34,14 +34,19 @@ class SizeImage extends Eloquent
     }
 	
     public static function getByID($id) {
-        $new = (Memcache::CACHE_ON)? Cache::get(Memcache::CACHE_SIZE_IMAGE_ID.$id) : array();
-        if (sizeof($new) == 0) {
-            $new = SizeImage::where('size_img_id', $id)->first();
-            if($new && Memcache::CACHE_ON){
-                Cache::put(Memcache::CACHE_SIZE_IMAGE_ID.$id, $new, Memcache::CACHE_TIME_TO_LIVE_ONE_MONTH);
+        $data = (Memcache::CACHE_ON)? Cache::get(Memcache::CACHE_SIZE_IMAGE_ID.$id) : array();
+        if (sizeof($data) == 0) {
+            $data = SizeImage::where('size_img_id', $id)->first();
+            if($data && Memcache::CACHE_ON){
+                Cache::put(Memcache::CACHE_SIZE_IMAGE_ID.$id, $data, Memcache::CACHE_TIME_TO_LIVE_ONE_MONTH);
             }
         }
-        return $new;
+        return $data;
+    }
+
+    public static function checkSize($width = 0, $height = 0) {
+        $data = SizeImage::where('size_img_width', $width)->where('size_img_height', $height)->first();
+        return $data;
     }
 
     public static function searchByCondition($dataSearch = array(), $limit =0, $offset=0, &$total){

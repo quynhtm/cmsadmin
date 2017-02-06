@@ -92,8 +92,8 @@ class SizeImageController extends BaseAdminController
             return Redirect::route('admin.dashboard',array('error'=>1));
         }
         $data['size_img_name'] = Request::get('size_img_name');
-        $data['size_img_width'] = (int)Request::get('size_img_width', 0);
-        $data['size_img_height'] = (int)Request::get('size_img_height', 0);
+        $data['size_img_width'] = (int)str_replace('.','',Request::get('size_img_width'));
+        $data['size_img_height'] = (int)str_replace('.','',Request::get('size_img_height'));
         $data['size_img_status'] = (int)Request::get('size_img_status', CGlobal::status_show);
         $id_hiden = (int)Request::get('id_hiden', 0);
 
@@ -139,7 +139,12 @@ class SizeImageController extends BaseAdminController
             if(isset($data['size_img_name']) && trim($data['size_img_name']) == '') {
                 $this->error[] = 'Tên Size không được bỏ trống';
             }
-            if(isset($data['size_img_name']) && trim($data['size_img_name']) == '') {
+            if(isset($data['size_img_width']) && trim($data['size_img_width']) > -1 && isset($data['size_img_height']) && trim($data['size_img_height']) > -1) {
+                $checkSize = SizeImage::checkSize((int)$data['size_img_width'],(int)$data['size_img_height']);
+                if($checkSize){
+                    $this->error[] = 'Trùng Width hoặc Height đã tồn tại';
+                }
+            }else{
                 $this->error[] = 'Tên Size không được bỏ trống';
             }
         }
