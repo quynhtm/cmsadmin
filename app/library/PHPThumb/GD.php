@@ -1422,12 +1422,11 @@ class GD extends PHPThumb
         }
     }
 	public function addWatermark(){
-	    	$stampPath = getcwd().'/assets/frontend/img/watermark.png';
+	    	$stampPath = getcwd().'/assets/frontend/shop/img/watermark_chuan.png';
 	    	if(is_file($stampPath)){
 	    		$stamp = imagecreatefrompng($stampPath);
-	    		
-	    		$marge_right = 10;
-	    		$marge_bottom = 10;
+	    		$marge_right = 0;
+	    		$marge_bottom = 0;
 	    		$sx = imagesx($stamp);
 	    		$sy = imagesy($stamp);
 	    		 
@@ -1436,7 +1435,11 @@ class GD extends PHPThumb
 	    		$centerX = round($imgx/2);
 	    		$centerY = round($imgy/2);
 	    
-	    		imagecopy($this->oldImage, $stamp, imagesx($this->oldImage) - $sx - $marge_right, imagesy($this->oldImage) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+	    		//Giữa: imagecopy($this->oldImage, $stamp, imagesx($this->oldImage) - $sx - round($centerX/2)+$marge_right, imagesy($this->oldImage) - $sy - $centerY + $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+                //chân ảnh
+                imagecopy($this->oldImage, $stamp, imagesx($this->oldImage) - $sx - $marge_right, imagesy($this->oldImage) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+	    		//imagecopy($this->oldImage, $stamp, imagesx($this->oldImage) - $sx - round($centerX/2)+$marge_right, imagesy($this->oldImage) - $sy - $marge_bottom, 0, 0, imagesx($stamp), imagesy($stamp));
+	    		//imagecopy($this->oldImage, $stamp, imagesx($this->oldImage), imagesy($this->oldImage), 0, 0, imagesx($stamp), imagesy($stamp));
 	    	}
 	    	return $this->oldImage;
 	 }	

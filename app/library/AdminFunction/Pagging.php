@@ -1,11 +1,9 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: TuanNguyenAnh
- * Date: 6/23/14
- * Time: 3:50 PM
- * To change this template use File | Settings | File Templates.
- */
+
+namespace App\Library\AdminFunction;
+
+use Illuminate\Support\Facades\Route;
+
 class Pagging
 {
     // phan trang dùng cho Boostrap
@@ -49,14 +47,16 @@ class Pagging
         }
         return '<ul class="pagination">'.$first.$prev.$left_dot.$pagerHtml.$right_dot.$next.$last.'</ul>';
     }
-    static function parseNewLink($page = 1, $class="", $title="", $page_name = 'page_no',$dataSearch){
+    static function parseNewLink($page = 1, $class =" ", $title="", $page_name = 'page_no',$dataSearch){
         $param = $dataSearch;
-        $action = Route::currentRouteAction();
+        $action = self::getRouteAction();
         $param[$page_name] = $page;
+        $class_page = 'paginate_button page-item ';
         if($class == 'active'){
-            return '<li class="'.$class.'"><a href="#" title="xem trang '.$title.'">'.$title.'</a></li>';
+            $class_page = $class_page.$class;
+            return '<li class="'.$class_page.'"><a class="page-link" href="#" title="xem trang '.$title.'">'.$title.'</a></li>';
         }
-        return '<li class="'.$class.'"><a href="'.action($action, $param).'" title="xem trang '.$title.'">'.$title.'</a></li>';
+        return '<li class="'.$class_page.'"><a class="page-link" href="'.action($action, $param).'" title="xem trang '.$title.'">'.$title.'</a></li>';
     }
 
     // phan trang tren site
@@ -102,11 +102,18 @@ class Pagging
         return '<div class="pager">'.$prev.$pagerHtml.$next.'</div>';
     }
     static function parseLinkSite($page = 1, $class="", $title="", $page_name = 'page_no',$param=array()){
-        $action = Route::currentRouteAction();
+        $action = self::getRouteAction();
         $param[$page_name] = $page;
         if($class == 'active' || $class == "first disabled"){
             return '<a class="'.$class.'"  title="xem trang '.$title.'">'.$title.'</a> ';
         }
         return '<a class="'.$class.'" href="'.action($action, $param).'" title="xem trang '.$title.'">'.$title.'</a> ';
+    }
+
+    static function getRouteAction(){
+        $action = Route::currentRouteAction();
+        $pos1 = strrpos($action, 'Controllers');//9
+        $action = substr($action, $pos1+12, strlen($action));
+        return $action;
     }
 }

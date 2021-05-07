@@ -1,71 +1,151 @@
 <?php
-class Memcache{
-    const CACHE_ON = 0 ;// 0: khong dung qua cache, 1: dung qua cache
-    const CACHE_TIME_TO_LIVE_5 = 300; //Time cache 5 phut
-    const CACHE_TIME_TO_LIVE_15 = 900; //Time cache 15 phut
-    const CACHE_TIME_TO_LIVE_30 = 1800; //Time cache 30 phut
-    const CACHE_TIME_TO_LIVE_60 = 3600; //Time cache 60 phut
+/**
+ * QuynhTM add
+ */
+namespace App\Library\AdminFunction;
 
-    const CACHE_TIME_TO_LIVE_ONE_DAY = 86400; //Time cache 1 ngay
-    const CACHE_TIME_TO_LIVE_ONE_WEEK = 604800; //Time cache 1 tuan
-    const CACHE_TIME_TO_LIVE_ONE_MONTH = 2419200; //Time cache 1 thang
-    const CACHE_TIME_TO_LIVE_ONE_YEAR =  29030400; //Time cache 1 nam
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redirect;
 
-    //user customer
-    const CACHE_ALL_CUSTOMER = 'cache_all_customer';
-    const CACHE_CUSTOMER_ID = 'cache_customer_id_';
+class Memcache
+{
+    const CACHE_ON = STATUS_INT_MOT;// 0: khong dung qua cache, 1: dung qua cache
+    /************************************************************************************************
+     * Cache Admin
+     ************************************************************************************************/
+    const CACHE_MENU_BY_ID = 'cache_menu_by_id_';
+    const CACHE_MENU_BY_TAB_ID = 'cache_menu_by_tab_id_';
+    const CACHE_LIST_MENU_PERMISSION = 'cache_list_menu_permission';
+    const CACHE_ALL_PARENT_MENU = 'cache_all_parent_menu_';
+    const CACHE_TREE_MENU = 'cache_tree_menu_';
 
-    //danh mục
-    const CACHE_ALL_CATEGORY    = 'cache_all_category';
-    const CACHE_ALL_PARENT_CATEGORY    = 'cache_all_parent_category';
-    const CACHE_ALL_SHOW_CATEGORY_FRONT    = 'cache_all_show_category_front';
-    const CACHE_ALL_CHILD_CATEGORY_BY_PARENT_ID    = 'cache_all_child_by_parent_id_';
-    const CACHE_CATEGORY_LANGUAGE    = 'cache_category_language_';
-    const CACHE_CATEGORY_ID    = 'cache_category_id_';
+    const CACHE_USER_ADMIN_ID = 'cache_user_admin_id_';
+    const CACHE_ALL_USER_ADMIN = 'cache_all_user_admin';
+    const CACHE_OPTION_USER = 'cache_option_user';
+    const CACHE_INFO_USER = 'cache_info_user';
+    const CACHE_FULL_USER_ID = 'cache_full_user_id_';
+    const CACHE_USER_BY_MANAGER = 'cache_user_by_manager_';
+    const CACHE_USER_BY_DEPART = 'cache_user_by_depart_';
+    const CACHE_USER_BY_DEPART_ONE = 'cache_user_by_depart_one_';
+    const CACHE_ROLE_MENU_ID = 'cache_role_menu_id_';
 
-    //tin đăng
-    const CACHE_ITEM_ID    = 'cache_item_id_';
-    const CACHE_ITEM_HOME_CATEGORY_ID   = 'cache_item_home_category_id_';
+    //DMS
+    const CACHE_CALENDAR_WORKING_ID = 'cache_calendar_working_id_';
+    const CACHE_STAFF_ID = 'cache_staff_id_';
+    const CACHE_POST_ID = 'cache_posts_id_';
+    const CACHE_DEPARTMENT_ID = 'cache_department_id_';
+    const CACHE_All_DEPARTMENT = 'cache_all_department';
 
-    //tin tức
-    const CACHE_NEW_ID    = 'cache_news_id_';
+    const CACHE_PERMISSION_ID = 'cache_permission_id_';
+    const CACHE_ROLE_ID = 'cache_role_id_';
+    const CACHE_OPTION_ROLE = 'cache_option_role';
+    const CACHE_ROLE_ALL = 'cache_option_all';
 
-    //share
-    const CACHE_SHARE_OBJECT_ID    = 'cache_share_object_id_';
-
-    //banner
-    const CACHE_BANNER_ID    = 'cache_banner_id_';
-    const CACHE_BANNER_ADVANCED    = 'cache_banner_advanced';
-
-    //size image
-    const CACHE_SIZE_IMAGE_ID    = 'cache_size_image_id_';
-    const CACHE_SIZE_IMAGE    = 'cache_list_size_image';
-
-    //banner
-    const CACHE_VIDEO_ID    = 'cache_video_id_';
-
-    //thu vien anh
-    const CACHE_IMAGE_ID    = 'cache_image_id_';
-
-    //Tinh thanh
-    const CACHE_ALL_PROVICE = 'cache_all_provice';
-    const CACHE_PROVICE_ID = 'cache_provice_id_';
-    //Info
-    const CACHE_INFO_ID    = 'cache_info_id_';
-    const CACHE_INFO_KEYWORD    = 'cache_info_keyword_';
-    const CACHE_INFO_TYPEINFO_TYPELANGUAGE    = 'cache_info_typeinfo_typelanguage_';
-    //Lang
-    const CACHE_LANG_ID    = 'cache_lang_id_';
-    const CACHE_LANG_KEYWORD_LANGUAGE    = 'cache_info_keyword_language_';
-    
-    //Thung rac
-    const CACHE_TRASH_ID    = 'cache_trash_id_';
-
-    //Tinh thành
-    const CACHE_ALL_PROVINCE = 'cache_all_province';
     const CACHE_PROVINCE_ID = 'cache_province_id_';
+    const CACHE_OPTION_PROVINCE = 'cache_option_province';
 
-    //quan huyen
-    const CACHE_DISTRICT_ID = 'cache_district_id_';
-    const CACHE_DISTRICT_WITH_PROVINCE_ID = 'cache_district_with_province_id_';
+    /************************************************************************************************
+     * Cache HD Insurance
+     ************************************************************************************************/
+    const CACHE_API_TOKEN_HD = 'cache_api_token_hd';
+
+    const CACHE_LIST_FIELD_TABLE_NAME = 'cache_list_field_table_';
+
+    const CACHE_TYPE_DEFINE_ALL = 'cache_type_define_all';
+
+    const CACHE_PROVINCE_DISTRICT_WARD_ALL = 'cache_province_district_ward_all';
+
+    const CACHE_BANK_ALL = 'cache_bank_all';
+    const CACHE_BANK_BY_KEY = 'cache_bank_by_key_';
+
+    const CACHE_MENU_SYSTEM_BY_ID = 'cache_menu_system_by_id_';
+    const CACHE_MENU_SYSTEM_BY_PROJECT_CODE = 'cache_menu_system_by_project_code_';
+    const CACHE_TREE_MENU_SYSTEM_BY_PROJECT_CODE = 'cache_tree_menu_system_by_project_code_';
+
+    const CACHE_USERS_BY_KEY = 'cache_users_by_key_';
+    const CACHE_INFOR_USERS_BY_KEY = 'cache_infor_users_by_key_';
+    const CACHE_USERS_ABOUT_BY_KEY = 'cache_users_about_by_key_';
+    const CACHE_USER_GROUP_MENU_BY_KEY = 'user_group_menu_by_key_';
+    const CACHE_USER_MENU_BY_KEY = 'cache_user_menu_by_key_';
+
+    const CACHE_ORGANIZATION_BY_KEY = 'cache_organization_by_key_';
+    const CACHE_ORGANIZATION_ALL = 'cache_organization_all';
+    const CACHE_ORGANIZATION_DATA_RELATION_BY_ORG_CODE = 'cache_organization_data_relation_by_org_code_';
+
+    const CACHE_ORG_BANK_BY_KEY = 'cache_org_bank_by_key_';
+    const CACHE_ORG_CONTRACT_BY_KEY = 'cache_org_contract_by_key_';
+    const CACHE_ORG_RELATIONSHIP_BY_KEY = 'cache_org_relationship_by_key_';
+    const CACHE_ORG_STRUCT_BY_KEY = 'cache_org_struct_by_key_';
+
+    const CACHE_ALL_DEPARTMENT_BY_KEY_CODE = 'cache_all_department_by_key_code_';
+    const CACHE_ALL_DEPARTMENT = 'cache_all_department';
+    const CACHE_DEPARTMENT_BY_KEY = 'cache_department_by_key_';
+
+    const CACHE_GROUP_MENU_BY_ID = 'cache_group_menu_by_id_';
+    const CACHE_DETAIL_GROUP_MENU_BY_KEY = 'cache_detail_group_menu_by_key_';
+    const CACHE_DETAIL_GROUP_MENU_BY_ORG_CODE = 'cache_detail_group_menu_by_org_code_';
+
+    const CACHE_TYPE_DEFINE_BY_ID = 'cache_type_define_by_id_';
+
+    const CACHE_VERSIONS_BY_ID = 'cache_versions_by_id_';
+    const CACHE_VERSIONS_ALL = 'cache_versions_all';
+    const CACHE_LIST_DETAIL_BY_VERSIONS_CODE = 'cache_list_detail_by_versions_code_';
+    const CACHE_DETAIL_VERSIONS_BY_ID = 'cache_detail_versions_by_id_';
+
+    const CACHE_DATABASES_BY_KEY = 'cache_databases_by_key_';
+    const CACHE_DATABASES_ALL = 'cache_databases_all';
+
+    const CACHE_DOMAINS_BY_KEY = 'cache_domains_by_key_';
+    const CACHE_DOMAINS_ALL = 'cache_domains_all';
+
+    //API
+    const CACHE_APIS_ALL = 'cache_apis_all';
+    const CACHE_APIS_BY_KEY = 'cache_apis_by_key_';
+    const CACHE_DATABASES_APIS_BY_ID = 'cache_databases_apis_by_id_';
+    const CACHE_DATABASES_APIS_BY_KEY = 'cache_databases_apis_by_key_';
+    const CACHE_BEHAVIOURS_APIS_BY_KEY = 'cache_behaviours_apis_by_key_';
+    const CACHE_EVENTS_APIS_BY_KEY = 'cache_events_apis_by_key_';
+    const CACHE_ALL_EVENTS_APIS_BY_KEY = 'cache_all_events_apis_by_key_';
+
+    //MEDIA
+    const CACHE_DATA_CONFIG_CODE_BY_KEY = 'cache_data_config_code_by_key_';
+    const CACHE_ALL_VOUCHER_VALUE_BY_KEY = 'cache_all_voucher_value_by_key_';
+    const CACHE_VOUCHER_VALUE_BY_KEY = 'cache_voucher_value_by_key_';
+    const CACHE_CAMPAIGN_INFO_BY_CAMPAIGN_CODE = 'cache_campaign_info_by_campaign_code_';
+
+    const CACHE_CAMPAIGNS_ALL = 'cache_campaigns_all';
+    const CACHE_ALL_DEFINE_POLICY = 'cache_all_define_policy';
+    /**
+     * @param string $key_cache
+     * @return bool
+     */
+    public static function getCache($key_cache = ''){
+        return (trim($key_cache) != '' && Memcache::CACHE_ON) ? Cache::get($key_cache) : false;
+    }
+
+    /**
+     * @param string $key_cache
+     * @param array $data
+     * @param int $time
+     * @return bool
+     */
+    public static function putCache($key_cache = '', $data = [] , $time = CACHE_ONE_YEAR){
+        return (trim($key_cache) != ''  && !empty($data) && Memcache::CACHE_ON) ? Cache::put($key_cache, $data, $time) : false;
+    }
+
+    /**
+     * @param string $key_cache
+     * @return bool
+     */
+    public static function forgetCache($key_cache = '',$arrDomain = []){
+        if(!empty($arrDomain)){
+            if(!empty($arrDomain)){
+                $curl = Curl::getInstance();
+                foreach ($arrDomain as $domain){
+                    $curl->execUrlOnsite($domain.'manager/clear');
+                }
+            }
+        }
+        return (trim($key_cache) != '' && Memcache::CACHE_ON) ? Cache::forget($key_cache) : false;
+    }
 }

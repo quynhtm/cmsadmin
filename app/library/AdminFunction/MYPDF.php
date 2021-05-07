@@ -5,6 +5,7 @@
  * Date: 4/22/2015
  * Time: 10:07 AM
  */
+namespace App\Library\AdminFunction;
 
 class MYPDF extends TCPDF {
     protected $background_img;
