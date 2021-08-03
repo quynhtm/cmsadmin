@@ -24,12 +24,6 @@ class AppServiceProvider extends ServiceProvider
                 \URL::forceScheme('https');
             }
         }
-
-        /*$this->app->bind(Client::class, function ($app) {
-            return ClientBuilder::create()
-                ->setHosts(config('elasticquent.config.hosts'))
-                ->build();
-        });*/
     }
 
     /**
@@ -39,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 }

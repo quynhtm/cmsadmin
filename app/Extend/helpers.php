@@ -991,6 +991,7 @@ function getDirFile($file_name = '')
 
 function getLinkFileToStore($file_id = '', $is_dev = true, $is_download = false)
 {
+    $is_dev = (Config::get('config.ENVIRONMENT') == 'DEV')? true: false;
     $urlServer = ($is_dev ? Config::get('config.URL_HYPERSERVICES_DEV') : Config::get('config.URL_HYPERSERVICES_LIVE')) . "f/";
     return ($is_download == true) ? $urlServer . $file_id . '?download=true' : $urlServer . $file_id;
 }
@@ -1204,16 +1205,24 @@ function getArrYear()
     }
     return $arrYear;
 }
+
 function getArrMinuteFull()
 {
     for ($i = 0; $i <= 60; $i++) {
-        if($i < 10){
-            $arrMinute['0'.$i] = '0'.$i;
-        }else{
+        if ($i < 10) {
+            $arrMinute['0' . $i] = '0' . $i;
+        } else {
             $arrMinute[$i] = $i;
         }
     }
     return $arrMinute;
+}
+
+function getDateStartOfMonth(){
+    return date('d/m/Y', strtotime(Carbon::now()->startOfMonth()));
+}
+function getDateNow(){
+    return date('d/m/Y', strtotime(Carbon::now()));
 }
 function getTimeCurrent($type = '')
 {
@@ -1237,4 +1246,29 @@ function getTimeCurrent($type = '')
             break;
     }
     return $time;
+}
+
+//str_date = 21/04/2021 00:00:00
+function cutStrDate($str_date = '')
+{
+    $date = trim($str_date);
+    if (trim($str_date) != '') {
+        $arrDate = explode(' ', $str_date);
+        $date = isset($arrDate[0]) ? $arrDate[0] : $str_date;
+    }
+    return $date;
+}
+
+//get array mang con truyền vào
+function getArrChild($arrRoot = [], $arrChose = [])
+{
+    $arrArrChild = [];
+    if (!empty($arrRoot) && !empty($arrChose)) {
+        foreach ($arrChose as $key_code) {
+            if (isset($arrRoot[$key_code])) {
+                $arrArrChild[$key_code] = $arrRoot[$key_code];
+            }
+        }
+    }
+    return $arrArrChild;
 }

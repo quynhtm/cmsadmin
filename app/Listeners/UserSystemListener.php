@@ -10,8 +10,11 @@ namespace App\Listeners;
 
 use App\Events\UserSystemEvent;
 use App\Http\Models\OpenId\UserSystem;
-use App\Services\SendMailService;
+use App\Library\AdminFunction\CGlobal;
+use App\Services\ServiceCommon;
 use Exception;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 
 class UserSystemListener
 {
@@ -30,16 +33,21 @@ class UserSystemListener
         $inforUser = $this->user->getInforUserByKey($event->user_name, 'USER_NAME');
         try {
             if (isset($inforUser->USER_CODE)) {
-                $dataSend['EMAIL'] = $inforUser->EMAIL;
-                $dataSend['USER_NAME'] = $inforUser->USER_NAME;
-                $dataSend['FULL_NAME'] = $inforUser->FULL_NAME;
-                $dataSend['PASSWORD_NEW'] = $event->password;
-                if (app(SendMailService::class)->sentEmailCreaterUser($dataSend)) {
-                    $arrData['isOk'] = STATUS_INT_MOT;
-                    $arrData['msg'] = 'Bạn hãy vào mail đăng ký để lấy mật khẩu mới.';
-                } else {
-                    $arrData['msg'] = 'Chưa gửi được mail';
+                $mail_send = (isset($inforUser->EMAIL) && trim($inforUser->EMAIL) != '')?trim($inforUser->EMAIL): '';
+
+                $dataUser['FULL_NAME'] = $inforUser->FULL_NAME;
+                $dataUser['USER_NAME'] = $inforUser->USER_NAME;
+                $dataUser['PASSWORD_NEW'] = $event->password;
+                $content = View::make('mail.mailCreaterUser')->with(['data' => $dataUser])->render();
+
+                //gửi mail
+                $dataSenmail['CONTENT'] = $content;
+                $dataSenmail['TO'] = trim($mail_send) != ''? $mail_send: CGlobal::mail_test;
+                if(trim($mail_send) != ''){
+                    $dataSenmail['CC'] = CGlobal::mail_test;
                 }
+                $dataSenmail['TYPE'] = 'MAT_KHAU';
+                app(ServiceCommon::class)->sendMailWithContent($dataSenmail);
             }
         } catch (Exception $e) {
             $this->writeLog('Event usser Error', $e->getMessage());
@@ -51,7 +59,6 @@ class UserSystemListener
         $name_log = 'UserSystemListener.log';
         $name_folder = FOLDER_FILE_LOG_COMMON;
         //$name_folder = FOLDER_FILE_LOG_COMMON . '_' . getParamDate('m') . '_' . getParamDate('Y');
-
         debugLog($msg, $name_log, $name_folder);
         if (!empty($dataLog)) {
             debugLog($dataLog, $name_log, $name_folder);

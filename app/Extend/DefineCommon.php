@@ -57,6 +57,7 @@ define('STATUS_MOI', 'moi');
 define('STATUS_HOAT_DONG', 'hoat_dong');
 define('STATUS_KHOA', 'khoa');
 define('STATUS_KHOA_VINH_VIEN', 'khoa_vinh_vien');
+define('DATA_SEARCH_NULL', 'DATA_SEARCH_NULL');
 
 define('ERROR_PERMISSION',  1);
 
@@ -102,27 +103,63 @@ define('USER_ROOT','ROOT');
 define('USER_CHANNEL_WEB_B2B','WEB_B2B');
 define('USER_CHANNEL_SDK_LO','SDK_LO');
 
+//đối tác
+define('ORG_VIETJET_VN','VIETJET_VN');
+define('ORG_HDI','HDI');
+
+//Mã sản phẩm
+define('PRODUCT_CODE_CSSK_NV','CSSK_NV');//Sức Khỏe cho nhân viên và người thân
+define('PRODUCT_CODE_CSVX','CSVX');//Chiến Sĩ Vắc Xin
+define('PRODUCT_CODE_XCG_TNDSBB','XCG_TNDSBB');//Trách nhiệm dân sự bắt buộc
+define('PRODUCT_CODE_BAY_AT','BAY_AT');//Bay an toàn
+define('PRODUCT_CODE_LOST_BAGGAGE','LOST_BAGGAGE');//Bảo hiểm mất hành lý
 define('PRODUCT_CODE_ATTD','ATTD');
-define('PRODUCT_CODE_XCG','XCG');
-define('PRODUCT_CODE_VISA_CARE','VISACARE');
+define('PRODUCT_CODE_ATTD_NEW','ATTD_NEW');//Bình An Cá Nhân
+define('PRODUCT_CODE_XCG_TNDS','XCG_TNDSBB');
+define('PRODUCT_CODE_XCG_VCX','XCG_VCX_NEW');//vật chất xe
+define('PRODUCT_CODE_VISA_CARE','VISA_CARE');
 define('PRODUCT_CODE_VNAT','VNAT');
 define('PRODUCT_CODE_TRAU','TRAU');
 define('PRODUCT_CODE_TCB','TCB');
 define('PRODUCT_CODE_HCB','HCB');
+define('PRODUCT_CODE_SUCKHOE365','SUCKHOE365');//SUCKHOE365
+define('PRODUCT_CODE_TAINAN365','TAINAN365');//TAINAN365
+define('PRODUCT_CODE_NHA365','NHA365');//NHA365
 
+//Danh mục sản phẩm
+define('CATEGORY_SUCKHOE365','CN.02');//SUCKHOE365
+define('CATEGORY_TAINAN365','CN.03');//TAINAN365 - CN.03
+define('CATEGORY_NHA365','TS10');//NHA365 - TS10
 define('CATEGORY_ATTD','CN.04');
-//define('CATEGORY_XCG','XE');
-define('CATEGORY_XCG','CN.07');
+define('CATEGORY_XCG','XE');
+define('CATEGORY_XCG_2','XE');
 define('CATEGORY_VISA_CARE','VISA_CARE');
 define('CATEGORY_VNAT','CN.05');
 define('CATEGORY_TRAU','CN.06');
 define('CATEGORY_TCB','CN.08');
 define('CATEGORY_HCB','CN.09');
 
+//Channel
+define('CHANNEL_SELLING','SDK_SELLING');//selling
+define('CHANNEL_NHA365','SDK_HOUSE_SELL');//NHA365
+define('CHANNEL_SUCKHOE365','SDK_HEALTH_SELL');//SUCKHOE365
+define('CHANNEL_TAINAN365','SDK_HEALTH_SELL');//TAINAN365
+
 define('RELATIONSHIP_BAN_THAN','BAN_THAN');
 
 define('MONEY_VND','VNĐ');
 define('MONEY_DONG','đ');
+
+//trạng thái bồi thường
+define('STATUS_CLAIM_TMBT','TMBT');//chờ tiếp nhận
+define('STATUS_CLAIM_XLHS','XLHS');//đang xử lý
+define('STATUS_CLAIM_YCBS','YCBS');//chờ bổ xung giấy tờ
+define('STATUS_CLAIM_DYKH','DYKH');//đồng ý bồi thường chờ xác nhận
+define('STATUS_CLAIM_TCKH','TCKH');//từ chối bồi thường chờ xác nhận
+define('STATUS_CLAIM_KHDY','KHDY');//KH đồng ý bồi thường
+define('STATUS_CLAIM_KHTC','KHTC');//Khách hành không đồng ý bồi thường
+define('STATUS_CLAIM_TTBT','TTBT');//đã chi trả bồi thường
+define('STATUS_CLAIM_TCBT','TCBT');//Từ chối bồi thường
 
 /**************************************************************************************************************
  * Định nghĩa ORG_STRUCT
@@ -183,7 +220,7 @@ define('DEFINE_CRUD_LIMIT','CRUD_LIMIT');
 define('DEFINE_ACTION_EXECUTE','ACTION_EXECUTE');
 
 //thư mục dự án chính
-define('DIR_PRO_BACKEND','backend');
+define('DIR_PRO_CORE_HDI','CoreHdi');
 define('DIR_PRO_SYSTEM','Systems');
 define('DIR_PRO_SELLING','Sellings');
 define('DIR_PRO_REPORT','Report');
@@ -198,9 +235,7 @@ define('DIR_MODULE_INSURANCE_POLICY','InsurancePolicy');//Selling cấp đơn
 define('DIR_MODULE_PAYMENT_CONTRACT','PaymentContract');//Selling thanh toán
 define('DIR_MODULE_CLAIM_INDEMNIFY','ClaimIndemnify');//Selling bồi thường
 define('DIR_MODULE_INSPECTION','Inspection');//Selling Giám định
-
-//report
-define('DIR_MODULE_REPORT_PRODUCT','reportProduct');//Report
+define('DIR_MODULE_CAMERA_RECORD','CameraRecord');//Selling quay video giám định
 
 //trạng thái STATUS VOUCHER
 define('STATUS_VOUCHER_APPROVE','APPROVE');//Duyet
@@ -215,6 +250,7 @@ define('STATUS_VOUCHER_USED','USED');//Đã sử dụng
 define('FOLDER_FILE_LOG_COMMON','LogCommon');
 define('FOLDER_FILE_DEFAULT','default');
 define('FOLDER_FILE_USER_ADMIN','user_admin');
+define('FOLDER_FILE_CREATE_ORDER','file_create_order');
 define('FOLDER_FILE_PRODUCT','product');
 define('FOLDER_FILE_CRONJOB','Cronjob');
 define('FOLDER_NEWS',  'news');

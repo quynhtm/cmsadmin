@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseAdminController;
 
 use App\Http\Models\Admin\User;
+use App\Library\AdminFunction\CGlobal;
+use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use App\Library\AdminFunction\Pagging;
+use Illuminate\Support\Facades\View;
 
 class  TestDataController extends BaseAdminController
 {
@@ -40,8 +44,39 @@ class  TestDataController extends BaseAdminController
         echo 'Chưa nhập tên cronjob để chạy, hãy nhập lại';
     }
 
-    /*public function clearCache(){
-        Artisan::call('cache:clear');
-        die('da xoa cache xong');
-    }*/
+    public function testData()
+    {
+        //Check phan quyen.
+        if (!$this->checkMultiPermiss()) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+        $functionAction = trim(Request::get('func', ''));
+        if ($functionAction != '' && $this->is_root) {
+            return $this->$functionAction();
+        } else {
+            echo 'Chưa nhập tên function để chạy, hãy nhập lại';
+        }
+    }
+
+    public function sendEmail()
+    {
+        $dataSend['PASSWORD'] = 'PASSWORD';
+        $dataSend['OLD_PASSWORD'] = 'OLD_PASSWORD';
+        $dataSend['IS_CHANGE_PWD'] = 1;
+
+        $dataSend['EMAIL'] = CGlobal::mail_test;
+        $dataSend['USER_NAME'] = 'USER_NAME';
+        $dataSend['FULL_NAME'] = 'FULL_NAME';
+        $dataSend['PASSWORD_NEW'] = 'PASSWORD_NEW';
+        $dataSend['URL_LOGIN'] = Config::get('config.WEB_ROOT');
+
+        $content = View::make('mail.mailForgotPassword')->with(['data' => $dataSend])->render();
+        $dataSenmail['CONTENT'] = $content;
+        $dataSenmail['TO'] = CGlobal::mail_test;
+        $dataSenmail['CC'] = CGlobal::mail_test;
+        $dataSenmail['TYPE'] = 'MAT_KHAU';
+        $sendEmail = app(ServiceCommon::class)->sendMailWithContent($dataSenmail);
+        myDebug($sendEmail);
+    }
+
 }

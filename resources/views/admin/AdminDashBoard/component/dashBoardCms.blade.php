@@ -99,30 +99,30 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3 card">
             <div class="card-header-tab card-header">
-                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Total Sales</div>
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Quản lý người dùng</div>
             </div>
             <div class="p-0 d-block">
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-car text-primary opacity-7 btn-icon-wrapper mb-2"></i> Admin
-                            </button>
+                            <a href="{{URL::route('userSystem.indexUser')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
+                                <i class="fa fa-street-view text-primary opacity-7 btn-icon-wrapper mb-2"></i> Users
+                            </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-bullhorn text-danger opacity-7 btn-icon-wrapper mb-2"></i> Blog
-                            </button>
+                            <a href="{{URL::route('depart.index')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
+                                <i class="lnr-apartment text-danger opacity-7 btn-icon-wrapper mb-2"></i> Quản lý phòng ban
+                            </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-bug text-success opacity-7 btn-icon-wrapper mb-2"></i> Register
-                            </button>
+                            <a href="{{URL::route('organization.indexOrganization')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
+                                <i class="lnr-earth text-success opacity-7 btn-icon-wrapper mb-2"></i> Danh mục tổ chức
+                            </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-heart text-warning opacity-7 btn-icon-wrapper mb-2"></i> Directory
-                            </button>
+                            <a href="{{URL::route('menuGroup.index')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
+                                <i class="lnr-select text-warning opacity-7 btn-icon-wrapper mb-2"></i> Nhóm chức năng
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -132,22 +132,22 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3 card">
             <div class="card-header-tab card-header">
-                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Daily Sales</div>
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Thiết lập Api</div>
             </div>
             <div class="p-0 d-block">
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-apartment text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Overview
-                            </button>
+                            <a href="{{URL::route('apiSystem.index')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
+                                <i class="fa fa-random fa-2x text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Config Api
+                            </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
-                                <i class="lnr-database text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Support
-                            </button>
+                            <a href="{{URL::route('databaseConnection.index')}}"  class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
+                                <i class="lnr-database text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Database
+                            </a>
                         </div>
-                        <div class="p-2 col-sm-6">
+<!--                        <div class="p-2 col-sm-6">
                             <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
                                 <i class="lnr-printer text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Activities
                             </button>
@@ -156,7 +156,7 @@
                             <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
                                 <i class="lnr-store text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Marketing
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -165,22 +165,22 @@
     <div class="col-sm-12 col-lg-4">
         <div class="mb-3 card">
             <div class="card-header-tab card-header">
-                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Total Expenses</div>
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">Setting system</div>
             </div>
             <div class="p-0 d-block">
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-success">
-                                <i class="lnr-lighter text-success opacity-7 btn-icon-wrapper mb-2"> </i>Accounts
-                            </button>
+                            <a href="{{URL::route('menu.indexMenu')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-success">
+                                <i class="lnr-list text-success opacity-7 btn-icon-wrapper mb-2"> </i>Menu
+                            </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
-                                <i class="lnr-construction text-warning opacity-7 btn-icon-wrapper mb-2"> </i> Contacts
-                            </button>
+                            <a href="{{URL::route('typeDefines.index')}}" class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
+                                <i class="lnr-cog text-warning opacity-7 btn-icon-wrapper mb-2"> </i>Cấu hình tham số
+                            </a>
                         </div>
-                        <div class="p-2 col-sm-6">
+<!--                        <div class="p-2 col-sm-6">
                             <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
                                 <i class="lnr-bus text-info opacity-7 btn-icon-wrapper mb-2"> </i> Products
                             </button>
@@ -189,35 +189,10 @@
                             <button class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-alternate">
                                 <i class="lnr-gift text-alternate opacity-7 btn-icon-wrapper mb-2"> </i> Services
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<button class="btn btn-success marginT25" onclick="clickShowLayoutSite()">An tâm tín dụng</button>
-
-<script src="https://beta-sdk.hdinsurance.com.vn/source/4874b3fae14c29fd43d9d7533651cb60/integrate.js"></script>
-<script type="text/javascript">
-    function clickShowLayoutSite(){
-        $('#sys_showLayoutSite').modal('show');
-        const config = {
-            classId: "hdi-sdk",
-            partnerId: "",
-            publickey: ""
-        }
-        const hdisdk = new HDISdk(config)
-        hdisdk.init((initresult)=>{
-            if(initresult.sucess){
-                //do something
-            }
-        })
-        //khi submit xong
-        hdisdk.onFormsubmit((data, result)=>{
-            // when form is submit
-        })
-    }
-</script>

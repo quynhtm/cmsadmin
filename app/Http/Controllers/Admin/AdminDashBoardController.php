@@ -12,7 +12,10 @@ use App\Http\Controllers\BaseAdminController;
 use App\Http\Models\Report\VouchersReport;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\FunctionLib;
+use App\Services\ServiceCommon;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\View;
 
 class AdminDashBoardController extends BaseAdminController
 {
@@ -32,7 +35,7 @@ class AdminDashBoardController extends BaseAdminController
     public function dashboard()
     {   //thuộc báo cáo
         //$this->tab_top = 4;//test
-        //myDebug($abc);
+        //myDebug($this->testData());
         switch ($this->tab_top) {
             case CGlobal::dms_portal:
                 $this->dashboardSystem();
@@ -73,8 +76,9 @@ class AdminDashBoardController extends BaseAdminController
         CGlobal::$pageAdminTitle = 'Trang chủ/Dashboard ' . CGlobal::$arrTitleProject[$this->tab_top];
         $modelReport = new VouchersReport();
         $dataRequest['p_org_code'] = isset($this->user['org_code']) ? $this->user['org_code'] : '';
-        $dataReport = $modelReport->searchReportDashbroadSelling();
-        //myDebug($dataReport);
+        $dataRequest['p_accumulate'] = addslashes(Request::get('p_accumulate', STATUS_INT_KHONG));//mặc định 0 all,1: lũy kế
+        $dataReport = $modelReport->searchReportDashbroadSelling($dataRequest);
+
         $arrDate = $arrMoney = $arrContract = $arrContractTemp = $dataTableInfor = [];
         $tongDoanhThu = $tongContract = $tongHoSoChoDuyet = $tongTaiTuc = 0;
         $totalReport = 0;
@@ -129,13 +133,23 @@ class AdminDashBoardController extends BaseAdminController
                 }
             }
         }
+        //check quyền view chi tiết báo cáo detail
+        $permiss_view_detail = STATUS_INT_KHONG;
+        if($this->user['user_type'] != USER_ROOT){
+            $routeName = 'report.indexReportProduct';
+            if(isset($this->user['user_permission'][$routeName][PERMISS_VIEW])){
+                $permiss_view_detail = STATUS_INT_MOT;
+            }
+        }else{
+            $permiss_view_detail = STATUS_INT_MOT;
+        }
+        //myDebug($this->user);
         //myDebug($arrContractTemp,false);
         //myDebug($dataTableInfor);
-        $today = Carbon::now();
-        $weekDay = getWeekDay($today);
         $this->template = 'index_selling';
         $this->dataOut = [
             'dataTableInfor' => $dataTableInfor,
+            'search' => $dataRequest,
             'arrDate' => $arrDate,
             'arrMoney' => $arrMoney,
             'arrContract' => $arrContract,
@@ -146,8 +160,7 @@ class AdminDashBoardController extends BaseAdminController
             'tongTaiTuc' => $tongTaiTuc,
 
             'totalReport' => $totalReport,
-            'weekDay' => $weekDay,
-            'today' => date('d-m-Y'),
+            'permiss_view_detail' => $permiss_view_detail,
         ];
     }
 }

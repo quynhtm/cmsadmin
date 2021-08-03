@@ -8,8 +8,8 @@ namespace App\Library\AdminFunction;
 
 class CGlobal
 {
-    static $css_ver = '1.0.1';
-    static $js_ver = '1.0.1';
+    static $css_ver = '1.0.4';
+    static $js_ver = '1.0.4';
     public static $POS_HEAD = 1;
     public static $POS_END = 2;
     public static $extraHeaderCSS = '';
@@ -75,10 +75,12 @@ class CGlobal
         self::dms_portal => MENU_HDI_OPEN_ID,
         self::selling => MENU_HDI_SELLING,
     ];
+
     public static $colorWithTab = [
-        self::selling => ['header'=>'app-theme-white','menu'=>'app-theme-white'],//đen: 29323c
-        self::dms_portal => ['header'=>'bg-happy-green','menu'=>'app-theme-white'],//đen: 29323c
+        self::dms_portal => ['header'=>'bg-grow-early header-text-light','menu'=>'app-theme-white','project_logo'=>'logo-src-system'],
+        self::selling => ['header'=>'app-theme-white','menu'=>'app-theme-white','project_logo'=>'logo-src-selling'],
     ];
+
     public static $projectMenuWithTabTop = [
         MENU_HDI_OPEN_ID => self::dms_portal,
         MENU_HDI_SELLING => self::selling,

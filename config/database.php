@@ -1,5 +1,7 @@
 <?php
-namespace App\Library\AdminFunction;
+
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -13,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', Define::DB_CONNECTION_MYSQL),
+    'default' => env('DB_CONNECTION', \App\Library\AdminFunction\Define::DB_CONNECTION_MYSQL),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,12 +43,12 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', Define::DB_HOST),
-            'port' => env('DB_PORT', Define::DB_PORT),
-            'database' => env('DB_DATABASE', Define::DB_DATABASE),
-            'username' => env('DB_USERNAME', Define::DB_USERNAME),
-            'password' => env('DB_PASSWORD', Define::DB_PASSWORD),
-            'unix_socket' => env('DB_SOCKET', Define::DB_SOCKET),
+            'host' => env('DB_HOST', \App\Library\AdminFunction\Define::DB_HOST),
+            'port' => env('DB_PORT', \App\Library\AdminFunction\Define::DB_PORT),
+            'database' => env('DB_DATABASE', \App\Library\AdminFunction\Define::DB_DATABASE),
+            'username' => env('DB_USERNAME', \App\Library\AdminFunction\Define::DB_USERNAME),
+            'password' => env('DB_PASSWORD', \App\Library\AdminFunction\Define::DB_PASSWORD),
+            'unix_socket' => env('DB_SOCKET', \App\Library\AdminFunction\Define::DB_SOCKET),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -56,12 +58,12 @@ return [
 
         'bpm_customdb' => [
             'driver' => 'mysql',
-            'host' => env('DB_CUSTOMDB_HOST', Define::DB_HOST),
-            'port' => env('DB_CUSTOMDB_PORT', Define::DB_PORT),
-            'database' => env('DB_CUSTOMDB_DATABASE', Define::DB_DATABASE),
-            'username' => env('DB_CUSTOMDB_USERNAME', Define::DB_USERNAME),
-            'password' => env('DB_CUSTOMDB_PASSWORD', Define::DB_PASSWORD),
-            'unix_socket' => env('DB_CUSTOMDB_SOCKET', Define::DB_SOCKET),
+            'host' => env('DB_CUSTOMDB_HOST', \App\Library\AdminFunction\Define::DB_HOST),
+            'port' => env('DB_CUSTOMDB_PORT', \App\Library\AdminFunction\Define::DB_PORT),
+            'database' => env('DB_CUSTOMDB_DATABASE', \App\Library\AdminFunction\Define::DB_DATABASE),
+            'username' => env('DB_CUSTOMDB_USERNAME', \App\Library\AdminFunction\Define::DB_USERNAME),
+            'password' => env('DB_CUSTOMDB_PASSWORD', \App\Library\AdminFunction\Define::DB_PASSWORD),
+            'unix_socket' => env('DB_CUSTOMDB_SOCKET', \App\Library\AdminFunction\Define::DB_SOCKET),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
@@ -71,11 +73,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', Define::DB_HOST),
-            'port' => env('DB_PORT', Define::DB_PORT),
-            'database' => env('DB_DATABASE', Define::DB_DATABASE),
-            'username' => env('DB_USERNAME', Define::DB_USERNAME),
-            'password' => env('DB_PASSWORD', Define::DB_PASSWORD),
+            'host' => env('DB_HOST', \App\Library\AdminFunction\Define::DB_HOST),
+            'port' => env('DB_PORT', \App\Library\AdminFunction\Define::DB_PORT),
+            'database' => env('DB_DATABASE', \App\Library\AdminFunction\Define::DB_DATABASE),
+            'username' => env('DB_USERNAME', \App\Library\AdminFunction\Define::DB_USERNAME),
+            'password' => env('DB_PASSWORD', \App\Library\AdminFunction\Define::DB_PASSWORD),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
@@ -84,11 +86,11 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', Define::DB_HOST),
-            'port' => env('DB_PORT', Define::DB_PORT),
-            'database' => env('DB_DATABASE', Define::DB_DATABASE),
-            'username' => env('DB_USERNAME', Define::DB_USERNAME),
-            'password' => env('DB_PASSWORD', Define::DB_PASSWORD),
+            'host' => env('DB_HOST', \App\Library\AdminFunction\Define::DB_HOST),
+            'port' => env('DB_PORT', \App\Library\AdminFunction\Define::DB_PORT),
+            'database' => env('DB_DATABASE', \App\Library\AdminFunction\Define::DB_DATABASE),
+            'username' => env('DB_USERNAME', \App\Library\AdminFunction\Define::DB_USERNAME),
+            'password' => env('DB_PASSWORD', \App\Library\AdminFunction\Define::DB_PASSWORD),
             'charset' => 'utf8',
             'prefix' => '',
         ],

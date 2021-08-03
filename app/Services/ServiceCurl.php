@@ -104,7 +104,7 @@ class ServiceCurl
             'ParentCode' => isset($arrActionRequest['ParentCode']) ? $arrActionRequest['ParentCode'] : Config::get('config.API_PARENT_CODE'),
             'UserName' => isset($arrActionRequest['UserName']) ? $arrActionRequest['UserName'] : Config::get('config.API_USER_NAME'),
             'Secret' => isset($arrActionRequest['Secret']) ? $arrActionRequest['Secret'] : Config::get('config.API_SECRET'),
-            'ActionCode' => isset($arrActionRequest['ActionCode']) ? $arrActionRequest['ActionCode'] : 'HDI_ACTION_CODE',
+            'ActionCode' => isset($arrActionRequest['ActionCode']) ? $arrActionRequest['ActionCode'] : 'HDI_API_LOGIN',
         ];
         $arrDefault['Data'] = isset($dataRequest['Data']) ? $dataRequest['Data'] : null;
         $arrDefault['Signature'] = isset($dataRequest['Signature']) ? $dataRequest['Signature'] : '';

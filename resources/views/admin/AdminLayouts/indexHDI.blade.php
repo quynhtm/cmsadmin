@@ -17,7 +17,7 @@ $imageDefault = Config::get('config.WEB_ROOT').'assets/backend/img/HDInsurance.p
 </head>
 
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar closed-sidebar" id="app-container">
+<div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar closed-sidebar" id="app-container">
         {{----Header---}}
         @include('admin.AdminLayouts.component._block_header')
 
@@ -81,6 +81,7 @@ $imageDefault = Config::get('config.WEB_ROOT').'assets/backend/img/HDInsurance.p
             @if(!$is_tech)
             $('.phpdebugbar-minimized').css('display','none');
             @endif
+            //$('#app-container').addClass("closed-sidebar");
 
             //var color_header = @if(isset($colorWithTab[$tab_top]['header']))'{{$colorWithTab[$tab_top]['header']}}' @else 'bg-vicious-stance' @endif;
             //$(".switch-header-cs-class").removeClass("active"), $("."+color_header).addClass("active"), $(".app-header").attr("class", "app-header"), $(".app-header").addClass("header-shadow " + color_header +' header-text-light');

@@ -3,7 +3,7 @@ use App\Library\AdminFunction\CGlobal;
 ?>
 <div class="app-header header-shadow @if(isset($colorWithTab[$tab_top]['header'])){{$colorWithTab[$tab_top]['header']}} @else bg-vicious-stance @endif">
     <div class="app-header__logo">
-        {{--<div class="logo-src"></div>--}}
+        <div class="@if(isset($colorWithTab[$tab_top]['project_logo'])){{$colorWithTab[$tab_top]['project_logo']}} @endif"></div>
         <div class="header__pane ml-auto">
             <div>
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">

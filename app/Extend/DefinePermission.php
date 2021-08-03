@@ -12,6 +12,8 @@ define('PERMISS_ADD','ADD');
 define('PERMISS_EDIT','EDIT');
 define('PERMISS_REMOVE','REMOVE');
 define('PERMISS_APPROVE','APPROVE');
+define('PERMISS_CREATE_ORDER','CREATE_ORDER');
+define('PERMISS_INSPECTION','INSPECTION');
 
 define('ERROR_AUT_EXP_API', 'ERROR_2004');
 define('ACTION_GET_FIELD_TABLE', 'HDI_27');
@@ -204,8 +206,11 @@ define('ACTION_REPORT_DASHBROAD_SELLING', 'APIZMNRWRE');//get_data_present
 define('ACTION_REPORT_INSMART', 'APINMA4WYD');//get_detail_cus_by_campaign
 
 //report
-define('ACTION_REPORT_PRODUCT', 'APIERE75JX');//PKG_RPT_CONTRACTS.rpt_insur_product_details
-define('ACTION_REPORT_DETAIL_PRODUCT', 'APID68SREX');//PKG_RPT_CONTRACTS.rpt_insur_product_details
+define('ACTION_REPORT_PRODUCT', 'APIERE75JX');//Báo cáo sản phâm: PKG_RPT_CONTRACTS.rpt_insur_product_details
+define('ACTION_REPORT_DETAIL_PRODUCT', 'APID68SREX');//Báo cáo chi tiết sản phâm: PKG_RPT_CONTRACTS.rpt_insur_product_details
+define('ACTION_REPORT_DATA_RECONCILIATION', 'APIHZYO0KG');//Báo cáo đối soát: PKG_RPT_CROSSCHECK.rpt_crosscheck
+define('ACTION_REPORT_CLAIM_VIETJET', 'APIBNKU7V8');//Báo cáo bồi thường VietJet: PKG_RPT_CLAIMS.rpt_general_claims
+define('ACTION_REPORT_ORDER_BUY', 'APIGR1JRQO');//Báo cáo đăng ký mua BH thường VietJet: pkg_rpt_contracts.search_infor_customer
 
 /*********************************************************************************************************
  * //HDI An tâm tín dụng
@@ -235,6 +240,20 @@ define('ACTION_UPDATE_CALENDAR_INSPECTION', 'APIP8TN47Q');// pkg_inspection_vehi
 //ExtenActionHdi
 define('ACTION_SEARCH_DIGITALLY_SIGNED', 'APIAH1T1B3');// search
 define('ACTION_CREATE_DIGITALLY_SIGNED', 'HDI_SIGN');// ký số
+
+/*********************************************************************************************************
+ * //HDI B_CONTRACTS
+ *********************************************************************************************************/
+define('ACTION_B_CONTRACTS_SEARCH_PRODUCT', 'API6ERHTCJ');// list sản phẩm pkg_define_bussiness.search_product
+define('ACTION_B_CONTRACTS_ADD_PRODUCT_USER', 'APIILV2534');// add sản phẩm cho user: pkg_define_bussiness.edit_product_with_user
+define('ACTION_B_CONTRACTS_GET_PRODUCT_BY_USER_CODE', 'APIH47JH13');// get sản phẩm by user code: pkg_define_bussiness.get_product_by_user_code
+
+//ExtenActionHdi: cấp đơn
+define('ACTION_SEARCH_LIST_CREATE_ORDER', 'API0DBOCAH');//pkg_insur_batch.search_prog_batch_detail
+define('ACTION_REMOVE_LIST_CREATE_ORDER', 'APIBP79YU6');// pkg_insur_batch.del_prog_batch_by_contract
+define('ACTION_GET_INFOR_PROGRAM_ALL', 'APIQRALIE1');// pkg_define_bussiness.get_infor_program_all
+define('ACTION_GET_INFOR_PROGRAM_DETAILS', 'APIV2F0ZHS');// pkg_define_bussiness.get_infor_program_details
+define('ACTION_UPDATE_PROGRAM_DETAILS', 'APIC8Y7APR');// pkg_define_bussiness.save_infor_program_details
 
 
 

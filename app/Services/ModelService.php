@@ -42,8 +42,23 @@ class ModelService extends ServiceCurl
             $dataRequest['Action'] = ['ActionCode' => $actionCode];
             $dataRequest['Data'] = $dataRequest;
             $resultApi = $this->postApiHD($dataRequest);
+
             //myDebug($dataRequest);
             return $this->setDataPaging($resultApi);
+        } catch (\PDOException $e) {
+            return returnError($e->getMessage());
+        }
+    }
+
+    public function searchDataOne($dataRequest = [], $actionCode = '')
+    {
+        if (trim($actionCode) == '' || empty($dataRequest))
+            return $this->returnStatusError();
+        try {
+            $dataRequest['Action'] = ['ActionCode' => $actionCode];
+            $dataRequest['Data'] = $dataRequest;
+            $resultApi = $this->postApiHD($dataRequest);
+            return $this->setDataOneResponce($resultApi);
         } catch (\PDOException $e) {
             return returnError($e->getMessage());
         }
@@ -128,9 +143,20 @@ class ModelService extends ServiceCurl
             if ($is_live) {
                 return $result;
             }
+            myDebug('Du lieu tra ve dang loi',false);
             myDebug($response);
         }
         return $result;
+    }
+
+    public function checkReturnData($response)
+    {
+        if (isset($response->Success) && $response->Success) {
+            return $this->returnStatusSuccess();
+        } else {
+            $msg = isset($response->ErrorMessage)?$response->ErrorMessage:'Có lỗi trả về';
+            return $this->returnStatusError($msg);
+        }
     }
 
     public function setDataFromApi($response)
@@ -254,7 +280,7 @@ class ModelService extends ServiceCurl
         }
     }
 
-    public function getDataCommonByOneKey($keyValue = '', $actionCode = '', $keyCache = '', $isList = false)
+    public function getDataCommonByOneKey($keyValue = '', $actionCode = '', $keyCache = '')
     {
         if (trim($keyValue) == '' || trim($actionCode) == '')
             return false;
@@ -267,7 +293,8 @@ class ModelService extends ServiceCurl
                 $dataRequest['Action'] = ['ActionCode' => $actionCode];
                 $dataRequest['Data'] = $dataRequestDefault;
                 $resultApi = $this->postApiHD($dataRequest);
-                $dataGet = ($isList) ? $this->setDataResponce($resultApi) : $this->setDataOneResponce($resultApi);
+
+                $dataGet = $this->setDataOneResponce($resultApi);
                 $data = isset($dataGet['Data'][0]) ? $dataGet['Data'][0] : false;
 
                 if ($data && trim($keyCache) != '') {

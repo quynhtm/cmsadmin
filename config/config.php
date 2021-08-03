@@ -40,6 +40,9 @@ return array(
     'PATH_FOLDER_UPLOAD' => env('IS_LIVE') ? env('APP_PATH_UPLOAD') . env('APP_PATH_UPLOAD_MIDDLE', 'uploads/filesUpload/') : dirname(__DIR__).DIRECTORY_SEPARATOR . env('APP_PATH_UPLOAD_MIDDLE', 'uploads/filesUpload/'),
 
     'MAIL_USERNAME'=> env('MAIL_USERNAME','info@hdinsurance.vn'),
+    'MAIL_SERVICE'=> env('MAIL_SERVICE','/hdi/service/sendMailWithJson'),
+    'SEND_MAIL_ADMIN'=> env('SEND_MAIL_ADMIN','/hdi/service/sendMailAdmin'),
+
     'TIME_NOW'=> time(),
     'API_TOKEN' => env('API_TOKEN','API_TOKEN@!1303'),
     'WEB_ROOT' => env('APP_URL'),

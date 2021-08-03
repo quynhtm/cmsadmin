@@ -118,3 +118,8 @@ define('TABLE_MD_CAM_ERROR', 'MD_CAM_ERROR');
 define('TABLE_MD_FILES', 'MD_FILES');
 define('TABLE_MD_GIFT_DETAILS', 'MD_GIFT_DETAILS');
 define('TABLE_MD_TEMPLATES', 'MD_TEMPLATES');
+
+/*********************************************************************************************************
+ * list table Contracts: HDI B_CONTRACTS
+ *********************************************************************************************************/
+define('TABLE_B_CONTRACTS_PRODUCTS', 'B_PRODUCTS');

@@ -38,7 +38,6 @@
                     @foreach($menu as $key => $item)
                         @if($is_boss || $item['show_menu'] == STATUS_SHOW)
                             @if($item['parent_id'] == STATUS_HIDE && $item['menu_type'] == STATUS_SHOW)
-
                                 <li class="@if(trim($item['RouteName']) !='' && Route::currentRouteName()==$item['RouteName'])mm-active @endif">
                                     <a class="@if(trim($item['RouteName']) !='' && Route::currentRouteName()==$item['RouteName'])mm-active @endif" href="@if(trim($item['RouteName']) !== '#'){{URL::route($item['RouteName'])}}@endif" title="{{ $item['name'] }}">
                                         <i class="metismenu-icon {{$item['icon']}}"></i>
@@ -66,20 +65,43 @@
                                         </span>
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
-
                                     <ul class="nav nav-second-level">
                                         @foreach($item['sub'] as $sub)
-                                            @if($is_boss || (!empty($aryPermissionMenu) && in_array($sub['menu_id'],$aryPermissionMenu)))
-                                                <li style="width: 100%">
-                                                    <a class="@if((strcmp(Route::currentRouteName(),$sub['RouteName']) == 0) || !empty($sub['url_chirld']) && isset($sub['url_chirld'][Route::currentRouteName()]) && (strcmp($sub['url_chirld'][Route::currentRouteName()],$sub['RouteName']) == 0)) mm-active @endif" title="{{ $sub['name'] }}"href="{{URL::route($sub['RouteName'])}}">
+                                            {{----menu cấp 2---}}
+                                            @if(isset($sub['sub']))
+                                                <li style="width: 100%" class="@if((strcmp(Route::currentRouteName(),$sub['RouteName']) == 0) || !empty($sub['arr_link_sub']) && in_array(Route::currentRouteName(),$sub['arr_link_sub'])) mm-active @endif">
+                                                    <a href="#">
+                                                        <i class="metismenu-icon"></i>
                                                         @if(isset($languageSite) && $languageSite == VIETNAM_LANGUAGE)
                                                             {{ $sub['name'] }}
                                                         @else
                                                             {{ $sub['name_en'] }}
                                                         @endif
+                                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                                     </a>
-                                                    <b class="arrow"></b>
+                                                    <ul class="@if((strcmp(Route::currentRouteName(),$sub['RouteName']) == 0) || !empty($sub['arr_link_sub']) && in_array(Route::currentRouteName(),$sub['arr_link_sub'])) mm-collapse mm-show @endif">
+                                                        @foreach($sub['sub'] as $sub_item)
+                                                        <li>
+                                                            <a class="@if((strcmp(Route::currentRouteName(),$sub_item['RouteName']) == 0) || !empty($sub_item['url_chirld']) && isset($sub_item['url_chirld'][Route::currentRouteName()]) && (strcmp($sub_item['url_chirld'][Route::currentRouteName()],$sub_item['RouteName']) == 0)) mm-active @endif" title="{{ $sub_item['name'] }}" href="{{URL::route($sub_item['RouteName'])}}">
+                                                                <i class="metismenu-icon"></i>{{$sub_item['name']}}
+                                                            </a>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
                                                 </li>
+                                            @else
+                                                @if($is_boss || (!empty($aryPermissionMenu) && in_array($sub['menu_id'],$aryPermissionMenu)))
+                                                    <li style="width: 100%">
+                                                        <a class="@if((strcmp(Route::currentRouteName(),$sub['RouteName']) == 0) || !empty($sub['url_chirld']) && isset($sub['url_chirld'][Route::currentRouteName()]) && (strcmp($sub['url_chirld'][Route::currentRouteName()],$sub['RouteName']) == 0)) mm-active @endif" title="{{ $sub['name'] }}" href="{{URL::route($sub['RouteName'])}}">
+                                                            @if(isset($languageSite) && $languageSite == VIETNAM_LANGUAGE)
+                                                                {{ $sub['name'] }}
+                                                            @else
+                                                                {{ $sub['name_en'] }}
+                                                            @endif
+                                                        </a>
+                                                        <b class="arrow"></b>
+                                                    </li>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </ul>

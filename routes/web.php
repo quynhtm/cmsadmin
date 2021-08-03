@@ -1,12 +1,7 @@
 <?php
-/*
-* @Created by: QuynhTM
-* @Author    : manhquynh1984@gmail.com
-* @Date      : 03/2020
-* @Version   : 1.0
-*/
 
-Auth::routes();
+use Illuminate\Support\Facades\Route;
+
 
 const Admin = "Admin";
 
@@ -15,7 +10,14 @@ Route::get('/{url?}', array('as' => 'admin.login', 'uses' => Admin . '\AdminLogi
 Route::post('/{url?}', array('as' => 'admin.login', 'uses' => Admin . '\AdminLoginController@postLogin'));
 
 Route::group(array('prefix' => 'manager', 'before' => ''), function () {
-    require __DIR__ . '/'.DIR_PRO_BACKEND.'/backend.php';
+    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeAdmin.php';
+    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeOpenID.php';
+    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeOpenApi.php';
+
+    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeCoreHdi.php';
+
+    require __DIR__ . '/'.DIR_PRO_SELLING.'/routeSelling.php';
+    require __DIR__ . '/'.DIR_PRO_SELLING.'/routeReport.php';
 });
 require __DIR__ . '/api.php';
 

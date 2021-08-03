@@ -29,12 +29,9 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {   if(Config::get('config.IS_SCHEDULE')){
+    {
+        if(Config::get('config.IS_SCHEDULE')){
             $schedule->command('cronjob:CronExcelExportInsmart')->dailyAt('08:45')->withoutOverlapping();
-
-            //$schedule->command('cronjob:CronBackupBpm')->dailyAt('02:00')->withoutOverlapping();
-            //$schedule->command('cronjob:CronExcelExportInsmart')->everyFiveMinutes()->withoutOverlapping();
-            //$schedule->command('cronjob:CronSaleNetworkUpsetNetworkT24')->everyFifteenMinutes()->withoutOverlapping();
         }
     }
 

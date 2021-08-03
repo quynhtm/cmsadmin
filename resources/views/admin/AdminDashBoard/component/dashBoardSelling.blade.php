@@ -1,9 +1,24 @@
 <div class="tabs-animation">
     <div class="mb-3 card">
         <div class="card-header-tab card-header">
-            <div class="card-header-title font-size-lg  font-weight-normal">
-                <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
-                Số liệu tính đến tháng {{date('m')}}/{{date('Y')}}
+            <div class="card-header-title font-size-lg  font-weight-normal w_100 row">
+                <div class="col-sm-10 text-left">
+                    <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+                    @if($search['p_accumulate'] == 1)
+                        Số liệu tính đến tháng {{date('m')}} - {{date('Y')}}
+                    @else
+                        Số liệu tháng {{date('m')}} - {{date('Y')}}
+                    @endif
+                </div>
+
+                <div class="col-sm-2 marginT10">
+                {{ Form::open(array('method' => 'post', 'role'=>'form','id'=>'formSeachDashboard')) }}
+                    <input type="hidden" id="p_accumulate" name="p_accumulate" value="{{$search['p_accumulate']}}">
+                    <label for="is_success" class="float-right marginL10">Lũy kế</label>
+                    <input type="checkbox" class="custom-checkbox float-right" id="is_success" name="is_success" onchange="changerRadio('formSeachDashboard');" @if($search['p_accumulate'] == 1) checked @endif>
+                    {{ Form::close() }}
+                </div>
+
             </div>
         </div>
         <div class="no-gutters row">
@@ -75,13 +90,13 @@
                         <table class="table table-bordered table-hover">
                             <thead class="thin-border-bottom">
                             <tr class="table-background-header">
-                                <th width="5%" class="text-center middle">{{viewLanguage('STT')}}</th>
-                                <th width="25%" class="text-center middle">{{viewLanguage('Sản phẩm')}}</th>
+                                <th width="3%" class="text-center middle">{{viewLanguage('TT')}}</th>
+                                <th width="30%" class="text-center middle">{{viewLanguage('Sản phẩm')}}</th>
                                 <th width="25%" class="text-center middle">{{viewLanguage('Đối tác')}}</th>
 
                                 <th width="10%" class="text-center middle">{{viewLanguage('Tổng đơn')}}</th>
-                                <th width="10%" class="text-center middle">{{viewLanguage('Chờ duyệt')}}</th>
-                                <th width="10%" class="text-center middle">{{viewLanguage('Tái tục')}}</th>
+                                <th width="8%" class="text-center middle">{{viewLanguage('Chờ duyệt')}}</th>
+                                <th width="8%" class="text-center middle">{{viewLanguage('Tái tục')}}</th>
                                 <th width="15%" class="text-center middle">{{viewLanguage('Doanh thu')}}</th>
                             </tr>
                             </thead>
@@ -90,8 +105,28 @@
                             @foreach ($dataTableInfor as $key => $inforDash)
                                 <tr>
                                     <td class="text-center middle">{{$stt++}}</td>
-                                    <td class="text-left middle">@if(isset($inforDash['PRODUCT_NAME'])){{$inforDash['PRODUCT_NAME']}}@endif</td>
-                                    <td class="text-left middle">@if(isset($inforDash['ORG_NAME'])){{$inforDash['ORG_NAME']}}@endif</td>
+                                    <td class="text-left middle">
+                                        @if($permiss_view_detail== STATUS_INT_MOT)
+                                            @if(isset($inforDash['PRODUCT_NAME']))
+                                                <a class="black_a" href="{{URL::route('report.indexReportProduct',['p_product_code'=>$inforDash['PRODUCT_CODE']])}}" title="Chi tiết theo sản phẩm" target="_blank">
+                                                    {{$inforDash['PRODUCT_NAME']}}
+                                                </a>
+                                            @endif
+                                        @else
+                                            @if(isset($inforDash['PRODUCT_NAME'])){{$inforDash['PRODUCT_NAME']}}@endif
+                                        @endif
+                                    </td>
+                                    <td class="text-left middle">
+                                        @if($permiss_view_detail== STATUS_INT_MOT)
+                                            @if(isset($inforDash['ORG_NAME']))
+                                                <a class="black_a" href="{{URL::route('report.indexReportProduct',['p_org_code'=>$inforDash['ORG_CODE']])}}" title="Chi tiết theo đối tác" target="_blank">
+                                                    @if(isset($inforDash['ORG_NAME'])){{$inforDash['ORG_NAME']}}@endif
+                                                </a>
+                                            @endif
+                                        @else
+                                            @if(isset($inforDash['ORG_NAME'])){{$inforDash['ORG_NAME']}}@endif
+                                        @endif
+                                    </td>
 
                                     <td class="text-right middle"><b>@if(isset($inforDash['TOTAL_CONTRACT'])){{numberFormat($inforDash['TOTAL_CONTRACT'])}}@endif</b></td>
                                     <td class="text-right middle"><b>@if(isset($inforDash['TOTAL_WAITS'])){{numberFormat($inforDash['TOTAL_WAITS'])}}@endif</b></td>
@@ -153,6 +188,17 @@
 </div>
 @endif
 <script type="text/javascript">
+    function changerRadio(formId){
+        var status_defaul = $("#p_accumulate").val();
+        if(status_defaul == 1){
+            $("#p_accumulate").val(0);
+        }else {
+            $("#p_accumulate").val(1);
+        }
+        document.getElementById(formId).submit();
+        //location.reload();
+    }
+
     $(function () {
         $('#container_report_line').highcharts({
             chart: {
