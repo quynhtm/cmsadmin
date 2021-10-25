@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseApiController;
-use App\Http\Models\SalesNetwork\SaleDepartment;
+use App\Models\SalesNetwork\SaleDepartment;
 use App\Services\SalesNetworkService;
 
 

@@ -9,8 +9,8 @@
 namespace App\Http\Controllers\Sellings\InsurancePolicy;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Province;
-use App\Http\Models\Selling\InsurancePolicy;
+use App\Models\OpenId\Province;
+use App\Models\Selling\InsurancePolicy;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

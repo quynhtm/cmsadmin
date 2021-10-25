@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Systems\OpenId;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\MenuSystem;
+use App\Models\OpenId\MenuSystem;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

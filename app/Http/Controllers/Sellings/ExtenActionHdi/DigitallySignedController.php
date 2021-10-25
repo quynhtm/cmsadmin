@@ -8,7 +8,7 @@
 namespace App\Http\Controllers\Sellings\ExtenActionHdi;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\Selling\ExtenActionHdi;
+use App\Models\Selling\ExtenActionHdi;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

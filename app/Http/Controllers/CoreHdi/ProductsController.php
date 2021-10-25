@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\CoreHdi;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\BContracts\Products;
+use App\Models\BContracts\Products;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

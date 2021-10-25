@@ -8,11 +8,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\OpenId\TypeDefine;
+use App\Models\OpenId\TypeDefine;
 use App\Library\AdminFunction\CGlobal;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Models\OpenId\MenuSystem;
+use App\Models\OpenId\MenuSystem;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +54,7 @@ class  BaseAdminController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (!app('App\Http\Models\OpenId\UserSystem')->isLogin()) {
+            if (!app('App\Models\OpenId\UserSystem')->isLogin()) {
                 $url_encode = self::buildUrlEncode(URL::current());
                 if ($request->ajax()) {
                     return Response::json(returnErrorSession());
@@ -68,7 +68,7 @@ class  BaseAdminController extends Controller
                 return Redirect::route('admin.dashboard');
             }
             $this->project_code_menu = $this->getMenuCodeByProjectCode($this->tab_top);
-            $this->user = app('App\Http\Models\OpenId\UserSystem')->userLogin();
+            $this->user = app('App\Models\OpenId\UserSystem')->userLogin();
             //myDebug($this->user);
             if (!empty($this->user)) {
                 $this->is_boss = $this->user['is_boss'];

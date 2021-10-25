@@ -8,7 +8,7 @@
 
 namespace App\Services;
 
-use App\Http\Models\OpenId\UserSystem;
+use App\Models\OpenId\UserSystem;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Curl;
 use App\Library\AdminFunction\Memcache;

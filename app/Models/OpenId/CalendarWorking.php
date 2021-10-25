@@ -6,7 +6,7 @@
 
 namespace App\Models\OpenId;
 
-use App\Http\Models\BaseModel;
+use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
 class CalendarWorking extends BaseModel

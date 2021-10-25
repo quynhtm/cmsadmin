@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseApiController;
-use App\Http\Models\Admin\Products;
+use App\Models\Admin\Products;
 use Illuminate\Http\Request;
-//use App\Http\Models\Admin\Products;
+//use App\Models\Admin\Products;
 
 class ApiRemoveCacheBackendController extends BaseApiController{
-	
+
 	public function __construct(){
 		parent::__construct();
 	}
@@ -18,7 +18,7 @@ class ApiRemoveCacheBackendController extends BaseApiController{
          if($key !== '' && $key == hash('sha256',KEY_API_REMOVE_CACHE)){
              if(is_array($object_name)){
                  foreach ($object_name as $key=>$value){
-                     $string_object = '\App\Http\Models\Admin\\' . $key;
+                     $string_object = '\App\Models\Admin\\' . $key;
                      $new_object = new $string_object();
 
                      $item = $new_object->getItemById($value);

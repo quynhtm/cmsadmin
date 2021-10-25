@@ -9,9 +9,9 @@
 namespace App\Http\Controllers\Sellings\ClaimIndemnify;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\Report\ReportProduct;
-use App\Http\Models\Selling\ClaimHdi;
+use App\Models\OpenId\Organization;
+use App\Models\Report\ReportProduct;
+use App\Models\Selling\ClaimHdi;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

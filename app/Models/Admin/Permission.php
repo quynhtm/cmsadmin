@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace App\Models\Admin;
-use App\Http\Models\BaseModel;
+use App\Models\BaseModel;
 use Illuminate\Support\Facades\DB;
 
 use App\Library\AdminFunction\Memcache;

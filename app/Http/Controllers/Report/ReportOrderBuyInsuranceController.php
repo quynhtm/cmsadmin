@@ -9,10 +9,10 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\OpenId\UserSystem;
-use App\Http\Models\Report\ReportProduct;
-use App\Http\Models\Selling\Campaigns;
+use App\Models\OpenId\Organization;
+use App\Models\OpenId\UserSystem;
+use App\Models\Report\ReportProduct;
+use App\Models\Selling\Campaigns;
 
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;

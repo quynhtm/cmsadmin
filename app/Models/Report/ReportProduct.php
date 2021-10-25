@@ -6,7 +6,7 @@
 
 namespace App\Models\Report;
 
-use App\Http\Models\Selling\ClaimHdi;
+use App\Models\Selling\ClaimHdi;
 use App\Library\AdminFunction\Memcache;
 use App\Services\ModelService;
 use Illuminate\Support\Carbon;

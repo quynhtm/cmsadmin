@@ -9,9 +9,9 @@
 namespace App\Http\Controllers\Systems\OpenId;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Banks;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\OpenId\Province;
+use App\Models\OpenId\Banks;
+use App\Models\OpenId\Organization;
+use App\Models\OpenId\Province;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

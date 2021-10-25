@@ -5,7 +5,7 @@
 
 namespace App\Http\Commands;
 
-use App\Http\Models\Report\VouchersReport;
+use App\Models\Report\VouchersReport;
 use App\Services\ActionExcel;
 use App\Services\SendMailService;
 use Illuminate\Console\Command;

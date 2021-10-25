@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\Report\VouchersReport;
+use App\Models\Report\VouchersReport;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\FunctionLib;
 use App\Services\ServiceCommon;

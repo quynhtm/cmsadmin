@@ -10,9 +10,9 @@ namespace App\Http\Controllers\Sellings\CameraRecord;
 
 use App\Http\Controllers\BaseAdminController;
 use App\Http\Controllers\Controller;
-use App\Http\Models\OpenId\Province;
-use App\Http\Models\OpenId\UserSystem;
-use App\Http\Models\Selling\CameraRecord;
+use App\Models\OpenId\Province;
+use App\Models\OpenId\UserSystem;
+use App\Models\Selling\CameraRecord;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

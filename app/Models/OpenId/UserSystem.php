@@ -296,7 +296,6 @@ class UserSystem extends ModelService
 
             $dataRequest['Data'] = $dataRequestDefault;
             $dataRequest['Action'] = ['ActionCode' => ACTION_GET_INFOR_USER];
-
             $resultApi = $this->postApiHD($dataRequest);
             $dataGet = $this->setDataFromApi($resultApi);
             $data = isset($dataGet['Data']['data'][0]) ? $dataGet['Data']['data'][0] : false;

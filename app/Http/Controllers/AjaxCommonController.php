@@ -7,10 +7,10 @@
 */
 namespace App\Http\Controllers;
 
-use App\Http\Models\OpenId\DepartmentOrg;
-use App\Http\Models\OpenId\MenuSystem;
-use App\Http\Models\OpenId\Province;
-use App\Http\Models\Selling\Campaigns;
+use App\Models\OpenId\DepartmentOrg;
+use App\Models\OpenId\MenuSystem;
+use App\Models\OpenId\Province;
+use App\Models\Selling\Campaigns;
 use App\Library\AdminFunction\FunctionLib;
 use Illuminate\Support\Facades\Response;
 

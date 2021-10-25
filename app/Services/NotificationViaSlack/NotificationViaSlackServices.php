@@ -40,7 +40,7 @@ class NotificationViaSlackServices implements NotificationViaSlackInterface
         $chanel = $exceptionType == 'PhpError' ? env('CHANNEL_ERROR_VIEW', '') : env('CHANNEL_ERROR_VIEW', '');
         self::connect($exceptionType, $chanel);
 //        $trace = $exception->getTraceAsString();
-//        $user = app('App\Http\Models\Admin\User')->user_login();
+//        $user = app('App\Models\Admin\User')->user_login();
 //        $userEmail = ($user) ? $user['user_email'] : "";
 //        $routeName = Route::currentRouteName();
 //        $error = $exception->getMessage();

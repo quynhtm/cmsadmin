@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseAdminController;
 
-use App\Http\Models\Admin\User;
+use App\Models\Admin\User;
 use App\Library\AdminFunction\CGlobal;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Artisan;

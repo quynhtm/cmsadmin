@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Report\VouchersReport;
+use App\Models\Report\VouchersReport;
 use App\Services\ActionExcel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;

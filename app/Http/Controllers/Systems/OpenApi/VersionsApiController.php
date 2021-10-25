@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Systems\OpenApi;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenApi\VersionsApi;
+use App\Models\OpenApi\VersionsApi;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

@@ -8,7 +8,7 @@
 
 namespace App\Services;
 
-use App\Http\Models\OpenId\UserSystem;
+use App\Models\OpenId\UserSystem;
 use Illuminate\Support\Facades\Config;
 //use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;

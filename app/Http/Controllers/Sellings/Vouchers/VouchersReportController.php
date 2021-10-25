@@ -9,9 +9,9 @@
 namespace App\Http\Controllers\Sellings\Vouchers;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\Selling\Campaigns;
-use App\Http\Models\Report\VouchersReport;
+use App\Models\OpenId\Organization;
+use App\Models\Selling\Campaigns;
+use App\Models\Report\VouchersReport;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

@@ -5,8 +5,8 @@
 
 namespace App\Http\Commands;
 
-use App\Http\Models\SalesNetwork\SaleStaff;
-use App\Http\Models\SalesNetwork\SaleStaffPositionHistory;
+use App\Models\SalesNetwork\SaleStaff;
+use App\Models\SalesNetwork\SaleStaffPositionHistory;
 use Illuminate\Console\Command;
 use Exception;
 use Illuminate\Support\Facades\DB;

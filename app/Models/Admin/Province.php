@@ -5,7 +5,7 @@
 
 namespace App\Models\Admin;
 
-use App\Http\Models\BaseModel;
+use App\Models\BaseModel;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Library\AdminFunction\Memcache;

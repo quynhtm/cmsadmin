@@ -2,7 +2,7 @@
 
 namespace App\Models\Admin;
 
-use App\Http\Models\BaseModel;
+use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;

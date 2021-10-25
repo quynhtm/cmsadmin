@@ -2,7 +2,7 @@
 
 namespace App\Models\Admin;
 
-use App\Http\Models\BaseModel;
+use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
 class VmDefine extends BaseModel

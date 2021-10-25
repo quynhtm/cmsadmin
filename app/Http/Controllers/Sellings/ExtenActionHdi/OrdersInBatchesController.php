@@ -9,10 +9,10 @@
 namespace App\Http\Controllers\Sellings\ExtenActionHdi;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\OpenId\Province;
-use App\Http\Models\Selling\ExtenActionHdi;
-use App\Http\Models\Selling\PaymentContract;
+use App\Models\OpenId\Organization;
+use App\Models\OpenId\Province;
+use App\Models\Selling\ExtenActionHdi;
+use App\Models\Selling\PaymentContract;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

@@ -9,10 +9,10 @@
 namespace App\Http\Controllers\Sellings\Inspection;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenId\Organization;
-use App\Http\Models\OpenId\Province;
-use App\Http\Models\OpenId\UserSystem;
-use App\Http\Models\Selling\Inspection;
+use App\Models\OpenId\Organization;
+use App\Models\OpenId\Province;
+use App\Models\OpenId\UserSystem;
+use App\Models\Selling\Inspection;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;

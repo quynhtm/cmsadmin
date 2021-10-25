@@ -9,7 +9,7 @@
 namespace App\Listeners;
 
 use App\Events\UserSystemEvent;
-use App\Http\Models\OpenId\UserSystem;
+use App\Models\OpenId\UserSystem;
 use App\Library\AdminFunction\CGlobal;
 use App\Services\ServiceCommon;
 use Exception;

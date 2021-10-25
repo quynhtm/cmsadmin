@@ -9,8 +9,8 @@
 namespace App\Http\Controllers\Systems\OpenApi;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Http\Models\OpenApi\ApiSystem;
-use App\Http\Models\OpenApi\DatabaseConnection;
+use App\Models\OpenApi\ApiSystem;
+use App\Models\OpenApi\DatabaseConnection;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;
