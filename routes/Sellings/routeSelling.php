@@ -32,8 +32,23 @@ Route::group(array('prefix' => 'selling'), function () {
         Route::post('ajaxCreateOrderInBatches', array('as' => 'extenHdi.ajaxCreateOrderInBatches', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxCreateOrderInBatches'));
         Route::post('ajaxPostAddInforPacks', array('as' => 'extenHdi.ajaxPostAddInforPacks', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxPostAddInforPacks'));
 
+        //get form immport
+        Route::get('ajaxGetFormImport', array('as' => 'extenHdi.ajaxGetFormImport', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxGetFormImport'));
+        Route::post('ajaxPostFormImport', array('as' => 'extenHdi.ajaxPostFormImport', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxPostFormImport'));
+        Route::post('ajaxPostGenCode', array('as' => 'extenHdi.ajaxPostGenCode', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxPostGenCode'));//upload file gen code
+        Route::get('getSearchGenGcnAjax', array('as' => 'extenHdi.getSearchGenGcnAjax', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@getSearchGenGcnAjax'));
+
         Route::get('ajaxGetOrdersInBatches', array('as' => 'extenHdi.ajaxGetOrdersInBatches', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxGetOrdersInBatches'));
         Route::post('ajaxPostOrdersInBatches', array('as' => 'extenHdi.ajaxPostOrdersInBatches', 'uses' => ModuleExtenActionHdi . '\OrdersInBatchesController@ajaxPostOrdersInBatches'));
+
+        /* Danh sách ký số Centech*/
+        Route::match(['GET', 'POST'],'indexDigitallyCentech', array('as' => 'digitallyCentech.index', 'uses' => ModuleExtenActionHdi . '\DigitallyCentechController@index'));
+        Route::post('ajaxCancelOrder', array('as' => 'digitallyCentech.ajaxCancelOrder', 'uses' => ModuleExtenActionHdi . '\DigitallyCentechController@ajaxCancelOrder'));
+
+        //Quản lý Đồng bộ dữ liệu sang bên Core
+        Route::match(['GET', 'POST'],'indexSyncDataCore', array('as' => 'extenHdi.indexSyncDataCore', 'uses' => ModuleExtenActionHdi . '\SyncDataCoreController@indexSyncDataCore'));
+        Route::post('ajaxGetAction', array('as' => 'syncDataCore.ajaxGetAction', 'uses' => ModuleExtenActionHdi . '\SyncDataCoreController@ajaxGetAction'));
+        Route::post('ajaxPostAction', array('as' => 'syncDataCore.ajaxPostAction', 'uses' => ModuleExtenActionHdi . '\SyncDataCoreController@ajaxPostAction'));
 
     });
 
@@ -68,7 +83,8 @@ Route::group(array('prefix' => 'selling'), function () {
         Route::post('ajaxPostItem', array('as' => 'insurancePolicy.ajaxPostItem', 'uses' => ModuleInsurancePolicy . '\InsurancePolicyController@ajaxPostItem'));
         Route::post('ajaxGetData', array('as' => 'insurancePolicy.ajaxGetData', 'uses' => ModuleInsurancePolicy . '\InsurancePolicyController@ajaxGetData'));
         Route::post('ajaxGetDetailContract', array('as' => 'insurancePolicy.ajaxGetDetailContract', 'uses' => ModuleInsurancePolicy . '\InsurancePolicyController@ajaxGetDetailContract'));
-
+        //get infor product
+        Route::get('ajaxGetInforPro', array('as' => 'insurancePolicy.ajaxGetInforPro', 'uses' => ModuleInsurancePolicy . '\InsurancePolicyController@ajaxGetInforPro'));
     });
 
     /* Thanh toán hợp đồng */
@@ -88,11 +104,23 @@ Route::group(array('prefix' => 'selling'), function () {
         Route::get('getSearchAjax', array('as' => 'claimHdi.getSearchAjax', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@getSearchAjax'));
         Route::get('ajaxGetItem', array('as' => 'claimHdi.ajaxGetItem', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@ajaxGetItem'));
         Route::post('ajaxPostItem', array('as' => 'claimHdi.ajaxPostItem', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@ajaxPostItem'));
+        Route::post('ajaxUpdateData', array('as' => 'claimHdi.ajaxUpdateData', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@ajaxUpdateData'));
         Route::post('ajaxGetData', array('as' => 'claimHdi.ajaxGetData', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@ajaxGetData'));
         Route::post('ajaxChangeProcess', array('as' => 'claimHdi.ajaxChangeProcess', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@ajaxChangeProcess'));
 
+
+        //Duyệt bồi thường ban
+        Route::match(['GET', 'POST'],'indexClaimDepart', array('as' => 'claimDepart.indexClaimDepart', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@indexClaimDepart'));
+
+        //Duyệt bồi thường công ty
+        Route::match(['GET', 'POST'],'indexClaimCompany', array('as' => 'claimCompany.indexClaimCompany', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@indexClaimCompany'));
+
+        //Thanh toán bồi thường
+        Route::match(['GET', 'POST'],'indexClaimAccountant', array('as' => 'claimAccountant.indexClaimAccountant', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@indexClaimAccountant'));
+
         //bồi thường VietJet
         Route::match(['GET', 'POST'],'indexVietJet', array('as' => 'claimHdi.indexVietJet', 'uses' => ModuleClaimIndemnify . '\ClaimHdiController@indexVietJet'));
+
     });
 
     /* Giám định HDI */
