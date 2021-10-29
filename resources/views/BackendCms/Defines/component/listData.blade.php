@@ -69,22 +69,22 @@
 
                         <td class="text-center middle">
                             @if($item->is_active == STATUS_INT_MOT)
-                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check"></i></a>
+                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
                             @else
-                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times"></i></a>
+                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
                             @endif
                             @if($is_root || $permission_edit || $permission_add)
-                                &nbsp;&nbsp;
+                                &nbsp;
                                 <a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa group: ')}}{{$item->TYPE_NAME}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
-                                    <i class="pe-7s-trash"></i>
+                                    <i class="pe-7s-trash fa-2x"></i>
                                 </a>
-                                &nbsp;&nbsp;
-                                <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Thêm định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item,'is_copy'=>STATUS_INT_MOT])}}" data-objectId="{{$item->id}}">
-                                    <i class="fa fa-copy"></i>
+                                &nbsp;
+                                <a href="javascript:void(0);"class="color_warning sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Thêm định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item,'is_copy'=>STATUS_INT_MOT])}}" data-objectId="{{$item->id}}">
+                                    <i class="fa fa-copy fa-2x"></i>
                                 </a>
-                                &nbsp;&nbsp;
+                                &nbsp;
                                 <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item->id}}">
-                                    <i class="fa fa-pencil-square-o"></i>
+                                    <i class="fa fa-pencil-square-o fa-2x"></i>
                                 </a>
                             @endif
                         </td>
