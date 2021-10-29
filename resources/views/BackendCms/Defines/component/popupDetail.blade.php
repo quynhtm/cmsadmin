@@ -15,15 +15,15 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('PROJECT CODE')}} <span class="red">(*)</span></label>
-                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="PROJECT_CODE" id="PROJECT_CODE"  @if(isset($data->PROJECT_CODE))value="{{$data->PROJECT_CODE}}"@endif>
+                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="project_code" id="project_code"  @if(isset($data->project_code))value="{{$data->project_code}}" @else value ="ALL" @endif>
                         </div>
                         <div class="col-lg-2">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Order')}}</label>
-                            <input type="text" class="form-control input-sm" required name="SORTORDER" id="SORTORDER" @if(isset($data->SORTORDER))value="{{$data->SORTORDER}}"@else value="1" @endif>
+                            <input type="text" class="form-control input-sm" required name="sort_order" id="sort_order" @if(isset($data->sort_order))value="{{$data->sort_order}}"@else value="1" @endif>
                         </div>
                         <div class="col-lg-4">
                             <label for="NAME" class="text-right">{{viewLanguage('Trạng thái')}} <span class="red">(*)</span></label>
-                            <select class="form-control input-sm" required name="IS_ACTIVE" id="IS_ACTIVE" >
+                            <select class="form-control input-sm" name="is_active" id="is_active" >
                                 {!! $optionStatus !!}
                             </select>
                         </div>
@@ -33,11 +33,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('DEFINE CODE')}} <span class="red">(*)</span></label>
-                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="DEFINE_CODE" id="DEFINE_CODE" @if(isset($data->DEFINE_CODE))value="{{$data->DEFINE_CODE}}"@endif>
+                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="define_code" id="define_code" @if(isset($data->define_code))value="{{$data->define_code}}"@endif>
                         </div>
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('DEFINE NAME')}} <span class="red">(*)</span></label>
-                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="DEFINE_NAME" id="DEFINE_NAME" @if(isset($data->DEFINE_NAME))value="{{$data->DEFINE_NAME}}"@endif>
+                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG)readonly @endif name="define_name" id="define_name" @if(isset($data->define_name))value="{{$data->define_name}}"@endif>
                         </div>
                     </div>
                 </div>
@@ -45,11 +45,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('TYPE CODE')}} <span class="red">(*)</span></label>
-                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG && $is_copy == STATUS_INT_KHONG)readonly @endif name="TYPE_CODE" id="TYPE_CODE" @if(isset($data->TYPE_CODE) && $is_copy==STATUS_INT_KHONG)value="{{$data->TYPE_CODE}}"@endif>
+                            <input type="text" class="form-control input-sm" required @if($objectId > STATUS_INT_KHONG && $is_copy == STATUS_INT_KHONG)readonly @endif name="type_code" id="type_code" @if(isset($data->type_code) && $is_copy==STATUS_INT_KHONG)value="{{$data->type_code}}"@endif>
                         </div>
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('TYPE NAME')}} <span class="red">(*)</span></label>
-                            <input type="text" class="form-control input-sm" required name="TYPE_NAME" id="TYPE_NAME" @if(isset($data->TYPE_NAME)  && $is_copy==STATUS_INT_KHONG)value="{{$data->TYPE_NAME}}"@endif>
+                            <input type="text" class="form-control input-sm" required name="type_name" id="type_name" @if(isset($data->type_name)  && $is_copy==STATUS_INT_KHONG)value="{{$data->type_name}}"@endif>
                         </div>
                     </div>
                 </div>
@@ -57,11 +57,11 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('DESCRIPTION')}}</label>
-                            <input type="text" class="form-control input-sm" name="DESCRIPTION" id="DESCRIPTION" @if(isset($data->DESCRIPTION))value="{{$data->DESCRIPTION}}"@endif>
+                            <input type="text" class="form-control input-sm" name="description" id="description" @if(isset($data->description))value="{{$data->description}}"@endif>
                         </div>
                         <div class="col-lg-6">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('LANGUAGE')}}</label>
-                            <input type="text" class="form-control input-sm" name="LANGUAGE" id="LANGUAGE" @if(isset($data->LANGUAGE))value="{{$data->LANGUAGE}}"@endif>
+                            <input type="text" class="form-control input-sm" name="language" id="language" @if(isset($data->language))value="{{$data->language}}" @else value ="VN" @endif>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="pe-7s-back"></i> {{viewLanguage('Cancel')}}</button>
             @if($is_root || $permission_edit || $permission_add)
-            <button type="button" class="btn btn-primary" onclick="jqueryCommon.doActionPopup('{{$form_id}}','{{$url_action}}');"><i class="pe-7s-diskette"></i> {{viewLanguage('Save')}}</button>
+            <button type="button" class="btn btn-primary" onclick="jqueryCommon.doActionPopup('{{$form_id}}','{{$urlPostItem}}');"><i class="pe-7s-diskette"></i> {{viewLanguage('Save')}}</button>
             @endif
         </div>
     </form>

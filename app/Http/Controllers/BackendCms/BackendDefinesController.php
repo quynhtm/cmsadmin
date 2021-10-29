@@ -65,8 +65,8 @@ class BackendDefinesController extends BaseAdminController
 
             'urlIndex' => URL::route('defines.index'),
             'urlGetItem' => URL::route('defines.ajaxGetItem'),
+            'urlPostItem' => URL::route('defines.ajaxPostItem'),
             'urlDeleteItem' => URL::route('defines.ajaxDeleteItem'),
-            'url_action' => URL::route('defines.ajaxPostItem'),
         ];
     }
 
@@ -83,12 +83,11 @@ class BackendDefinesController extends BaseAdminController
         $search['define_code'] = trim(addslashes(Request::get('define_code', '')));
         $search['define_name'] = trim(addslashes(Request::get('define_name', '')));
 
-        $result = $this->modelObj->searchByCondition($search);
+        $result = $this->modelObj->searchByCondition($search,$limit);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 
         $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
-
         $this->_outDataView($_GET, $search);
         return view($this->templateRoot . 'viewIndex', array_merge([
             'data' => $dataList,
@@ -107,13 +106,12 @@ class BackendDefinesController extends BaseAdminController
         }
         $request = $_GET;
         $oject_id = $request['objectId'] ?? 0;
-        $data = $arrSelectMenuCheck = [];
+        $data = [];
         $is_copy = STATUS_INT_KHONG;
         if ($oject_id > 0) {
             $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
             $data = isset($dataInput->item) ? $dataInput->item : false;
             $is_copy = isset($dataInput->is_copy) ? $dataInput->is_copy : STATUS_INT_KHONG;
-            $arrSelectMenuCheck = (isset($data->MENU_CODE) && trim($data->MENU_CODE) != '') ? explode(',', $data->MENU_CODE) : [];
         }
 
         $this->_outDataView($request, (array)$data);
@@ -121,8 +119,6 @@ class BackendDefinesController extends BaseAdminController
             ->with(array_merge([
                 'data' => $data,
                 'is_copy' => $is_copy,
-                'arrSelectMenuCheck' => $arrSelectMenuCheck,
-
             ], $this->dataOutCommon))->render();
         $arrAjax = array('success' => 1, 'html' => $html);
         return Response::json($arrAjax);
@@ -141,9 +137,8 @@ class BackendDefinesController extends BaseAdminController
         }
 
         if ($this->_validFormData($dataForm) && empty($this->error)) {
-            $dataForm['ID'] = ($id > 0) ? $id : '';// ID tự tăng
-            $result = $this->modelObj->editItem($dataForm, ($id > 0) ? 'EDIT' : 'ADD');
-            if ($result['Success'] == STATUS_INT_MOT) {
+            $result = $this->modelObj->editItem($dataForm, $id);
+            if ((int)$result > STATUS_INT_KHONG) {
                 return Response::json(['loadPage'=>STATUS_INT_MOT,'success'=>1]);
             } else {
                 return Response::json(returnError($result['Message']));

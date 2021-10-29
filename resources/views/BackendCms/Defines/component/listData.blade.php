@@ -44,46 +44,48 @@
                 <!--<th width="10%" class="text-left">{{viewLanguage('Desc')}}</th>-->
                     <th width="5%" class="text-center">{{viewLanguage('Lang')}}</th>
 
-                    <th width="8%" class="text-center"></th>
+                    <th width="12%" class="text-center"></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($data as $key => $item)
                     <tr>
                         <td class="text-center middle">{{$stt+$key+1}}</td>
-                        <td class="text-center middle">{{$item->PROJECT_CODE}}</td>
+                        <td class="text-center middle">{{$item->project_code}}</td>
                         <td class="text-center middle">
-                            <a href="{{URL::route('typeDefines.index',array('s_search' => $item->DEFINE_CODE))}}" title="tìm nhanh theo {{$item->DEFINE_CODE}}">{{$item->DEFINE_CODE}}</a>&nbsp;
+                            <a href="{{URL::route('defines.index',array('s_search' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">{{$item->define_code}}</a>&nbsp;
                         </td>
                         <td class="text-left middle">
-                            <a href="{{URL::route('typeDefines.index',array('s_search' => $item->DEFINE_CODE))}}" title="tìm nhanh theo {{$item->DEFINE_CODE}}">
-                            {{$item->DEFINE_NAME}}
+                            <a href="{{URL::route('defines.index',array('s_search' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">
+                            {{$item->define_name}}
                             </a>
                         </td>
 
-                        <td class="text-left middle">{{$item->TYPE_CODE}}</td>
-                        <td class="text-left middle">{{$item->TYPE_NAME}}</td>
-                        <td class="text-center middle">{{$item->SORTORDER}}</td>
+                        <td class="text-left middle">{{$item->type_code}}</td>
+                        <td class="text-left middle">{{$item->type_name}}</td>
+                        <td class="text-center middle">{{$item->sort_order}}</td>
                     <!--<td class="text-left middle">{{$item->DESCRIPTION}}</td>-->
-                        <td class="text-center middle">{{$item->LANGUAGE}}</td>
+                        <td class="text-center middle">{{$item->language}}</td>
 
                         <td class="text-center middle">
-                            @if($item->IS_ACTIVE == STATUS_INT_MOT)
-                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="pe-7s-check fa-2x"></i></a>
+                            @if($item->is_active == STATUS_INT_MOT)
+                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check"></i></a>
                             @else
-                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="pe-7s-close-circle fa-2x"></i></a>
+                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times"></i></a>
                             @endif
                             @if($is_root || $permission_edit || $permission_add)
-                            {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa group: ')}}{{$item->TYPE_NAME}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
-                                <i class="pe-7s-trash fa-2x"></i>
-                            </a>
-                             <br/>--}}
-                            <a href="javascript:void(0);"class="a_none_color sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Thêm định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item,'is_copy'=>STATUS_INT_MOT])}}" data-objectId="{{$item->ID}}">
-                                <i class="pe-7s-copy-file fa-2x"></i>
-                            </a>
-                            <a href="javascript:void(0);"class="a_none_color sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item->ID}}">
-                                <i class="pe-7s-note fa-2x"></i>
-                            </a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa group: ')}}{{$item->TYPE_NAME}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
+                                    <i class="pe-7s-trash"></i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Thêm định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item,'is_copy'=>STATUS_INT_MOT])}}" data-objectId="{{$item->id}}">
+                                    <i class="fa fa-copy"></i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item->id}}">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
                             @endif
                         </td>
                     </tr>

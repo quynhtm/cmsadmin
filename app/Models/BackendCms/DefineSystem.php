@@ -11,10 +11,10 @@ class DefineSystem extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = true;
 
-    public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_KHONG, $offset = STATUS_INT_KHONG, $is_total = true)
+    public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
-            $query = DefineSystem::where('id', '>', STATUS_INT_KHONG);
+            $query = DefineSystem::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['define_name']) && $dataSearch['define_name'] != '') {
                 $query->where('define_name', 'LIKE', '%' . $dataSearch['define_name'] . '%');
             }
@@ -45,53 +45,39 @@ class DefineSystem extends BaseModel
         }
     }
 
-    public function createItem($data)
+    public function editItem($data, $id = 0)
     {
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = new DefineSystem();
+                $item = ($id <= STATUS_INT_KHONG)? new DefineSystem(): self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
                     }
                 }
-                $item->user_id_creater = $this->getUserId();
-                $item->user_name_creater = $this->getUserName();
-                $item->save();
-                self::removeCache($item->id, $item);
-                return $item->id;
+                if($id <= STATUS_INT_KHONG){
+                    $item->created_id = $this->getUserId();
+                    $item->created_name = $this->getUserName();
+                    $item->save();
+                    $id = $item->id;
+                }else{
+                    $item->updated_id = $this->getUserId();
+                    $item->updated_name = $this->getUserName();
+                    $item->update();
+                }
+                self::removeCache($id, $item);
+                return $id;
             }
             return STATUS_INT_KHONG;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
-        }
-    }
-
-    public function updateItem($id, $data)
-    {
-        try {
-            $fieldInput = $this->checkFieldInTable($data);
-            if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = self::getItemById($id);
-                foreach ($fieldInput as $k => $v) {
-                    $item->$k = $v;
-                }
-                $item->user_id_update = $this->getUserId();
-                $item->user_name_update = $this->getUserName();
-                $item->update();
-                self::removeCache($item->id, $item);
-            }
-            return true;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
+        } catch (PDOException $e) {
+            throw $e->getMessage();
         }
     }
 
     public function getItemById($id)
     {
         $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
-        $data = false;
         if (!$data) {
             $data = DefineSystem::find($id);
             if ($data) {
@@ -111,9 +97,8 @@ class DefineSystem extends BaseModel
                 self::removeCache($id, $dataOld);
             }
             return true;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
-            return false;
+        } catch (PDOException $e) {
+            throw $e->getMessage();
         }
     }
 
