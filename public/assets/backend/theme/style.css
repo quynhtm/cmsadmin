@@ -9564,6 +9564,7 @@ body.md-skin {
 
 
 .color_hdi{color: var(--color_hdi);}
+.color_warning{color: #f7b924!important;}
 .border-none{border: none!important;}
 
 .profile-user-info {
