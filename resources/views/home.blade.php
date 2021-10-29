@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('Layouts.AdminCms.home')
 @section('title', '')
 @section('content')
   <main>

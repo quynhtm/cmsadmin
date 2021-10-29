@@ -30,9 +30,9 @@ class CGlobal
     const phone_holine = '(028) 3827 4248';
     const copy_right = '<b>Copyright</b>&nbsp;HD Insurance Company &copy;2020';
 
-    const number_limit_show = 30;
-    const number_show_30 = 30;
     const number_show_10 = 10;
+    const number_show_20 = 20;
+    const number_show_30 = 30;
     const number_show_500 = 500;
     const number_show_1000 = 1000;
 

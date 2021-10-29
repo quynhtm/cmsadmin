@@ -220,6 +220,8 @@ define('DEFINE_CRUD_LIMIT','CRUD_LIMIT');
 define('DEFINE_ACTION_EXECUTE','ACTION_EXECUTE');
 
 //thư mục dự án chính
+define('DIR_PRO_BACKEND','BackendCms');
+
 define('DIR_PRO_CORE_HDI','CoreHdi');
 define('DIR_PRO_SYSTEM','Systems');
 define('DIR_PRO_SELLING','Sellings');

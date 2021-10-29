@@ -11,6 +11,10 @@
  **************************************************************************************************************/
 define('PREFIX_ADM', 'admin_');
 define('PREFIX_DMS', 'dms_');
+define('PREFIX_BACKEND', 'backend_');
+
+//Backend
+define('TABLE_DEFINE_SYSTEM',PREFIX_BACKEND.'define');
 
 define('TABLE_BANNERS', 'web_banner');
 define('TABLE_USER_ADMIN', PREFIX_ADM.'user');

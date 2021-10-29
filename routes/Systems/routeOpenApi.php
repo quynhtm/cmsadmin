@@ -52,4 +52,14 @@ Route::group(array('prefix' => 'systemApi'), function () {
         //thêm sửa tab other
         Route::post('ajaxUpdateRelation', array('as' => 'versionsApi.ajaxUpdateRelation', 'uses' => ModuleOpenApi . '\VersionsApiController@ajaxUpdateRelation'));
     });
+
+    /* Quản lý template config */
+    Route::group(array('prefix' => 'templateConfig'), function () {
+        Route::match(['GET', 'POST'],'index', array('as' => 'templateConfig.index', 'uses' => ModuleOpenApi . '\TemplateSystemController@index'));
+        Route::get('ajaxGetItem', array('as' => 'templateConfig.ajaxGetItem', 'uses' => ModuleOpenApi . '\TemplateSystemController@ajaxGetItem'));
+        Route::post('ajaxPostItem', array('as' => 'templateConfig.ajaxPostItem', 'uses' => ModuleOpenApi . '\TemplateSystemController@ajaxPostItem'));
+        Route::post('ajaxGetData', array('as' => 'templateConfig.ajaxGetData', 'uses' => ModuleOpenApi . '\TemplateSystemController@ajaxGetData'));
+        //thêm tab other của api
+        Route::post('ajaxUpdateRelation', array('as' => 'templateConfig.ajaxUpdateRelation', 'uses' => ModuleOpenApi . '\TemplateSystemController@ajaxUpdateRelation'));
+    });
 });

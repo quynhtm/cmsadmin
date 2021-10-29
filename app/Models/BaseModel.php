@@ -8,6 +8,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Session;
 
 class BaseModel extends Model
 {
@@ -57,6 +58,25 @@ class BaseModel extends Model
         return $dataDB;
     }
 
+    public function getUserId()
+    {
+        $id = STATUS_INT_KHONG;
+        if (Session::has(SESSION_ADMIN_LOGIN)) {
+            $user = Session::get(SESSION_ADMIN_LOGIN);
+            $id = $user['user_id'];
+        }
+        return $id;
+    }
+
+    public function getUserName()
+    {
+        $user_name = '';
+        if (Session::has(SESSION_ADMIN_LOGIN)) {
+            $user = Session::get(SESSION_ADMIN_LOGIN);
+            $user_name = $user['user_name'];
+        }
+        return $user_name;
+    }
     public function getFieldsSearch($dataSearch = array())
     {
         $fields = array();
