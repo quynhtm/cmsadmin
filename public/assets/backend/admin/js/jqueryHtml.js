@@ -51,7 +51,7 @@ function showDataIntoForm(p_formName){
         var input = $(this);
 
         if (input.attr('type') != 'button' && input.attr('name') != 'temp_data' &&
-            $.trim(input.attr('name')) != '' && input.attr('name') != typeof undefiend && this.id.indexOf(p_formName + '_') != -1
+            $.trim(input.attr('name')) != '' && input.attr('name') != typeof undefiend && this.id.indexOf(p_formName) != -1
         ) {
             if (input.attr('type') == 'checkbox') {
                 input.attr('checked', json[input.attr('name')]);
