@@ -110,83 +110,33 @@ class DefineSystem extends BaseModel
         if ($id > STATUS_INT_KHONG) {
             Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
         }
-    }
-
-    public function getDataByType($define_type = STATUS_INT_KHONG)
-    {
-        if ($define_type == STATUS_INT_KHONG) return [];
-        $data = false;
-        if (!$data) {
-            $data = DefineSystem::where('id', '>', STATUS_INT_KHONG)
-                ->where('define_type', $define_type)
-                ->orderBy('define_order', 'asc')->get();
-            if ($data) {}
+        if($data){
+            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);
         }
-        return $data;
     }
 
-    public function getOptionNameByType($define_type = STATUS_INT_KHONG, $define_status = true)
+    public function getOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
     {
-        if ($define_type == STATUS_INT_KHONG) return [];
-        $arrOption = [];
-        $data = self::getDataByType($define_type);
-        if ($data || $data->count() > STATUS_INT_KHONG) {
-            foreach ($data as $v) {
-                if ($define_status && $v->define_status == STATUS_SHOW) {
-                    $arrOption[$v->id] = $v->define_name;
-                } else {
-                    $arrOption[$v->id] = $v->define_name;
+        if (trim($define_code) == '') return [];
+        $key_memcache = Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$define_code.'_'.$project_code;
+        $option = Memcache::getCache($key_memcache);
+        if (!$option) {
+            $dataSearch = DefineSystem::where($this->primaryKey, '>', STATUS_INT_KHONG)
+                ->where('project_code', $project_code)
+                ->where('define_code', $define_code)
+                ->where('is_active', STATUS_INT_MOT)
+                ->orderBy('sort_order', 'asc')->get();
+            if ($dataSearch) {
+                foreach ($dataSearch as $k => $val) {
+                    if($language == $val->language || $language == ''){
+                        $option[$val->type_code] = $val->type_name;
+                    }
+                }
+                if(!empty($option)){
+                    Memcache::putCache($key_memcache, $option);
                 }
             }
         }
-        return $arrOption;
-    }
-
-    public function getOptionColorByType($define_type = STATUS_INT_KHONG, $define_status = true)
-    {
-        if ($define_type == STATUS_INT_KHONG) return [];
-        $arrOption = [];
-        $data = self::getDataByType($define_type);
-        if ($data || $data->count() > STATUS_INT_KHONG) {
-            foreach ($data as $v) {
-                if ($define_status && $v->define_status == STATUS_SHOW) {
-                    $arrOption[$v->id] = ['name'=>$v->define_name,'color'=>$v->define_color];
-                } else {
-                    $arrOption[$v->id] = ['name'=>$v->define_name,'color'=>$v->define_color];
-                }
-            }
-        }
-        return $arrOption;
-    }
-
-    public function getArrByType($define_type){
-        $data = $this->getDataByType($define_type);
-        $result = [];
-        if($data->count() > STATUS_INT_KHONG){
-            foreach($data as $item){
-                $result[$item->id] = $item->define_name;
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * @param $define_type
-     * @param bool $define_status
-     * @return array
-     */
-    public function getArrCodeByType($define_type,$define_status = true){
-        $data = $this->getDataByType($define_type);
-        $result = [];
-        if($data->count() > STATUS_INT_KHONG){
-            foreach($data as $item){
-                if ($define_status && $item->define_status == STATUS_SHOW) {
-                    $result[$item->define_code] = $item->define_name;
-                }else{
-                    $result[$item->define_code] = $item->define_name;
-                }
-            }
-        }
-        return $result;
+        return $option;
     }
 }

@@ -177,7 +177,16 @@ define('STRUCT_WAREHOUSE','WAREHOUSE');
 /**************************************************************************************************************
  * Định nghĩa Common
  **************************************************************************************************************/
-define('DEFINE_ALL','');
+define('DEFINE_LANGUAGE_VN','VN');
+define('DEFINE_NULL','');
+define('DEFINE_ALL','ALL');
+define('DEFINE_TRUE_FALSE','TRUE_FALSE');
+define('DEFINE_TYPE_MENU','TYPE_MENU');
+define('DEFINE_TRANG_THAI','TRANG_THAI');
+
+
+
+
 define('DEFINE_PORTAL','PORTAL');
 define('DEFINE_CHUC_VU','CHUC_VU');
 define('DEFINE_GENDER','GENDER');//giới tính

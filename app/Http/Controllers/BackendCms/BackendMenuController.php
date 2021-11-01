@@ -9,59 +9,67 @@
 namespace App\Http\Controllers\BackendCms;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Models\BackendCms\DefineSystem;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
+use App\Models\BackendCms\MenuSystem;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
-class BackendDefinesController extends BaseAdminController
+class BackendMenuController extends BaseAdminController
 {
     private $error = array();
     private $dataOutCommon = array();
     private $pageTitle = '';
     private $modelObj = false;
 
-    private $arrStatus = array();
-    private $arrDefineCode = array();
+    private $arrIsActive = array();
+    private $arrIsLink = array();
+    private $arrTypeMenu = array();
+    private $arrParentMenu = array();
 
-    private $templateRoot = DIR_PRO_BACKEND . '.Defines.';
-    private $routerIndex = 'defines.index';
+    private $templateRoot = DIR_PRO_BACKEND . '.Menu.';
+    private $routerIndex = 'menu.index';
 
     public function __construct()
     {
         parent::__construct();
-        $this->modelObj = new DefineSystem();
-        $this->arrDefineCode = [];
+        $this->modelObj = new MenuSystem();
+        $this->arrIsLink = $this->getArrOptionTypeDefine(DEFINE_TRUE_FALSE);
+        $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
     }
 
     private function _outDataView($request, $data)
     {
-        $this->arrStatus = CGlobal::$arrStatus;
+        $optionActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionIsLink = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['define_code']) ? $data['define_code'] : STATUS_INT_MOT);
 
-        $optionStatus = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrStatus, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionDefineCode = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrDefineCode, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
+        $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
+        $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
+        $this->arrOptionMenuParent = $this->modelObj->getOptionMenuParent($projectCode);
+        $optionParentMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrParentMenu, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
         return $this->dataOutCommon = [
-            'optionDefineCode' => $optionDefineCode,
-            'optionStatus' => $optionStatus,
-            'arrStatus' => $this->arrStatus,
+            'optionIsLink' => $optionIsLink,
+            'optionActive' => $optionActive,
+            'optionParentMenu' => $optionParentMenu,
+            'optionTypeMenu' => $optionTypeMenu,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
 
             'urlIndex' => URL::route($this->routerIndex),
-            'urlGetItem' => URL::route('defines.ajaxGetItem'),
-            'urlPostItem' => URL::route('defines.ajaxPostItem'),
-            'urlDeleteItem' => URL::route('defines.ajaxDeleteItem'),
+            'urlGetItem' => URL::route('menu.ajaxGetItem'),
+            'urlPostItem' => URL::route('menu.ajaxPostItem'),
+            'urlDeleteItem' => URL::route('menu.ajaxDeleteItem'),
         ];
     }
 
@@ -70,8 +78,8 @@ class BackendDefinesController extends BaseAdminController
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Defines system';
-        $limit = CGlobal::number_show_20;
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Menu system';
+        $limit = CGlobal::number_show_500;
         $page_no = (int)Request::get('page_no', 1);
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;

@@ -3,7 +3,7 @@
  * QuynhTM
  */
 
-namespace App\Models\Admin;
+namespace App\Models\BackendCms;
 
 use App\Models\BaseModel;
 use App\Library\AdminFunction\CGlobal;
@@ -16,25 +16,22 @@ class MenuSystem extends BaseModel
     protected $primaryKey = 'menu_id';
     public $timestamps = false;
 
-    public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_KHONG, $offset = STATUS_INT_KHONG, $is_total = true)
+    public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
-            $query = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG);
+            $query = MenuSystem::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['menu_name']) && $dataSearch['menu_name'] != '') {
                 $query->where('menu_name', 'LIKE', '%' . $dataSearch['menu_name'] . '%');
             }
 
-            if (isset($dataSearch['parent_id']) && $dataSearch['parent_id'] > STATUS_DEFAULT) {
-                $query->where('parent_id', $dataSearch['parent_id']);
+            if (isset($dataSearch['menu_parent']) && $dataSearch['menu_parent'] > STATUS_DEFAULT) {
+                $query->where('menu_parent', $dataSearch['menu_parent']);
             }
-            if (isset($dataSearch['active']) && $dataSearch['active'] > STATUS_DEFAULT) {
-                $query->where('active', $dataSearch['active']);
-            }
-            if (isset($dataSearch['menu_tab_top_id']) && $dataSearch['menu_tab_top_id'] > STATUS_DEFAULT) {
-                $query->where('menu_tab_top_id', $dataSearch['menu_tab_top_id']);
+            if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_DEFAULT) {
+                $query->where('is_active', $dataSearch['is_active']);
             }
             $total = ($is_total)? $query->count(): STATUS_INT_KHONG;
-            $query->orderBy('ordering', 'asc');
+            $query->orderBy('menu_order', 'asc');
 
             //get field can lay du lieu
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',', trim($dataSearch['field_get'])) : array();
@@ -44,46 +41,38 @@ class MenuSystem extends BaseModel
                 $result = $query->take($limit)->skip($offset)->get();
             }
             return ['data' => $result, 'total' => $total];
-        } catch (\PDOException $e) {
-            throw new \PDOException();
+        } catch (PDOException $e) {
+            throw $e->getMessage();
         }
     }
 
-    public function createItem($data)
+    public function editItem($data, $id = 0)
     {
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = new MenuSystem();
-                foreach ($fieldInput as $k => $v) {
-                    $item->$k = $v;
+                $item = ($id <= STATUS_INT_KHONG)? new MenuSystem(): self::getItemById($id);
+                if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
+                    foreach ($fieldInput as $k => $v) {
+                        $item->$k = $v;
+                    }
                 }
-                $item->save();
-                self::removeCache($item->menu_id, $item);
-                return $item->menu_id;
+                if($id <= STATUS_INT_KHONG){
+                    $item->created_id = $this->getUserId();
+                    $item->created_name = $this->getUserName();
+                    $item->save();
+                    $id = $item->menu_id;
+                }else{
+                    $item->updated_id = $this->getUserId();
+                    $item->updated_name = $this->getUserName();
+                    $item->update();
+                }
+                self::removeCache($id, $item);
+                return $id;
             }
             return STATUS_INT_KHONG;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
-        }
-    }
-
-    public function updateItem($id, $data)
-    {
-        try {
-            $fieldInput = $this->checkFieldInTable($data);
-            if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = self::getItemById($id);
-                foreach ($fieldInput as $k => $v) {
-                    $item->$k = $v;
-                }
-                $item->update();
-                self::removeCache($item->menu_id, $item);
-                return true;
-            }
-            return false;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
+        } catch (PDOException $e) {
+            throw $e->getMessage();
         }
     }
 
@@ -109,9 +98,8 @@ class MenuSystem extends BaseModel
                 self::removeCache($item->menu_id, $dataOld);
             }
             return true;
-        } catch (\PDOException $e) {
-            throw new \PDOException();
-            return false;
+        } catch (PDOException $e) {
+            throw $e->getMessage();
         }
     }
 
@@ -124,6 +112,27 @@ class MenuSystem extends BaseModel
         if($data){
             Memcache::forgetCache(Memcache::CACHE_MENU_BY_TAB_ID.$data->menu_tab_top_id);
         }
+    }
+
+    public function getOptionMenuParent($projectCode = MENU_HDI_OPEN_API)
+    {
+        $dataMenu = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
+            ->where('project_code', '=',$projectCode)
+            ->where('controller_name', '=','#')
+            ->where('is_link', '=',STATUS_INT_KHONG)
+            ->where('is_active', '=',STATUS_INT_MOT)
+            ->orderBy('menu_order', 'asc')->get();
+        $arrOption = [];
+        if($dataMenu){
+            foreach($dataMenu as $item) {
+                if($item->menu_lever == 0){
+                    $arrOption[$item->menu_id] = $item->menu_name;
+                }else{
+                    $arrOption[$item->menu_id] = '----'.$item->menu_name;
+                }
+            }
+        }
+        return $arrOption;
     }
 
     public function getMenuByTab($menu_tab_top_id) {

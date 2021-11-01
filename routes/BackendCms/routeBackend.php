@@ -18,5 +18,13 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostItem', array('as' => 'defines.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxPostItem'));
         Route::post('ajaxDeleteItem', array('as' => 'defines.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxDeleteItem'));
     });
+
+    /* Quản lý Menu system */
+    Route::group(array('prefix' => 'menu'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'menu.index', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@index'));
+        Route::get('ajaxGetItem', array('as' => 'menu.ajaxGetItem', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@ajaxGetItem'));
+        Route::post('ajaxPostItem', array('as' => 'menu.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@ajaxPostItem'));
+        Route::post('ajaxDeleteItem', array('as' => 'menu.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@ajaxDeleteItem'));
+    });
 });
 

@@ -11,14 +11,17 @@ class Memcache
 {
     const CACHE_ON = STATUS_INT_MOT;// 0: khong dung qua cache, 1: dung qua cache
     /************************************************************************************************
-     * Cache Admin
+     * Cache Backend
      ************************************************************************************************/
     const CACHE_DEFINE_SYSTEM_ID = 'CACHE_DEFINE_SYSTEM_ID_';
+    const CACHE_DEFINE_BY_DEFINE_CODE = 'CACHE_DEFINE_BY_DEFINE_CODE_';
+
+    const CACHE_MENU_BY_ID = 'cache_menu_by_id_';
 
     /************************************************************************************************
      * Cache Admin
      ************************************************************************************************/
-    const CACHE_MENU_BY_ID = 'cache_menu_by_id_';
+
     const CACHE_MENU_BY_TAB_ID = 'cache_menu_by_tab_id_';
     const CACHE_LIST_MENU_PERMISSION = 'cache_list_menu_permission';
     const CACHE_ALL_PARENT_MENU = 'cache_all_parent_menu_';

@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BackendCms\DefineSystem;
 use App\Models\OpenId\TypeDefine;
 use App\Library\AdminFunction\CGlobal;
 use Illuminate\Support\Facades\Config;
@@ -235,9 +236,9 @@ class  BaseAdminController extends Controller
         return $menuCode;
     }
 
-    public function getArrOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL)
+    public function getArrOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
     {
-        return app(TypeDefine::class)->getOptionTypeDefine($define_code, $project_code);
+        return app(DefineSystem::class)->getOptionTypeDefine($define_code, $project_code,$language);
     }
 
     public function getMenuSystem($type_menu = MENU_HDI_SELLING)

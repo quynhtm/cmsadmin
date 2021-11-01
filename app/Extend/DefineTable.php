@@ -15,12 +15,14 @@ define('PREFIX_BACKEND', 'backend_');
 
 //Backend
 define('TABLE_DEFINE_SYSTEM',PREFIX_BACKEND.'define');
+define('TABLE_MENU_SYSTEM',PREFIX_BACKEND.'menu');
+
+
 
 define('TABLE_BANNERS', 'web_banner');
 define('TABLE_USER_ADMIN', PREFIX_ADM.'user');
 define('TABLE_GROUP_USER', PREFIX_ADM.'group_user');
 define('TABLE_PERMISSION', PREFIX_ADM.'permission');
-define('TABLE_MENU_SYSTEM',PREFIX_ADM.'menu_system');
 define('TABLE_ROLE_MENU', PREFIX_ADM.'role_menu');
 define('TABLE_ROLE',PREFIX_ADM.'role');
 define('TABLE_DEFINE',PREFIX_ADM.'define');
