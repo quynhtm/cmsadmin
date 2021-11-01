@@ -43,6 +43,7 @@ class  BaseAdminController extends Controller
     protected $role_type = STATUS_INT_KHONG;
     protected $languageSite = VIETNAM_LANGUAGE;
 
+    protected $permission_full = false;
     protected $permission_view = false;
     protected $permission_add = false;
     protected $permission_edit = false;
@@ -146,6 +147,7 @@ class  BaseAdminController extends Controller
     public function shareListPermission($pageCurrent = '')
     {
         //permission action
+        $this->permission_full = $this->checkPermiss(PERMISS_FULL, $pageCurrent);
         $this->permission_view = $this->checkPermiss(PERMISS_VIEW, $pageCurrent);
         $this->permission_add = $this->checkPermiss(PERMISS_ADD, $pageCurrent);
         $this->permission_edit = $this->checkPermiss(PERMISS_EDIT, $pageCurrent);
@@ -154,6 +156,7 @@ class  BaseAdminController extends Controller
         $this->permission_create_order = $this->checkPermiss(PERMISS_CREATE_ORDER, $pageCurrent);//cấp đơn
         $this->permission_inspection = $this->checkPermiss(PERMISS_INSPECTION, $pageCurrent);//giám định
 
+        View::share('permission_full', $this->permission_full);
         View::share('permission_view', $this->permission_view);
         View::share('permission_add', $this->permission_add);
         View::share('permission_edit', $this->permission_edit);

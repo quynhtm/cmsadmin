@@ -7,6 +7,7 @@
  */
 
 //Action Execute HDI
+define('PERMISS_FULL','FULL_PERMISS');
 define('PERMISS_VIEW','VIEW');
 define('PERMISS_ADD','ADD');
 define('PERMISS_EDIT','EDIT');

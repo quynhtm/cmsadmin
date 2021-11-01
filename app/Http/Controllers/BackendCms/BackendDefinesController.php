@@ -10,7 +10,6 @@ namespace App\Http\Controllers\BackendCms;
 
 use App\Http\Controllers\BaseAdminController;
 use App\Models\BackendCms\DefineSystem;
-use App\Models\OpenId\TypeDefine;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Define;
@@ -33,7 +32,7 @@ class BackendDefinesController extends BaseAdminController
     private $arrDefineCode = array();
 
     private $templateRoot = DIR_PRO_BACKEND. '.Defines.';
-
+    private $routerIndex = 'defines.index';
     public function __construct()
     {
         parent::__construct();
@@ -63,7 +62,7 @@ class BackendDefinesController extends BaseAdminController
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
 
-            'urlIndex' => URL::route('defines.index'),
+            'urlIndex' => URL::route($this->routerIndex),
             'urlGetItem' => URL::route('defines.ajaxGetItem'),
             'urlPostItem' => URL::route('defines.ajaxPostItem'),
             'urlDeleteItem' => URL::route('defines.ajaxDeleteItem'),
@@ -72,7 +71,7 @@ class BackendDefinesController extends BaseAdminController
 
     public function index()
     {
-        if (!$this->checkMultiPermiss([PERMISS_VIEW])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_VIEW])) {
             return Redirect::route('admin.dashboard', array('error' => Define::ERROR_PERMISSION));
         }
         $this->pageTitle = CGlobal::$pageAdminTitle = 'Defines system';
@@ -101,7 +100,7 @@ class BackendDefinesController extends BaseAdminController
 
     public function ajaxGetItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_ADD,PERMISS_EDIT],$this->routerIndex)) {
             return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
         }
         $request = $_GET;
@@ -126,7 +125,7 @@ class BackendDefinesController extends BaseAdminController
 
     public function ajaxPostItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_ADD,PERMISS_EDIT],$this->routerIndex)) {
             return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
         }
         $dataRequest = $_POST;
@@ -161,7 +160,7 @@ class BackendDefinesController extends BaseAdminController
     }
     public function ajaxDeleteItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_REMOVE])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_REMOVE],$this->routerIndex)) {
             return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
         }
         $request = $_POST;
