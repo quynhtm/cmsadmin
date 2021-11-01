@@ -51,10 +51,10 @@
                         <td class="text-center middle">{{$stt+$key+1}}</td>
                         <td class="text-center middle">{{$item->project_code}}</td>
                         <td class="text-center middle">
-                            <a href="{{URL::route('defines.index',array('s_search' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">{{$item->define_code}}</a>&nbsp;
+                            <a href="{{URL::route('defines.index',array('define_code' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">{{$item->define_code}}</a>&nbsp;
                         </td>
                         <td class="text-left middle">
-                            <a href="{{URL::route('defines.index',array('s_search' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">
+                            <a href="{{URL::route('defines.index',array('define_code' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">
                             {{$item->define_name}}
                             </a>
                         </td>
