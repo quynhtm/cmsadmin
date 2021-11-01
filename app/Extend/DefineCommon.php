@@ -8,6 +8,11 @@
 
 define('URL_IMAGE','https://demo.vn');
 
+define('ERROR_PERMISSION',1);
+define('MSG_ERROR','Có lỗi thao tác! Hãy thử lại.');
+define('MSG_DATA_ERROR','Dữ liệu đầu vào không đúng.');
+define('MSG_PERMISSION_ERROR','Bạn không có quyền thao tác.');
+
 define('IMAGE_DIRECTORY','uploads');
 define('AUDIO_DIRECTORY','demo');
 
@@ -58,8 +63,6 @@ define('STATUS_HOAT_DONG', 'hoat_dong');
 define('STATUS_KHOA', 'khoa');
 define('STATUS_KHOA_VINH_VIEN', 'khoa_vinh_vien');
 define('DATA_SEARCH_NULL', 'DATA_SEARCH_NULL');
-
-define('ERROR_PERMISSION',  1);
 
 define('STATUS_INT_AM_HAI', -2);
 define('STATUS_INT_AM_MOT', -1);
@@ -174,7 +177,7 @@ define('STRUCT_WAREHOUSE','WAREHOUSE');
 /**************************************************************************************************************
  * Định nghĩa Common
  **************************************************************************************************************/
-define('DEFINE_ALL','ALL');
+define('DEFINE_ALL','');
 define('DEFINE_PORTAL','PORTAL');
 define('DEFINE_CHUC_VU','CHUC_VU');
 define('DEFINE_GENDER','GENDER');//giới tính

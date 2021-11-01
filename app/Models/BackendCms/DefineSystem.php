@@ -95,8 +95,9 @@ class DefineSystem extends BaseModel
             if ($item) {
                 $item->delete();
                 self::removeCache($id, $dataOld);
+                return true;
             }
-            return true;
+            return false;
         } catch (PDOException $e) {
             throw $e->getMessage();
         }

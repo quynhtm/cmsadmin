@@ -9,7 +9,7 @@
             <!-- <a href="javascript:void(0);" class="area-btn-right btn-action1 btn-search-right btn-success" title="{{viewLanguage('Search')}}">
                 <i class="pe-7s-search fa-w-16 fa-2x"></i>
             </a>-->
-            @if($is_root || $permission_edit || $permission_add)
+            @if($permission_full || $permission_edit || $permission_add)
                 <a href="javascript:void(0);"class="area-btn-right btn-action2 btn-edit-right btn-warning sys_show_popup_common" data-form-name="addForm" data-input="{{json_encode([])}}" title="{{viewLanguage('Thêm ')}}{{$pageTitle}}" data-method="get" data-url="{{$urlGetItem}}" data-objectId="0">
                     <i class="pe-7s-plus fa-w-16 fa-2x"></i>
                 </a>
@@ -26,12 +26,12 @@
                     <div class="form-group col-lg-12">
                         <label for="status" class="control-label">{{viewLanguage('Define Code')}}</label>
                         <select name="s_define_code" id="s_define_code" class="form-control input-sm">
-                            {!! $optionSearchDefineCode !!}}
+                            {!! $optionDefineCode !!}}
                         </select>
                     </div>
                     <hr>
                     <div class="form-group col-lg-12">
-                        @if($is_root || $permission_view)
+                        @if($permission_full || $permission_edit || $permission_add)
                             <button class="mb-2 mr-2 btn-icon btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
                         @endif
                     </div>

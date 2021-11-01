@@ -3,7 +3,9 @@
     {{---breadcrumbs---}}
     @include('Layouts.AdminCms.breadcrumbs')
     {{ Form::open(array('method' => 'GET', 'role'=>'form')) }}
-        {{--Search---}}
+        {{ csrf_field() }}
+
+    {{--Search---}}
         {{--@include('BackendCms.Defines.component.formSearch')--}}
 
         {{--list data---}}

@@ -69,7 +69,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="pe-7s-back"></i> {{viewLanguage('Cancel')}}</button>
-            @if($is_root || $permission_edit || $permission_add)
+            @if($permission_full || $permission_edit || $permission_add)
             <button type="button" class="btn btn-primary" onclick="jqueryCommon.doActionPopup('{{$form_id}}','{{$urlPostItem}}');"><i class="pe-7s-diskette"></i> {{viewLanguage('Save')}}</button>
             @endif
         </div>

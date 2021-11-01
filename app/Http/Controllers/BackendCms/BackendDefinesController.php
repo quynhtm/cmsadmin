@@ -12,7 +12,6 @@ use App\Http\Controllers\BaseAdminController;
 use App\Models\BackendCms\DefineSystem;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
-use App\Library\AdminFunction\Define;
 use App\Library\AdminFunction\Pagging;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -28,11 +27,11 @@ class BackendDefinesController extends BaseAdminController
     private $modelObj = false;
 
     private $arrStatus = array();
-    private $arrProject = array();
     private $arrDefineCode = array();
 
-    private $templateRoot = DIR_PRO_BACKEND. '.Defines.';
+    private $templateRoot = DIR_PRO_BACKEND . '.Defines.';
     private $routerIndex = 'defines.index';
+
     public function __construct()
     {
         parent::__construct();
@@ -45,18 +44,15 @@ class BackendDefinesController extends BaseAdminController
         $this->arrStatus = CGlobal::$arrStatus;
 
         $optionStatus = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrStatus, isset($data['IS_ACTIVE']) ? $data['IS_ACTIVE'] : STATUS_INT_MOT);
-        $optionProjectCode = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrProject, isset($data['PROJECT_CODE']) ? $data['PROJECT_CODE'] : '');
-        $optionSearchDefineCode = FunctionLib::getOption([DEFINE_ALL => '---Chọn---'] +$this->arrDefineCode, isset($data['s_define_code']) ? $data['s_define_code'] : DEFINE_ALL);
+        $optionDefineCode = FunctionLib::getOption([DEFINE_ALL => '---Chọn---'] + $this->arrDefineCode, isset($data['define_code']) ? $data['define_code'] : DEFINE_ALL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
         return $this->dataOutCommon = [
-            'optionSearchDefineCode' => $optionSearchDefineCode,
+            'optionDefineCode' => $optionDefineCode,
             'optionStatus' => $optionStatus,
             'arrStatus' => $this->arrStatus,
-            'optionProjectCode' => $optionProjectCode,
-            'arrProject' => $this->arrProject,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -71,8 +67,8 @@ class BackendDefinesController extends BaseAdminController
 
     public function index()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_VIEW])) {
-            return Redirect::route('admin.dashboard', array('error' => Define::ERROR_PERMISSION));
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
         $this->pageTitle = CGlobal::$pageAdminTitle = 'Defines system';
         $limit = CGlobal::number_show_20;
@@ -82,7 +78,7 @@ class BackendDefinesController extends BaseAdminController
         $search['define_code'] = trim(addslashes(Request::get('define_code', '')));
         $search['define_name'] = trim(addslashes(Request::get('define_name', '')));
 
-        $result = $this->modelObj->searchByCondition($search,$limit);
+        $result = $this->modelObj->searchByCondition($search, $limit);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 
@@ -100,8 +96,8 @@ class BackendDefinesController extends BaseAdminController
 
     public function ajaxGetItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_ADD,PERMISS_EDIT],$this->routerIndex)) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $request = $_GET;
         $oject_id = $request['objectId'] ?? 0;
@@ -125,27 +121,28 @@ class BackendDefinesController extends BaseAdminController
 
     public function ajaxPostItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_ADD,PERMISS_EDIT],$this->routerIndex)) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $dataRequest = $_POST;
         $dataForm = $dataRequest['dataForm'] ?? [];
         $id = (int)$dataForm['objectId'] ?? 0;
         if (empty($dataForm)) {
-            return Response::json(returnError(viewLanguage('Dữ liệu đầu vào không đúng')));
+            return Response::json(returnError(MSG_DATA_ERROR));
         }
 
         if ($this->_validFormData($dataForm) && empty($this->error)) {
-            $result = $this->modelObj->editItem($dataForm, $id);
-            if ((int)$result > STATUS_INT_KHONG) {
-                return Response::json(['loadPage'=>STATUS_INT_MOT,'success'=>1]);
+            $idNew = $this->modelObj->editItem($dataForm, $id);
+            if ((int)$idNew > STATUS_INT_KHONG) {
+                return Response::json(['loadPage' => STATUS_INT_MOT, 'success' => 1]);
             } else {
-                return Response::json(returnError($result['Message']));
+                return Response::json(returnError(MSG_ERROR));
             }
         } else {
             return Response::json(returnError($this->error));
         }
     }
+
     private function _validFormData($data = array())
     {
         if (!empty($data)) {
@@ -158,24 +155,25 @@ class BackendDefinesController extends BaseAdminController
         }
         return true;
     }
+
     public function ajaxDeleteItem()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL,PERMISS_REMOVE],$this->routerIndex)) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_REMOVE], $this->routerIndex)) {
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $request = $_POST;
         $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
-        $dataItem = isset($dataInput->item) ? (array)$dataInput->item : false;
-
+        $dataItem = isset($dataInput->item) ? $dataInput->item : false;
         if (!empty($dataItem)) {
-            $result = $this->modelObj->deleteItem($dataItem);
-            if ($result['Success'] == STATUS_INT_MOT) {
+            $id = isset($dataItem->id) ? $dataItem->id : 0;
+            $result = $this->modelObj->deleteItem($id);
+            if ($result) {
                 return Response::json(returnSuccess());
             } else {
-                return Response::json(returnError($result['Message']));
+                return Response::json(returnError(MSG_ERROR));
             }
         } else {
-            return Response::json(returnError('Dữ liệu không đúng'));
+            return Response::json(returnError(MSG_DATA_ERROR));
         }
     }
 }
