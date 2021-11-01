@@ -193,12 +193,15 @@ class  BaseAdminController extends Controller
         $project_code = $project_code_new = Config::get('config.PROJECT_CODE');
         $pageCurrent = $this->getRouteNameAction();
         $allMenu = app(MenuSystem::class)->getAllMenuByProjectCode();
-        foreach ($allMenu as $ky => $menu) {
-            if ($menu->MENU_PATH == $pageCurrent) {
-                $project_code_new = CGlobal::$projectMenuWithTabTop[trim($menu->PROJECT_CODE)];
-                break;
+        if(!empty($allMenu)){
+            foreach ($allMenu as $ky => $menu) {
+                if ($menu->MENU_PATH == $pageCurrent) {
+                    $project_code_new = CGlobal::$projectMenuWithTabTop[trim($menu->PROJECT_CODE)];
+                    break;
+                }
             }
         }
+
         if (Config::get('config.IS_DEV')) {
             if ($pageCurrent != 'admin.dashboard') {
                 Session::put(SESSION_PROJECT_MENU, $project_code_new, 60 * 24);
