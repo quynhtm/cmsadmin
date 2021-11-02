@@ -23,7 +23,9 @@ class MenuSystem extends BaseModel
             if (isset($dataSearch['menu_name']) && $dataSearch['menu_name'] != '') {
                 $query->where('menu_name', 'LIKE', '%' . $dataSearch['menu_name'] . '%');
             }
-
+            if (isset($dataSearch['project_code']) && $dataSearch['project_code'] > STATUS_DEFAULT) {
+                $query->where('project_code', $dataSearch['project_code']);
+            }
             if (isset($dataSearch['menu_parent']) && $dataSearch['menu_parent'] > STATUS_DEFAULT) {
                 $query->where('menu_parent', $dataSearch['menu_parent']);
             }

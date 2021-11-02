@@ -6,12 +6,12 @@
         <div class="row">
             <div class=" col-lg-4">
                 <label for="depart_name">{{viewLanguage('Tìm kiếm')}}</label>
-                <input type="text" class="form-control input-sm" id="define_name" name="define_name" autocomplete="off" @if(isset($search['define_name']))value="{{$search['define_name']}}"@endif>
+                <input type="text" class="form-control input-sm" id="menu_name" name="menu_name"placeholder="Tên menu" @if(isset($search['menu_name']))value="{{$search['menu_name']}}"@endif>
             </div>
             <div class=" col-lg-4">
-                <label for="user_group">Define code</label>
-                <select class="form-control input-sm chosen-select w-100" name="define_code" id="define_code">
-
+                <label for="user_group">Project Code</label>
+                <select class="form-control input-sm chosen-select w-100" name="project_code" id="project_code">
+                    {!! $optionTypeMenu !!}
                 </select>
             </div>
             <div class="col-lg-3 text-right marginT20">
@@ -34,52 +34,51 @@
                 <thead class="thin-border-bottom">
                 <tr class="table-background-header">
                     <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                    <th width="5%" class="text-center">{{viewLanguage('ProjectCode')}}</th>
-                    <th width="10%" class="text-left">{{viewLanguage('Define code')}}</th>
-                    <th width="15%" class="text-left">{{viewLanguage('Define name')}}</th>
+                    <th width="5%" class="text-center">{{viewLanguage('Icons')}}</th>
+                    <th width="5%" class="text-center">{{viewLanguage('MenuId')}}</th>
+                    <th width="30%" class="text-left">{{viewLanguage('Menu name')}}</th>
+                    <th width="35%" class="text-left">{{viewLanguage('Router name')}}</th>
 
-                    <th width="15%" class="text-left">{{viewLanguage('Type code')}}</th>
-                    <th width="15%" class="text-left">{{viewLanguage('Type name')}}</th>
-                    <th width="5%" class="text-center">{{viewLanguage('Order')}}</th>
-                    <th width="5%" class="text-center">{{viewLanguage('Lang')}}</th>
-                    <th width="12%" class="text-center"></th>
+                    <th width="5%" class="text-left">{{viewLanguage('Order')}}</th>
+                    <th width="13%" class="text-center"></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($data as $key => $item)
                     <tr>
                         <td class="text-center middle">{{$stt+$key+1}}</td>
-                        <td class="text-center middle">{{$item->project_code}}</td>
                         <td class="text-center middle">
-                            <a href="{{URL::route('defines.index',array('define_code' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">{{$item->define_code}}</a>&nbsp;
+                            <i class="{!! $item['menu_icon'] !!} fa-3x "></i>
                         </td>
+                        <td class="text-center middle">{{$item['menu_id']}}</td>
                         <td class="text-left middle">
-                            <a href="{{URL::route('defines.index',array('define_code' => $item->define_code))}}" title="tìm nhanh theo {{$item->define_code}}">
-                            {{$item->define_name}}
-                            </a>
+                            @if(in_array($item['router_name'],$arrRouter))
+                                <a href="{{URL::route($item['router_name'])}}" target="_blank">
+                                    {!! $item['menu_name']!!}
+                                </a>
+                            @else
+                                {!! $item['menu_name']!!}
+                            @endif
                         </td>
-
-                        <td class="text-left middle">{{$item->type_code}}</td>
-                        <td class="text-left middle">{{$item->type_name}}</td>
-                        <td class="text-center middle">{{$item->sort_order}}</td>
-                        <td class="text-center middle">{{$item->language}}</td>
-
+                        <td class="text-left middle">{{$item['router_name']}}</td>
+                        <td class="text-center middle">{{$item['menu_order']}}</td>
                         <td class="text-center middle">
-                            @if($item->is_active == STATUS_INT_MOT)
+                            @if($item['is_active'] == STATUS_INT_MOT)
                                 <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
                             @else
                                 <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
                             @endif
                             @if($permission_full || $permission_edit || $permission_add || $permission_remove)
-                                @if($permission_full || $permission_remove)
-                                    &nbsp;
-                                    <a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa group: ')}}{{$item->TYPE_NAME}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
-                                        <i class="pe-7s-trash fa-2x"></i>
+                                @if($permission_full || $permission_edit || $permission_add)
+                                        &nbsp;
+                                        <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật menu ')}} {{$item['menu_name']}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item['menu_id']}}">
+                                        <i class="fa fa-pencil-square-o fa-2x"></i>
                                     </a>
                                 @endif
-                                @if($permission_full || $permission_edit || $permission_add)
-                                    <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật menu ')}} {{$item->menu_name}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item->menu_id}}">
-                                        <i class="fa fa-pencil-square-o fa-2x"></i>
+                                @if($permission_remove)
+                                    &nbsp;
+                                    <a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa: ')}}{{$item['menu_name']}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
+                                        <i class="pe-7s-trash fa-2x"></i>
                                     </a>
                                 @endif
                             @endif

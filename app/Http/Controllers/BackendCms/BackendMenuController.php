@@ -51,7 +51,7 @@ class BackendMenuController extends BaseAdminController
         $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
         $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
         $this->arrOptionMenuParent = $this->modelObj->getOptionMenuParent($projectCode);
-        $optionParentMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrParentMenu, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
+        $optionParentMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrOptionMenuParent, isset($data['menu_parent']) ? $data['menu_parent'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -83,8 +83,8 @@ class BackendMenuController extends BaseAdminController
         $page_no = (int)Request::get('page_no', 1);
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
-        $search['define_code'] = trim(addslashes(Request::get('define_code', '')));
-        $search['define_name'] = trim(addslashes(Request::get('define_name', '')));
+        $search['project_code'] = trim(addslashes(Request::get('project_code', STATUS_INT_HAI)));
+        $search['menu_name'] = trim(addslashes(Request::get('menu_name', '')));
 
         $result = $this->modelObj->searchByCondition($search, $limit);
         $dataList = $result['data'] ?? [];
@@ -99,6 +99,7 @@ class BackendMenuController extends BaseAdminController
             'stt' => ($page_no - 1) * $limit,
             'paging' => $paging,
             'pageTitle' => $this->pageTitle,
+            'arrRouter' => $this->getRouterNameSite(),
         ], $this->dataOutCommon));
     }
 

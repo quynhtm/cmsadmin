@@ -32,7 +32,7 @@
                             <input type="text" class="form-control input-sm" required name="controller_name" id="{{$form_id}}controller_name">
                         </div>
                         <div class="col-lg-6">
-                            <label for="NAME" class="text-right">{{viewLanguage('Thuộc menu cha')}} <span class="red">(*)</span></label>
+                            <label for="NAME" class="text-right">{{viewLanguage('Thuộc menu cha')}}</label>
                             <select class="form-control input-sm" name="menu_parent" id="menu_parent" >
                                 {!! $optionParentMenu !!}
                             </select>
@@ -55,11 +55,11 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Icons')}}</label>
-                            <input type="text" class="form-control input-sm" name="menu_icon" id="{{$form_id}}menu_icon">
+                            <input type="text" class="form-control input-sm" name="menu_icon" @if($objectId > 0) id="{{$form_id}}menu_icon" @else value="pe-7s-config" @endif>
                         </div>
                         <div class="col-lg-2">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Order')}}</label>
-                            <input type="text" class="form-control input-sm" name="menu_order" id="{{$form_id}}menu_order">
+                            <input type="text" class="form-control input-sm" name="menu_order" @if($objectId > 0) id="{{$form_id}}menu_order" @else value="1" @endif>
                         </div>
                         <div class="col-lg-2">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Có link')}}</label>
