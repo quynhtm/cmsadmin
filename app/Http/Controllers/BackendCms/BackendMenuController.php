@@ -29,7 +29,6 @@ class BackendMenuController extends BaseAdminController
     private $arrIsActive = array();
     private $arrIsLink = array();
     private $arrTypeMenu = array();
-    private $arrParentMenu = array();
 
     private $templateRoot = DIR_PRO_BACKEND . '.Menu.';
     private $routerIndex = 'menu.index';

@@ -16,6 +16,8 @@ define('PREFIX_BACKEND', 'backend_');
 //Backend
 define('TABLE_DEFINE_SYSTEM',PREFIX_BACKEND.'define');
 define('TABLE_MENU_SYSTEM',PREFIX_BACKEND.'menu');
+define('TABLE_PERMISSION_GROUP',PREFIX_BACKEND.'perm_group');
+define('TABLE_PERMISSION_GROUP_DETAIL',PREFIX_BACKEND.'perm_group_detail');
 
 
 

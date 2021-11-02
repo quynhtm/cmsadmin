@@ -5,16 +5,16 @@ namespace App\Models\BackendCms;
 use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
-class DefineSystem extends BaseModel
+class PermissionGroup extends BaseModel
 {
-    protected $table = TABLE_DEFINE_SYSTEM;
-    protected $primaryKey = 'id';
+    protected $table = TABLE_PERMISSION_GROUP;
+    protected $primaryKey = 'group_id';
     public $timestamps = true;
 
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
-            $query = DefineSystem::where($this->primaryKey, '>', STATUS_INT_KHONG);
+            $query = PermissionGroup::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['define_name']) && $dataSearch['define_name'] != '') {
                 $query->where('define_name', 'LIKE', '%' . $dataSearch['define_name'] . '%');
             }
@@ -29,10 +29,7 @@ class DefineSystem extends BaseModel
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
 
-            $query->orderBy('define_code', 'asc');
-            $query->orderBy('sort_order', 'asc');
-            //$query->orderBy('created_at', 'desc');
-
+            $query->orderBy('created_at', 'desc');
 
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',', trim($dataSearch['field_get'])) : array();
             if (!empty($fields)) {
@@ -52,7 +49,7 @@ class DefineSystem extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new DefineSystem(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG)? new PermissionGroup(): self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
@@ -62,7 +59,7 @@ class DefineSystem extends BaseModel
                     $item->created_id = $this->getUserId();
                     $item->created_name = $this->getUserName();
                     $item->save();
-                    $id = $item->id;
+                    $id = $item->group_id;
                 }else{
                     $item->updated_id = $this->getUserId();
                     $item->updated_name = $this->getUserName();
@@ -81,7 +78,7 @@ class DefineSystem extends BaseModel
     {
         $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
         if (!$data) {
-            $data = DefineSystem::find($id);
+            $data = PermissionGroup::find($id);
             if ($data) {
                 Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id, $data);
             }
@@ -115,28 +112,4 @@ class DefineSystem extends BaseModel
         }
     }
 
-    public function getOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
-    {
-        if (trim($define_code) == '') return [];
-        $key_memcache = Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$define_code.'_'.$project_code;
-        $option = Memcache::getCache($key_memcache);
-        if (!$option) {
-            $dataSearch = DefineSystem::where($this->primaryKey, '>', STATUS_INT_KHONG)
-                ->where('project_code', $project_code)
-                ->where('define_code', $define_code)
-                ->where('is_active', STATUS_INT_MOT)
-                ->orderBy('sort_order', 'asc')->get();
-            if ($dataSearch) {
-                foreach ($dataSearch as $k => $val) {
-                    if($language == $val->language || $language == ''){
-                        $option[$val->type_code] = $val->type_name;
-                    }
-                }
-                if(!empty($option)){
-                    Memcache::putCache($key_memcache, $option);
-                }
-            }
-        }
-        return $option;
-    }
 }

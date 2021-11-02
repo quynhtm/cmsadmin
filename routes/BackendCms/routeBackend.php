@@ -26,5 +26,12 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostItem', array('as' => 'menu.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@ajaxPostItem'));
         Route::post('ajaxDeleteItem', array('as' => 'menu.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendMenuController@ajaxDeleteItem'));
     });
+
+    /* Quản lý Permission Group */
+    Route::group(array('prefix' => 'permissGroup'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'permissGroup.index', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@index'));
+        Route::get('ajaxGetData', array('as' => 'permissGroup.ajaxGetData', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'permissGroup.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@ajaxPostData'));
+    });
 });
 
