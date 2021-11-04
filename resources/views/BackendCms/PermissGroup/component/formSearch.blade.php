@@ -28,13 +28,13 @@
                         <div class="form-group col-lg-12">
                             <label for="depart_alias">{{viewLanguage('Tổ chức')}}</label>
                             <select class="form-control input-sm" name="ORG_CODE" id="ORG_CODE">
-                                {!! $optionOrg !!}
+
                             </select>
                         </div>
                         <div class="form-group col-lg-12">
                             <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                             <select  class="form-control input-sm" name="IS_ACTIVE" id="IS_ACTIVE">
-                                {!! $optionStatus !!}}
+
                             </select>
                         </div>
                         <hr>

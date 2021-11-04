@@ -10,15 +10,15 @@
         </div>
 
         <div class="div-infor-right">
-            <div class="main-card mb-3">
+            <div class="main-card mb-3" id="formShowEditSuccess">
                 <div class="card-body paddingTop-unset">
                     <div class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column" style="padding-top: 0px!important;">
 
                         {{---Block 1---}}
-                        <form id="{{$form_id}}">
+                        <form id="{{$formName}}">
                             <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">1</span>
-                                <div class="vertical-timeline-element-content bounce-in" id="formShowEditSuccess">
+                                <div class="vertical-timeline-element-content bounce-in" >
                                     @include('BackendCms.PermissGroup.component._detailFormItem')
                                 </div>
                             </div>

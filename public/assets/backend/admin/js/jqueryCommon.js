@@ -226,16 +226,16 @@ var jqueryCommon = {
     },
     doSubmitForm: function () {
         var url_action = $('#url_action').val();
-        var form_name = $('#formName').val();
+        var form_id = $('#formName').val();
         var load_page = $('#load_page').val();
-        var form_id = 'form_' + form_name;
+        //var form_id = 'form_' + form_name;
         if (!jqueryCommon.getFormValidation(form_id, 2)) return;
         var dataForm = jqueryCommon.getDataFormObj(form_id);
         var _token = $('input[name="_token"]').val();
 
         //check ngày tháng
-        var startDate = $('#' + form_name + '_EFFECTIVE_DATE').val();
-        var endDate = $('#' + form_name + '_EXPIRATION_DATE').val();
+        var startDate = $('#' + form_id + '_EFFECTIVE_DATE').val();
+        var endDate = $('#' + form_id + '_EXPIRATION_DATE').val();
         if (startDate != '' && endDate != '') {
             var checkDate = jqueryCommon.compareDate(startDate, endDate);
             if (checkDate) {
@@ -244,8 +244,8 @@ var jqueryCommon = {
             }
         }
 
-        $('#loaderRight').show();
-        $('.submitFormItem').prop("disabled", true);
+       // $('#loaderRight').show();
+        //$('.submitFormItem').prop("disabled", true);
         $.ajax({
             dataType: 'json',
             type: 'POST',
