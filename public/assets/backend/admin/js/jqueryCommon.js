@@ -180,9 +180,9 @@ var jqueryCommon = {
         var functionAction = $(obj).attr('data-function-action');
         var loading = $(obj).attr('data-loading');//1: right detail: 2: other detail
         if (loading == 2) {
-            $('#loaderRight').show();
+            //$('#loaderRight').show();
         } else {
-            $('#loader').show();
+            //$('#loader').show();
         }
         $.ajax({
             dataType: 'json',

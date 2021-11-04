@@ -20,11 +20,7 @@
         <input type="hidden" id="objectId" name="objectId" value="{{$objectId}}">
         <input type="hidden" id="url_action" name="url_action" value="{{$urlPostData}}">
         <input type="hidden" id="formName" name="formName" value="{{$form_id}}">
-        <input type="hidden" id="data_item" name="data_item" value="{{json_encode($dataOther)}}">
 
-        <input type="hidden" id="funcAction" name="funcAction" value="{{$actionEdit}}">
-        <input type="hidden" id="typeTabAction" name="typeTabAction" value="{{$typeTab}}">
-        <input type="hidden" id="divShowIdAction" name="divShowIdAction" value="{{$divShowId}}">
         {{ csrf_field() }}
         <div class="form-group">
             <div class="table-responsive" style="height: 400px; overflow: hidden; overflow-y: scroll" id="div_list_menu_permission">

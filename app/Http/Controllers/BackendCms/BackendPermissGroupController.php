@@ -138,6 +138,10 @@ class BackendPermissGroupController extends BaseAdminController
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon,[
                         'dataDetail' => $dataDetail,
+                        //tab1
+                        'arrActionExecute' => $this->arrActionExecute,
+                        'arrMenuSystem' => [],
+
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,
                         'formName' => $formName,
