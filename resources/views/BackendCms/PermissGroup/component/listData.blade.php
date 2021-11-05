@@ -36,16 +36,22 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="4%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('Action')}}</th>
                         <th width="8%" class="text-center">{{viewLanguage('ID')}}</th>
                         <th width="30%" class="text-left">{{viewLanguage('Tên nhóm')}}</th>
-                        <th width="50%" class="text-left">{{viewLanguage('Mô tả')}}</th>
+
+                        <th width="45%" class="text-left">{{viewLanguage('Mô tả')}}</th>
+                        <th width="5%" class="text-left">{{viewLanguage('Vị trí')}}</th>
+                        <th width="8%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
+                            <td class="text-center middle">{{$item->group_id}}</td>
+                            <td class="text-left middle">{{$item->group_name}}</td>
+                            <td class="text-left middle">{{$item->description}}</td>
+                            <td class="text-center middle">{{$item->sort_order}}</td>
                             <td class="text-center middle">
                                 @if($is_root || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->group_id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
@@ -61,9 +67,6 @@
                                     <a href="javascript:void(0);" class="red" title="Ẩn"><i class="fa fa-minus fa-2x"></i></a>
                                 @endif
                             </td>
-                            <td class="text-center middle">{{$item->group_id}}</td>
-                            <td class="text-left middle">{{$item->group_name}}</td>
-                            <td class="text-left middle">{{$item->description}}</td>
                         </tr>
                     @endforeach
                     </tbody>

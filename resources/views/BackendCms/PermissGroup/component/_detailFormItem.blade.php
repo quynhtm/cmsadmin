@@ -17,26 +17,27 @@
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
-        <div class="form-group">
-            <div class="row">
-                <div class="col-lg-10">
-                    <label for="NAME" class="text-right control-label">{{viewLanguage('Tên nhóm chức năng')}}</label><span class="red"> (*)</span>
-                    <input type="text" class="form-control input-sm" maxlength="100" required name="group_name" id="{{$formName}}group_name">
-                </div>
-                <div class="col-lg-2">
-                    <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label><span class="red"> (*)</span>
-                    <select  class="form-control input-sm" name="is_active" id="is_active">
-                        {!! $optionIsActive !!}}
-                    </select>
-                </div>
+        <div class="row form-group">
+            <div class="col-lg-10">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Tên nhóm chức năng')}}</label><span class="red"> (*)</span>
+                <input type="text" class="form-control input-sm" maxlength="100" required name="group_name" id="{{$formName}}group_name">
+            </div>
+            <div class="col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label><span class="red"> (*)</span>
+                <select  class="form-control input-sm" name="is_active" id="is_active">
+                    {!! $optionIsActive !!}}
+                </select>
             </div>
         </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-lg-12">
-                    <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
-                    <textarea class="form-control input-sm" name="description" id="{{$formName}}description" rows="2"></textarea>
-                </div>
+        <div class="row form-group">
+            <div class="col-lg-10">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
+                <textarea class="form-control input-sm" name="description" id="{{$formName}}description" rows="2"></textarea>
+            </div>
+
+            <div class="col-lg-2">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" required name="sort_order" @if($objectId > STATUS_INT_KHONG) id="{{$formName}}sort_order" @else value="1" @endif>
             </div>
         </div>
     </div>
