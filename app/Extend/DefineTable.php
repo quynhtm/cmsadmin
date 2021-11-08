@@ -20,6 +20,7 @@ define('TABLE_PERMISSION_GROUP',PREFIX_BACKEND.'perm_group');
 define('TABLE_PERMISSION_GROUP_DETAIL',PREFIX_BACKEND.'perm_group_detail');
 define('TABLE_PERMISSION_USER_GROUP',PREFIX_BACKEND.'perm_user_group');
 define('TABLE_PERMISSION_USER',PREFIX_BACKEND.'perm_user');
+define('TABLE_USERS',PREFIX_BACKEND.'users');
 
 
 

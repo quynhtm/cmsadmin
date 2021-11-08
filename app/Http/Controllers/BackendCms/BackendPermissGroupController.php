@@ -99,23 +99,6 @@ class BackendPermissGroupController extends BaseAdminController
         ], $this->dataOutCommon));
     }
 
-    public function ajaxGetData()
-    {
-        $dataRequest = $_POST;
-        $functionAction = $dataRequest['functionAction'] ?? '';
-        $html = '';
-        $success = STATUS_INT_KHONG;
-        if (trim($functionAction) != '') {
-            $html = $this->$functionAction($dataRequest);
-            if (is_array($html)) {
-                return Response::json($html);
-            } else {
-                $success = STATUS_INT_MOT;
-            }
-        }
-        $arrAjax = array('success' => $success, 'html' => $html);
-        return Response::json($arrAjax);
-    }
     private function _functionGetData($request)
     {
         $formName = isset($request['formName']) ? $request['formName'] : 'formName';
@@ -160,6 +143,9 @@ class BackendPermissGroupController extends BaseAdminController
      * */
     public function ajaxPostData()
     {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
         $request = $_POST;
         $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
         $actionUpdate = 'actionUpdate';
@@ -195,6 +181,26 @@ class BackendPermissGroupController extends BaseAdminController
         return Response::json($arrAjax);
     }
 
+    public function ajaxGetData()
+    {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+        $dataRequest = $_POST;
+        $functionAction = $dataRequest['functionAction'] ?? '';
+        $html = '';
+        $success = STATUS_INT_KHONG;
+        if (trim($functionAction) != '') {
+            $html = $this->$functionAction($dataRequest);
+            if (is_array($html)) {
+                return Response::json($html);
+            } else {
+                $success = STATUS_INT_MOT;
+            }
+        }
+        $arrAjax = array('success' => $success, 'html' => $html);
+        return Response::json($arrAjax);
+    }
 
     private function _validFormData($data = array())
     {

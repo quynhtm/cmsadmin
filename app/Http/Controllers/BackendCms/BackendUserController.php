@@ -10,15 +10,9 @@ namespace App\Http\Controllers\BackendCms;
 
 use App\Events\UserSystemEvent;
 use App\Http\Controllers\BaseAdminController;
-use App\Models\BContracts\Products;
-use App\Models\OpenId\DepartmentOrg;
-use App\Models\OpenId\GroupMenu;
-use App\Models\OpenId\MenuSystem;
-use App\Models\OpenId\Organization;
-use App\Models\OpenId\UserSystem;
+use App\Models\BackendCms\Users;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
-use App\Library\AdminFunction\Define;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Upload;
 use App\Services\ServiceCommon;
@@ -33,93 +27,185 @@ class BackendUserController extends BaseAdminController
 {
     private $error = array();
     private $dataOutCommon = array();
-    private $dataOutItem = array();
     private $pageTitle = '';
     private $modelObj = false;
 
-    private $arrChucVu = array();
-    private $arrStatus = array();
-    private $arrGender = array();
-    private $arrDepart = array();
-    private $arrProject = array();
-    private $arrOrg = array();
-    private $arrAuthType = array();
-    private $arrUserType = array();
+    private $arrIsActive = array();
+    private $arrDefineCode = array();
+    private $arrTypeMenu = array();
+    private $arrActionExecute = array();
 
-    private $templateRoot = DIR_PRO_BACKEND. '.Users.';
-
-    private $tabOtherItem1 = 'tabOtherItem1';
-    private $tabOtherItem2 = 'tabOtherItem2';
-    private $tabOtherItem3 = 'tabOtherItem3';
-    private $tabOtherItem4 = 'tabOtherItem4';
+    private $templateRoot = DIR_PRO_BACKEND . '.Users.';
+    private $routerIndex = 'users.index';
 
     public function __construct()
     {
         parent::__construct();
-        $this->modelObj = new UserSystem();
-        $this->arrChucVu = $this->getArrOptionTypeDefine(DEFINE_CHUC_VU);
-        $this->arrStatus = $this->getArrOptionTypeDefine(DEFINE_STATUS);
-        $this->arrAuthType = $this->getArrOptionTypeDefine(DEFINE_AUT_TYPE);
-        $this->arrUserType = $this->getArrOptionTypeDefine(DEFINE_USER_TYPE);
-        $this->arrProject = $this->getArrOptionTypeDefine(DEFINE_MENU_SYSTEM);
-        $this->arrGender = CGlobal::$gender_option;
-        $this->arrOrg = app(Organization::class)->getArrOptionOrg();
+        $this->modelObj = new Users();
+        $this->arrDefineCode = [];
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
+        $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
+        $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
     }
 
     private function _outDataView($request, $data)
     {
-        if (isset($data['ORG_CODE']) && trim($data['ORG_CODE']) != '') {
-            $this->arrDepart = app(DepartmentOrg::class)->getArrOptionDepartByOrgCode($data['ORG_CODE']);
-        }
+        $optionIsActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionDefineCode = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrDefineCode, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
+        $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
+        $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
 
-        $optionDepart = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrDepart, isset($data['STRUCT_CODE']) ? $data['STRUCT_CODE'] : '');
-        $optionOrg = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrOrg, isset($data['ORG_CODE']) ? $data['ORG_CODE'] : '');
-        $optionChucVu = FunctionLib::getOption($this->arrChucVu, (isset($data['ORG_STRUCT']) ? $data['ORG_STRUCT'] : ''));
-        $optionStatus = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrStatus, isset($data['IS_ACTIVE']) ? $data['IS_ACTIVE'] : '');
-        $optionAuthType = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrAuthType, isset($data['AUTH_TYPE']) ? $data['AUTH_TYPE'] : '');
-        $optionUserType = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrUserType, isset($data['USER_TYPE']) ? $data['USER_TYPE'] : '');
-        $optionGender = FunctionLib::getOption($this->arrGender, isset($data['GENDER']) ? $data['GENDER'] : '');
-        $optionSearchProjectCode = FunctionLib::getOption($this->arrProject, $this->project_code_menu);
-
-        $formName = $request['formName'] ?? 'formPopup';
+        $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
+        $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
-            'optionStatus' => $optionStatus,
-            'optionOrg' => $optionOrg,
-            'optionDepart' => $optionDepart,
-            'optionChucVu' => $optionChucVu,
-            'optionAuthType' => $optionAuthType,
-            'optionUserType' => $optionUserType,
-            'optionGender' => $optionGender,
-            'optionSearchProjectCode' => $optionSearchProjectCode,
+            'optionDefineCode' => $optionDefineCode,
+            'optionIsActive' => $optionIsActive,
+            'optionTypeMenu' => $optionTypeMenu,
 
-            'arrStatus' => $this->arrStatus,
-            'arrOrg' => $this->arrOrg,
-            'arrDepart' => $this->arrDepart,
-            'arrChucVu' => $this->arrChucVu,
-            'arrAuthType' => $this->arrAuthType,
-            'arrUserType' => $this->arrUserType,
-
-            'formName' => $formName,
+            'form_id' => $formId,
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
-            'tabOtherItem1' => $this->tabOtherItem1,
-            'tabOtherItem2' => $this->tabOtherItem2,
-            'tabOtherItem3' => $this->tabOtherItem3,
-            'tabOtherItem4' => $this->tabOtherItem4,
 
-            'urlIndex' => URL::route('userSystem.indexUser'),
-            'urlGetItem' => URL::route('userSystem.ajaxGetUser'),
-            'urlDeleteItem' => URL::route('userSystem.ajaxDeleteUser'),
-            'urlAjaxGetData' => URL::route('userSystem.ajaxGetData'),
-            'urlAjaxChangePass' => URL::route('userSystem.ajaxGetChangePass'),
-            'url_action' => URL::route('userSystem.ajaxPostUser'),
-            'url_action_other_item' => URL::route('userSystem.ajaxUpdateUserRelation'),
-            'urlAjaxGetProductWithUser' => URL::route('userSystem.ajaxGetProductWithUser'),
-            'urlAjaxPostProductWithUser' => URL::route('userSystem.ajaxPostProductWithUser'),
-            'functionAction' => '_ajaxGetItem',
+            'urlIndex' => URL::route($this->routerIndex),
+            'urlGetData' => URL::route('users.ajaxGetData'),
+            'urlPostData' => URL::route('users.ajaxPostData'),
         ];
+    }
+    /*********************************************************************************************************
+     * Danh mục tổ chức: USER
+     *********************************************************************************************************/
+    public function index()
+    {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Users System';
+        $limit = CGlobal::number_show_20;
+        $page_no = (int)Request::get('page_no', 1);
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['user_name'] = trim(addslashes(Request::get('user_name', '')));
+        $search['full_name'] = trim(addslashes(Request::get('full_name', '')));
+
+        $result = $this->modelObj->searchByCondition($search, $limit);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+
+        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+        $this->_outDataView($_GET, $search);
+        return view($this->templateRoot . 'viewIndex', array_merge([
+            'data' => $dataList,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'pageTitle' => $this->pageTitle,
+        ], $this->dataOutCommon));
+    }
+
+    private function _functionGetData($request)
+    {
+        $formName = isset($request['formName']) ? $request['formName'] : 'formName';
+        $titlePopup = isset($request['titlePopup']) ? $request['titlePopup'] : 'Thông tin chung';
+        $objectId = isset($request['objectId']) ? (int)$request['objectId'] : STATUS_INT_KHONG;
+
+        $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput'], true) : false;
+        $funcAction = isset($dataInput['funcAction']) ? $dataInput['funcAction'] : (isset($request['funcAction']) ? $request['funcAction'] : '');
+        $paramSearch = isset($dataInput['paramSearch']) ? $dataInput['paramSearch'] : [];
+
+        $htmlView = '';
+        switch ($funcAction) {
+            case 'getDetailItem':
+                $dataDetail = false;
+                if($objectId > STATUS_INT_KHONG){
+                    $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
+                }
+
+                $this->_outDataView($request, (array)$dataDetail);
+                $htmlView = View::make($this->templateRoot . 'component.popupDetail')
+                    ->with(array_merge($this->dataOutCommon,[
+                        'dataDetail' => $dataDetail,
+                        //tab1
+                        'arrActionExecute' => $this->arrActionExecute,
+                        'arrMenuSystem' => [],
+
+                        'paramSearch' => $paramSearch,
+                        'objectId' => $objectId,
+                        'formName' => $formName,
+                        'titlePopup' => $titlePopup,
+                    ]))->render();
+                break;
+            default:
+                break;
+        }
+        return $htmlView;
+    }
+
+    /*
+     * url update common
+     * actionUpdate:
+     * */
+    public function ajaxPostData()
+    {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+        $request = $_POST;
+        $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
+        $actionUpdate = 'actionUpdate';
+        $actionUpdate = isset($request['dataForm']['actionUpdate']) ? $request['dataForm']['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
+
+        switch ($actionUpdate) {
+            case 'updateData':
+                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+                //myDebug($dataForm,false);
+                $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
+                $idNew = $this->modelObj->editItem($dataForm,$objectId);
+                //myDebug($idNew);
+                if ($idNew > 0) {
+                    $dataDetail = $this->modelObj->getItemById($idNew);
+                    $this->_outDataView($request, (array)$dataDetail);
+                    $htmlView = View::make($this->templateRoot . 'component.popupDetail')
+                        ->with(array_merge($this->dataOutCommon,[
+                            'dataDetail' => $dataDetail,
+                            'paramSearch' => '',
+                            'objectId' => $objectId,
+                            'formName' => isset($dataForm['formName'])? $dataForm['formName']:'formName',
+                            'titlePopup' => isset($dataForm['titlePopup'])? $dataForm['titlePopup']:'Thông tin chi tiết',
+                        ]))->render();
+
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = $htmlView;
+                    $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
+                }
+                break;
+            default:
+                break;
+        }
+        return Response::json($arrAjax);
+    }
+
+    public function ajaxGetData()
+    {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+        $dataRequest = $_POST;
+        $functionAction = $dataRequest['functionAction'] ?? '';
+        $html = '';
+        $success = STATUS_INT_KHONG;
+        if (trim($functionAction) != '') {
+            $html = $this->$functionAction($dataRequest);
+            if (is_array($html)) {
+                return Response::json($html);
+            } else {
+                $success = STATUS_INT_MOT;
+            }
+        }
+        $arrAjax = array('success' => $success, 'html' => $html);
+        return Response::json($arrAjax);
     }
 
     private function _validFormData($id = 0, &$data = array())
@@ -187,240 +273,7 @@ class BackendUserController extends BaseAdminController
         return true;
     }
 
-    /*********************************************************************************************************
-     * Danh mục tổ chức: USER
-     *********************************************************************************************************/
-    public function indexUser()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_VIEW])) {
-            return Redirect::route('admin.dashboard', array('error' => Define::ERROR_PERMISSION));
-        }
 
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Quản lý User';
-        $page_no = (int)Request::get('page_no', 1);
-
-        $search['ORG_CODE'] = addslashes(Request::get('ORG_CODE', ''));
-        $search['STRUCT_CODE'] = addslashes(Request::get('STRUCT_CODE', ''));
-        $search['USER_TYPE'] = addslashes(Request::get('USER_TYPE', ''));
-        $search['IS_ACTIVE'] = addslashes(Request::get('IS_ACTIVE', ''));
-        $search['p_keyword'] = addslashes(Request::get('p_keyword', ''));
-        $search['p_is_active'] = $search['IS_ACTIVE'];
-        $search['p_org_code'] = $search['ORG_CODE'];
-        $search['p_struct_code'] = $search['STRUCT_CODE'];
-        $search['p_user_type'] = $search['USER_TYPE'];
-        $search['page_no'] = $page_no;
-
-        $dataList = [];
-        $total = 0;
-        $limit = CGlobal::number_show_10;
-        $result = $this->modelObj->searchUser($search);
-        //myDebug($result);
-        if ($result['Success'] == STATUS_INT_MOT) {
-            $dataList = $result['Data']['data'] ?? $dataList;
-            $total = $result['Data']['total'] ?? $total;
-        }
-        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
-
-        $this->_outDataView($_GET, $search);
-        return view($this->templateRoot . 'viewUser', array_merge([
-            'data' => $dataList,
-            'search' => $search,
-            'total' => $total,
-            'stt' => ($page_no - 1) * $limit,
-            'paging' => $paging,
-            'pageTitle' => $this->pageTitle,
-
-        ], $this->dataOutCommon));
-    }
-
-    public function ajaxGetUser()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $request = $_GET;
-        $arrAjax = $this->_getInfoItem($request);
-        return Response::json($arrAjax);
-    }
-
-    private function _getInfoItem($request)
-    {
-        $objectId = $request['objectId'] ?? 0;
-        $data = [];
-        if ($objectId > 0) {
-            $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
-            $user_code = isset($dataInput->item) ? $dataInput->item->USER_CODE : '';
-            $data = $this->modelObj->getUserByKey($user_code);
-            //lay dư liệu tab default
-            if ($data) {
-                ///dữ liệu data about
-                $dataOther = $this->modelObj->getUserAboutByKey($data->USER_CODE);
-                $optionGender = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrGender, isset($dataOther->GENDER) ? $dataOther->GENDER : '');
-
-                $this->dataOutItem = [
-                    'actionEdit' => isset($dataOther->USER_CODE) ? STATUS_INT_MOT : STATUS_INT_KHONG, //0: thêm mới, 1: edit
-                    'formNameOther' => $this->tabOtherItem1,
-                    'dataOther' => $dataOther,
-                    'typeTab' => $this->tabOtherItem1,
-                    'obj_id' => $data->USER_CODE,
-                    'USER_CODE' => $data->USER_CODE,
-                    'USER_ORG_CODE' => $data->ORG_CODE,
-                    'divShowId' => 'tab-content-1',
-                    'optionGender' => $optionGender,
-                ];
-            }
-        }
-        $this->_outDataView($request, (array)$data);
-        $html = View::make($this->templateRoot . 'component.user.popupDetail')
-            ->with(array_merge([
-                'data' => $data,
-            ], $this->dataOutCommon, $this->dataOutItem))->render();
-        $divShowInfor = isset($request['divShowInfor']) ? $request['divShowInfor'] : 'formShowEditSuccess';//div show infor item
-        $arrAjax = array('success' => 1, 'html' => $html, 'divShowInfor' => $divShowInfor);
-        return $arrAjax;
-    }
-
-    public function ajaxPostUser()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $dataRequest = $_POST;
-        $dataForm = $dataRequest['dataForm'] ?? [];
-        $id = $dataForm['objectId'] ?? 0;
-        if (empty($dataForm)) {
-            return Response::json(returnError(viewLanguage('Dữ liệu đầu vào không đúng')));
-        }
-        if ($this->_validFormData($id, $dataForm) && empty($this->error)) {
-            $dataForm['MENU_CODE'] = '-1';
-            $id = (int)$dataForm['objectId'] ?? 0;
-            $str_password = '';
-            if ($id <= 0) {
-                $str_password = $dataForm['PASSWORD'];
-                $dataForm['PASSWORD'] = $this->modelObj->buildPassword(strtoupper($dataForm['USER_NAME']), $dataForm['PASSWORD']);
-            }
-            $result = $this->modelObj->editUser($dataForm, ($id > 0) ? 'EDIT' : 'ADD');
-            if ($result['Success'] == STATUS_INT_MOT) {
-                //EDIT: lấy lại dữ liệu đã cập nhật để hiển thị lại
-                if ($id > 0) {
-                    $request = $dataForm;
-                    $request['formName'] = $dataForm['formName'];
-                    $this->_outDataView($request, $dataForm);
-                    $html = View::make($this->templateRoot . 'component.user._detailFormItem')
-                        ->with(array_merge([
-                            'data' => (object)$dataForm,
-                        ], $this->dataOutCommon))->render();
-                    $divShowInfor = isset($request['divShowInfor']) ? $request['divShowInfor'] : 'formShowEditSuccess';//div show infor item
-                    $arrAjax = array('success' => 1, 'html' => $html, 'divShowInfor' => $divShowInfor);
-                } //ADD: thêm mới thì load lại dư liệu để nhập các thông tin khác
-                else {
-                    event(new UserSystemEvent($dataForm['USER_NAME'],$str_password));//gửi mail cho người dùng
-                    $user_code = isset($result['Data'][0]->USER_CODE) ? $result['Data'][0]->USER_CODE : 1;
-                    $dataForm['USER_CODE'] = $user_code;
-                    $request['objectId'] = 1;
-                    $request['divShowInfor'] = 'divDetailItem';
-                    $request['dataInput'] = json_encode(['item' => $dataForm]);
-                    $arrAjax = $this->_getInfoItem($request);
-                }
-                return Response::json($arrAjax);
-            } else {
-                return Response::json(returnError($result['Message']));
-            }
-        } else {
-            return Response::json(returnError($this->error));
-        }
-    }
-
-    /***************************************************************************
-     * Setting sản phẩm cho user
-     ***************************************************************************/
-    public function ajaxGetProductWithUser()
-    {
-        $request = $_GET;
-        $objectId = $request['objectId'] ?? 0;
-        $data = $listProduct = $productUser = [];
-        if ($objectId > 0) {
-            $listProductSearch = app(Products::class)->searchProduct(['page_no'=>0]);
-            $listProduct = isset($listProductSearch['Data']['data'])?$listProductSearch['Data']['data']:[];
-
-            $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
-            $user_code = isset($dataInput->item) ? $dataInput->item->USER_CODE : '';
-            $data = $this->modelObj->getUserByKey($user_code);
-            //lay dư liệu tab default
-            if ($listProduct) {
-                ///dữ liệu sản phẩm đính kèm
-                $listProductWithUserCode = app(Products::class)->getProductWithUserCode($user_code);
-                if(!empty($listProductWithUserCode)){
-                    foreach ($listProductWithUserCode as $pro_us){
-                        $productUser[$pro_us->PRODUCT_CODE] = $pro_us->PRODUCT_CODE;
-                    }
-                }
-                $this->dataOutItem = [
-                    'productUser'=>$productUser
-                ];
-            }
-        }
-        $this->_outDataView($request, (array)$data);
-        $html = View::make($this->templateRoot . 'component.user.popupProductUser')
-            ->with(array_merge([
-                'listProduct' => $listProduct,
-                'data' => $data,
-                'loadPage' => 1,
-                'formChangePass' => 'formChangeProduct',
-            ], $this->dataOutCommon, $this->dataOutItem))->render();
-        $divShowInfor = isset($request['divShowInfor']) ? $request['divShowInfor'] : 'formShowEditSuccess';//div show infor item
-        $arrAjax = array('success' => 1, 'html' => $html, 'divShowInfor' => $divShowInfor);
-        return Response::json($arrAjax);
-    }
-
-    public function ajaxPostProductWithUser()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $dataRequest = $_POST;
-
-        $dataForm = $dataRequest['dataForm'] ?? [];
-        if (empty($dataForm)) {
-            return Response::json(returnError(viewLanguage('Dữ liệu đầu vào không đúng')));
-        }
-        $user = isset($dataForm['data_item'])? json_decode($dataForm['data_item']):[];
-        $str_product_user = isset($dataForm['str_product_user'])? $dataForm['str_product_user']:'';
-
-        $dataUpdate['USER_CODE'] = $user->USER_CODE;
-        $dataUpdate['ORG_CODE'] = $user->ORG_CODE;
-        $dataUpdate['STRUCT_CODE'] = $user->STRUCT_CODE;
-        $dataUpdate['STR_PRODUCT_USER'] = $str_product_user;
-        $update = app(Products::class)->editProductWithUser($dataUpdate);
-        if ($update['Success'] == STATUS_INT_MOT) {
-            $arrAjax = array('success' => 1, 'html' => '', 'divShowInfor' => '');
-            return Response::json($arrAjax);
-        } else {
-            return Response::json(returnError($update['Message']));
-        }
-
-    }
-
-    public function ajaxDeleteUser()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_REMOVE])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $request = $_POST;
-        $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
-        $dataItem = isset($dataInput->item) ? (array)$dataInput->item : false;
-
-        if (!empty($dataItem)) {
-            $result = $this->modelObj->deleteUser($dataItem);
-            if ($result['Success'] == STATUS_INT_MOT) {
-                return Response::json(returnSuccess());
-            } else {
-                return Response::json(returnError($result['Message']));
-            }
-        } else {
-            return Response::json(returnError('Dữ liệu không đúng'));
-        }
-    }
 
     //get profile
     public function getProfile($ids, $name)
@@ -581,261 +434,6 @@ class BackendUserController extends BaseAdminController
             }
         }
         return Response::json(returnError($error));
-    }
-
-    /*********************************************************************************************************
-     * Các quan hệ của USER tab
-     *********************************************************************************************************/
-    private function _ajaxGetItem($request)
-    {
-        $data = $inforItem = [];
-        $formNameOther = isset($request['formName']) ? $request['formName'] : 'formName';
-        $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput'], true) : false;
-
-        $typeTab = isset($dataInput['type']) ? $dataInput['type'] : '';
-        $arrKey = isset($dataInput['arrKey']) ? $dataInput['arrKey'] : [];
-        $actionEdit = STATUS_INT_KHONG;
-
-        $obj_id = $request['objectId'];
-        $divShowId = $request['divShowId'];
-        $templateOut = $this->templateRoot . 'component.user._formUserAbout';
-
-        switch ($typeTab) {
-            case $this->tabOtherItem1:
-                if (trim($obj_id) != '') {
-                    $data = $this->modelObj->getUserByKey($obj_id);
-                    $inforItem = $this->modelObj->getUserAboutByKey($obj_id);
-                }
-                $actionEdit = STATUS_INT_MOT;
-                $divShowId = 'tab-content-1';
-                $optionGender = FunctionLib::getOption($this->arrGender, isset($inforItem->GENDER) ? $inforItem->GENDER : '');
-
-                $this->dataOutItem = [
-                    'optionGender' => $optionGender,
-                ];
-                $templateOut = $this->templateRoot . 'component.user._formUserAbout';
-                break;
-            case $this->tabOtherItem2:
-                if (trim($obj_id) != '') {
-                    $data = $this->modelObj->getUserByKey($obj_id);
-                }
-                $arrSelectGroupMenu = [];
-                if (!empty($data)) {
-                    $inforItem = $this->modelObj->getUserGroupMenuByKey($data->USER_CODE);
-                    $arrSelectGroupMenu = isset($inforItem->GROUP_CODE) ? explode(',', $inforItem->GROUP_CODE) : [];
-                }
-
-                $actionEdit = ($inforItem) ? STATUS_INT_MOT : STATUS_INT_KHONG;
-                $divShowId = 'tab-content-2';
-
-                $groupMenu = ($data) ? app(GroupMenu::class)->getDataByOrgCode($data->ORG_CODE) : [];
-                $chooseGroupMenu = $this->_pushGroupChoose($groupMenu,$arrSelectGroupMenu);
-                $this->dataOutItem = [
-                    'arrSelectGroupMenu' => $arrSelectGroupMenu,
-                    'chooseGroupMenu' => $chooseGroupMenu,
-                    'groupMenu' => $groupMenu,
-                ];
-                $templateOut = $this->templateRoot . 'component.user._formUserPermissionWithGroup';
-                break;
-            case $this->tabOtherItem3:
-                ///dữ liệu data about
-                $this->arrCrudLimit = $this->getArrOptionTypeDefine(DEFINE_CRUD_LIMIT);
-                $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_ACTION_EXECUTE);
-                $this->arrMenuSystem = app(MenuSystem::class)->getListMenuWithPermission($this->project_code_menu);
-
-                if (trim($obj_id) != '') {
-                    $data = $this->modelObj->getUserByKey($obj_id);
-                    if ($data) {
-                        $userCode = isset($data->USER_CODE) ? $data->USER_CODE : '';
-                        $orgCode = isset($data->ORG_CODE) ? $data->ORG_CODE : '';
-                        $inforItem = $this->modelObj->getDetailGroupMenuByKey($userCode, $orgCode);
-                        $this->arrChooseMenu = $this->_pushArrMenuChoose($this->arrMenuSystem,$this->arrActionExecute,$this->arrCrudLimit,$inforItem);
-                    }
-                }
-                $actionEdit = STATUS_INT_MOT;
-                $divShowId = 'tab-content-3';
-
-                $this->dataOutItem = [
-                    'arrCrudLimit' => $this->arrCrudLimit,
-                    'arrActionExecute' => $this->arrActionExecute,
-                    'arrMenuSystem' => $this->arrMenuSystem,
-                    'arrChooseMenu' => $this->arrChooseMenu,
-                ];
-                $templateOut = $this->templateRoot . 'component.user._formUserPermissionWithMenu';
-                break;
-            default:
-                break;
-        }
-        $this->_outDataView($request, (array)$data);
-        $html = View::make($templateOut)
-            ->with(array_merge([
-                'data' => $data,
-                'dataOther' => $inforItem,
-                'actionEdit' => $actionEdit,//0: thêm mới, 1: edit
-                'obj_id' => $obj_id,
-                'formNameOther' => $formNameOther,
-                'typeTab' => $typeTab,
-                'divShowId' => $divShowId,
-            ], $this->dataOutCommon, $this->dataOutItem))->render();
-        return $html;
-    }
-    private function _pushGroupChoose(&$arrGroup,$arrChecked = []){
-        if(!empty($arrChecked) && !empty($arrGroup)){
-            $result = [];
-            foreach($arrGroup as $kgm => $itemGroup){
-                if(isset($arrChecked) && in_array($itemGroup->GROUP_CODE,$arrChecked)){
-                    $result[$kgm] = $itemGroup;
-                    unset($arrGroup[$kgm]);
-                }
-            }
-            return $result;
-        }
-        return [];
-    }
-    private function _pushArrMenuChoose(&$arrMenu,$arrAction,$arrCrudLimit, $arrChecked = []){
-        if(!empty($arrChecked)){
-            $result = [];
-            foreach ($arrMenu as $menu_id => $va){
-                foreach ($arrAction as $keyAction => $namea2){
-                    foreach ($arrCrudLimit as $kCrudLimit => $nameCrudLimit){
-                        if(isset($arrChecked[$menu_id][$keyAction]) && $arrChecked[$menu_id][$keyAction] == $kCrudLimit && $kCrudLimit != 'NONE'){
-                            $result[$menu_id] = $va;
-                            unset($arrMenu[$menu_id]);
-                            break;
-                        }
-                    }
-                }
-            }
-            return $result;
-        }
-        return  [];
-    }
-    private function _updateDataUserRelation($dataForm, $typeTabAction)
-    {
-        $active = (int)$dataForm['ACTION_FORM'];
-        $result = returnError('Không đúng thao tác! Hãy thử lại');
-        switch ($typeTabAction) {
-            case $this->tabOtherItem1:
-                if (isset($_FILES['inputFile']) && count($_FILES['inputFile']) > 0 && $_FILES['inputFile']['name'] != '') {
-                    $folder = FOLDER_FILE_USER_ABOUT;;
-                    $fileName = app(Upload::class)->uploadFileHdi('inputFile', $folder);
-                    if (trim($fileName) != '') {
-                        app(Upload::class)->removeFile($folder, $dataForm['IMAGE']);
-                        $pathFileUpload = getDirFile($fileName);
-                        $image_id = app(ServiceCommon::class)->moveFileToServerStore($pathFileUpload,false);
-                        $dataForm['IMAGE'] = $image_id;
-                        app(Upload::class)->removeFile($folder, $fileName);
-                    }
-                }
-                $result = $this->modelObj->editUserAbout($dataForm, ($active > 0) ? 'EDIT' : 'ADD');
-                break;
-            case $this->tabOtherItem2:
-                $result = $this->modelObj->editUserGroupMenu($dataForm, ($active > 0) ? 'EDIT' : 'ADD');
-                break;
-            case $this->tabOtherItem3:
-                $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_ACTION_EXECUTE);
-                $arrPermission = [];
-                foreach ($this->arrActionExecute as $key_action => $name_action) {
-                    foreach ($dataForm as $key => $val_form) {
-                        if ($key == $key_action . '[')
-                            $arrPermission[$key_action] = $val_form;
-                    }
-                }
-                $dataPermission = [];
-                if (!empty($arrPermission)) {
-                    foreach ($arrPermission as $crud => $arrVal) {
-                        foreach ($arrVal as $menuId => $crudLimit) {
-                            $dataPermission['DATA'][] = [
-                                'MENU_CODE' => $menuId,
-                                'CRUD' => trim($crud),
-                                'CRUD_LIMIT' => trim($crudLimit)
-                            ];
-                        }
-                    }
-                }
-                $dataPermission['USER_CODE'] = $dataForm['USER_CODE'];
-                $dataPermission['ORG_CODE'] = $dataForm['ORG_CODE'];
-                $dataPermission['IS_ACTIVE'] = 1;
-
-                $dataForm['str_data_json'] = json_encode($dataPermission, false);
-                $result = $this->modelObj->updateUserMenu($dataForm);
-                break;
-            default:
-                break;
-        }
-
-        if ($result['Success'] == STATUS_INT_MOT) {
-            //lấy lại dữ liệu vừa sửa
-            $dataInput['type'] = $dataForm['typeTabAction'];
-            $requestLoad['dataInput'] = json_encode($dataInput);
-            $requestLoad['objectId'] = $dataForm['USER_CODE'];
-            $requestLoad['divShowId'] = $dataForm['divShowIdAction'];
-            $requestLoad['formName'] = $dataForm['formName'];
-
-            $html = $this->_ajaxGetItem($requestLoad);
-            $arrAjax = array('success' => 1, 'message' => 'Successfully', 'divShowAjax' => $requestLoad['divShowId'], 'html' => $html);
-
-            return Response::json($arrAjax);
-        } else {
-            return Response::json(returnError($result['Message']));
-        }
-    }
-
-    public function ajaxGetData()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_VIEW])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $dataRequest = $_POST;
-        $functionAction = $dataRequest['functionAction'] ?? '';
-        $html = '';
-        $success = STATUS_INT_KHONG;
-        if (trim($functionAction) != '') {
-            $html = $this->$functionAction($dataRequest);
-            $success = STATUS_INT_MOT;
-        }
-        $arrAjax = array('success' => $success, 'html' => $html);
-        return Response::json($arrAjax);
-    }
-
-    public function ajaxUpdateUserRelation()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $dataRequest = $_POST;
-        $dataForm = $dataRequest['dataForm'] ?? [];
-
-        if (empty($dataRequest)) {
-            return Response::json(returnError(viewLanguage('Dữ liệu đầu vào không đúng')));
-        }
-        //check form with file upload
-        $typeTabAction = isset($dataRequest['typeTabAction']) ? $dataRequest['typeTabAction'] : $dataForm['typeTabAction'];
-        $dataForm = isset($dataRequest['typeTabAction']) ? $dataRequest : $dataForm;
-        $active = (int)$dataForm['ACTION_FORM'];
-
-        if ($this->_validFormDataUserRelation($typeTabAction, $active, $dataForm) && empty($this->error)) {
-            $actionUpdate = $this->_updateDataUserRelation($dataForm, $typeTabAction);
-            return $actionUpdate;
-        } else {
-            return Response::json(returnError($this->error));
-        }
-    }
-
-    private function _validFormDataUserRelation($typeTabAction = '', $active = STATUS_INT_KHONG, &$data = array())
-    {
-        switch ($typeTabAction) {
-            case $this->tabOtherItem1:
-                if (!empty($data)) {
-                    if (isset($data['BIRTHDAY']) && trim($data['BIRTHDAY']) == '') {
-                        $this->error[] = 'Ngày sinh không được bỏ trống';
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-        return true;
     }
 
 }

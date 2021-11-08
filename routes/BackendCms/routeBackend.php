@@ -33,5 +33,12 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxGetData', array('as' => 'permissGroup.ajaxGetData', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@ajaxGetData'));
         Route::post('ajaxPostData', array('as' => 'permissGroup.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@ajaxPostData'));
     });
+
+    /* Quản lý User admin */
+    Route::group(array('prefix' => 'users'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'users.index', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@index'));
+        Route::post('ajaxGetData', array('as' => 'users.ajaxGetData', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'users.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxPostData'));
+    });
 });
 
