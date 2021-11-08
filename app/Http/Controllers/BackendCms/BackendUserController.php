@@ -32,7 +32,9 @@ class BackendUserController extends BaseAdminController
 
     private $arrIsActive = array();
     private $arrDefineCode = array();
-    private $arrTypeMenu = array();
+    private $arrGender = array();
+    private $arrUserType = array();
+    private $arrPosition = array();
     private $arrActionExecute = array();
 
     private $templateRoot = DIR_PRO_BACKEND . '.Users.';
@@ -44,29 +46,39 @@ class BackendUserController extends BaseAdminController
         $this->modelObj = new Users();
         $this->arrDefineCode = [];
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
-        $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
+        $this->arrGender = $this->getArrOptionTypeDefine(DEFINE_GIOI_TINH);
+        $this->arrUserType = $this->getArrOptionTypeDefine(DEFINE_USER_TYPE);
+        $this->arrPosition = $this->getArrOptionTypeDefine(DEFINE_CHUC_VU);
         $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
     }
 
     private function _outDataView($request, $data)
     {
-        $optionIsActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionDefineCode = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrDefineCode, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
-        $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
-        $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
+        $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionGender = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrGender, isset($data['user_gender']) ? $data['user_gender'] : STATUS_INT_MOT);
+        $optionUserType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrUserType, isset($data['user_type']) ? $data['user_type'] : STATUS_INT_BA);
+        $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['user_position']) ? $data['user_position'] : DEFINE_NHAN_VIEN);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Users System';
+
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
-            'optionDefineCode' => $optionDefineCode,
+            'optionGender' => $optionGender,
             'optionIsActive' => $optionIsActive,
-            'optionTypeMenu' => $optionTypeMenu,
+            'optionUserType' => $optionUserType,
+            'optionPosition' => $optionPosition,
+
+            'arrGender' => $this->arrGender,
+            'arrUserType' => $this->arrUserType,
+            'arrPosition' => $this->arrPosition,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
+            'pageTitle' => $this->pageTitle,
 
             'urlIndex' => URL::route($this->routerIndex),
             'urlGetData' => URL::route('users.ajaxGetData'),
@@ -81,7 +93,7 @@ class BackendUserController extends BaseAdminController
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Users System';
+
         $limit = CGlobal::number_show_20;
         $page_no = (int)Request::get('page_no', 1);
         $search['page_no'] = $page_no;
@@ -101,7 +113,6 @@ class BackendUserController extends BaseAdminController
             'search' => $search,
             'stt' => ($page_no - 1) * $limit,
             'paging' => $paging,
-            'pageTitle' => $this->pageTitle,
         ], $this->dataOutCommon));
     }
 
@@ -162,6 +173,9 @@ class BackendUserController extends BaseAdminController
                 $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
                 //myDebug($dataForm,false);
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
+                /*if($this->_validFormData($objectId,$dataForm)){
+
+                }*/
                 $idNew = $this->modelObj->editItem($dataForm,$objectId);
                 //myDebug($idNew);
                 if ($idNew > 0) {

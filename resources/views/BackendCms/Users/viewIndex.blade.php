@@ -6,9 +6,9 @@
         {{ csrf_field() }}
 
     {{--Search---}}
-        @include('BackendCms.PermissGroup.component.formSearch')
+        @include('BackendCms.Users.component.formSearch')
 
         {{--list data---}}
-        `@include('BackendCms.PermissGroup.component.listData')
+        `@include('BackendCms.Users.component.listData')
     {{ Form::close() }}
 @stop

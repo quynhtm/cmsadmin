@@ -3,7 +3,7 @@
 
     <div id="divDetailItem">
         <div class="card-header">
-            @if($objectId > 0)Cập nhật thông tin nhóm @else Thêm thông tin nhóm @endif
+            @if($objectId > 0)Cập nhật thông tin {{$pageTitle}} @else Thêm thông tin {{$pageTitle}} @endif
             <div class="btn-actions-pane-right">
                 @include('Layouts.AdminCms.listButtonActionFormEdit')
             </div>
@@ -19,7 +19,7 @@
                             <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">1</span>
                                 <div class="vertical-timeline-element-content bounce-in" >
-                                    @include('BackendCms.PermissGroup.component._detailFormItem')
+                                    @include('BackendCms.Users.component._detailFormItem')
                                 </div>
                             </div>
                         </form>
@@ -41,7 +41,7 @@
                                             <div class="tab-content marginT10" >
                                                 {{--Thông tin cá nhân---}}
                                                 <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
-                                                    @include('BackendCms.PermissGroup.component._formDetailPermission')
+                                                    {{--@include('BackendCms.Users.component._formDetailPermission')--}}
                                                 </div>
                                             </div>
                                         </div>

@@ -9,12 +9,6 @@
 <!--            <a href="javascript:void(0);" class="area-btn-right btn-action1 btn-search-right btn-success" title="{{viewLanguage('Search')}}">
                 <i class="pe-7s-search fa-w-16 fa-2x"></i>
             </a>-->
-            @if($is_root || $permission_edit || $permission_add)
-                <a href="javascript:void(0);" class="area-btn-right btn-action2 btn-edit-right btn-warning sys_show_popup_common" data-form-name="addForm" data-input="{{json_encode([])}}" data-show="2" data-div-show="content-page-right" title="{{viewLanguage('Thêm ')}}{{$pageTitle}}" data-method="get" data-url="{{$urlGetData}}" data-objectId="0">
-                    <i class="pe-7s-plus fa-w-16 fa-2x"></i>
-                </a>
-            @endif
-
             {{-- Nội dung form search--}}
             <div class="content-search-page" >
                 <h3 class="themeoptions-heading">Tìm kiếm </h3>

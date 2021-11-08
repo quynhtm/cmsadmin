@@ -37,10 +37,9 @@
                     <tr class="table-background-header">
                         <th width="4%" class="text-center">{{viewLanguage('STT')}}</th>
                         <th width="8%" class="text-center">{{viewLanguage('ID')}}</th>
-                        <th width="30%" class="text-left">{{viewLanguage('Tên nhóm')}}</th>
+                        <th width="40%" class="text-left">{{viewLanguage('Thông tin User')}}</th>
 
-                        <th width="45%" class="text-left">{{viewLanguage('Mô tả')}}</th>
-                        <th width="5%" class="text-left">{{viewLanguage('Vị trí')}}</th>
+                        <th width="45%" class="text-left">{{viewLanguage('Thông tin thêm')}}</th>
                         <th width="8%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
@@ -48,13 +47,19 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-center middle">{{$item->group_id}}</td>
-                            <td class="text-left middle">{{$item->group_name}}</td>
-                            <td class="text-left middle">{{$item->description}}</td>
-                            <td class="text-center middle">{{$item->sort_order}}</td>
+                            <td class="text-center middle">{{$item->id}}</td>
+                            <td class="text-left middle">
+                                U: {{$item->user_name}}<br/>
+                                F: {{$item->full_name}}<br/>
+                                T: @if(isset($arrUserType[$item->user_type])){{$arrUserType[$item->user_type]}}@endif<br/>
+                            </td>
+                            <td class="text-left middle">
+                                P: @if(isset($arrPosition[$item->user_position])){{$arrPosition[$item->user_position]}}@endif<br/>
+                                G: @if(isset($arrGender[$item->user_gender])){{$arrGender[$item->user_gender]}}@endif<br/>
+                            </td>
                             <td class="text-center middle">
                                 @if($is_root || $permission_edit || $permission_add)
-                                    <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->group_id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
+                                    <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>
                                     {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
