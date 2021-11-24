@@ -43,10 +43,11 @@ class CGlobal
     const mail_test = 'quynhtm@hdinsurance.com.vn';
 
     static $arrLanguage = array(VIETNAM_LANGUAGE => 'vi', ENGLISH_LANGUAGE => 'en');
+    const project_code = 2;
 
     const dms_portal = 1;//system
     const selling = 4; // selling: bán hàng B2B, C2C
-    //const dms_open_api = 2;
+
     //const indemnify = 3; // bồi thường
 
     public static $arrDomainProject = [
