@@ -12,6 +12,7 @@ use App\Http\Controllers\BaseAdminController;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
+use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -30,6 +31,7 @@ class BackendPermissGroupController extends BaseAdminController
     private $arrDefineCode = array();
     private $arrTypeMenu = array();
     private $arrActionExecute = array();
+    private $arrMenuSystem = array();
 
     private $templateRoot = DIR_PRO_BACKEND . '.PermissGroup.';
     private $routerIndex = 'permissGroup.index';
@@ -42,6 +44,9 @@ class BackendPermissGroupController extends BaseAdminController
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
         $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
         $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
+        $this->arrMenuSystem = app(MenuSystem::class)->getListMenuPermission();
+        //myDebug($this->arrActionExecute,false);
+        //myDebug($this->arrMenuSystem[CGlobal::project_code]);
     }
 
     private function _outDataView($request, $data)
@@ -123,7 +128,7 @@ class BackendPermissGroupController extends BaseAdminController
                         'dataDetail' => $dataDetail,
                         //tab1
                         'arrActionExecute' => $this->arrActionExecute,
-                        'arrMenuSystem' => [],
+                        'arrMenuSystem' => $this->arrMenuSystem[CGlobal::project_code],
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,

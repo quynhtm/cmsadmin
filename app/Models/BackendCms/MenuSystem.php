@@ -112,7 +112,7 @@ class MenuSystem extends BaseModel
         Memcache::forgetCache(Memcache::CACHE_ALL_PARENT_MENU);
         Memcache::forgetCache(Memcache::CACHE_TREE_MENU);
         if($data){
-            Memcache::forgetCache(Memcache::CACHE_MENU_BY_TAB_ID.$data->menu_tab_top_id);
+            Memcache::forgetCache(Memcache::CACHE_MENU_BY_TAB_ID.$data->project_code);
         }
     }
 
@@ -137,20 +137,20 @@ class MenuSystem extends BaseModel
         return $arrOption;
     }
 
-    public function getMenuByTab($menu_tab_top_id) {
-        $data = Memcache::getCache(Memcache::CACHE_MENU_BY_TAB_ID.$menu_tab_top_id);
+    public function getMenuByTab($project_code) {
+        $data = Memcache::getCache(Memcache::CACHE_MENU_BY_TAB_ID.$project_code);
         if (!$data || sizeof($data) == STATUS_INT_KHONG) {
             $dataMenu = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
-                ->where('menu_tab_top_id', '=',$menu_tab_top_id)
-                ->where('parent_id', '=',STATUS_HIDE)
+                ->where('project_code', '=',$project_code)
+                ->where('menu_parent', '=',STATUS_HIDE)
                 ->where('menu_type', '=',STATUS_HIDE)
-                ->where('active', '=',STATUS_SHOW)
-                ->orderBy('ordering', 'asc')->get();
+                ->where('is_active', '=',STATUS_SHOW)
+                ->orderBy('menu_order', 'asc')->get();
             foreach($dataMenu as $itm) {
                 $data[$itm['menu_id']] = $itm['menu_name'];
             }
             if(!empty($data) && Memcache::CACHE_ON){
-                Memcache::putCache(Memcache::CACHE_MENU_BY_TAB_ID.$menu_tab_top_id, $data);
+                Memcache::putCache(Memcache::CACHE_MENU_BY_TAB_ID.$project_code, $data);
             }
         }
         return $data;
@@ -161,7 +161,7 @@ class MenuSystem extends BaseModel
             return [];
         $data = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
             ->whereIn('menu_id',$arrId)
-            ->orderBy('ordering', 'asc')->get();
+            ->orderBy('menu_order', 'asc')->get();
         return $data;
     }
 
@@ -170,10 +170,10 @@ class MenuSystem extends BaseModel
         $data = Memcache::getCache(Memcache::CACHE_ALL_PARENT_MENU);
         if (!$data || sizeof($data) == STATUS_INT_KHONG) {
             $menu = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
-                ->where('parent_id', STATUS_INT_KHONG)
-                ->where('active', STATUS_SHOW)
-                ->where('menu_tab_top_id', CGlobal::dms_portal)
-                ->orderBy('ordering', 'asc')->get();
+                ->where('menu_parent', STATUS_INT_KHONG)
+                ->where('is_active', STATUS_SHOW)
+                ->where('project_code', CGlobal::dms_portal)
+                ->orderBy('menu_order', 'asc')->get();
             if ($menu) {
                 foreach ($menu as $itm) {
                     $data[$itm['menu_id']] = $itm['menu_name'];
@@ -191,7 +191,7 @@ class MenuSystem extends BaseModel
         $data = $menuTree = array();
         $menuTree = Memcache::getCache(Memcache::CACHE_TREE_MENU);
         if (!$menuTree || count($menuTree) == STATUS_INT_KHONG) {
-            $search['active'] = STATUS_SHOW;
+            $search['is_active'] = STATUS_SHOW;
             $dataSearch = app(MenuSystem::class)->searchByCondition($search, LIMIT_RECORD_500, STATUS_INT_KHONG,false);
             if (!empty($dataSearch['data'])) {
                 $data = MenuSystem::getTreeMenu($dataSearch['data']);
@@ -199,26 +199,26 @@ class MenuSystem extends BaseModel
             }
             if (!empty($data)) {
                 foreach ($data as $menu) {
-                    if ($menu['parent_id'] == STATUS_HIDE && $menu['menu_type'] == STATUS_HIDE) {
+                    if ($menu['menu_parent'] == STATUS_HIDE && $menu['menu_type'] == STATUS_HIDE) {
                         $menuTree[$menu['menu_id']] = array(
-                            'parent_id' => $menu['parent_id'],
+                            'menu_parent' => $menu['menu_parent'],
                             'menu_id' => $menu['menu_id'],
                             'name' => $menu['menu_name'],
                             'name_en' => $menu['menu_name_en'],
                             'show_menu' => $menu['show_menu'],
-                            'menu_tab_top_id' => $menu['menu_tab_top_id'],
+                            'project_code' => $menu['project_code'],
                             'menu_type' => $menu['menu_type'],
                             'link' => 'javascript:void(0)',
                             'icon' => $menu['menu_icons']
                         );
-                    }elseif ($menu['parent_id'] == STATUS_HIDE && $menu['menu_type'] == STATUS_SHOW) {
+                    }elseif ($menu['menu_parent'] == STATUS_HIDE && $menu['menu_type'] == STATUS_SHOW) {
                         $menuTree[$menu['menu_id']] = array(
-                            'parent_id' => $menu['parent_id'],
+                            'menu_parent' => $menu['menu_parent'],
                             'menu_id' => $menu['menu_id'],
                             'name' => $menu['menu_name'],
                             'name_en' => $menu['menu_name_en'],
                             'show_menu' => $menu['show_menu'],
-                            'menu_tab_top_id' => $menu['menu_tab_top_id'],
+                            'project_code' => $menu['project_code'],
                             'menu_type' => $menu['menu_type'],
                             'link' => 'javascript:void(0)',
                             'icon' => $menu['menu_icons'],
@@ -237,22 +237,22 @@ class MenuSystem extends BaseModel
                         }
 
                         $arrInforSub = array(
-                            'menu_id' => $menu['menu_id'],'parent_id' => $menu['parent_id'], 'show_menu' => $menu['show_menu'], 'name' => $menu['menu_name'],
-                            'menu_tab_top_id' => $menu['menu_tab_top_id'], 'name_en' => $menu['menu_name_en'], 'RouteName' => $menu['menu_url'],
+                            'menu_id' => $menu['menu_id'],'menu_parent' => $menu['menu_parent'], 'show_menu' => $menu['show_menu'], 'name' => $menu['menu_name'],
+                            'project_code' => $menu['project_code'], 'name_en' => $menu['menu_name_en'], 'RouteName' => $menu['menu_url'],
                             'url_chirld' => $url_chirld, 'icon' => $menu['menu_icons'] . ' icon-4x', 'showcontent' => $menu['showcontent'], 'permission' => '');
 
-                        if (isset($menuTree[$menu['parent_id']]['arr_link_sub'])) {
-                            $tempLink = $menuTree[$menu['parent_id']]['arr_link_sub'];
+                        if (isset($menuTree[$menu['menu_parent']]['arr_link_sub'])) {
+                            $tempLink = $menuTree[$menu['menu_parent']]['arr_link_sub'];
                             array_push($tempLink, $menu['menu_url']);
-                            $menuTree[$menu['parent_id']]['arr_link_sub'] = $tempLink;
+                            $menuTree[$menu['menu_parent']]['arr_link_sub'] = $tempLink;
 
                             //sub
-                            $tempSub = $menuTree[$menu['parent_id']]['sub'];
+                            $tempSub = $menuTree[$menu['menu_parent']]['sub'];
                             array_push($tempSub, $arrInforSub);
-                            $menuTree[$menu['parent_id']]['sub'] = $tempSub;
+                            $menuTree[$menu['menu_parent']]['sub'] = $tempSub;
 
                             //chirld
-                            $tempLinkChirld = $menuTree[$menu['parent_id']]['arr_link_chirld'];
+                            $tempLinkChirld = $menuTree[$menu['menu_parent']]['arr_link_chirld'];
                             if(!empty($url_chirld)){
                                 foreach ($url_chirld as $url_sub=>$val_url_chirld){
                                     if(!in_array($url_sub,$tempLinkChirld)){
@@ -260,12 +260,12 @@ class MenuSystem extends BaseModel
                                     }
                                 }
                             }
-                            $menuTree[$menu['parent_id']]['arr_link_chirld'] = $tempLinkChirld;
+                            $menuTree[$menu['menu_parent']]['arr_link_chirld'] = $tempLinkChirld;
                         } else {
 
-                            $menuTree[$menu['parent_id']]['arr_link_sub'] = array($menu['menu_url']);
-                            $menuTree[$menu['parent_id']]['arr_link_chirld'] = $arr_link_chirld;
-                            $menuTree[$menu['parent_id']]['sub'] = array( $arrInforSub);
+                            $menuTree[$menu['menu_parent']]['arr_link_sub'] = array($menu['menu_url']);
+                            $menuTree[$menu['menu_parent']]['arr_link_chirld'] = $arr_link_chirld;
+                            $menuTree[$menu['menu_parent']]['sub'] = array( $arrInforSub);
                         }
                     }
                 }
@@ -283,20 +283,20 @@ class MenuSystem extends BaseModel
         $aryCategoryProduct = $arrCategory = array();
         if (!empty($data)) {
             foreach ($data as $k => $value) {
-                $max = ($max < $value->parent_id) ? $value->parent_id : $max;
+                $max = ($max < $value->menu_parent) ? $value->menu_parent : $max;
                 $arrCategory[$value->menu_id] = array(
                     'menu_id' => $value->menu_id,
-                    'parent_id' => $value->parent_id,
-                    'menu_tab_top_id' => $value->menu_tab_top_id,
+                    'menu_parent' => $value->menu_parent,
+                    'project_code' => $value->project_code,
                     'menu_type' => $value->menu_type,
-                    'ordering' => $value->ordering,
+                    'menu_order' => $value->menu_order,
                     'menu_icons' => $value->menu_icons,
                     'menu_url' => $value->menu_url,
                     'menu_url_chirld' => $value->menu_url_chirld,
                     'showcontent' => $value->showcontent,
                     'show_permission' => $value->show_permission,
                     'show_menu' => $value->show_menu,
-                    'active' => $value->active,
+                    'is_active' => $value->is_active,
                     'menu_name_en' => $value->menu_name_en,
                     'menu_name' => $value->menu_name);
             }
@@ -313,7 +313,7 @@ class MenuSystem extends BaseModel
         $aryData = array();
         if (is_array($aryDataInput) && count($aryDataInput) > STATUS_INT_KHONG) {
             foreach ($aryDataInput as $k => $val) {
-                if ((int)$val['parent_id'] == STATUS_INT_KHONG) {
+                if ((int)$val['menu_parent'] == STATUS_INT_KHONG) {
                     $val['padding_left'] = '';
                     $val['menu_name_parent'] = '';
                     $val['menu_name_parent_en'] = '';
@@ -329,7 +329,7 @@ class MenuSystem extends BaseModel
     {
         if ($cat_id <= $max) {
             foreach ($aryDataInput as $chk => $chval) {
-                if ($chval['parent_id'] == $cat_id) {
+                if ($chval['menu_parent'] == $cat_id) {
                     $chval['padding_left'] = '--- ';
                     $chval['menu_name_parent'] = $cat_name;
                     $chval['menu_name_parent_en'] = $cat_name_en;
@@ -344,9 +344,9 @@ class MenuSystem extends BaseModel
         $data = Memcache::getCache(Memcache::CACHE_LIST_MENU_PERMISSION);
         if (!$data) {
             $data = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
-                ->where('active', STATUS_SHOW)
+                ->where('is_active', STATUS_SHOW)
                 ->where('show_permission',STATUS_SHOW)
-                ->orderBy('parent_id', 'asc')->orderBy('ordering', 'asc')->get();
+                ->orderBy('menu_parent', 'asc')->orderBy('menu_order', 'asc')->get();
             if ($data) {
                 Memcache::putCache(Memcache::CACHE_LIST_MENU_PERMISSION, $data);
             }
@@ -360,7 +360,7 @@ class MenuSystem extends BaseModel
         $result = [];
         if($data){
             foreach ($data as $k => $val){
-                $result[$val->menu_tab_top_id][$val->menu_id] = ['menu_id'=>$val->menu_id,'menu_name'=>$val->menu_name,'menu_name_en'=>$val->menu_name_en];
+                $result[$val->project_code][$val->menu_id] = ['menu_id'=>$val->menu_id,'menu_name'=>$val->menu_name,'menu_name_en'=>$val->menu_name_en];
             }
         }
         return $result;
