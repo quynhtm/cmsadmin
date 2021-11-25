@@ -344,10 +344,10 @@ var jqueryCommon = {
     },
     submitFormChildElement: function (form_name, url_action) {
         var form_id = 'form_' + form_name;
-        if (!jqueryCommon.getFormValidation(form_id, 2)) return;
-        var dataForm = jqueryCommon.getDataFormObj(form_id);
+        if (!jqueryCommon.getFormValidation(form_name, 2)) return;
+        var dataForm = jqueryCommon.getDataFormObj(form_name);
         var msg = 'Bạn có chắc chắc cập nhật thông tin này?';
-        $('#loaderRight').show();
+        //$('#loaderRight').show();
         var _token = $('input[name="_token"]').val();
         $.ajax({
             dataType: 'json',

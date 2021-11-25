@@ -180,6 +180,22 @@ class BackendPermissGroupController extends BaseAdminController
                     $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
                 }
                 break;
+            case 'updatePermissGroupDetail':
+                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+                //$acb = $dataForm['PERMISS_FULL['];
+                myDebug($this->arrMenuSystem,false);
+                myDebug($this->arrActionExecute,false);
+                myDebug($dataForm);
+
+                $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
+                $idNew = $this->modelObj->editItem($dataForm,$objectId);
+                //myDebug($idNew);
+                if ($idNew > 0) {
+
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = '';
+                }
+                break;
             default:
                 break;
         }

@@ -1,3 +1,5 @@
+<input type="hidden" id="formName" name="formName" value="other_{{$form_id}}">
+<input type="hidden" id="formName" name="formName" value="other_{{$form_id}}">
 <table class="table table-bordered table-hover">
     <thead class="thin-border-bottom">
     <tr class="">
@@ -34,10 +36,10 @@
         @if($arrMenuSystem && !empty($arrMenuSystem))
             @foreach ($arrMenuSystem as $menu_id2 => $inforMenu2)
                 <tr>
-                    <td class="text-left middle">{{$inforMenu2['menu_name']}}</td>
+                    <td class="text-left middle">[{{$inforMenu2['menu_id']}}] {{$inforMenu2['menu_name']}}</td>
                     @foreach ($arrActionExecute as $keyAction2 => $namea2)
                         <td class="text-center">
-                            <input type="checkbox" value="1">
+                            <input type="checkbox" name="{{$keyAction2}}[][{{$menu_id2}}]" id="{{$keyAction2}}[{{$menu_id2}}]">
                             {{--<select class="form-control input-sm" name="{{$keyAction2}}[][{{$menu_id2}}]" id="{{$keyAction2}}[{{$menu_id2}}]">
                                 @foreach ($arrCrudLimit as $kCrudLimit2 => $nameCrudLimit2)
                                     <option value="{{$kCrudLimit2}}">{{$nameCrudLimit2}}</option>
