@@ -18,14 +18,7 @@
                     <td class="text-left middle">{{$inforMenu['menu_name']}}</td>
                     @foreach ($arrActionExecute as $keyAction => $namea)
                         <td class="text-center">
-                            <input type="checkbox" value="1">
-                            <select class="form-control input-sm" name="{{$keyAction}}[][{{$menu_id}}]" id="{{$keyAction}}[{{$menu_id}}]">
-                                @foreach ($arrCrudLimit as $kCrudLimit => $nameCrudLimit)
-                                    <option value="{{$kCrudLimit}}" @if(isset($dataOther[$menu_id][$keyAction]) && $dataOther[$menu_id][$keyAction] == $kCrudLimit)selected @endif>
-                                        {{$nameCrudLimit}}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <input type="checkbox" name="{{$keyAction}}[][{{$menu_id}}]" id="{{$keyAction}}[{{$menu_id}}]" @if($inforMenu['permiss_code'] == $keyAction) checked @endif>
                         </td>
                     @endforeach
                 </tr>

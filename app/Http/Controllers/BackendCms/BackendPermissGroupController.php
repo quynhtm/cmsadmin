@@ -27,6 +27,7 @@ class BackendPermissGroupController extends BaseAdminController
     private $dataOutCommon = array();
     private $pageTitle = '';
     private $modelObj = false;
+    private $modelDetail = false;
 
     private $arrIsActive = array();
     private $arrDefineCode = array();
@@ -41,6 +42,7 @@ class BackendPermissGroupController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new PermissionGroup();
+        $this->modelDetail = new PermissionGroupDetail();
         $this->arrDefineCode = [];
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
         $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
@@ -119,8 +121,21 @@ class BackendPermissGroupController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
+                $arrMenuSystem = $this->arrMenuSystem[CGlobal::project_code];
+                $arrChooseMenu = [];
                 if($objectId > STATUS_INT_KHONG){
                     $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
+                    $groupDetail = $this->modelDetail->getPermissDetailWithGroupId($dataDetail['group_id']);
+                    if($groupDetail){
+                        foreach ($groupDetail as $k =>$gdetail){
+                            if (isset($arrMenuSystem[$gdetail->menu_id])){
+                                $arrChooseMenu[$gdetail->menu_id] = $arrMenuSystem[$gdetail->menu_id];
+                                $arrChooseMenu[$gdetail->menu_id]['permiss_code'] = $gdetail->permiss_code;
+                            }
+                        }
+                    }
+                    //myDebug($arrChooseMenu,false);
+                    myDebug($groupDetail->toArray());
                 }
 
                 $this->_outDataView($request, (array)$dataDetail);
@@ -129,7 +144,8 @@ class BackendPermissGroupController extends BaseAdminController
                         'dataDetail' => $dataDetail,
                         //tab1
                         'arrActionExecute' => $this->arrActionExecute,
-                        'arrMenuSystem' => $this->arrMenuSystem[CGlobal::project_code],
+                        'arrMenuSystem' => $arrMenuSystem,
+                        'arrChooseMenu' => $arrChooseMenu,
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,
@@ -188,18 +204,14 @@ class BackendPermissGroupController extends BaseAdminController
 
                 $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
                 $arrPermissForm = $this->modelObj->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
-                //myDebug($dataForm,false);
-                //myDebug($arrMenuSystem,false);
-                //myDebug($arrPermissForm);
 
                 if(!empty($arrPermissForm) && $group_id >0 && $project_code >0 ){
-                    $edit = app(PermissionGroupDetail::class)->updatePermissGroupDetail($arrPermissForm,$group_id, $project_code);
+                    $edit = $this->modelDetail->updatePermissGroupDetail($arrPermissForm,$group_id, $project_code);
                 }
                 if ($edit) {
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                 }
-
                 break;
             default:
                 break;

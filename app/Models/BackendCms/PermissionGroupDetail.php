@@ -49,18 +49,18 @@ class PermissionGroupDetail extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new PermissionGroupDetail(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG) ? new PermissionGroupDetail() : self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
                     }
                 }
-                if($id <= STATUS_INT_KHONG){
+                if ($id <= STATUS_INT_KHONG) {
                     $item->created_id = $this->getUserId();
                     $item->created_name = $this->getUserName();
                     $item->save();
                     $id = $item->id;
-                }else{
+                } else {
                     $item->updated_id = $this->getUserId();
                     $item->updated_name = $this->getUserName();
                     $item->update();
@@ -76,11 +76,11 @@ class PermissionGroupDetail extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id);
         if (!$data) {
             $data = PermissionGroupDetail::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id, $data);
+                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id, $data);
             }
         }
         return $data;
@@ -105,35 +105,50 @@ class PermissionGroupDetail extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id);
         }
-        if($data){
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);
+        if ($data) {
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $data->group_id);
         }
     }
 
-    public function updatePermissGroupDetail($arrPermissForm=[],$group_id,$project_code){
+    public function getPermissDetailWithGroupId($group_id = 0)
+    {
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $group_id);
+        if (!$data) {
+            $data = PermissionGroupDetail::where('group_id', $group_id)->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $group_id, $data);
+            }
+        }
+        return $data;
+    }
+
+    public function updatePermissGroupDetail($arrPermissForm = [], $group_id = 0, $project_code = 0)
+    {
         $edit = false;
-        if(empty($arrPermissForm) || $group_id <= 0 || $project_code <= 0)
+        if (empty($arrPermissForm) || $group_id <= 0 || $project_code <= 0)
             return $edit;
 
-        foreach ($arrPermissForm as $permiss_code => $arrMenu){
+        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
             PermissionGroupDetail::where('group_id', $group_id)
                 ->where('project_code', $project_code)
-                ->whereIn('menu_id',$arrMenu)->delete();
+                ->whereIn('menu_id', $arrMenu)->delete();
         }
-        foreach ($arrPermissForm as $permiss_code => $arrMenu){
-            foreach ($arrMenu as $k => $menu_id){
+        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
+            foreach ($arrMenu as $k => $menu_id) {
                 $arrInsert['group_id'] = $group_id;
                 $arrInsert['project_code'] = $project_code;
                 $arrInsert['menu_id'] = $menu_id;
                 $arrInsert['permiss_code'] = $permiss_code;
                 $arrInsert['is_active'] = STATUS_INT_MOT;
-                if($this->editItem($arrInsert)){
+                if ($this->editItem($arrInsert)) {
                     $edit = true;
                 }
             }
         }
+
+        Memcache::forgetCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $group_id);
         return $edit;
     }
 }
