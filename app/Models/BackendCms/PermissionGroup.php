@@ -2,6 +2,7 @@
 
 namespace App\Models\BackendCms;
 
+use App\Library\AdminFunction\CGlobal;
 use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
@@ -112,4 +113,23 @@ class PermissionGroup extends BaseModel
         }
     }
 
+    //get perrin detail
+    public function buildInforPermGroup($arrMenu = [],$arrPermiss = [],$arrInput = []){
+        if(empty($arrMenu) || empty($arrPermiss) || empty($arrInput)  )
+            return [];
+        $arrInforPermiss = [];
+        foreach ($arrPermiss as $permiss_code => $permiss_name){
+            if(isset($arrInput[$permiss_code.'['])){
+                $arrPermissInput = $arrInput[$permiss_code.'['];
+                $arrTempMenu = [];
+                foreach ($arrPermissInput as $obj_id => $obj_val){
+                    if(isset($arrMenu[$obj_id])){
+                        $arrTempMenu[] = $obj_id;
+                    }
+                }
+                $arrInforPermiss[$permiss_code] = $arrTempMenu;
+            }
+        }
+        return $arrInforPermiss;
+    }
 }

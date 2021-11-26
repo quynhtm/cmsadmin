@@ -1,12 +1,10 @@
-<input type="hidden" id="formName" name="formName" value="other_{{$form_id}}">
-<input type="hidden" id="formName" name="formName" value="other_{{$form_id}}">
 <table class="table table-bordered table-hover">
     <thead class="thin-border-bottom">
-    <tr class="">
+    <tr class="table-background-header">
         {{--<th width="3%" class="text-center"><input type="checkbox" class="check" id="checkAll"></th>--}}
-        <th width="20%" class="text-left th_sticky">{{viewLanguage('Chức năng')}}</th>
+        <th width="30%" class="text-left th_sticky">{{viewLanguage('Chức năng')}}</th>
         <?php
-        $with = 80/count($arrActionExecute);
+        $with = 70/count($arrActionExecute);
         ?>
         @foreach ($arrActionExecute as $ka => $namea)
             <th width="{{$with}}%" class="text-center th_sticky">{{$namea}}</th>
@@ -40,11 +38,6 @@
                     @foreach ($arrActionExecute as $keyAction2 => $namea2)
                         <td class="text-center">
                             <input type="checkbox" name="{{$keyAction2}}[][{{$menu_id2}}]" id="{{$keyAction2}}[{{$menu_id2}}]">
-                            {{--<select class="form-control input-sm" name="{{$keyAction2}}[][{{$menu_id2}}]" id="{{$keyAction2}}[{{$menu_id2}}]">
-                                @foreach ($arrCrudLimit as $kCrudLimit2 => $nameCrudLimit2)
-                                    <option value="{{$kCrudLimit2}}">{{$nameCrudLimit2}}</option>
-                                @endforeach
-                            </select>--}}
                         </td>
                     @endforeach
                 </tr>

@@ -14,6 +14,7 @@ use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
 use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
+use App\Models\BackendCms\PermissionGroupDetail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -182,19 +183,23 @@ class BackendPermissGroupController extends BaseAdminController
                 break;
             case 'updatePermissGroupDetail':
                 $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
-                //$acb = $dataForm['PERMISS_FULL['];
-                myDebug($this->arrMenuSystem,false);
-                myDebug($this->arrActionExecute,false);
-                myDebug($dataForm);
+                $group_id = isset($dataForm['group_id'])? $dataForm['group_id']:STATUS_INT_KHONG;
+                $project_code = isset($dataForm['s_project_code'])? $dataForm['s_project_code']: STATUS_INT_KHONG;
 
-                $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
-                $idNew = $this->modelObj->editItem($dataForm,$objectId);
-                //myDebug($idNew);
-                if ($idNew > 0) {
+                $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
+                $arrPermissForm = $this->modelObj->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
+                //myDebug($dataForm,false);
+                //myDebug($arrMenuSystem,false);
+                //myDebug($arrPermissForm);
 
+                if(!empty($arrPermissForm) && $group_id >0 && $project_code >0 ){
+                    $edit = app(PermissionGroupDetail::class)->updatePermissGroupDetail($arrPermissForm,$group_id, $project_code);
+                }
+                if ($edit) {
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                 }
+
                 break;
             default:
                 break;
