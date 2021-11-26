@@ -18,6 +18,8 @@ class Memcache
 
     const CACHE_MENU_BY_ID = 'cache_menu_by_id_';
 
+    const CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID = 'cache_permission_group_detail_by_group_id_';
+
     /************************************************************************************************
      * Cache Admin
      ************************************************************************************************/
