@@ -34,9 +34,6 @@
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});
     });
 
-    //hiển thị data in form
-    showDataIntoForm('form_other_{{$form_id}}');
-
     //tim kiem
     var config = {
         '.chosen-select'           : {width: "58%"},

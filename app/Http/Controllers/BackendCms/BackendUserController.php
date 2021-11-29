@@ -10,6 +10,8 @@ namespace App\Http\Controllers\BackendCms;
 
 use App\Events\UserSystemEvent;
 use App\Http\Controllers\BaseAdminController;
+use App\Models\BackendCms\MenuSystem;
+use App\Models\BackendCms\PermissionGroup;
 use App\Models\BackendCms\Users;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
@@ -36,6 +38,13 @@ class BackendUserController extends BaseAdminController
     private $arrUserType = array();
     private $arrPosition = array();
     private $arrActionExecute = array();
+    private $arrTypeMenu = array();
+    private $arrMenuSystem = array();
+
+    private $tabOtherItem1 = 'tabOtherItem1';
+    private $tabOtherItem2 = 'tabOtherItem2';
+    private $tabOtherItem3 = 'tabOtherItem3';
+    private $tabOtherItem4 = 'tabOtherItem4';
 
     private $templateRoot = DIR_PRO_BACKEND . '.Users.';
     private $routerIndex = 'users.index';
@@ -50,6 +59,9 @@ class BackendUserController extends BaseAdminController
         $this->arrUserType = $this->getArrOptionTypeDefine(DEFINE_USER_TYPE);
         $this->arrPosition = $this->getArrOptionTypeDefine(DEFINE_CHUC_VU);
         $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
+
+        $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
+        $this->arrMenuSystem = app(MenuSystem::class)->getListMenuPermission();
     }
 
     private function _outDataView($request, $data)
@@ -58,6 +70,9 @@ class BackendUserController extends BaseAdminController
         $optionGender = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrGender, isset($data['user_gender']) ? $data['user_gender'] : STATUS_INT_MOT);
         $optionUserType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrUserType, isset($data['user_type']) ? $data['user_type'] : STATUS_INT_BA);
         $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['user_position']) ? $data['user_position'] : DEFINE_NHAN_VIEN);
+
+        $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
+        $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -70,6 +85,8 @@ class BackendUserController extends BaseAdminController
             'optionIsActive' => $optionIsActive,
             'optionUserType' => $optionUserType,
             'optionPosition' => $optionPosition,
+            'optionTypeMenu' => $optionTypeMenu,
+            'arrActionExecute' => $this->arrActionExecute,
 
             'arrGender' => $this->arrGender,
             'arrUserType' => $this->arrUserType,
@@ -79,6 +96,10 @@ class BackendUserController extends BaseAdminController
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
             'pageTitle' => $this->pageTitle,
+            'tabOtherItem1' => $this->tabOtherItem1,
+            'tabOtherItem2' => $this->tabOtherItem2,
+            'tabOtherItem3' => $this->tabOtherItem3,
+            'tabOtherItem4' => $this->tabOtherItem4,
 
             'urlIndex' => URL::route($this->routerIndex),
             'urlGetData' => URL::route('users.ajaxGetData'),
@@ -130,17 +151,26 @@ class BackendUserController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
+                $groupMenu = $chooseGroupMenu = [];
+                $arrMenuSystem = $this->arrMenuSystem[CGlobal::project_code];
+                $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
                     $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
+                    //get data group permisss
+                    $groupMenu =  app(PermissionGroup::class)->getDataAll();
                 }
 
                 $this->_outDataView($request, (array)$dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon,[
                         'dataDetail' => $dataDetail,
-                        //tab1
-                        'arrActionExecute' => $this->arrActionExecute,
-                        'arrMenuSystem' => [],
+                        //tab2
+                        'groupMenu' => $groupMenu,
+
+                        //tab2
+                        'arrMenuSystem' => $arrMenuSystem,
+                        'arrCheckMenu' => $arrCheckMenu,
+                        'arrChooseMenu' => $arrChooseMenu,
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,

@@ -67,6 +67,7 @@ class BackendPermissGroupController extends BaseAdminController
             'optionDefineCode' => $optionDefineCode,
             'optionIsActive' => $optionIsActive,
             'optionTypeMenu' => $optionTypeMenu,
+            'arrActionExecute' => $this->arrActionExecute,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -142,7 +143,6 @@ class BackendPermissGroupController extends BaseAdminController
                     ->with(array_merge($this->dataOutCommon,[
                         'dataDetail' => $dataDetail,
                         //tab1
-                        'arrActionExecute' => $this->arrActionExecute,
                         'arrMenuSystem' => $arrMenuSystem,
                         'arrCheckMenu' => $arrCheckMenu,
                         'arrChooseMenu' => $arrChooseMenu,
@@ -188,7 +188,6 @@ class BackendPermissGroupController extends BaseAdminController
                             'dataDetail' => $dataDetail,
                             'paramSearch' => '',
                             'objectId' => $objectId,
-                            'arrActionExecute' => $this->arrActionExecute,
                             'formName' => isset($dataForm['formName'])? $dataForm['formName']:'formName',
                             'titlePopup' => isset($dataForm['titlePopup'])? $dataForm['titlePopup']:'Thông tin chi tiết',
                         ]))->render();
