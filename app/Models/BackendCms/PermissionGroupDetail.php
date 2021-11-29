@@ -115,6 +115,7 @@ class PermissionGroupDetail extends BaseModel
     public function getPermissDetailWithGroupId($group_id = 0)
     {
         $data = Memcache::getCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $group_id);
+        $data = false;
         if (!$data) {
             $data = PermissionGroupDetail::where('group_id', $group_id)->get();
             if ($data) {
@@ -132,8 +133,7 @@ class PermissionGroupDetail extends BaseModel
 
         foreach ($arrPermissForm as $permiss_code => $arrMenu) {
             PermissionGroupDetail::where('group_id', $group_id)
-                ->where('project_code', $project_code)
-                ->whereIn('menu_id', $arrMenu)->delete();
+                ->where('project_code', $project_code)->delete();
         }
         foreach ($arrPermissForm as $permiss_code => $arrMenu) {
             foreach ($arrMenu as $k => $menu_id) {

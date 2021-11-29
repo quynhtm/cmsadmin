@@ -14,14 +14,19 @@
     <tbody >
         @if(isset($arrChooseMenu) && !empty($arrChooseMenu))
             @foreach ($arrChooseMenu as $menu_id => $inforMenu)
-                <tr style="background-color: #E0F3FF">
-                    <td class="text-left middle">{{$inforMenu['menu_name']}}</td>
-                    @foreach ($arrActionExecute as $keyAction => $namea)
-                        <td class="text-center">
-                            <input type="checkbox" name="{{$keyAction}}[][{{$menu_id}}]" id="{{$keyAction}}[{{$menu_id}}]" @if($inforMenu['permiss_code'] == $keyAction) checked @endif>
-                        </td>
-                    @endforeach
-                </tr>
+                    <?php
+                    if (isset($arrMenuSystem[$menu_id])){
+                        unset($arrMenuSystem[$menu_id]);
+                    }
+                    ?>
+                    <tr style="background-color: #E0F3FF">
+                        <td class="text-left middle">[{{$inforMenu['menu_id']}}] {{$inforMenu['menu_name']}}</td>
+                        @foreach ($arrActionExecute as $keyAction => $namea)
+                            <td class="text-center">
+                                <input type="checkbox" name="{{$keyAction}}[][{{$menu_id}}]" id="{{$keyAction}}[{{$menu_id}}]" @if(isset($arrCheckMenu[$menu_id]) && in_array($keyAction,$arrCheckMenu[$menu_id])) checked @endif>
+                            </td>
+                        @endforeach
+                    </tr>
             @endforeach
         @endif
         @if($arrMenuSystem && !empty($arrMenuSystem))
