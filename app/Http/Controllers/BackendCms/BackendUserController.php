@@ -12,6 +12,7 @@ use App\Events\UserSystemEvent;
 use App\Http\Controllers\BaseAdminController;
 use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
+use App\Models\BackendCms\PermissionUserGroup;
 use App\Models\BackendCms\Users;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
@@ -151,13 +152,15 @@ class BackendUserController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
-                $groupMenu = $chooseGroupMenu = [];
+                $groupMenu = $chooseGroupMenu = $arrCheckPer = [];
                 $arrMenuSystem = $this->arrMenuSystem[CGlobal::project_code];
                 $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
                     $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
                     //get data group permisss
                     $groupMenu =  app(PermissionGroup::class)->getDataAll();
+                    $dataCheck = app(PermissionUserGroup::class)->getPermUserGroupByUserId($objectId);
+                    $arrCheckPer = (isset($dataCheck->str_group_id) && trim($dataCheck->str_group_id) != '')? explode(',',trim($dataCheck->str_group_id)):[];
                 }
 
                 $this->_outDataView($request, (array)$dataDetail);
@@ -166,6 +169,7 @@ class BackendUserController extends BaseAdminController
                         'dataDetail' => $dataDetail,
                         //tab2
                         'groupMenu' => $groupMenu,
+                        'arrCheckPer' => $arrCheckPer,
 
                         //tab2
                         'arrMenuSystem' => $arrMenuSystem,
@@ -223,6 +227,23 @@ class BackendUserController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = $htmlView;
                     $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
+                }
+                break;
+            case 'updatePermissUserGroup':
+                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+                $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
+                $str_group_id = isset($dataForm['str_group_id'])? $dataForm['str_group_id']:'';
+                if($objectId > 0){
+                    $this->modelPerUserGroup = new PermissionUserGroup();
+                    $dataGroupUser = ['user_id'=> $objectId,'str_group_id'=> $str_group_id];
+                    $editPerGroupUser = $this->modelPerUserGroup->updatePermUserGroup($dataGroupUser,$objectId);
+                }
+
+                //myDebug($idNew);
+                if ($editPerGroupUser) {
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = '';
+                    $arrAjax['loadPage'] = 1;
                 }
                 break;
             default:

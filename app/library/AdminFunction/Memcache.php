@@ -16,9 +16,15 @@ class Memcache
     const CACHE_DEFINE_SYSTEM_ID = 'CACHE_DEFINE_SYSTEM_ID_';
     const CACHE_DEFINE_BY_DEFINE_CODE = 'CACHE_DEFINE_BY_DEFINE_CODE_';
 
-    const CACHE_MENU_BY_ID = 'cache_menu_by_id_';
+    const CACHE_MENU_BY_ID = 'CACHE_MENU_BY_ID_';
 
-    const CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID = 'cache_permission_group_detail_by_group_id_';
+    const CACHE_PERMISSION_GROUP_ID = 'CACHE_PERMISSION_GROUP_ID_';
+    const CACHE_PERMISSION_GROUP_ALL = 'CACHE_PERMISSION_GROUP_ALL';
+
+    const CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID = 'CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID_';
+
+    const CACHE_PERMISSION_USER_GROUP_BY_USER_ID = 'CACHE_PERMISSION_USER_GROUP_BY_USER_ID_';
+    const CACHE_PERMISSION_GROUP_USER_ID = 'CACHE_PERMISSION_GROUP_USER_ID_';
 
     /************************************************************************************************
      * Cache Admin

@@ -49,18 +49,18 @@ class PermissionUserGroup extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new PermissionUserGroup(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG) ? new PermissionUserGroup() : self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
                     }
                 }
-                if($id <= STATUS_INT_KHONG){
+                if ($id <= STATUS_INT_KHONG) {
                     $item->created_id = $this->getUserId();
                     $item->created_name = $this->getUserName();
                     $item->save();
                     $id = $item->id;
-                }else{
+                } else {
                     $item->updated_id = $this->getUserId();
                     $item->updated_name = $this->getUserName();
                     $item->update();
@@ -76,11 +76,11 @@ class PermissionUserGroup extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_GROUP_USER_ID . $id);
         if (!$data) {
             $data = PermissionUserGroup::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id, $data);
+                Memcache::putCache(Memcache::CACHE_PERMISSION_GROUP_USER_ID . $id, $data);
             }
         }
         return $data;
@@ -104,12 +104,31 @@ class PermissionUserGroup extends BaseModel
 
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
-        if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+        if ($id > 0) {
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_GROUP_USER_ID . $id);
         }
-        if($data){
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);
+        if ($data) {
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_USER_GROUP_BY_USER_ID . $data->user_id);
         }
     }
 
+    public function updatePermUserGroup($data = [], $userId = 0)
+    {
+        if (empty($data) || $userId <= 0)
+            return false;
+        PermissionUserGroup::where('user_id', $userId)->delete();
+        return $this->editItem($data);
+    }
+
+    public function getPermUserGroupByUserId($userId = 0)
+    {
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_USER_GROUP_BY_USER_ID . $userId);
+        if (!$data) {
+            $data = PermissionUserGroup::where('user_id', $userId)->first();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_PERMISSION_USER_GROUP_BY_USER_ID . $userId, $data);
+            }
+        }
+        return $data;
+    }
 }
