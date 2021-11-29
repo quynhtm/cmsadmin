@@ -361,7 +361,11 @@ var jqueryCommon = {
                 $('#loaderRight').hide();
                 if (res.success == 1) {
                     jqueryCommon.showMsg('success', res.message);
-                    $('#' + res.divShowAjax).html(res.html);
+                    if(res.loadPage ==  1){
+                        location.reload();
+                    }else {
+                        $('#' + res.divShowAjax).html(res.html);
+                    }
                 } else {
                     jqueryCommon.showMsg('error', '', 'Thông báo lỗi', res.message);
                 }

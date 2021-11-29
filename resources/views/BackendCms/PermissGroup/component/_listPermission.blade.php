@@ -29,7 +29,7 @@
                     </tr>
             @endforeach
         @endif
-        @if($arrMenuSystem && !empty($arrMenuSystem))
+        @if(isset($arrMenuSystem) && !empty($arrMenuSystem))
             @foreach ($arrMenuSystem as $menu_id2 => $inforMenu2)
                 <tr>
                     <td class="text-left middle">[{{$inforMenu2['menu_id']}}] {{$inforMenu2['menu_name']}}</td>

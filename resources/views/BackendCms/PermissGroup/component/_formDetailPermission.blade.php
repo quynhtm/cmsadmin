@@ -20,6 +20,7 @@
         <input type="hidden" id="group_id" name="group_id" value="{{$objectId}}">
         <input type="hidden" id="url_action" name="url_action" value="{{$urlPostData}}">
         <input type="hidden" id="formName" name="formName" value="other_{{$form_id}}">
+        <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updatePermissGroupDetail">
 
         {{ csrf_field() }}

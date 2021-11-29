@@ -115,7 +115,6 @@ class PermissionGroupDetail extends BaseModel
     public function getPermissDetailWithGroupId($group_id = 0)
     {
         $data = Memcache::getCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $group_id);
-        $data = false;
         if (!$data) {
             $data = PermissionGroupDetail::where('group_id', $group_id)->get();
             if ($data) {

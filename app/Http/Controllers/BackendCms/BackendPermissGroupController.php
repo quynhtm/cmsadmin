@@ -188,6 +188,7 @@ class BackendPermissGroupController extends BaseAdminController
                             'dataDetail' => $dataDetail,
                             'paramSearch' => '',
                             'objectId' => $objectId,
+                            'arrActionExecute' => $this->arrActionExecute,
                             'formName' => isset($dataForm['formName'])? $dataForm['formName']:'formName',
                             'titlePopup' => isset($dataForm['titlePopup'])? $dataForm['titlePopup']:'Thông tin chi tiết',
                         ]))->render();
@@ -201,6 +202,7 @@ class BackendPermissGroupController extends BaseAdminController
                 $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
                 $group_id = isset($dataForm['group_id'])? $dataForm['group_id']:STATUS_INT_KHONG;
                 $project_code = isset($dataForm['s_project_code'])? $dataForm['s_project_code']: STATUS_INT_KHONG;
+                $load_page = isset($dataForm['load_page'])? $dataForm['load_page']: STATUS_INT_KHONG;
 
                 $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
                 $arrPermissForm = $this->modelObj->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
@@ -210,6 +212,7 @@ class BackendPermissGroupController extends BaseAdminController
                 }
                 if ($edit) {
                     $arrAjax['success'] = 1;
+                    $arrAjax['loadPage'] = $load_page;
                     $arrAjax['html'] = '';
                 }
                 break;
