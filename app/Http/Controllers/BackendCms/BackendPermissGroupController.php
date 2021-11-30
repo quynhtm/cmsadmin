@@ -133,7 +133,6 @@ class BackendPermissGroupController extends BaseAdminController
                                 $arrChooseMenu[$gdetail->menu_id] = $arrMenuSystem[$gdetail->menu_id];
                                 $arrCheckMenu[$gdetail->menu_id][] = $gdetail->permiss_code;
                             }
-                            $arrPer[$gdetail->menu_id][] = $gdetail->permiss_code;
                         }
                     }
                 }

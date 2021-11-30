@@ -12,6 +12,7 @@ use App\Events\UserSystemEvent;
 use App\Http\Controllers\BaseAdminController;
 use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
+use App\Models\BackendCms\PermissionUser;
 use App\Models\BackendCms\PermissionUserGroup;
 use App\Models\BackendCms\Users;
 use App\Library\AdminFunction\FunctionLib;
@@ -157,17 +158,27 @@ class BackendUserController extends BaseAdminController
                 $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
                     $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
-                    //get data group permisss
+                    //tab1: get data group permisss
                     $groupMenu =  app(PermissionGroup::class)->getDataAll();
                     $dataCheck = app(PermissionUserGroup::class)->getPermUserGroupByUserId($objectId);
                     $arrCheckPer = (isset($dataCheck->str_group_id) && trim($dataCheck->str_group_id) != '')? explode(',',trim($dataCheck->str_group_id)):[];
+                    //tab2
+                    $groupUser = app(PermissionUser::class)->getPermissUserWithUserId($dataDetail['id']);
+                    if($groupUser){
+                        foreach ($groupUser as $k =>$gdetail){
+                            if (isset($arrMenuSystem[$gdetail->menu_id])){
+                                $arrChooseMenu[$gdetail->menu_id] = $arrMenuSystem[$gdetail->menu_id];
+                                $arrCheckMenu[$gdetail->menu_id][] = $gdetail->permiss_code;
+                            }
+                        }
+                    }
                 }
 
                 $this->_outDataView($request, (array)$dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon,[
                         'dataDetail' => $dataDetail,
-                        //tab2
+                        //tab1
                         'groupMenu' => $groupMenu,
                         'arrCheckPer' => $arrCheckPer,
 
@@ -200,11 +211,11 @@ class BackendUserController extends BaseAdminController
         $request = $_POST;
         $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
         $actionUpdate = 'actionUpdate';
-        $actionUpdate = isset($request['dataForm']['actionUpdate']) ? $request['dataForm']['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
+        $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+        $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
 
         switch ($actionUpdate) {
             case 'updateData':
-                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
                 //myDebug($dataForm,false);
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
                 /*if($this->_validFormData($objectId,$dataForm)){
@@ -230,7 +241,6 @@ class BackendUserController extends BaseAdminController
                 }
                 break;
             case 'updatePermissUserGroup':
-                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
                 $str_group_id = isset($dataForm['str_group_id'])? $dataForm['str_group_id']:'';
                 if($objectId > 0){
@@ -244,6 +254,23 @@ class BackendUserController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = 1;
+                }
+                break;
+            case 'updatePermissUser':
+                $user_id = isset($dataForm['user_id'])? $dataForm['user_id']:STATUS_INT_KHONG;
+                $project_code = isset($dataForm['s_project_code'])? $dataForm['s_project_code']: STATUS_INT_KHONG;
+                $load_page = isset($dataForm['load_page'])? $dataForm['load_page']: STATUS_INT_KHONG;
+
+                $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
+                $arrPermissForm = app(PermissionGroup::class)->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
+
+                if(!empty($arrPermissForm) && $user_id >0 && $project_code >0 ){
+                    $edit = app(PermissionUser::class)->updatePermissUser($arrPermissForm,$user_id, $project_code);
+                }
+                if ($edit) {
+                    $arrAjax['success'] = 1;
+                    $arrAjax['loadPage'] = $load_page;
+                    $arrAjax['html'] = '';
                 }
                 break;
             default:

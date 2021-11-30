@@ -76,11 +76,11 @@ class PermissionUser extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_USER_ID.$id);
         if (!$data) {
             $data = PermissionUser::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id, $data);
+                Memcache::putCache(Memcache::CACHE_PERMISSION_USER_ID.$id, $data);
             }
         }
         return $data;
@@ -105,11 +105,49 @@ class PermissionUser extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_USER_ID.$id);
         }
         if($data){
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_USER_BY_USER_ID.$data->user_id);
         }
     }
 
+    public function updatePermissUser($arrPermissForm = [], $user_id = 0, $project_code = 0)
+    {
+        $edit = false;
+        if (empty($arrPermissForm) || $user_id <= 0 || $project_code <= 0)
+            return $edit;
+
+        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
+            PermissionUser::where('user_id', $user_id)
+                ->where('project_code', $project_code)->delete();
+        }
+        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
+            foreach ($arrMenu as $k => $menu_id) {
+                $arrInsert['user_id'] = $user_id;
+                $arrInsert['project_code'] = $project_code;
+                $arrInsert['menu_id'] = $menu_id;
+                $arrInsert['permiss_code'] = $permiss_code;
+                $arrInsert['is_active'] = STATUS_INT_MOT;
+                if ($this->editItem($arrInsert)) {
+                    $edit = true;
+                }
+            }
+        }
+
+        Memcache::forgetCache(Memcache::CACHE_PERMISSION_USER_BY_USER_ID . $user_id);
+        return $edit;
+    }
+
+    public function getPermissUserWithUserId($user_id = 0)
+    {
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_USER_BY_USER_ID . $user_id);
+        if (!$data) {
+            $data = PermissionUser::where('user_id', $user_id)->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_PERMISSION_USER_BY_USER_ID . $user_id, $data);
+            }
+        }
+        return $data;
+    }
 }

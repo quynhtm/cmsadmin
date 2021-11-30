@@ -17,9 +17,10 @@
     @endif
     <div class="clear1"></div>
     <div class="clear1 marginT15">
-        <input type="hidden" id="objectId" name="objectId" value="{{$objectId}}">
-        <input type="hidden" id="url_action" name="url_action" value="{{$urlPostData}}">
+        <input type="hidden" id="user_id" name="user_id" value="{{$objectId}}">
         <input type="hidden" id="formName" name="formName" value="{{$form_id}}">
+        <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
+        <input type="hidden" id="actionUpdate" name="actionUpdate" value="updatePermissUser">
 
         {{ csrf_field() }}
         <div class="form-group">
