@@ -15,6 +15,7 @@ use App\Library\AdminFunction\Pagging;
 use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
 use App\Models\BackendCms\PermissionGroupDetail;
+use App\Models\BackendCms\PermissionUser;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -48,8 +49,6 @@ class BackendPermissGroupController extends BaseAdminController
         $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
         $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
         $this->arrMenuSystem = app(MenuSystem::class)->getListMenuPermission();
-        //myDebug($this->arrActionExecute,false);
-        //myDebug($this->arrMenuSystem[CGlobal::project_code]);
     }
 
     private function _outDataView($request, $data)
@@ -152,9 +151,42 @@ class BackendPermissGroupController extends BaseAdminController
                         'titlePopup' => $titlePopup,
                     ]))->render();
                 break;
+            case 'getListMenuPermission'://danh sách quyền theo menu
+                $dataDetail = false;
+                $projectCodeMenu = isset($request['projectCodeMenu']) ? (int)$request['projectCodeMenu'] : STATUS_INT_KHONG;
+                $typeSearch = isset($request['typeSearch']) ? $request['typeSearch'] : 'permissGroup';
+                $arrMenuSystem = $this->arrMenuSystem[$projectCodeMenu];
+                $arrChooseMenu = $arrCheckMenu = [];
+                if($objectId > STATUS_INT_KHONG){
+                    $groupDetail = ($typeSearch == 'permissGroup')?$this->modelDetail->getPermissDetailWithGroupId($objectId): app(PermissionUser::class)->getPermissUserWithUserId($objectId);
+                    if($groupDetail){
+                        foreach ($groupDetail as $k =>$gdetail){
+                            if (isset($arrMenuSystem[$gdetail->menu_id])){
+                                $arrChooseMenu[$gdetail->menu_id] = $arrMenuSystem[$gdetail->menu_id];
+                                $arrCheckMenu[$gdetail->menu_id][] = $gdetail->permiss_code;
+                            }
+                        }
+                    }
+                }
+
+                $this->_outDataView($request, (array)$dataDetail);
+                $htmlView = View::make($this->templateRoot . 'component._listPermission')
+                    ->with(array_merge($this->dataOutCommon,[
+                        //tab1
+                        'arrMenuSystem' => $arrMenuSystem,
+                        'arrCheckMenu' => $arrCheckMenu,
+                        'arrChooseMenu' => $arrChooseMenu,
+
+                        'paramSearch' => $paramSearch,
+                        'objectId' => $objectId,
+                        'formName' => $formName,
+                        'titlePopup' => $titlePopup,
+                    ]))->render();
+                break;
             default:
                 break;
         }
+       // myDebug('xxx');
         return $htmlView;
     }
 

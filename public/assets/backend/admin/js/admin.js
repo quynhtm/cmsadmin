@@ -223,10 +223,10 @@ var Admin = {
             }
         });
     },
-    getListMenuPermission: function (objectCode,orgCode,urlAction,typeSearch){
+    getListMenuPermission: function (objectId,urlAction,typeSearch){
         var _token = $('input[name="_token"]').val();
         var projectCodeMenu = $('#s_project_code_menu').val();
-        $('#loaderRight').show();
+        //$('#loaderRight').show();
         $.ajax({
             dataType: 'json',
             type: 'POST',
@@ -234,9 +234,10 @@ var Admin = {
             data: {
                 '_token': _token,
                 'projectCodeMenu': projectCodeMenu,
-                'objectCode': objectCode,
-                'orgCode': orgCode,
+                'objectId': objectId,
                 'typeSearch': typeSearch,
+                'funcAction': 'getListMenuPermission',
+                'functionAction': '_functionGetData',
             },
             success: function (res) {
                 $('#loaderRight').hide();

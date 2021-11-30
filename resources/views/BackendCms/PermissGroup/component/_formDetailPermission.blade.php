@@ -2,11 +2,10 @@
     @if($is_root || $permission_edit || $permission_add)
     <div class="row">
         <?php
-            $groupCode = (isset($data->GROUP_CODE))?$data->GROUP_CODE:'';
-            $orgCode = (isset($data->ORG_CODE))?$data->ORG_CODE:'';
+            $objectId = (isset($dataDetail['group_id'])) ? $dataDetail['group_id'] : 0;
         ?>
         <div class="form-group col-lg-4">
-            <select name="s_project_code" id="s_project_code_menu" class="form-control input-sm" onchange="Admin.getListMenuPermission('{{$groupCode}}','{{$orgCode}}','{{URL::route('menuGroup.ajaxGetListMenuPermission')}}','groupMenu')">
+            <select name="s_project_code" id="s_project_code_menu" class="form-control input-sm" onchange="Admin.getListMenuPermission('{{$objectId}}','{{$urlGetData}}','permissGroup')">
                 {!! $optionTypeMenu !!}}
             </select>
         </div>
@@ -35,9 +34,6 @@
     $(document).ready(function(){
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});
     });
-
-    //hiển thị data in form
-    showDataIntoForm('form_other_{{$form_id}}');
 
     //tim kiem
     var config = {

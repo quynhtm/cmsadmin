@@ -1,12 +1,8 @@
 {{Form::open(array('method' => 'POST','class'=>$form_id,'id'=>'form_other_'.$form_id,'role'=>'form','files' => true))}}
     @if($is_root || $permission_edit || $permission_add)
     <div class="row">
-        <?php
-            $groupCode = (isset($data->GROUP_CODE))?$data->GROUP_CODE:'';
-            $orgCode = (isset($data->ORG_CODE))?$data->ORG_CODE:'';
-        ?>
         <div class="form-group col-lg-4">
-            <select name="s_project_code" id="s_project_code_menu" class="form-control input-sm" onchange="Admin.getListMenuPermission('{{$groupCode}}','{{$orgCode}}','{{URL::route('menuGroup.ajaxGetListMenuPermission')}}','groupMenu')">
+            <select name="s_project_code" id="s_project_code_menu" class="form-control input-sm" onchange="Admin.getListMenuPermission('{{$objectId}}','{{URL::route('permissGroup.ajaxGetData')}}','permissUser')">
                 {!! $optionTypeMenu !!}}
             </select>
         </div>
