@@ -1,0 +1,22 @@
+.uk{
+  &-offcanvas{
+    &-overlay{
+      &:before{
+        @extend .uk-modal;
+      }
+    }
+    &-close{
+      top: 16px;
+      right: 16px;
+    }
+    &-bar{
+      background: #FFFFFF;
+      color: #212121;
+      padding: 16px;
+      padding-top: calc(40px + 24px);
+      >*{
+        color: #212121 !important;
+      }
+    }
+  }
+}

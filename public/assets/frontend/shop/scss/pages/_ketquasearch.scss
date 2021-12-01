@@ -1,0 +1,8 @@
+.ketquasearch{
+  &__title{
+    color: #212121;
+    line-height: (36/24);
+    @extend .fz-24;
+    font-family: $font-Mulish-Bold;
+  }
+}

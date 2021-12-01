@@ -1,0 +1,35 @@
+@function base($i){
+  @return ($i*$base-font)/strip-unit($base-design-font);
+}
+
+// Scale font-size responsive
+@function scale_10($j){
+  @return $j*1;
+}
+@function scale_9($j){
+  @return $j*0.9;
+}
+@function scale_8($j){
+  @return $j*0.8;
+}
+@function scale_7($j){
+  @return $j*0.7;
+}
+@function scale_6($j){
+  @return $j*0.6;
+}
+@function scale_5($j){
+  @return $j*0.5;
+}
+@function scale_4($j){
+  @return $j*0.4;
+}
+@function scale_3($j){
+  @return $j*0.3;
+}
+@function scale_2($j){
+  @return $j*0.2;
+}
+@function scale_1($j){
+  @return $j*0.1;
+}

@@ -1,0 +1,79 @@
+.faq{
+  &__section{
+    padding-top: 24px;
+    padding-bottom: 40px;
+    @include media-breakpoint-up('m'){
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+  }
+  &__title{
+    color: #000000;
+    line-height: (36/24);
+    @extend .fz-24;
+    font-family: $font-Mulish-Bold;
+  }
+  &__tab{
+    &:before{
+      @include media-breakpoint-up('m'){
+        opacity: 0;
+      }
+    }
+    >li{
+      &.uk-active{
+        >a{
+          color: #52B4F3;
+          font-family: $font-Mulish-Bold;
+          @include media-breakpoint-up('m'){
+            border-color: transparent;
+          }
+        }
+      }
+      >a{
+        text-transform: inherit;
+        color: #212121;
+        @extend .fz-16;
+        font-family: $font-Mulish-Regular;
+      }
+    }
+  }
+  &__accordion{
+    &__li{
+      margin: 0 !important;
+      padding: 16px;
+      padding-right: 0;
+      padding-left: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      @include media-breakpoint-up('m'){
+        padding-left: 16px;
+        padding-right: 10px;
+      }
+      &:last-child{
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+    &__title{
+      &:before{
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.40234 9.67969C7.71875 9.99609 8.24609 9.99609 8.5625 9.67969L15.418 2.85938C15.7344 2.50781 15.7344 1.98047 15.418 1.66406L14.6094 0.855469C14.293 0.539062 13.7656 0.539062 13.4141 0.855469L8 6.26953L2.55078 0.855469C2.19922 0.539062 1.67188 0.539062 1.35547 0.855469L0.546875 1.66406C0.230469 1.98047 0.230469 2.50781 0.546875 2.85938L7.40234 9.67969Z' fill='%23888888'/%3E%3C/svg%3E%0A");
+        .uk-open &{
+          background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.5625 0.855469C8.24609 0.539062 7.71875 0.539062 7.40234 0.855469L0.546875 7.67578C0.230469 8.02734 0.230469 8.55469 0.546875 8.87109L1.35547 9.67969C1.67188 9.99609 2.19922 9.99609 2.55078 9.67969L8 4.26562L13.4141 9.67969C13.7656 9.99609 14.293 9.99609 14.6094 9.67969L15.418 8.87109C15.7344 8.55469 15.7344 8.02734 15.418 7.67578L8.5625 0.855469Z' fill='%2352B4F3'/%3E%3C/svg%3E%0A");
+        }
+      }
+      color: #2B2B2B;
+      line-height: (27/18);
+      @extend .fz-18;
+      font-family: $font-Mulish-SemiBold;
+      .uk-open> &{
+        color: #52B4F3;
+      }
+    }
+    &__content{
+      margin-top: 16px;
+      p{
+        @extend .lienhe__section3__desc;
+      }
+    }
+  }
+}

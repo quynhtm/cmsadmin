@@ -1,0 +1,102 @@
+.footer{
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: contain;
+  @include media-breakpoint-up('l'){
+    background-size: cover;
+  }
+  &__top{
+    height: 16px;
+    background: linear-gradient(90deg, #52B4F3 0%, #96C760 100%);
+  }
+  &__center{
+    padding-top: 24px;
+    padding-bottom: 24px;
+    @include media-breakpoint-up('m'){
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    &__desc{
+      @extend .footer__dc1;
+      font-family: $font-Mulish-Regular !important;
+    }
+    &__title{
+      @extend .fz-24;
+      color: #212121;
+      line-height: (36/24);
+      margin-top: 0;
+      font-family: $font-Mulish-Bold;
+      margin-bottom: 16px;
+    }
+    &__list2{
+      >li{
+        @extend .footer__dc1;
+        padding-left: 23px;
+        color: #7BB98D;
+        background-position: left center;
+        background-repeat: no-repeat;
+        &:nth-child(1){
+          background-image: url("data:image/svg+xml,%3Csvg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3125 0.625H1.6875C0.949219 0.625 0.375 1.22656 0.375 1.9375V11.5625C0.375 12.3008 0.949219 12.875 1.6875 12.875H11.3125C12.0234 12.875 12.625 12.3008 12.625 11.5625V1.9375C12.625 1.22656 12.0234 0.625 11.3125 0.625ZM10.8477 9.04688L10.4375 10.8242C10.4102 11.0156 10.2461 11.125 10.0547 11.125C5.67969 11.125 2.125 7.59766 2.125 3.19531C2.125 3.00391 2.26172 2.86719 2.42578 2.8125L4.20312 2.40234C4.23047 2.40234 4.25781 2.40234 4.3125 2.375C4.47656 2.40234 4.61328 2.48438 4.66797 2.64844L5.48828 4.5625C5.51562 4.58984 5.51562 4.64453 5.54297 4.69922C5.51562 4.83594 5.46094 4.94531 5.37891 5.02734L4.33984 5.875C4.96875 7.21484 6.03516 8.28125 7.375 8.91016L8.22266 7.87109C8.30469 7.78906 8.41406 7.73438 8.55078 7.70703C8.60547 7.73438 8.66016 7.73438 8.6875 7.76172L10.6016 8.58203C10.7656 8.63672 10.8477 8.77344 10.875 8.9375C10.8477 8.99219 10.8477 9.01953 10.8477 9.04688Z' fill='%237BB98D'/%3E%3C/svg%3E%0A");
+        }
+        &:nth-child(2){
+          background-image: url("data:image/svg+xml,%3Csvg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.3125 0.625H1.6875C0.949219 0.625 0.375 1.22656 0.375 1.9375V11.5625C0.375 12.3008 0.949219 12.875 1.6875 12.875H11.3125C12.0234 12.875 12.625 12.3008 12.625 11.5625V1.9375C12.625 1.22656 12.0234 0.625 11.3125 0.625ZM5.24219 6.94141C2.75391 5.13672 2.78125 5.13672 2.125 4.61719V3.90625C2.125 3.55078 2.39844 3.25 2.78125 3.25H10.2188C10.5742 3.25 10.875 3.55078 10.875 3.90625V4.61719C10.1914 5.13672 10.2188 5.13672 7.73047 6.94141C7.45703 7.13281 6.88281 7.65234 6.5 7.625C6.08984 7.65234 5.51562 7.13281 5.24219 6.94141ZM10.875 5.71094V9.59375C10.875 9.97656 10.5742 10.25 10.2188 10.25H2.78125C2.39844 10.25 2.125 9.97656 2.125 9.59375V5.71094C2.48047 6.01172 3.02734 6.42188 4.72266 7.625C5.10547 7.92578 5.76172 8.52734 6.47266 8.5C7.21094 8.52734 7.89453 7.89844 8.25 7.625C9.94531 6.42188 10.4922 6.01172 10.875 5.71094Z' fill='%237BB98D'/%3E%3C/svg%3E%0A");
+        }
+      }
+    }
+    &__title1{
+      margin: 0;
+      @extend .footer__dc1;
+      color: #212121;
+    }
+    &__list1{
+      margin: 0;
+      >li{
+        &:before{
+          background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='%237D7D7D' cx='3' cy='3' r='3' /%3E%3C/svg%3E");
+        }
+        @extend .footer__dc1;
+        font-family: $font-Mulish-Regular !important;
+        margin: 0 !important;
+        color: #7D7D7D;
+      }
+    }
+    &__item16{
+      &:nth-child(n+2){
+        margin-top: 16px;
+      }
+    }
+    &__item24{
+      &:nth-child(n+2){
+        margin-top: 16px;
+        @include media-breakpoint-up('m'){
+          margin-top: 24px;
+        }
+      }
+    }
+    &__list{
+      margin: 0;
+      >li{
+        &:before{
+          background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='%237BB98D' cx='3' cy='3' r='3' /%3E%3C/svg%3E");
+        }
+        >a{
+          @extend .footer__dc1;
+          color: #7BB98D;
+        }
+      }
+    }
+  }
+  &__bottom{
+    background: #7BB98D;
+    padding: 12px 0;
+    &__txtCopyright{
+      color: #ffffff;
+      @extend .footer__dc1;
+    }
+  }
+  &__dc1{
+    @extend .fz-14;
+    line-height: (21/14);
+    font-family: $font-Mulish-Bold;
+  }
+}

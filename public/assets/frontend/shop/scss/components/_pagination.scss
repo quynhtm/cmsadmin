@@ -1,0 +1,32 @@
+.pagination{
+  margin: 0;
+  >li{
+    &:nth-child(n+2){
+      margin-left: 5px;
+      @include media-breakpoint-up('m'){
+        margin-left: 10px;
+      }
+    }
+    >*{
+      $x:38px;
+      width: #{$x};
+      height: #{$x};
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: 1px solid #EBEBEB;
+      box-sizing: border-box;
+      padding: 0;
+      @extend .fz-14;
+      //font-family: $font-SVNGilroy-Bold;
+    }
+    &.uk-active{
+      >*{
+        color: #FFFFFF;
+        background: #52B4F3;
+      }
+    }
+  }
+}

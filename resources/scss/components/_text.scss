@@ -1,0 +1,12 @@
+@mixin line-clamp($i){
+  display: -webkit-box;
+  -webkit-line-clamp: #{$i};
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+$j: 1,2,3,4,5;
+@each $i in $j {
+  .line-clamp-#{$i}{
+    @include line-clamp($i);
+  }
+}

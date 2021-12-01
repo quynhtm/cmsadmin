@@ -1,0 +1,32 @@
+$width-container: 1290px;
+// Fonts families
+$font-primary: 'Arial Regular',sans-serif;
+$font-Roboto: 'Roboto Regular',sans-serif;
+$font-Roboto-Bold: 'Roboto Bold',sans-serif;
+$font-Roboto-Medium: 'Roboto Medium',sans-serif;
+$font-Roboto-LightItalic: 'Roboto Light Italic',sans-serif;
+$font-Roboto-Black: 'Roboto Black',sans-serif;
+$font-Roboto-BoldItalic: 'Roboto Bold Italic',sans-serif;
+$font-Verdana: 'Verdana Regular',sans-serif;
+$font-Verdana-Bold: 'Verdana Bold',sans-serif;
+
+$font-Mulish-Regular: 'Mulish Regular',sans-serif;
+$font-Mulish-Bold: 'Mulish Bold',sans-serif;
+$font-Mulish-SemiBold: 'Mulish SemiBold',sans-serif;
+//$font-secondary: 'Playfair Display',sans-serif;
+
+// Font-size base
+$base-font: 14px !default;
+$base-design-font: 14px !default;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$grid-breakpoints: (
+  xs: 375px,
+  s: 640px,
+  m: 960px,
+  l: 1200px,
+  xl: 1600px
+) !default;

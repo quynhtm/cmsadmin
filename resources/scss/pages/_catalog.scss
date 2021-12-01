@@ -1,0 +1,67 @@
+.catalog{
+  &__section{
+    padding-top: 23px;
+    padding-bottom: 40px;
+    background: #F8F8F8;
+    @include media-breakpoint-up('m'){
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+  }
+  &__txtSearch{
+    color: #212121;
+    line-height: (21/14);
+    @extend .fz-14;
+    font-family: $font-Mulish-SemiBold;
+  }
+  &__grid{
+    @include media-breakpoint-up('m'){
+      margin-bottom: 24px;
+    }
+  }
+  &__card{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    padding: 16px;
+    &__title{
+      color: #212121;
+      line-height: (36/24);
+      @extend .fz-24;
+      font-family: $font-Mulish-Bold;
+      margin: 0;
+      margin-bottom: 16px;
+    }
+    &__txt{
+      color: #888888;
+      line-height: (24/16);
+      @extend .fz-16;
+      font-family: $font-Mulish-Regular;
+    }
+  }
+}
+.boloc__btnFillter {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14 13.6972C14 13.4998 14.0584 13.3068 14.1679 13.1425L19.2265 5.5547C19.6695 4.89015 19.1931 4 18.3944 4H5.60551C4.80681 4 4.33042 4.89015 4.77346 5.5547L9.83201 13.1425C9.94152 13.3068 9.99996 13.4998 9.99996 13.6972V19.5873C9.99996 20.3727 10.8639 20.8515 11.53 20.4353L13.53 19.1853C13.8223 19.0025 14 18.682 14 18.3373V13.6972ZM16 14.3028C16 14.1054 16.0584 13.9123 16.1679 13.7481L20.8906 6.6641C22.2197 4.67044 20.7905 2 18.3944 2H5.60551C3.20942 2 1.78025 4.67043 3.10936 6.6641L7.83201 13.7481C7.94152 13.9123 7.99996 14.1054 7.99996 14.3028V19.5873C7.99996 21.9436 10.5918 23.3801 12.59 22.1313L14.59 20.8813C15.4671 20.333 16 19.3716 16 18.3373V14.3028Z' fill='%23777E91'/%3E%3C/svg%3E%0A");
+  position: relative;
+  &:before{
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: -1px;
+    /* Sub/01 */
+
+    background: #E73C3D;
+    /* Neutral/08 */
+
+    border: 2px solid #FCFCFD;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    box-sizing: content-box;
+  }
+}
