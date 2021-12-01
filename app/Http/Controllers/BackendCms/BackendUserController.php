@@ -226,15 +226,15 @@ class BackendUserController extends BaseAdminController
                 if ($idNew > 0) {
                     $dataDetail = $this->modelObj->getItemById($idNew);
                     $this->_outDataView($request, (array)$dataDetail);
-                    $htmlView = View::make($this->templateRoot . 'component.popupDetail')
+                    /*$htmlView = View::make($this->templateRoot . 'component.popupDetail')
                         ->with(array_merge($this->dataOutCommon,[
                             'dataDetail' => $dataDetail,
                             'paramSearch' => '',
                             'objectId' => $objectId,
                             'formName' => isset($dataForm['formName'])? $dataForm['formName']:'formName',
                             'titlePopup' => isset($dataForm['titlePopup'])? $dataForm['titlePopup']:'Thông tin chi tiết',
-                        ]))->render();
-
+                        ]))->render();*/
+                    $htmlView = '';
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = $htmlView;
                     $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
