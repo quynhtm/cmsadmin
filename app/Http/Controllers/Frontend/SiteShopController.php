@@ -33,6 +33,53 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.home');
     }
 
+    public function searchProduct()
+    {
+        return view('Frontend.Shop.Pages.listProductWithDepart');
+    }
+
+    public function indexNew()
+    {
+        return view('Frontend.Shop.Pages.listNews');
+    }
+
+    public function listProductNew()
+    {
+        $titleSearchName = env('PROJECT_NAME') . ' - Sản phẩm mới';
+        $pageNo = (int)Request::get('page_no', 1);
+        $limit = LIMIT_RECORD_40;
+        $offset = ($pageNo - 1) * $limit;
+        $search = $data = array();
+
+        $search['field_order'] = 'product_id';
+        $data = app(Product::class)->getProductForSite($search, $limit, $offset, false);
+        $dataSearch = $data['data'];
+        $paging = '';
+
+        //seo
+        $meta_title = $titleSearchName;
+        $meta_keywords = $titleSearchName;
+        $meta_description = $titleSearchName;
+        $meta_img = '';
+        $url_detail = URL::route('site.listProductNew');
+        $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
+
+        $arrListCampaign = $this->commonService->getCampaignOnsite();
+        FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+
+        return view('site.SiteShop.listProductWithDepart', array_merge([
+            'paging' => $paging,
+            'total' => $limit,
+            'arrShowCampaign' => $arrShowCampaign,
+            'is_category' => STATUS_INT_HAI,
+            'titleSearchName' => 'Sản phẩm mới',
+            'departName' => '',
+            'departId' => 0,
+            'dataSearch' => $dataSearch,
+            'dataCateWithDepart' => []
+        ], $this->outDataCommon));
+    }
+
     /**
      * @param $cate_name
      * @param $pro_id
@@ -88,44 +135,6 @@ class SiteShopController extends BaseSiteController
             ], $this->outDataCommon));
         }
         return Redirect::route('site.home');
-    }
-
-    public function listProductNew()
-    {
-        $titleSearchName = env('PROJECT_NAME') . ' - Sản phẩm mới';
-        $pageNo = (int)Request::get('page_no', 1);
-        $limit = LIMIT_RECORD_40;
-        $offset = ($pageNo - 1) * $limit;
-        $search = $data = array();
-
-        $search['field_order'] = 'product_id';
-        $data = app(Product::class)->getProductForSite($search, $limit, $offset, false);
-        $dataSearch = $data['data'];
-        $paging = '';
-
-        //seo
-        $meta_title = $titleSearchName;
-        $meta_keywords = $titleSearchName;
-        $meta_description = $titleSearchName;
-        $meta_img = '';
-        $url_detail = URL::route('site.listProductNew');
-        $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
-
-        $arrListCampaign = $this->commonService->getCampaignOnsite();
-        FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
-
-        $this->getCommonSite();
-        return view('site.SiteShop.listProductWithDepart', array_merge([
-            'paging' => $paging,
-            'total' => $limit,
-            'arrShowCampaign' => $arrShowCampaign,
-            'is_category' => STATUS_INT_HAI,
-            'titleSearchName' => 'Sản phẩm mới',
-            'departName' => '',
-            'departId' => 0,
-            'dataSearch' => $dataSearch,
-            'dataCateWithDepart' => []
-        ], $this->outDataCommon));
     }
 
     /**
@@ -367,59 +376,6 @@ class SiteShopController extends BaseSiteController
      * Search tìm kiếm theo tên sản phẩm
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function searchProduct()
-    {
-        $product_name = Request::get('title_search', '');
-        $depart_id = (int)Request::get('depart_search', STATUS_INT_KHONG);
-        $token = Request::get('_token', '');
-        /*if(Session::token() !== $token){
-            return Redirect::route('site.home');
-        }*/
-        if (trim($product_name) == '' && $depart_id == 0) {
-            return Redirect::route('site.home');
-        }
-        $pageNo = (int)Request::get('page_no', 1);
-        $limit = LIMIT_RECORD_40;
-        $offset = ($pageNo - 1) * $limit;
-        $search = $data = array();
-
-        $search['product_name'] = $search_page['title_search'] = Security::cleanText($product_name);
-        $search['depart_id'] = $search_page['depart_search'] = $depart_id;
-
-        $data = app(Product::class)->getProductForSite($search, $limit, $offset, true);
-        $total = $data['total'];
-        $dataSearch = $data['data'];
-        $paging = $total > 0 ? Pagging::getNewPager(3, $pageNo, $total, $limit, $search_page) : '';
-
-        //danh mục của sản phẩm theo departs
-        $dataCateWithDepart = ($total > 0) ? app(Product::class)->getListCateSearchHome($depart_id, $product_name) : [];
-
-        $this->getCommonSite();
-        if (trim($product_name) == '') {
-            $department = app(Department::class)->getItemById($depart_id);
-            $product_name = $department->department_name;
-        }
-        $titleSearchName = 'Kết quả tìm kiếm - ' . $product_name;
-
-        //seo
-        $meta_title = env('PROJECT_NAME') . ' - ' . $titleSearchName;
-        $meta_keywords = env('PROJECT_NAME') . ' - ' . $titleSearchName;
-        $meta_description = env('PROJECT_NAME') . ' - ' . $titleSearchName;
-        $meta_img = '';
-        $url_detail = URL::route('site.searchProduct', array('depart_search' => (int)$depart_id, 'title_search' => strtolower(safe_title($product_name))));
-        $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
-
-        return view('site.SiteShop.listProductWithDepart', array_merge([
-            'paging' => $paging,
-            'total' => $total,
-            'arrShowCampaign' => [],
-            'is_category' => ($total > 0) ? STATUS_INT_KHONG : STATUS_INT_MOT,
-            'titleSearchName' => $titleSearchName,
-            'dataCateWithDepart' => convertToArray($dataCateWithDepart),
-            'dataSearch' => ($total > 0) ? $dataSearch : [],
-        ], $this->outDataCommon));
-    }
-
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -589,56 +545,6 @@ class SiteShopController extends BaseSiteController
     /***************************************************************************************************
      * Phần tin tức
     *****************************************************************************************************/
-    public function indexNew()
-    {
-        $titleSearchName = env('PROJECT_NAME') . ' - Tin tức';
-        $pageNo = (int)Request::get('page_no', 1);
-        $limit = LIMIT_RECORD_30;
-        $offset = ($pageNo - 1) * $limit;
-        $search = $data = array();
-        $dataTop = $dataCenter = $dataLeft = array();
-
-        $search['news_title'] = addslashes(Request::get('news_title', ''));
-        $search['news_status'] = (int)Request::get('news_status', STATUS_INT_MOT);
-        $search['news_type'] = (int)Request::get('news_type', STATUS_DEFAULT);
-        $search['field_get'] = 'news_id,news_title,news_type,news_desc_sort,news_image';//cac truong can lay
-        $data = app(News::class)->searchByCondition($search, $limit, $offset, true);
-        if($data['data']){
-            foreach ($data['data'] as $key =>$news){
-                if($key == 0){
-                    $dataBig = $news;
-                }elseif($key < 4){
-                    array_push($dataTop,$news);
-                }elseif ($key < 19){
-                    array_push($dataCenter,$news);
-                }elseif ($key < 29){
-                    array_push($dataLeft,$news);
-                }else{
-                    break;
-                }
-            }
-        }
-        //myDebug($dataBig);
-        //seo
-        $meta_title = $titleSearchName;
-        $meta_keywords = $titleSearchName;
-        $meta_description = $titleSearchName;
-        $meta_img = '';
-        $url_detail = URL::route('site.indexNew');
-        $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
-
-        //sản phẩm
-        $arrProductNew = $this->commonService->getProductNew();
-
-        $this->getCommonSite();
-        return view('site.SiteShop.listNews', array_merge([
-            'dataBig' => $dataBig,
-            'dataTop' => $dataTop,
-            'dataCenter' => $dataCenter,
-            'dataLeft' => $dataLeft,
-            'arrProductNew' => $arrProductNew['pro_new'][0]['product'],
-        ], $this->outDataCommon));
-    }
     public function detailNew($cat_id, $new_id, $new_name)
     {
         if ($new_id <= 0) {

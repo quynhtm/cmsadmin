@@ -2311,7 +2311,8 @@ body {
 
 @media (min-width: 960px) {
     .home__section {
-        padding-top: 24px;
+        /*padding-top: 24px;*/
+        padding-top: 0px;
         padding-bottom: 60px
     }
 }

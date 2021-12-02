@@ -11,9 +11,8 @@
             {{--Header--}}
             @include('Frontend.Shop.Layouts.header')
             {{--Content--}}
-            <div class="home__section" uk-height-viewport="offset-top: true;offset-bottom: true">
-                @yield('content')
-            </div>
+            @yield('content')
+
         </div>
         {{--Footer--}}
         @include('Frontend.Shop.Layouts.footer')
