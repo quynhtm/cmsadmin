@@ -1,3 +1,4 @@
+
 <!--footer-->
 <div id="footer" class="footer" data-src="images/MaskGroup__footer.png" uk-img>
     <!--footer__top-->
@@ -266,3 +267,4 @@
         UIkit.modal('#modal-wishList').hide();
     }
 </script>
+

@@ -30,7 +30,7 @@ class SiteShopController extends BaseSiteController
 
     public function index()
     {
-        return view('Frontend.Shop.Demo.indexDemo');
+        return view('Frontend.Shop.Pages.home');
     }
 
     /**
