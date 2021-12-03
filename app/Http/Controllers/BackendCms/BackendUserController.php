@@ -158,6 +158,7 @@ class BackendUserController extends BaseAdminController
                 $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
                     $dataDetail = $this->modelObj->getItemById($objectId);
+                    $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                     //tab1: get data group permisss
                     $groupMenu =  app(PermissionGroup::class)->getDataAll();
                     $dataCheck = app(PermissionUserGroup::class)->getPermUserGroupByUserId($objectId);
@@ -205,7 +206,7 @@ class BackendUserController extends BaseAdminController
      * */
     public function ajaxPostData()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
         $request = $_POST;
@@ -274,7 +275,7 @@ class BackendUserController extends BaseAdminController
 
     public function ajaxGetData()
     {
-        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT])) {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
         $dataRequest = $_POST;

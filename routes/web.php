@@ -12,6 +12,8 @@ require __DIR__.'/frontend.php';
 
 Route::group(array('prefix' => 'manager', 'before' => ''), function () {
     require __DIR__ . '/'.DIR_PRO_BACKEND.'/routeBackend.php';
+    require __DIR__ . '/'.DIR_PRO_WEB.'/routeWeb.php';
+    require __DIR__ . '/'.DIR_PRO_SHOP.'/routeShop.php';
 
     require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeAdmin.php';
     require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeOpenID.php';

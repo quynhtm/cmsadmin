@@ -16,12 +16,15 @@ class Memcache
     const CACHE_DEFINE_SYSTEM_ID = 'CACHE_DEFINE_SYSTEM_ID_';
     const CACHE_DEFINE_BY_DEFINE_CODE = 'CACHE_DEFINE_BY_DEFINE_CODE_';
 
+    const CACHE_USER_ADMIN_ID = 'CACHE_USER_ADMIN_ID_';
+
     const CACHE_MENU_BY_ID = 'CACHE_MENU_BY_ID_';
 
     const CACHE_PERMISSION_GROUP_ID = 'CACHE_PERMISSION_GROUP_ID_';
     const CACHE_PERMISSION_GROUP_ALL = 'CACHE_PERMISSION_GROUP_ALL';
 
     const CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID = 'CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID_';
+    const CACHE_PERMISSION_GROUP_DETAIL_ID = 'CACHE_PERMISSION_GROUP_DETAIL_ID_';
 
     const CACHE_PERMISSION_USER_BY_USER_ID = 'CACHE_PERMISSION_USER_BY_USER_ID_';
     const CACHE_PERMISSION_USER_ID = 'CACHE_PERMISSION_USER_ID_';
@@ -30,15 +33,18 @@ class Memcache
     const CACHE_PERMISSION_GROUP_USER_ID = 'CACHE_PERMISSION_GROUP_USER_ID_';
 
     /************************************************************************************************
+     * Cache Web
+     ************************************************************************************************/
+    const CACHE_PARTNER_ID = 'CACHE_PARTNER_ID_';
+
+    /************************************************************************************************
      * Cache Admin
      ************************************************************************************************/
-
     const CACHE_MENU_BY_TAB_ID = 'cache_menu_by_tab_id_';
     const CACHE_LIST_MENU_PERMISSION = 'cache_list_menu_permission';
     const CACHE_ALL_PARENT_MENU = 'cache_all_parent_menu_';
     const CACHE_TREE_MENU = 'cache_tree_menu_';
 
-    const CACHE_USER_ADMIN_ID = 'cache_user_admin_id_';
     const CACHE_ALL_USER_ADMIN = 'cache_all_user_admin';
     const CACHE_OPTION_USER = 'cache_option_user';
     const CACHE_INFO_USER = 'cache_info_user';
