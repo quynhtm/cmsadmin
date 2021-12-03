@@ -9,6 +9,6 @@
         @include('BackendCms.PermissGroup.component.formSearch')
 
         {{--list data---}}
-        `@include('BackendCms.PermissGroup.component.listData')
+        @include('BackendCms.PermissGroup.component.listData')
     {{ Form::close() }}
 @stop

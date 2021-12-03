@@ -76,11 +76,11 @@ class PermissionGroupDetail extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id);
+        $data = Memcache::getCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_ID . $id);
         if (!$data) {
             $data = PermissionGroupDetail::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id, $data);
+                Memcache::putCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_ID . $id, $data);
             }
         }
         return $data;
@@ -105,7 +105,7 @@ class PermissionGroupDetail extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID . $id);
+            Memcache::forgetCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_ID . $id);
         }
         if ($data) {
             Memcache::forgetCache(Memcache::CACHE_PERMISSION_GROUP_DETAIL_BY_GROUP_ID . $data->group_id);

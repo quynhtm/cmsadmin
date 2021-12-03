@@ -259,7 +259,7 @@ var jqueryCommon = {
                 $('.submitFormItem').prop("disabled", false);
                 if (res.success == 1) {
                     jqueryCommon.showMsg('success', res.message);
-                    if (load_page == 1) {
+                    if (load_page == 1 || res.loadPage == 1) {
                         location.reload();
                     } else {
                         $('#' + res.divShowInfor).html(res.html);

@@ -157,7 +157,7 @@ class BackendUserController extends BaseAdminController
                 $arrMenuSystem = $this->arrMenuSystem[CGlobal::project_code];
                 $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
-                    $dataDetail = (isset($dataInput['dataItem']) && !empty($dataInput['dataItem'])) ? $dataInput['dataItem'] : $this->modelObj->getItemById($objectId);
+                    $dataDetail = $this->modelObj->getItemById($objectId);
                     //tab1: get data group permisss
                     $groupMenu =  app(PermissionGroup::class)->getDataAll();
                     $dataCheck = app(PermissionUserGroup::class)->getPermUserGroupByUserId($objectId);
@@ -226,18 +226,11 @@ class BackendUserController extends BaseAdminController
                 if ($idNew > 0) {
                     $dataDetail = $this->modelObj->getItemById($idNew);
                     $this->_outDataView($request, (array)$dataDetail);
-                    /*$htmlView = View::make($this->templateRoot . 'component.popupDetail')
-                        ->with(array_merge($this->dataOutCommon,[
-                            'dataDetail' => $dataDetail,
-                            'paramSearch' => '',
-                            'objectId' => $objectId,
-                            'formName' => isset($dataForm['formName'])? $dataForm['formName']:'formName',
-                            'titlePopup' => isset($dataForm['titlePopup'])? $dataForm['titlePopup']:'Thông tin chi tiết',
-                        ]))->render();*/
-                    $htmlView = '';
+
                     $arrAjax['success'] = 1;
-                    $arrAjax['html'] = $htmlView;
-                    $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
+                    $arrAjax['html'] = '';
+                    $arrAjax['loadPage'] = ($objectId >0) ? 0 : 1;
+                    $arrAjax['divShowInfor'] = '';
                 }
                 break;
             case 'updatePermissUserGroup':
@@ -253,7 +246,7 @@ class BackendUserController extends BaseAdminController
                 if ($editPerGroupUser) {
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
-                    $arrAjax['loadPage'] = 1;
+                    $arrAjax['loadPage'] = 0;
                 }
                 break;
             case 'updatePermissUser':

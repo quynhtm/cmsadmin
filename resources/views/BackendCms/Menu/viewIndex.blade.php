@@ -9,6 +9,6 @@
         {{--@include('BackendCms.Menu.component.formSearch')--}}
 
         {{--list data---}}
-        `@include('BackendCms.Menu.component.listData')
+        @include('BackendCms.Menu.component.listData')
     {{ Form::close() }}
 @stop

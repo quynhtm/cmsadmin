@@ -83,11 +83,11 @@ class Users extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_USER_ADMIN_ID.$id);
         if (!$data) {
             $data = Users::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id, $data);
+                Memcache::putCache(Memcache::CACHE_USER_ADMIN_ID.$id, $data);
             }
         }
         return $data;
@@ -112,7 +112,7 @@ class Users extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_USER_ADMIN_ID.$id);
         }
         if($data){
             Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);

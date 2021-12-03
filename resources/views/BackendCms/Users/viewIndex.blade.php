@@ -9,6 +9,6 @@
         @include('BackendCms.Users.component.formSearch')
 
         {{--list data---}}
-        `@include('BackendCms.Users.component.listData')
+        @include('BackendCms.Users.component.listData')
     {{ Form::close() }}
 @stop
