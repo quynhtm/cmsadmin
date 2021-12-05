@@ -23,7 +23,7 @@
                         <input type="radio" id="EMP_CODE" name="type_user" value="EMP_CODE">
                         <label for="EMP_CODE">Mã nhân viên</label>
                     </div>-->
-                    <input type="text" class="login_input marginB20" name="user_name" placeholder="Tên đăng nhập/ Email/ Mã nhân sự" @if(isset($username)) value="{{$username}}" @endif>
+                    <input type="text" class="login_input marginB20" name="user_name" placeholder="Tên đăng nhập" @if(isset($username)) value="{{$username}}" @endif>
 
                     <div class="label_input">Mật khẩu</div>
                     <input type="password" class="login_input" name="user_password" placeholder="Mật khẩu">
@@ -76,7 +76,7 @@
 
         <div class="footer_login">
             <div class="label_left">
-                Copyright@2020 HDInsurance all rights reserved
+                {!! \App\Library\AdminFunction\CGlobal::copy_right !!}
             </div>
             <div class="label_right">
                 <i class="lnr-envelope" aria-hidden="true"></i>

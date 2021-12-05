@@ -162,7 +162,7 @@ $(document).ready(() => {
     if (win < 1250) {
       $(".app-container").addClass("closed-sidebar-mobile closed-sidebar");
     } else {
-      $(".app-container").removeClass("closed-sidebar-mobile closed-sidebar");
+      //$(".app-container").removeClass("closed-sidebar-mobile closed-sidebar");
     }
   };
 
