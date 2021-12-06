@@ -2,8 +2,10 @@
 
 namespace App\Models\BackendCms;
 
+use App\Library\AdminFunction\CGlobal;
 use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
+use Illuminate\Support\Facades\Session;
 
 class Users extends BaseModel
 {
@@ -56,18 +58,18 @@ class Users extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new Users(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG) ? new Users() : self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
                     }
                 }
-                if($id <= STATUS_INT_KHONG){
+                if ($id <= STATUS_INT_KHONG) {
                     $item->created_id = $this->getUserId();
                     $item->created_name = $this->getUserName();
                     $item->save();
                     $id = $item->id;
-                }else{
+                } else {
                     $item->updated_id = $this->getUserId();
                     $item->updated_name = $this->getUserName();
                     $item->update();
@@ -83,11 +85,11 @@ class Users extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_USER_ADMIN_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_USER_ADMIN_ID . $id);
         if (!$data) {
             $data = Users::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_USER_ADMIN_ID.$id, $data);
+                Memcache::putCache(Memcache::CACHE_USER_ADMIN_ID . $id, $data);
             }
         }
         return $data;
@@ -112,11 +114,88 @@ class Users extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_USER_ADMIN_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_USER_ADMIN_ID . $id);
         }
-        if($data){
-            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$data->define_code.'_'.$data->project_code);
+        if ($data) {
+            Memcache::forgetCache(Memcache::CACHE_DEFINE_BY_DEFINE_CODE . $data->define_code . '_' . $data->project_code);
         }
     }
 
+    /**********************************************************************************************************************/
+    public function isLogin()
+    {
+        if (session()->has(SESSION_ADMIN_LOGIN)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function userLogin()
+    {
+        $user = array();
+        if (Session::has(SESSION_ADMIN_LOGIN)) {
+            $user = Session::get(SESSION_ADMIN_LOGIN);
+        }
+        return $user;
+    }
+    public function getUserByName($name)
+    {
+        return Users::where('user_name', $name)->first();
+    }
+
+    public function getUserByEmail($user_email)
+    {
+        return Users::where('user_email', $user_email)->first();
+    }
+
+    public function encode_password($password)
+    {
+        return password_hash(Users::stringCode($password), PASSWORD_DEFAULT);
+    }
+
+    public function password_verify($password = '', $hash = '')
+    {
+        return password_verify(Users::stringCode(trim($password)), trim($hash)) ? true : false;
+    }
+
+    public function stringCode($string)
+    {
+        return $string . CGlobal::authorWeb . env('KEY_PASS', '-!@0938413368!@');
+    }
+    public function updateLogin($user_id)
+    {
+        if($user_id <= STATUS_INT_KHONG) return;
+        $updateData['last_login'] = getCurrentDateTime();
+        self::editItem( $updateData , $user_id);
+    }
+    public function getPermissionUser($user = false)
+    {
+        $arrPermiss = ['permUserGroup'=>[],'permUser'=>[],'menuUser'=>[]];
+        if (isset($user->id) && $user->id > STATUS_INT_KHONG) {
+            $arrMenu = [];
+            //perm user group
+            $strGroup = PermissionUserGroup::where('user_id', $user->id)->first(['str_group_id']);
+            if (isset($strGroup->str_group_id) && trim($strGroup->str_group_id) != '') {
+                $strGroupDetail = PermissionGroupDetail::whereIn('group_id', explode(',', trim($strGroup->str_group_id)))->get(['group_id', 'project_code', 'menu_id', 'permiss_code', 'is_active']);
+                $groupDetail = ($strGroupDetail) ? $strGroupDetail->toArray() : [];
+                if(!empty($groupDetail)){
+                    $arrPermiss['permUserGroup'] = $groupDetail;
+                    foreach ($groupDetail as $k=>$val){
+                        $arrMenu[$val['menu_id']] = $val['menu_id'];
+                    }
+                }
+
+            }
+            //perm user
+            $permUser = PermissionUser::where('user_id', $user->id)->get(['user_id','project_code','menu_id','permiss_code','is_active']);
+            if($permUser){
+                $arrPermiss['permUser'] = $permUser->toArray();
+                foreach ($permUser->toArray() as $kk=>$val2){
+                    $arrMenu[$val2['menu_id']] = $val2['menu_id'];
+                }
+            }
+            $arrPermiss['menuUser'] = $arrMenu;
+        }
+        return $arrPermiss;
+    }
 }

@@ -8,8 +8,8 @@
 
 namespace App\Http\Controllers\BackendCms;
 
-use App\Models\OpenId\MenuSystem;
-use App\Models\OpenId\UserSystem;
+use App\Models\BackendCms\MenuSystem;
+use App\Models\BackendCms\Users;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
@@ -21,13 +21,12 @@ use Illuminate\Support\Facades\View;
 
 class BackendLoginController extends Controller
 {
-    public $_user;
+    public $modelUser;
     public $_bg_login;
 
-    //public function __construct(UserSystem $user)
-    public function __construct(UserSystem $user)
+    public function __construct(Users $user)
     {
-        $this->_user = $user;
+        $this->modelUser = $user;
         CGlobal::$pageAdminTitle = CGlobal::$arrTitleProject[Config::get('config.PROJECT_CODE')];
         $this->_bg_login = CGlobal::$arrBgLogin[Config::get('config.PROJECT_CODE')];
     }
@@ -58,28 +57,27 @@ class BackendLoginController extends Controller
         $token = Request::get('_token', '');
         $keyword = Request::get('user_name', '');
         $password = Request::get('user_password', '');
-        $type_user = Request::get('type_user', 'USER_LOGIN');
         $error = '';
         if ((Session::token() == $token)) {
             if ($keyword != '' && $password != '') {
                 if (strlen($keyword) < 3 || strlen($keyword) > 50 || preg_match('/[^A-Za-z0-9_\.@]/', $keyword) || strlen($password) < 5) {
                     $error = 'Không tồn tại tên đăng nhập!';
                 } else {
-                    $modelUser = new UserSystem();
-                    $user = $modelUser->getInforUserByKey($keyword, $type_user);
-                    if (isset($user->USER_CODE)) {
-                        if ($user->IS_ACTIVE == STATUS_INT_KHONG) {
-                            $error = 'Tài khoản của bạn hiện đang bị khóa!';
-                        } elseif ($user->IS_ACTIVE == STATUS_INT_MOT) {
-                            $username = $user->USER_NAME;
-                            if ($modelUser->comparePassword(trim($username), trim($password), $user->PASSWORD)) {
+                    $user = $this->modelUser->getUserByName(strtolower($keyword));
+                    if ($user !== NULL) {
+                        if ($user->is_active == CGlobal::status_hide || $user->is_active == CGlobal::status_block) {
+                            $error = 'Tài khoản bị khóa!';
+                        } elseif ($user->is_active == CGlobal::status_show || $user->user_view == CGlobal::status_hide) {
+                            //$pas = $this->modelUser->encode_password(trim($password).strtoupper(trim($user->user_name)));
+                            //myDebug($pas);
+                            if ($this->modelUser->password_verify(trim($password).strtoupper(trim($user->user_name)), $user->password)) {
                                 return $this->_buildUserLogin($user,$url);
                             } else {
                                 $error = 'User name hoặc mật khẩu không đúng!';
                             }
                         }
                     } else {
-                        $error = 'Tài khoản của bạn chưa có trên hệ thống!';
+                        $error = 'Không tồn tại đăng nhập này!';
                     }
                 }
             } else {
@@ -93,13 +91,12 @@ class BackendLoginController extends Controller
 
     public function loginAs($keyword = '')
     {
-        $modelUser = new UserSystem();
         if (Session::has(SESSION_ADMIN_LOGIN)) {
-            $userAction = $modelUser->userLogin();
+            $userAction = $this->modelUser->userLogin();
             if(isset($userAction['is_boss']) && $userAction['is_boss'] == STATUS_INT_MOT){
                 Session::forget(SESSION_ADMIN_LOGIN);
                 $type_user = 'USER_LOGIN';
-                $user = $modelUser->getInforUserByKey($keyword, $type_user);
+                $user = $this->modelUser->getInforUserByKey($keyword, $type_user);
                 if (isset($user->USER_CODE)) {
                     return $this->_buildUserLogin($user);
                 }
@@ -112,39 +109,37 @@ class BackendLoginController extends Controller
     }
 
     private function _buildUserLogin($user,$url = ''){
-        $modelUser = new UserSystem();
-        $dataUserMenu = json_decode($user->MENU_CODE, true);
-        $userMenu = $this->_getMenuWithUserLogin($dataUserMenu);
-        $inforSystemUser = $modelUser->getSystemInfoByUser($user->USER_NAME, $user->ORG_CODE);
-        $data = array(
-            'user_id' => $user->USER_CODE,
-            'user_name' => $user->USER_NAME,
-            'user_full_name' => $user->FULL_NAME,
-            'user_depart_id' => $user->STRUCT_CODE,
-            'user_depart_name' => $user->STRUCT_NAME,
-            'user_email' => $user->EMAIL,
-            'position' => $user->POSITION_CODE,
-            'org_code' => $user->ORG_CODE,
-            'user_type' => $user->USER_TYPE,
-            'phone' => $user->PHONE,
-            'birthday' => $user->BIRTHDAY,
-            'user_image' => $user->IMAGE,
-            'time_last_login' => $user->LAST_LOGIN,
-            'is_boss' => ($user->USER_TYPE == USER_ROOT) ? STATUS_INT_MOT : STATUS_INT_KHONG,
-            'change_pass' => $user->IS_CHANGE_PWD,
+        $permUser = $this->modelUser->getPermissionUser($user);
+
+        //$this->_getMenuWithUser($data);//menu của user login
+        $userMenu = $this->_getMenuWithUserLogin($permUser['menuUser']);
+        $dataUserLogin = array(
+            'user_id' => $user->id,
+            'user_name' => $user->user_name,
+            'partner_id' => $user->partner_id,
+            'user_full_name' => $user->full_name,
+            'user_email' => $user->user_email,
+            'user_birthday' => $user->user_birthday,
+            'user_image' => $user->user_avatar,
+            'user_code' => $user->user_code,
+            'user_position' => $user->user_position,//chức vụ
+            'user_gender' => $user->user_gender,//giới tính
+            'change_pass' => $user->is_change_pass,//change pass
+            'is_active' => $user->is_active,
+            'start_date' => $user->start_date,
+            'last_login' => $user->last_login,
+            'is_boss' => 0,
             'user_group_menu' => $userMenu['arrMenuId'],
             'user_permission' => $userMenu['userPermissionMenu'],
             'user_tab_id' => $userMenu['projectCode'],
-            'infor_system_user' => $inforSystemUser,
         );
-        $this->_getMenuWithUser($data);//menu của user login
-        $modelUser->updateUserLogin($user->USER_CODE);
-        Session::put(SESSION_ADMIN_LOGIN, $data, 60 * 24);
+        Session::put(SESSION_ADMIN_LOGIN, $dataUserLogin, 60 * 24);
+        $this->modelUser->updateLogin($user->id);
 
         if ($url === '' || $url === 'login') {
-            if ($user->IS_CHANGE_PWD == STATUS_INT_KHONG || $user->USER_TYPE != USER_ROOT) {
-                return Redirect::route('userSystem.userProfile', ['id' => setStrVar($user->USER_CODE), 'name' => safe_title($user->FULL_NAME)]);
-            }
+            /*if($user->change_pass == STATUS_INT_KHONG){
+                return Redirect::route('admin.user_change',['id'=>setStrVar($user->id)]);
+            }*/
             return Redirect::route('admin.dashboard');
         } else {
             return Redirect::to(self::buildUrlDecode($url));
@@ -240,20 +235,19 @@ class BackendLoginController extends Controller
      * @param array $dataInput
      * @return array|array[]
      */
-    private function _getMenuWithUserLogin($dataInput = [])
+    private function _getMenuWithUserLogin($arrMenuId = [])
     {
-        if (empty($dataInput))
+        if (empty($arrMenuId))
             return ['userPermissionMenu' => [], 'arrMenuId' => [], 'projectCode' => []];
 
-        $allMenu = app(MenuSystem::class)->getAllMenuByProjectCode();
-        $arrProjectCode = $arrUserMenu = $arrMenuId = [];
+        $allMenu = app(MenuSystem::class)->getAllMenu();
+        $arrProjectCode = $arrUserMenu = [];
         if ($allMenu) {
-            $arrMenuId = array_keys($dataInput);
             foreach ($allMenu as $k => $menu) {
-                if (in_array($menu->MENU_CODE, $arrMenuId) && $menu->IS_ACTIVE == STATUS_INT_MOT && trim($menu->CONTROL_NAME) != '') {
-                    $tabId = isset(CGlobal::$projectMenuWithTabTop[trim($menu->PROJECT_CODE)]) ? CGlobal::$projectMenuWithTabTop[trim($menu->PROJECT_CODE)] : CGlobal::dms_portal;
-                    $arrProjectCode[$tabId] = trim($menu->PROJECT_CODE);
-                    $arrUserMenu[trim($menu->CONTROL_NAME)] = $dataInput[trim($menu->MENU_CODE)];
+                if (in_array($menu->menu_id, $arrMenuId) && $menu->is_active == STATUS_INT_MOT && trim($menu->router_name) != '') {
+                    $tabId = isset(CGlobal::$projectMenuWithTabTop[trim($menu->project_code)]) ? CGlobal::$projectMenuWithTabTop[trim($menu->project_code)] : CGlobal::dms_portal;
+                    $arrProjectCode[$tabId] = trim($menu->project_code);
+                    $arrUserMenu[$menu->menu_id] = $menu->toArray();
                 }
             }
         }
@@ -279,8 +273,7 @@ class BackendLoginController extends Controller
         $arrData['msg'] = 'Chưa đổi được mật khẩu. Hãy thử lại';
 
         if (trim($email_forgot) != '' && trim($user_name_forgot) != '') {
-            $modelUser = new UserSystem();
-            $user = $modelUser->getInforUserByKey($user_name_forgot, 'USER_NAME');
+            $user = $this->modelUser->getInforUserByKey($user_name_forgot, 'USER_NAME');
             if ($user) {
                 if ($email_forgot != $user->EMAIL) {
                     $arrData['msg'] = 'Email không đúng với đúng với Tên đăng nhập.';
@@ -291,7 +284,7 @@ class BackendLoginController extends Controller
                     return response()->json($arrData);
                 } else {
                     $password_new = randomString(8);
-                    $strPassNew = $modelUser->buildPassword(strtoupper($user->USER_NAME), $password_new);
+                    $strPassNew = $this->modelUser->buildPassword(strtoupper($user->USER_NAME), $password_new);
 
                     $dataSend['PASSWORD'] = $strPassNew;
                     $dataSend['OLD_PASSWORD'] = $user->PASSWORD;
@@ -303,7 +296,7 @@ class BackendLoginController extends Controller
                     $dataSend['PASSWORD_NEW'] = $password_new;
                     $dataSend['URL_LOGIN'] = Config::get('config.WEB_ROOT');
 
-                    if ($modelUser->updatePassword($user->USER_CODE, $dataSend)) {
+                    if ($this->modelUser->updatePassword($user->USER_CODE, $dataSend)) {
                         //gửi mail
                         $content = View::make('mail.mailForgotPassword')->with(['data' => $dataSend])->render();
                         $dataSenmail['CONTENT'] = $content;

@@ -111,6 +111,7 @@ class MenuSystem extends BaseModel
         Memcache::forgetCache(Memcache::CACHE_LIST_MENU_PERMISSION);
         Memcache::forgetCache(Memcache::CACHE_ALL_PARENT_MENU);
         Memcache::forgetCache(Memcache::CACHE_TREE_MENU);
+        Memcache::forgetCache(Memcache::CACHE_ALL_MENU);
         if($data){
             Memcache::forgetCache(Memcache::CACHE_MENU_BY_TAB_ID.$data->project_code);
         }
@@ -165,6 +166,17 @@ class MenuSystem extends BaseModel
         return $data;
     }
 
+    public function getAllMenu()
+    {
+        $data = Memcache::getCache(Memcache::CACHE_ALL_MENU);
+        if (!$data) {
+            $data = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)->orderBy('menu_order', 'asc')->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_ALL_MENU, $data);
+            }
+        }
+        return $data;
+    }
     public function getAllParentMenu()
     {
         $data = Memcache::getCache(Memcache::CACHE_ALL_PARENT_MENU);

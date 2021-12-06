@@ -9,12 +9,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\BackendCms\DefineSystem;
-use App\Models\OpenId\TypeDefine;
 use App\Library\AdminFunction\CGlobal;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\OpenId\MenuSystem;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -56,7 +54,7 @@ class  BaseAdminController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (!app('App\Models\OpenId\UserSystem')->isLogin()) {
+            if (!app('App\Models\BackendCms\Users')->isLogin()) {
                 $url_encode = self::buildUrlEncode(URL::current());
                 if ($request->ajax()) {
                     return Response::json(returnErrorSession());
@@ -70,8 +68,8 @@ class  BaseAdminController extends Controller
                 return Redirect::route('admin.dashboard');
             }
             $this->project_code_menu = $this->getMenuCodeByProjectCode($this->tab_top);
-            $this->user = app('App\Models\OpenId\UserSystem')->userLogin();
-            //myDebug($this->user);
+            $this->user = app('App\Models\BackendCms\Users')->userLogin();
+            myDebug($this->user);
             if (!empty($this->user)) {
                 $this->is_boss = $this->user['is_boss'];
                 if (isset($this->user['change_pass']) && $this->user['change_pass'] == STATUS_INT_KHONG) {
@@ -114,10 +112,6 @@ class  BaseAdminController extends Controller
             $this->languageSite = (Session::has('languageSite')) ? Session::get('languageSite') : $this->languageSite;
             $this->is_root = $this->is_boss ? $this->is_boss : $this->is_root;
             $this->is_tech = $this->is_boss ? $this->is_boss : $this->is_tech;
-
-            $this->arrProductUser = $this->getInforUser('product');
-            $this->arrOrgUser = $this->getInforUser('org');
-            $this->arrPackUser = $this->getInforUser('pack');
 
             View::share('languageSite', $this->languageSite);
             View::share('menu', isset($this->menuSystem[$this->tab_top]) ? $this->menuSystem[$this->tab_top] : []);

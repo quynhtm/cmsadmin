@@ -84,7 +84,7 @@
             </div>
             <div class="label_right">
                 <i class="fa fa-headphones" aria-hidden="true"></i>
-                Hotline: <span class="text-hdi">{{\App\Library\AdminFunction\CGlobal::phone_holine}}</span>
+                Hotline: <span class="text-hdi">{{\App\Library\AdminFunction\CGlobal::phone_hotline}}</span>
             </div>
         </div>
     </div>
