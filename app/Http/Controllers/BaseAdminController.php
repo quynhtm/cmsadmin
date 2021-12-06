@@ -283,9 +283,9 @@ class  BaseAdminController extends Controller
      */
     public function checkMultiPermiss($arrPermiss = [], $pageCurrent = '')
     {
-        if ($this->change_pass && isset($this->user['user_id'])) {
+        /*if ($this->change_pass && isset($this->user['user_id'])) {
             Redirect::route('userSystem.userProfile', ['id' => setStrVar($this->user['user_id']), 'name' => safe_title($this->user['user_full_name'])])->send();
-        }
+        }*/
         if (trim($pageCurrent) != '') {
             $this->shareListPermission($pageCurrent);
         }

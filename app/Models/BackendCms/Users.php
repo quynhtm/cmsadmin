@@ -184,7 +184,6 @@ class Users extends BaseModel
                         $arrMenu[$val['menu_id']] = $val['menu_id'];
                     }
                 }
-
             }
             //perm user
             $permUser = PermissionUser::where('user_id', $user->id)->get(['user_id','project_code','menu_id','permiss_code','is_active']);

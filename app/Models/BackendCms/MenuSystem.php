@@ -205,8 +205,7 @@ class MenuSystem extends BaseModel
     {
         $data = $menuTree = array();
         $menuTree = Memcache::getCache(Memcache::CACHE_TREE_MENU);
-        $menuTree = false;
-        if (!$menuTree || count($menuTree) == STATUS_INT_KHONG) {
+        if (!$menuTree) {
             $search['is_active'] = STATUS_SHOW;
             $dataSearch = app(MenuSystem::class)->searchByCondition($search, LIMIT_RECORD_500, STATUS_INT_KHONG, false);
             if (!empty($dataSearch['data'])) {
