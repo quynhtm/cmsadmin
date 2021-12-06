@@ -9,6 +9,11 @@
  * Router Backend
  * *******************************************************************************************************
  */
+Route::get('logout', array('as' => 'backend.logout','uses' => DIR_PRO_BACKEND.'\BackendLoginController@logout'));
+Route::post('forgot_password', array('as' => 'backend.forgot_password','uses' => DIR_PRO_BACKEND.'\BackendLoginController@forgot_password'));
+Route::get('loginas/{username}', array('as' => 'admin.loginas', 'uses' => DIR_PRO_BACKEND . '\BackendLoginController@loginAs'));
+Route::match(['GET', 'POST'], 'dashboard.hdi', array('as' => 'admin.dashboard','uses' => DIR_PRO_BACKEND.'\BackendDashBoardController@dashboard'));
+
 Route::group(array('prefix' => 'backend'), function () {
 
     /* Quản lý Type defines */

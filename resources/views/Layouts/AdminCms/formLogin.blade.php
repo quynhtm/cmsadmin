@@ -1,9 +1,9 @@
-@extends('admin.AdminLayouts.login')
+@extends('Layouts.AdminCms.login')
 @section('content')
     <div class="bg_login_center {{$bg_login}}">
 
         <div class="form_login" id="form_login">
-            {{ Form::open(array('class'=>'form-signin', 'method'=>'POST', 'url'=>URL::route('admin.login',['url'=>$url]))) }}
+            {{ Form::open(array('class'=>'form-signin', 'method'=>'POST', 'url'=>URL::route('backend.login',['url'=>$url]))) }}
             <div class="form_login_content">
                 <div class="dangnhap">Đăng nhập</div>
                 @if(isset($error) && $error != '')
@@ -107,7 +107,7 @@
             }
         }
         function request_creater_user(){
-            jqueryCommon.showMsg('success','Liên hệ với Admin của HDI');
+            jqueryCommon.showMsg('success','Liên hệ với Admin');
         }
         function submit_forgot_password() {
             var user_name_forgot = $('#user_name_forgot').val();
@@ -118,7 +118,7 @@
                     $('#loader').show();
                     $.ajax({
                         type: "POST",
-                        url:'<?php echo e(URL::route('admin.forgot_password')); ?>',
+                        url:'<?php echo e(URL::route('backend.forgot_password')); ?>',
                         data: {email_forgot: email_forgot,user_name_forgot: user_name_forgot, _token: _token},
                         dataType: 'json',
                         success: function (res) {

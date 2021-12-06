@@ -54,7 +54,7 @@ class BackendDashBoardController extends BaseAdminController
                 break;
         }
 
-        return view('admin.AdminDashBoard.' . $this->template, array_merge([
+        return view('BackendCms.DashBoard.' . $this->template, array_merge([
             'title_dashboard' => CGlobal::web_title_dashboard,
             'lang' => $this->languageSite,
         ], $this->dataOut));

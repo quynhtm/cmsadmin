@@ -26,9 +26,9 @@ class CGlobal
     const web_keywords = 'HDI';
     const web_description = 'HDI';
 
-    const email_cskh = 'cskh@hdi.com';
-    const phone_holine = '(028) 3827 4248';
-    const copy_right = '<b>Copyright</b>&nbsp;HD Insurance Company &copy;2020';
+    const email_cskh = 'cmsbackend@gmail.com';
+    const phone_holine = '093.84133.68';
+    const copy_right = '<b>Copyright</b>&nbsp;CMS backend &copy;2022';
 
     const number_show_10 = 10;
     const number_show_20 = 20;
@@ -78,7 +78,9 @@ class CGlobal
     ];
 
     public static $colorWithTab = [
-        self::dms_portal => ['header'=>'bg-grow-early header-text-light','menu'=>'app-theme-white','project_logo'=>'logo-src-system'],
+        self::dms_portal => ['header'=>'app-theme-white','menu'=>'app-theme-white','project_logo'=>'logo-src-system'],
+        //self::dms_portal => ['header'=>'bg-vicious-stance header-text-light','menu'=>'bg-vicious-stance','project_logo'=>'logo-src-system'],
+        //self::dms_portal => ['header'=>'bg-grow-early header-text-light','menu'=>'bg-vicious-stance','project_logo'=>'logo-src-system'],
         self::selling => ['header'=>'app-theme-white','menu'=>'app-theme-white','project_logo'=>'logo-src-selling'],
     ];
 

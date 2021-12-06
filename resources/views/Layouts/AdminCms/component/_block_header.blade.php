@@ -407,7 +407,7 @@ use App\Library\AdminFunction\CGlobal;
                                                             <div class="widget-subheading opacity-8">{{$user['user_full_name']}}</div>
                                                         </div>
                                                         <div class="widget-content-right mr-2">
-                                                            <a class="btn-pill btn-shadow btn-shine btn btn-focus" href="{{URL::route('admin.logout')}}">{{viewLanguage('Logout')}}</a>
+                                                            <a class="btn-pill btn-shadow btn-shine btn btn-focus" href="{{URL::route('backend.logout')}}">{{viewLanguage('Logout')}}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -428,7 +428,7 @@ use App\Library\AdminFunction\CGlobal;
                                                 </li>
                                                 <li class="nav-item-divider mb-0 nav-item"></li>
                                                 <li class="nav-item">
-                                                    <a href="{{URL::route('admin.logout')}}" class="nav-link dropdown-item">{{viewLanguage('Logout')}}</a>
+                                                    <a href="{{URL::route('backend.logout')}}" class="nav-link dropdown-item">{{viewLanguage('Logout')}}</a>
                                                 </li>
                                             </ul>
                                         </div>

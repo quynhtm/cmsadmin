@@ -41,7 +41,7 @@ class BackendLoginController extends Controller
                 return Redirect::to(self::buildUrlDecode($url));
             }
         } else {
-            return view('admin.AdminLayouts.formLogin', ['url' => $url, 'bg_login' => $this->_bg_login]);
+            return view('Layouts.AdminCms.formLogin', ['url' => $url, 'bg_login' => $this->_bg_login]);
         }
     }
 
@@ -88,7 +88,7 @@ class BackendLoginController extends Controller
         } else {
             $error = 'Thông tin đăng nhập không đúng!';
         }
-        return view('admin.AdminLayouts.formLogin', ['error' => $error, 'username' => $keyword, 'url' => $url, 'bg_login' => $this->_bg_login]);
+        return view('Layouts.AdminCms.formLogin', ['error' => $error, 'username' => $keyword, 'url' => $url, 'bg_login' => $this->_bg_login]);
     }
 
     public function loginAs($keyword = '')
@@ -103,12 +103,12 @@ class BackendLoginController extends Controller
                 if (isset($user->USER_CODE)) {
                     return $this->_buildUserLogin($user);
                 }
-                return Redirect::route('admin.login');
+                return Redirect::route('backend.login');
             }else{
-                return Redirect::route('admin.login');
+                return Redirect::route('backend.login');
             }
         }
-        return Redirect::route('admin.login');
+        return Redirect::route('backend.login');
     }
 
     private function _buildUserLogin($user,$url = ''){
@@ -266,7 +266,7 @@ class BackendLoginController extends Controller
         if (Session::has(SESSION_ADMIN_LOGIN)) {
             Session::forget(SESSION_ADMIN_LOGIN);
         }
-        return Redirect::route('admin.login');
+        return Redirect::route('backend.login');
     }
 
     //ajax

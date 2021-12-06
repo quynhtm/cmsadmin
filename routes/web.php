@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 const Admin = "Admin";
 
 //Quan tri CMS cho admin
-Route::get('/backend-cms.html', array('as' => 'admin.login', 'uses' => Admin . '\AdminLoginController@getLogin'));
-Route::post('/backend-cms.html', array('as' => 'admin.login', 'uses' => Admin . '\AdminLoginController@postLogin'));
+/*Route::get('/backend-cms.html', array('as' => 'admin.login', 'uses' => Admin . '\AdminLoginController@getLogin'));
+Route::post('/backend-cms.html', array('as' => 'admin.login', 'uses' => Admin . '\AdminLoginController@postLogin'));*/
+Route::get('/backend-cms.html', array('as' => 'backend.login', 'uses' => DIR_PRO_BACKEND . '\BackendLoginController@getLogin'));
+Route::post('/backend-cms.html', array('as' => 'backend.login', 'uses' => DIR_PRO_BACKEND . '\BackendLoginController@postLogin'));
 
 require __DIR__.'/frontend.php';
 

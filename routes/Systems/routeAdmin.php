@@ -1,9 +1,7 @@
 <?php
 
-Route::get('logout', array('as' => 'admin.logout','uses' => Admin.'\AdminLoginController@logout'));
-Route::post('forgot_password', array('as' => 'admin.forgot_password','uses' => Admin.'\AdminLoginController@forgot_password'));
-Route::get('loginas/{username}', array('as' => 'admin.loginas', 'uses' => Admin . '\AdminLoginController@loginAs'));
-Route::match(['GET', 'POST'], 'dashboard.hdi', array('as' => 'admin.dashboard','uses' => Admin.'\AdminDashBoardController@dashboard'));
+
+
 
 //testData
 Route::get('testData',array('as' => 'admin.testData','uses' => Admin.'\TestDataController@testData'));
