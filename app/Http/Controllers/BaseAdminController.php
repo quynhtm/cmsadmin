@@ -69,7 +69,7 @@ class  BaseAdminController extends Controller
             }
             $this->project_code_menu = $this->getMenuCodeByProjectCode($this->tab_top);
             $this->user = app('App\Models\BackendCms\Users')->userLogin();
-            myDebug($this->user);
+            //myDebug($this->user);
             if (!empty($this->user)) {
                 $this->is_boss = $this->user['is_boss'];
                 if (isset($this->user['change_pass']) && $this->user['change_pass'] == STATUS_INT_KHONG) {
@@ -114,7 +114,8 @@ class  BaseAdminController extends Controller
             $this->is_tech = $this->is_boss ? $this->is_boss : $this->is_tech;
 
             View::share('languageSite', $this->languageSite);
-            View::share('menu', isset($this->menuSystem[$this->tab_top]) ? $this->menuSystem[$this->tab_top] : []);
+            ///View::share('menu', isset($this->menuSystem[$this->tab_top]) ? $this->menuSystem[$this->tab_top] : []);
+            View::share('menu', $this->menuSystem);
             View::share('aryPermissionMenu', $this->user_group_menu);
 
             View::share('is_root', $this->is_root);

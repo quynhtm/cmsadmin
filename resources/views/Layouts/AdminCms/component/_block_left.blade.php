@@ -37,7 +37,7 @@
                 @if(!empty($menu))
                     @foreach($menu as $key => $item)
                         @if($is_boss || $item['show_menu'] == STATUS_SHOW)
-                            @if($item['parent_id'] == STATUS_HIDE && $item['menu_type'] == STATUS_SHOW)
+                            @if($item['menu_parent'] == STATUS_HIDE && $item['is_link'] == STATUS_SHOW)
                                 <li class="@if(trim($item['RouteName']) !='' && Route::currentRouteName()==$item['RouteName'])mm-active @endif">
                                     <a class="@if(trim($item['RouteName']) !='' && Route::currentRouteName()==$item['RouteName'])mm-active @endif" href="@if(trim($item['RouteName']) !== '#'){{URL::route($item['RouteName'])}}@endif" title="{{ $item['name'] }}">
                                         <i class="metismenu-icon {{$item['icon']}}"></i>

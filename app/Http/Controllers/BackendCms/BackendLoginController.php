@@ -110,8 +110,6 @@ class BackendLoginController extends Controller
 
     private function _buildUserLogin($user,$url = ''){
         $permUser = $this->modelUser->getPermissionUser($user);
-
-        //$this->_getMenuWithUser($data);//menu của user login
         $userMenu = $this->_getMenuWithUserLogin($permUser['menuUser']);
         $dataUserLogin = array(
             'user_id' => $user->id,
@@ -128,11 +126,14 @@ class BackendLoginController extends Controller
             'is_active' => $user->is_active,
             'start_date' => $user->start_date,
             'last_login' => $user->last_login,
-            'is_boss' => 0,
+            'is_boss' => 1,
             'user_group_menu' => $userMenu['arrMenuId'],
             'user_permission' => $userMenu['userPermissionMenu'],
             'user_tab_id' => $userMenu['projectCode'],
+            'user_tree_menu' => [],
         );
+        $this->_getMenuWithUser($dataUserLogin,$permUser);//menu của user login
+
         Session::put(SESSION_ADMIN_LOGIN, $dataUserLogin, 60 * 24);
         $this->modelUser->updateLogin($user->id);
 
@@ -149,76 +150,73 @@ class BackendLoginController extends Controller
      * @param $dataUser
      * Build menu tree theo user login
      */
-    private function _getMenuWithUser(&$dataUser)
+    private function _getMenuWithUser(&$dataUser,$permUser)
     {
         $menuSystem = [];
-        $arrProject = Config::get('config.IS_DEV') ? [MENU_HDI_OPEN_ID, MENU_HDI_SELLING] : [CGlobal::$menuWithTabTop[trim(Config::get('config.PROJECT_CODE'))]];
-
-        foreach ($arrProject as $project_code_menu) {
-            $arrMenu = app(MenuSystem::class)->buildMenuAdmin($project_code_menu);
-            if (!empty($arrMenu)) {
-                $arrMenuChild2 = [];
-                foreach ($arrMenu as $menu_id => $menu) {
-                    if (isset($menu['show_menu']) && $menu['show_menu'] == STATUS_SHOW) {
-                        $checkMenu = false;
-                        if (isset($menu['sub']) && !empty($menu['sub'])) {
-                            foreach ($menu['sub'] as $ks => $sub) {
-                                //menu level 2
-                                if (isset($sub['sub']) && !empty($sub['sub'])) {
-                                    foreach ($sub['sub'] as $kk2 => $sub_level2) {
-                                        if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($sub_level2['menu_id'], $dataUser['user_group_menu']))) {
-                                            $arrMenuChild2[$sub_level2['menu_id']] = $sub_level2['menu_id'];
-                                            $checkMenu = true;
-                                        }
-                                    }
-                                } else {
-                                    //menu lever 1
-                                    if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($sub['menu_id'], $dataUser['user_group_menu']))) {
+        $arrMenu = app(MenuSystem::class)->buildMenuAdmin();
+        //myDebug($arrMenu,false);
+        if (!empty($arrMenu)) {
+            $arrMenuChild2 = [];
+            foreach ($arrMenu as $menu_id => $menu) {
+                if (isset($menu['show_menu']) && $menu['show_menu'] == STATUS_SHOW) {
+                    $checkMenu = false;
+                    if (isset($menu['sub']) && !empty($menu['sub'])) {
+                        foreach ($menu['sub'] as $ks => $sub) {
+                            //menu level 2
+                            if (isset($sub['sub']) && !empty($sub['sub'])) {
+                                foreach ($sub['sub'] as $kk2 => $sub_level2) {
+                                    if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($sub_level2['menu_id'], $dataUser['user_group_menu']))) {
+                                        $arrMenuChild2[$sub_level2['menu_id']] = $sub_level2['menu_id'];
                                         $checkMenu = true;
                                     }
                                 }
+                            } else {
+                                //menu lever 1
+                                if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($sub['menu_id'], $dataUser['user_group_menu']))) {
+                                    $checkMenu = true;
+                                }
                             }
-                            if ($checkMenu) {
-                                $menuSystem[$menu['menu_tab_top_id']][$menu_id] = $menu;
-                            }
-                        } else {
-                            if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($menu['menu_id'], $dataUser['user_group_menu']))) {
-                                $checkMenu = true;
-                            }
-                            if ($checkMenu) {
-                                $menuSystem[$menu['menu_tab_top_id']][$menu['menu_id']] = $menu;
-                            }
+                        }
+                        if ($checkMenu) {
+                            $menuSystem[$menu_id] = $menu;
+                        }
+                    } else {
+                        if ($dataUser['is_boss'] == STATUS_INT_MOT || (!empty($dataUser['user_group_menu']) && in_array($menu['menu_id'], $dataUser['user_group_menu']))) {
+                            $checkMenu = true;
+                        }
+                        if ($checkMenu) {
+                            $menuSystem[$menu['menu_id']] = $menu;
                         }
                     }
                 }
+            }
 
-                if ($dataUser['is_boss'] == STATUS_INT_KHONG) {
-                    foreach ($menuSystem as $projectId => &$menuSysUser) {
-                        foreach ($menuSysUser as $ke => &$men1) {
-                            //menu gốc
-                            if (isset($men1['sub']) && !empty($men1['sub'])) {
-                                foreach ($men1['sub'] as $ke1 => &$men2) {
-                                    //loại bỏ menu level 2 ko đc chọn
-                                    if (!empty($arrMenuChild2)) {//có menu con cấp 2
-                                        if (isset($men2['sub']) && !empty($men2['sub'])) {
-                                            foreach ($men2['sub'] as $ke2 => $men3) {
-                                                if ((!empty($dataUser['user_group_menu']) && !in_array($men3['menu_id'], $dataUser['user_group_menu']))) {
-                                                    unset($men2['sub'][$ke2]);
-                                                    //xóa menu cha cấp 2 rỗng sub
-                                                    if (empty($men2['sub'])) {
-                                                        unset($men1['sub'][$ke1]);
-                                                    }
+            if ($dataUser['is_boss'] == STATUS_INT_KHONG) {
+                foreach ($menuSystem as $projectId => &$menuSysUser) {
+                    foreach ($menuSysUser as $ke => &$men1) {
+                        //menu gốc
+                        if (isset($men1['sub']) && !empty($men1['sub'])) {
+                            foreach ($men1['sub'] as $ke1 => &$men2) {
+                                //loại bỏ menu level 2 ko đc chọn
+                                if (!empty($arrMenuChild2)) {//có menu con cấp 2
+                                    if (isset($men2['sub']) && !empty($men2['sub'])) {
+                                        foreach ($men2['sub'] as $ke2 => $men3) {
+                                            if ((!empty($dataUser['user_group_menu']) && !in_array($men3['menu_id'], $dataUser['user_group_menu']))) {
+                                                unset($men2['sub'][$ke2]);
+                                                //xóa menu cha cấp 2 rỗng sub
+                                                if (empty($men2['sub'])) {
+                                                    unset($men1['sub'][$ke1]);
                                                 }
                                             }
-                                        } elseif ((!empty($dataUser['user_group_menu']) && !in_array($men2['menu_id'], $dataUser['user_group_menu']))) {
-                                            unset($men1['sub'][$ke1]);
                                         }
+                                    } elseif ((!empty($dataUser['user_group_menu']) && !in_array($men2['menu_id'], $dataUser['user_group_menu']))) {
+                                        unset($men1['sub'][$ke1]);
                                     }
-                                    //menu ko được cấp
-                                    else{
-                                        if ((!empty($dataUser['user_group_menu']) && !in_array($men2['menu_id'], $dataUser['user_group_menu']))) {
-                                            unset($men1['sub'][$ke1]);
-                                        }
+                                }
+                                //menu ko được cấp
+                                else{
+                                    if ((!empty($dataUser['user_group_menu']) && !in_array($men2['menu_id'], $dataUser['user_group_menu']))) {
+                                        unset($men1['sub'][$ke1]);
                                     }
                                 }
                             }

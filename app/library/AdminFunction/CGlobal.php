@@ -10,6 +10,7 @@ class CGlobal
 {
     static $css_ver = '1.0.4';
     static $js_ver = '1.0.4';
+    const authorWeb = 'manhquynh1984@gmail.com';
     public static $POS_HEAD = 1;
     public static $POS_END = 2;
     public static $extraHeaderCSS = '';
@@ -27,7 +28,7 @@ class CGlobal
     const web_description = 'HDI';
 
     const email_cskh = 'cmsbackend@gmail.com';
-    const phone_holine = '093.84133.68';
+    const phone_hotline = '093.84133.68';
     const copy_right = '<b>Copyright</b>&nbsp;CMS backend &copy;2022';
 
     const number_show_10 = 10;
