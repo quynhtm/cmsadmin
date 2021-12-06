@@ -4,7 +4,13 @@
 @extends('Layouts.AdminCms.indexAdmin')
 @section('content')
     <div class="wrapper wrapper-content">
-        {{--Lịch công tác--}}
+        @if(isset($error) && !empty($error))
+            <div class="alert alert-danger fade show" role="alert">
+                @foreach($error as $itmError)
+                    <p><b>{{ $itmError }}</b></p>
+                @endforeach
+            </div>
+        @endif
         @include('BackendCms.DashBoard.component.dashBoardCms')
     </div>
 @stop
