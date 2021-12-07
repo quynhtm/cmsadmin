@@ -58,7 +58,7 @@
                                 G: @if(isset($arrGender[$item->user_gender])){{$arrGender[$item->user_gender]}}@endif<br/>
                             </td>
                             <td class="text-center middle">
-                                @if($is_root || $permission_edit || $permission_add)
+                                @if($permission_full || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>

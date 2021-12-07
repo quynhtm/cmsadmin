@@ -11,12 +11,12 @@
  */
 Route::group(array('prefix' => 'backend'), function () {
 
-    /* Quản lý Type defines */
+    /* Quản lý Type product */
     Route::group(array('prefix' => 'product'), function () {
-        Route::match(['GET', 'POST'], 'index', array('as' => 'defines.index', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@index'));
-        Route::get('ajaxGetItem', array('as' => 'defines.ajaxGetItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxGetItem'));
-        Route::post('ajaxPostItem', array('as' => 'defines.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxPostItem'));
-        Route::post('ajaxDeleteItem', array('as' => 'defines.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxDeleteItem'));
+        Route::match(['GET', 'POST'], 'index', array('as' => 'product.index', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@index'));
+        Route::get('ajaxGetItem', array('as' => 'product.ajaxGetItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxGetItem'));
+        Route::post('ajaxPostItem', array('as' => 'product.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxPostItem'));
+        Route::post('ajaxDeleteItem', array('as' => 'product.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxDeleteItem'));
     });
 
 });

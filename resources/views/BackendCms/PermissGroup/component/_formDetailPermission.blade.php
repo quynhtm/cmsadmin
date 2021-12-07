@@ -1,5 +1,5 @@
 {{Form::open(array('method' => 'POST','class'=>$form_id,'id'=>'other_'.$form_id,'role'=>'form','files' => true))}}
-    @if($is_root || $permission_edit || $permission_add)
+    @if($permission_full || $permission_edit || $permission_add)
     <div class="row">
         <?php
             $objectId = (isset($dataDetail['group_id'])) ? $dataDetail['group_id'] : 0;
