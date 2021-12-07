@@ -75,6 +75,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label for="NAME" class="text-right control-label">{{viewLanguage('Phân quyền')}}</label>
+                            <select class="form-control input-sm" name="show_permission" id="show_permission" >
+                                {!! $optionShowPermission !!}
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="NAME" class="text-right control-label">{{viewLanguage('Show Menu')}}</label>
+                            <select class="form-control input-sm" name="show_menu" id="show_menu" >
+                                {!! $optionShowMenu !!}
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

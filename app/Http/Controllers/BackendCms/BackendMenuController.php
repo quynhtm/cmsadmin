@@ -45,7 +45,9 @@ class BackendMenuController extends BaseAdminController
     private function _outDataView($request, $data)
     {
         $optionActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionIsLink = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['define_code']) ? $data['define_code'] : STATUS_INT_MOT);
+        $optionIsLink = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['is_link']) ? $data['is_link'] : STATUS_INT_MOT);
+        $optionShowPermission = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['show_permission']) ? $data['show_permission'] : STATUS_INT_MOT);
+        $optionShowMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['show_menu']) ? $data['show_menu'] : STATUS_INT_MOT);
 
         $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
         $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
@@ -60,6 +62,8 @@ class BackendMenuController extends BaseAdminController
             'optionActive' => $optionActive,
             'optionParentMenu' => $optionParentMenu,
             'optionTypeMenu' => $optionTypeMenu,
+            'optionShowPermission' => $optionShowPermission,
+            'optionShowMenu' => $optionShowMenu,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,

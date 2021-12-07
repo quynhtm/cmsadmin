@@ -345,6 +345,7 @@ class MenuSystem extends BaseModel
             $data = MenuSystem::where('menu_id', '>', STATUS_INT_KHONG)
                 ->where('is_active', STATUS_SHOW)
                 ->where('show_permission', STATUS_SHOW)
+                ->where('show_menu', STATUS_SHOW)
                 ->orderBy('menu_parent', 'asc')->orderBy('menu_order', 'asc')->get();
             if ($data) {
                 Memcache::putCache(Memcache::CACHE_LIST_MENU_PERMISSION, $data);
