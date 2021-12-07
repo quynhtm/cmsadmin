@@ -1128,7 +1128,7 @@ function returnError($msg = 'Error', $data = '')
 
 function returnErrorSession($url_current = '')
 {
-    $link_login = '<a href="' . \Illuminate\Support\Facades\URL::route('admin.login') . '">Đăng nhập</a>';
+    $link_login = '<a href="' . \Illuminate\Support\Facades\URL::route('backend.login') . '">Đăng nhập</a>';
     return ['success' => -1, 'message' => 'Bạn hãy ' . $link_login . ' lại.'];
 }
 

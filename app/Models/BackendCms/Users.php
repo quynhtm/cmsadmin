@@ -170,9 +170,9 @@ class Users extends BaseModel
     }
     public function getPermissionUser($user = false)
     {
-        $arrPermiss = ['permUserGroup'=>[],'permUser'=>[],'menuUser'=>[]];
+        $arrPermiss = ['permUserGroup'=>[],'permUser'=>[],'menuUser'=>[],'permMenu'=>[]];
         if (isset($user->id) && $user->id > STATUS_INT_KHONG) {
-            $arrMenu = [];
+            $arrMenu = $arrPermMenu = [];
             //perm user group
             $strGroup = PermissionUserGroup::where('user_id', $user->id)->first(['str_group_id']);
             if (isset($strGroup->str_group_id) && trim($strGroup->str_group_id) != '') {
@@ -182,6 +182,7 @@ class Users extends BaseModel
                     $arrPermiss['permUserGroup'] = $groupDetail;
                     foreach ($groupDetail as $k=>$val){
                         $arrMenu[$val['menu_id']] = $val['menu_id'];
+                        $arrPermMenu[$val['menu_id']][$val['permiss_code']] = $val['permiss_code'];
                     }
                 }
             }
@@ -191,9 +192,11 @@ class Users extends BaseModel
                 $arrPermiss['permUser'] = $permUser->toArray();
                 foreach ($permUser->toArray() as $kk=>$val2){
                     $arrMenu[$val2['menu_id']] = $val2['menu_id'];
+                    $arrPermMenu[$val2['menu_id']][$val2['permiss_code']] = $val2['permiss_code'];
                 }
             }
             $arrPermiss['menuUser'] = $arrMenu;
+            $arrPermiss['permMenu'] = $arrPermMenu;
         }
         return $arrPermiss;
     }

@@ -2,7 +2,7 @@
 $formNameOther = 'formPermissGroup';
 ?>
 {{Form::open(array('method' => 'POST','class'=>$formNameOther,'id'=>$formNameOther,'role'=>'form','files' => true))}}
-@if($is_root || $permission_edit || $permission_add)
+@if($is_root || $permission_full || $permission_edit || $permission_add)
     <button type="button" class="btn btn-primary" onclick="jqueryCommon.submitFormChildElement('{{$formNameOther}}','{{$urlPostData}}');">{{viewLanguage('Phân theo nhóm')}}</button>
 @endif
 <div class="clearfix marginT15">

@@ -59,7 +59,7 @@ class  BaseAdminController extends Controller
                 if ($request->ajax()) {
                     return Response::json(returnErrorSession());
                 } else {
-                    Redirect::route('admin.login', array('url' => $url_encode))->send();
+                    Redirect::route('backend.login', array('url' => $url_encode))->send();
                 }
             }
 

@@ -110,7 +110,7 @@ class BackendLoginController extends Controller
 
     private function _buildUserLogin($user,$url = ''){
         $permUser = $this->modelUser->getPermissionUser($user);
-        $userMenu = $this->_getMenuWithUserLogin($permUser['menuUser']);
+        $userMenu = $this->_getMenuWithUserLogin($permUser);
         $dataUserLogin = array(
             'user_id' => $user->id,
             'user_name' => $user->user_name,
@@ -234,8 +234,10 @@ class BackendLoginController extends Controller
      * @param array $dataInput
      * @return array|array[]
      */
-    private function _getMenuWithUserLogin($arrMenuId = [])
+    private function _getMenuWithUserLogin($permUser = [])
     {
+        $arrMenuId = isset($permUser['menuUser'])? $permUser['menuUser'] :[];
+        $arrPermMenu = isset($permUser['permMenu'])? $permUser['permMenu'] :[];
         if (empty($arrMenuId))
             return ['userPermissionMenu' => [], 'arrMenuId' => [], 'projectCode' => []];
 
@@ -246,7 +248,8 @@ class BackendLoginController extends Controller
                 if (in_array($menu->menu_id, $arrMenuId) && $menu->is_active == STATUS_INT_MOT && trim($menu->router_name) != '') {
                     $tabId = isset(CGlobal::$projectMenuWithTabTop[trim($menu->project_code)]) ? CGlobal::$projectMenuWithTabTop[trim($menu->project_code)] : CGlobal::dms_portal;
                     $arrProjectCode[$tabId] = trim($menu->project_code);
-                    $arrUserMenu[$menu->menu_id] = $menu->toArray();
+                    //$arrUserMenu[$menu->menu_id] = $menu->toArray();
+                    $arrUserMenu[$menu->router_name] = isset($arrPermMenu[$menu->menu_id])?$arrPermMenu[$menu->menu_id]:[];
                 }
             }
         }

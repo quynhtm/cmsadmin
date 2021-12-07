@@ -2,7 +2,7 @@
     <div class="ibox-title">
         <h5>{{viewLanguage('Tìm kiếm')}}</h5>
         <div class="ibox-tools marginDownT6">
-            @if($is_root || $permission_view)
+            @if($permission_full || $permission_view)
             <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
                 @if($permission_full || $permission_edit || $permission_add)
                     <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
@@ -58,7 +58,7 @@
                                 G: @if(isset($arrGender[$item->user_gender])){{$arrGender[$item->user_gender]}}@endif<br/>
                             </td>
                             <td class="text-center middle">
-                                @if($is_root || $permission_edit || $permission_add)
+                                @if($permission_full || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>
