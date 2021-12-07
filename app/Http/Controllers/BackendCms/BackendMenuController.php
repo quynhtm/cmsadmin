@@ -92,11 +92,15 @@ class BackendMenuController extends BaseAdminController
         $result = $this->modelObj->searchByCondition($search, $limit);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
+        if (!empty($dataList)) {
+            $data = $this->modelObj->getTreeMenu($dataList);
+        }
 
+        //myDebug($data);
         $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
         $this->_outDataView($_GET, $search);
         return view($this->templateRoot . 'viewIndex', array_merge([
-            'data' => $dataList,
+            'data' => $data,
             'total' => $total,
             'search' => $search,
             'stt' => ($page_no - 1) * $limit,
@@ -117,10 +121,10 @@ class BackendMenuController extends BaseAdminController
         $is_copy = STATUS_INT_KHONG;
         if ($oject_id > 0) {
             $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput']) : false;
-            $data = isset($dataInput->item) ? $dataInput->item : false;
+            $data = $this->modelObj->getItemById($oject_id);
+            $data = isset($data->menu_id)?$data->toArray(): false;
             $is_copy = isset($dataInput->is_copy) ? $dataInput->is_copy : STATUS_INT_KHONG;
         }
-
         $this->_outDataView($request, (array)$data);
         $html = View::make($this->templateRoot . 'component.popupDetail')
             ->with(array_merge([

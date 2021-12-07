@@ -36,10 +36,14 @@
                     <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
                     <th width="5%" class="text-center">{{viewLanguage('Icons')}}</th>
                     <th width="5%" class="text-center">{{viewLanguage('MenuId')}}</th>
-                    <th width="30%" class="text-left">{{viewLanguage('Menu name')}}</th>
-                    <th width="35%" class="text-left">{{viewLanguage('Router name')}}</th>
+                    <th width="20%" class="text-left">{{viewLanguage('Menu name')}}</th>
+                    <th width="30%" class="text-left">{{viewLanguage('Router name')}}</th>
 
-                    <th width="5%" class="text-left">{{viewLanguage('Order')}}</th>
+                    <th width="5%" class="text-center">{{viewLanguage('Link')}}</th>
+                    <th width="5%" class="text-center">{{viewLanguage('Perm')}}</th>
+                    <th width="5%" class="text-center">{{viewLanguage('Menu')}}</th>
+
+                    <th width="5%" class="text-center">{{viewLanguage('Order')}}</th>
                     <th width="13%" class="text-center"></th>
                 </tr>
                 </thead>
@@ -48,19 +52,41 @@
                     <tr>
                         <td class="text-center middle">{{$stt+$key+1}}</td>
                         <td class="text-center middle">
-                            <i class="{!! $item['menu_icon'] !!} fa-3x "></i>
+                            <i class="{!! $item['menu_icons'] !!} fa-3x "></i>
                         </td>
                         <td class="text-center middle">{{$item['menu_id']}}</td>
                         <td class="text-left middle">
                             @if(in_array($item['router_name'],$arrRouter))
                                 <a href="{{URL::route($item['router_name'])}}" target="_blank">
-                                    {!! $item['menu_name']!!}
+                                    {!! $item['padding_left'].$item['menu_name']!!}
                                 </a>
                             @else
-                                {!! $item['menu_name']!!}
+                                {!! $item['padding_left'].$item['menu_name'] !!}
                             @endif
                         </td>
                         <td class="text-left middle">{{$item['router_name']}}</td>
+
+                        <td class="text-center middle">
+                            @if($item['is_link'] == STATUS_INT_MOT)
+                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
+                            @else
+                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
+                            @endif
+                        </td>
+                        <td class="text-center middle">
+                            @if($item['show_permission'] == STATUS_INT_MOT)
+                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
+                            @else
+                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
+                            @endif
+                        </td>
+                        <td class="text-center middle">
+                            @if($item['show_menu'] == STATUS_INT_MOT)
+                                <a href="javascript:void(0);" style="color: green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
+                            @else
+                                <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
+                            @endif
+                        </td>
                         <td class="text-center middle">{{$item['menu_order']}}</td>
                         <td class="text-center middle">
                             @if($item['is_active'] == STATUS_INT_MOT)

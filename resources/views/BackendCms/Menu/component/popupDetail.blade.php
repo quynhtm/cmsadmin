@@ -57,33 +57,33 @@
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Icons')}}</label>
                             <input type="text" class="form-control input-sm" name="menu_icon" @if($objectId > 0) id="{{$form_id}}menu_icon" @else value="pe-7s-config" @endif>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="NAME" class="text-right control-label">{{viewLanguage('Order')}}</label>
-                            <input type="text" class="form-control input-sm" name="menu_order" @if($objectId > 0) id="{{$form_id}}menu_order" @else value="1" @endif>
-                        </div>
-                        <div class="col-lg-2">
-                            <label for="NAME" class="text-right control-label">{{viewLanguage('Có link')}}</label>
-                            <select class="form-control input-sm" name="is_link" id="is_link" >
-                                {!! $optionIsLink !!}
-                            </select>
-                        </div>
                         <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái')}}</label>
                             <select class="form-control input-sm" name="is_active" id="is_active" >
                                 {!! $optionActive !!}
                             </select>
                         </div>
+                        <div class="col-lg-4">
+                            <label for="NAME" class="text-right control-label">{{viewLanguage('Order')}}</label>
+                            <input type="text" class="form-control input-sm" name="menu_order" @if($objectId > 0) id="{{$form_id}}menu_order" @else value="1" @endif>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
+                            <label for="NAME" class="text-right control-label">{{viewLanguage('Có link')}}</label>
+                            <select class="form-control input-sm" name="is_link" id="is_link" >
+                                {!! $optionIsLink !!}
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Phân quyền')}}</label>
                             <select class="form-control input-sm" name="show_permission" id="show_permission" >
                                 {!! $optionShowPermission !!}
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Show Menu')}}</label>
                             <select class="form-control input-sm" name="show_menu" id="show_menu" >
                                 {!! $optionShowMenu !!}
