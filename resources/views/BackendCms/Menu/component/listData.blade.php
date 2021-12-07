@@ -18,7 +18,7 @@
                 <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
                 @if($permission_full || $permission_edit || $permission_add)
                     <a href="javascript:void(0);"class="btn btn-success sys_show_popup_common" data-form-name="addForm" data-input="{{json_encode([])}}" title="{{viewLanguage('Thêm ')}}{{$pageTitle}}" data-method="get" data-url="{{$urlGetItem}}" data-objectId="0">
-                        <i class="fa fa-plus"></i> Thêm mới
+                        <i class="fa fa-plus"></i>
                     </a>
                 @endif
             </div>
