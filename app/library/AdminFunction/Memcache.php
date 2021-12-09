@@ -37,6 +37,7 @@ class Memcache
      * Cache Web
      ************************************************************************************************/
     const CACHE_PARTNER_ID = 'CACHE_PARTNER_ID_';
+    const CACHE_ALL_PARTNER = 'CACHE_ALL_PARTNER';
 
     /************************************************************************************************
      * Cache Admin

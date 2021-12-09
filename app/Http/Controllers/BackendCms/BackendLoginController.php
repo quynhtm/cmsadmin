@@ -117,6 +117,7 @@ class BackendLoginController extends Controller
             'partner_id' => $user->partner_id,
             'user_full_name' => $user->full_name,
             'user_email' => $user->user_email,
+            'user_phone' => $user->user_phone,
             'user_type' => $user->user_type,
             'user_birthday' => $user->user_birthday,
             'user_image' => $user->user_avatar,
