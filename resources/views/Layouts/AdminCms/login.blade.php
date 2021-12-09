@@ -8,7 +8,7 @@
     <meta name="description" content="User login page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-    @include('admin.AdminLayouts.component._files_header')
+    @include('Layouts.AdminCms.component._files_header')
     <script type="text/javascript">
         var WEB_ROOT = "<?php echo e(URL::to('/')); ?>";
     </script>

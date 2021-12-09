@@ -11,9 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\BackendCms\DefineSystem;
 use App\Library\AdminFunction\CGlobal;
 use App\Services\ServiceCommon;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\OpenId\MenuSystem;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -62,13 +60,10 @@ class  BaseAdminController extends Controller
                 }
             }
 
-            $this->tab_top = $this->getProjectCodeByRouter();
-            if (Config::get('config.ENVIRONMENT') == 'LIVE' && $this->tab_top != Config::get('config.PROJECT_CODE')) {
-                return Redirect::route('admin.dashboard');
-            }
-            $this->project_code_menu = $this->getMenuCodeByProjectCode($this->tab_top);
+            $this->tab_top = CGlobal::dms_portal;
+            $this->project_code_menu = CGlobal::dms_portal;
             $this->user = app('App\Models\BackendCms\Users')->userLogin();
-            //myDebug($this->user);
+
             if (!empty($this->user)) {
                 $this->is_boss = $this->user['is_boss'];
                 if (isset($this->user['change_pass']) && $this->user['change_pass'] == STATUS_INT_KHONG) {
@@ -147,8 +142,6 @@ class  BaseAdminController extends Controller
         $this->permission_edit = $this->checkPermiss(PERMISS_EDIT, $pageCurrent);
         $this->permission_remove = $this->checkPermiss(PERMISS_REMOVE, $pageCurrent);
         $this->permission_approve = $this->checkPermiss(PERMISS_APPROVE, $pageCurrent);//duyệt
-        $this->permission_create_order = $this->checkPermiss(PERMISS_CREATE_ORDER, $pageCurrent);//cấp đơn
-        $this->permission_inspection = $this->checkPermiss(PERMISS_INSPECTION, $pageCurrent);//giám định
 
         View::share('permission_full', $this->permission_full);
         View::share('permission_view', $this->permission_view);
@@ -156,88 +149,12 @@ class  BaseAdminController extends Controller
         View::share('permission_edit', $this->permission_edit);
         View::share('permission_remove', $this->permission_remove);
         View::share('permission_approve', $this->permission_approve);
-        View::share('permission_create_order', $this->permission_create_order);
-        View::share('permission_inspection', $this->permission_inspection);
-    }
 
-    public function getInforUser($type = '')
-    {
-        $result = [];
-        if (trim($type) != '') {
-            switch (strtoupper($type)) {
-                case 'ORG':
-                    $result = isset($this->user['infor_system_user']['arrOrg']) ? $this->user['infor_system_user']['arrOrg'] : $result;
-                    break;
-                case 'PRODUCT':
-                    $result = isset($this->user['infor_system_user']['arrProduct']) ? $this->user['infor_system_user']['arrProduct'] : $result;
-                    break;
-                case 'PACK':
-                    $result = isset($this->user['infor_system_user']['arrPack']) ? $this->user['infor_system_user']['arrPack'] : $result;
-                    break;
-                default:
-                    $result = isset($this->user['infor_system_user']) ? $this->user['infor_system_user'] : $result;
-                    break;
-            }
-        }
-        return $result;
-    }
-
-    private function getProjectCodeByRouter()
-    {
-        $project_code = $project_code_new = Config::get('config.PROJECT_CODE');
-        $pageCurrent = $this->getRouteNameAction();
-        $allMenu = app(MenuSystem::class)->getAllMenuByProjectCode();
-        if(!empty($allMenu)){
-            foreach ($allMenu as $ky => $menu) {
-                if ($menu->MENU_PATH == $pageCurrent) {
-                    $project_code_new = CGlobal::$projectMenuWithTabTop[trim($menu->PROJECT_CODE)];
-                    break;
-                }
-            }
-        }
-
-        if (Config::get('config.IS_DEV')) {
-            if ($pageCurrent != 'admin.dashboard') {
-                Session::put(SESSION_PROJECT_MENU, $project_code_new, 60 * 24);
-            } elseif (Session::has(SESSION_PROJECT_MENU)) {
-                $project_code_new = Session::get(SESSION_PROJECT_MENU);
-            }
-            return $project_code_new;
-        } else {
-            if ($project_code != $project_code_new && $pageCurrent != 'admin.dashboard') {
-                return $project_code_new;
-            }
-        }
-        return $project_code;
-    }
-
-    private function getMenuCodeByProjectCode($projectCode = STATUS_INT_KHONG)
-    {
-        $menuCode = '';
-        switch ($projectCode) {
-            case CGlobal::dms_portal;
-                $menuCode = MENU_HDI_OPEN_ID;
-                CGlobal::$pageAdminTitle = 'HDI OpenID';
-                break;
-            case CGlobal::selling;
-                $menuCode = MENU_HDI_SELLING;
-                CGlobal::$pageAdminTitle = 'HDI Selling';
-                break;
-            default:
-                break;
-        }
-        return $menuCode;
     }
 
     public function getArrOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
     {
-        return app(DefineSystem::class)->getOptionTypeDefine($define_code, $project_code,$language);
-    }
-
-    public function getMenuSystem($type_menu = MENU_HDI_SELLING)
-    {
-        $menuTree = app(MenuSystem::class)->buildMenuAdmin($type_menu);
-        return $menuTree;
+        return app(DefineSystem::class)->getOptionTypeDefine($define_code, $project_code, $language);
     }
 
     public function getRouterNameSite()
