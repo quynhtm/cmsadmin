@@ -55,23 +55,26 @@ class BackendUserController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new Users();
+
         $this->arrDefineCode = [];
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
         $this->arrGender = $this->getArrOptionTypeDefine(DEFINE_GIOI_TINH);
         $this->arrUserType = $this->getArrOptionTypeDefine(DEFINE_USER_TYPE);
         $this->arrPosition = $this->getArrOptionTypeDefine(DEFINE_CHUC_VU);
         $this->arrActionExecute = $this->getArrOptionTypeDefine(DEFINE_PERMISSION_ACTION);
-
         $this->arrTypeMenu = $this->getArrOptionTypeDefine(DEFINE_TYPE_MENU);
+
         $this->arrMenuSystem = app(MenuSystem::class)->getListMenuPermission();
     }
 
     private function _outDataView($request, $data)
     {
+
         $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
         $optionGender = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrGender, isset($data['user_gender']) ? $data['user_gender'] : STATUS_INT_MOT);
         $optionUserType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrUserType, isset($data['user_type']) ? $data['user_type'] : STATUS_INT_BA);
         $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['user_position']) ? $data['user_position'] : DEFINE_NHAN_VIEN);
+        $optionPartner = FunctionLib::getOption([DEFINE_NULL => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
 
         $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
         $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
@@ -88,6 +91,7 @@ class BackendUserController extends BaseAdminController
             'optionUserType' => $optionUserType,
             'optionPosition' => $optionPosition,
             'optionTypeMenu' => $optionTypeMenu,
+            'optionPartner' => $optionPartner,
             'arrActionExecute' => $this->arrActionExecute,
 
             'arrGender' => $this->arrGender,
@@ -210,7 +214,7 @@ class BackendUserController extends BaseAdminController
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
         $request = $_POST;
-        $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
+        $arrAjax = array('success' => 0, 'html' => '', 'message' => '');
         $actionUpdate = 'actionUpdate';
         $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
         $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
@@ -219,20 +223,30 @@ class BackendUserController extends BaseAdminController
             case 'updateData':
                 //myDebug($dataForm,false);
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
-                /*if($this->_validFormData($objectId,$dataForm)){
+                $isUpdate = 0;
+                if($this->_validFormData($objectId,$dataForm) && empty($this->error)){
+                    $isUpdate = $this->modelObj->editItem($dataForm,$objectId);
+                }
 
-                }*/
-                $idNew = $this->modelObj->editItem($dataForm,$objectId);
-                //myDebug($idNew);
-                if ($idNew > 0) {
-                    $dataDetail = $this->modelObj->getItemById($idNew);
+                if ($isUpdate > 0) {
+                    $dataDetail = $this->modelObj->getItemById($isUpdate);
                     $this->_outDataView($request, (array)$dataDetail);
 
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = ($objectId >0) ? 0 : 1;
                     $arrAjax['divShowInfor'] = '';
+                }else{
+                    $arrAjax = returnError($this->error);
+                    /*if(!empty($this->error)){
+                        $str_error = '';
+                        foreach ($this->error as $key=>$msg){
+                            $str_error .= $msg.' <br/> ';
+                        }
+                    }
+                    $arrAjax['message'] = $str_error;*/
                 }
+                //myDebug($arrAjax);
                 break;
             case 'updatePermissUserGroup':
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
@@ -297,61 +311,47 @@ class BackendUserController extends BaseAdminController
     private function _validFormData($id = 0, &$data = array())
     {
         if (!empty($data)) {
-            if (isset($data['USER_TYPE']) && trim($data['USER_TYPE']) == '') {
+            if (isset($data['user_type']) && trim($data['user_type']) == '') {
                 $this->error[] = 'Kiểu người dùng không được bỏ trống';
             }
-            if (isset($data['FULL_NAME']) && trim($data['FULL_NAME']) == '') {
+            if (isset($data['full_name']) && trim($data['full_name']) == '') {
                 $this->error[] = 'Họ tên không được bỏ trống';
             }
-            if (isset($data['USER_NAME']) && trim($data['USER_NAME']) == '') {
+            if (isset($data['user_name']) && trim($data['user_name']) == '') {
                 $this->error[] = 'Tên đăng nhập không được bỏ trống';
             } else {
-                $userExits = $this->modelObj->getInforUserByKey(strtoupper($data['USER_NAME']),'USER_NAME');
-                if(isset($userExits->USER_CODE) && $id != $userExits->USER_CODE){
+                $userExits = $this->modelObj->getUserByName(strtolower($data['user_name']));
+                if(isset($userExits->id) && $id != $userExits->id){
                     $this->error[] = 'Tên đăng nhập đã tồn tại trên hệ thống';
                 }else{
-                    $data['USER_NAME'] = strtoupper($data['USER_NAME']);
+                    if($id == 0){
+                        $data['user_name'] = strtolower($data['user_name']);
+                    }else{
+                        unset($data['user_name']);
+                    }
                 }
             }
-            if (isset($data['PASSWORD']) && trim($data['PASSWORD']) == '') {
-                $data['PASSWORD'] = DEFINE_PASSWORD_DEFAULT;
-            }
-            if (isset($data['ORG_CODE']) && trim($data['ORG_CODE']) == '') {
-                $this->error[] = 'Tổ chức không được bỏ trống';
-            }
-            if (isset($data['STRUCT_CODE']) && trim($data['STRUCT_CODE']) == '') {
-                $this->error[] = 'Phòng ban không được bỏ trống';
-            }
-            if (isset($data['EFFECTIVE_DATE']) && trim($data['EFFECTIVE_DATE']) == '') {
-                $this->error[] = 'Ngày hiệu lực không được bỏ trống';
-            }
-
-            if (isset($data['AUTH_TYPE']) && trim($data['AUTH_TYPE']) != '') {
-                if ($data['AUTH_TYPE'] == 'E') {
-                    if (isset($data['EMAIL']) && trim($data['EMAIL']) == '') {
-                        $this->error[] = 'EMAIL không được bỏ trống';
-                    }
-                } elseif ($data['AUTH_TYPE'] == 'O') {
-                    if (isset($data['PHONE']) && trim($data['PHONE']) == '') {
-                        $this->error[] = 'PHONE không được bỏ trống';
-                    }
-                } else {
-                    $this->error[] = 'Kiểu xác thực sai định dạng';
+            if ($id == 0 && isset($data['password'])) {
+                $str_password = (trim($data['password']) == '')? DEFINE_PASSWORD_DEFAULT : $data['password'];
+                $data['password'] = $this->modelObj->encode_password(trim($str_password).strtoupper(trim($data['user_name'])));
+            }else{
+                if(isset($data['password'])){
+                    unset($data['password']);
                 }
             }
-            if (isset($data['EMAIL']) && trim($data['EMAIL']) != '') {
-                if (!checkRegexEmail(trim(strtolower($data['EMAIL'])))) {
+            if (isset($data['user_email']) && trim($data['user_email']) != '') {
+                if (!checkRegexEmail(trim(strtolower($data['user_email'])))) {
                     $this->error[] = 'EMAIL không đúng định dạng';
                 }else{
-                    $emailExits = $this->modelObj->getInforUserByKey(strtolower($data['EMAIL']),'EMAIL');
-                    if(isset($emailExits->USER_CODE) && $id != $emailExits->USER_CODE){
+                    $emailExits = $this->modelObj->getUserByEmail(strtolower($data['user_email']));
+                    if(isset($emailExits->id) && $id != $emailExits->id){
                         $this->error[] = 'Email đã tồn tại trên hệ thống';
                     }
                 }
-                $data['EMAIL'] = strtolower($data['EMAIL']);
+                $data['user_email'] = strtolower($data['user_email']);
             }
-            if (isset($data['PHONE']) && trim($data['PHONE']) != '') {
-                if (!validatePhoneNumber(trim($data['PHONE']))) {
+            if (isset($data['user_phone']) && trim($data['user_phone']) != '') {
+                if (!validatePhoneNumber(trim($data['user_phone']))) {
                     $this->error[] = 'PHONE không đúng định dạng';
                 }
             }

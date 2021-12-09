@@ -23,7 +23,7 @@ class Partner extends BaseModel
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
 
-            $query->orderBy($this->primaryKey, 'desc');
+            $query->orderBy('partner_order', 'asc');
 
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',', trim($dataSearch['field_get'])) : array();
             if (!empty($fields)) {
@@ -100,32 +100,32 @@ class Partner extends BaseModel
     {
         if ($id > STATUS_INT_KHONG) {
             Memcache::forgetCache(Memcache::CACHE_PARTNER_ID.$id);
-        }
-        if($data){
 
         }
+        Memcache::forgetCache(Memcache::CACHE_ALL_PARTNER);
+        if($data){}
     }
-
-    public function getOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
-    {
-        if (trim($define_code) == '') return [];
-        $key_memcache = Memcache::CACHE_DEFINE_BY_DEFINE_CODE.$define_code.'_'.$project_code;
-        $option = Memcache::getCache($key_memcache);
-        if (!$option) {
-            $dataSearch = Partner::where($this->primaryKey, '>', STATUS_INT_KHONG)
-                ->where('project_code', $project_code)
-                ->where('define_code', $define_code)
+    /**************************************************************************************************************************/
+    public function getAllPartner(){
+        $key_memcache = Memcache::CACHE_ALL_PARTNER;
+        $data = Memcache::getCache($key_memcache);
+        if (!$data) {
+            $data = Partner::where($this->primaryKey, '>', STATUS_INT_KHONG)
                 ->where('is_active', STATUS_INT_MOT)
-                ->orderBy('sort_order', 'asc')->get();
-            if ($dataSearch) {
-                foreach ($dataSearch as $k => $val) {
-                    if($language == $val->language || $language == ''){
-                        $option[$val->type_code] = $val->type_name;
-                    }
-                }
-                if(!empty($option)){
-                    Memcache::putCache($key_memcache, $option);
-                }
+                ->orderBy('partner_order', 'asc')->get();
+            if($data){
+                Memcache::putCache($key_memcache, $data);
+            }
+        }
+        return $data;
+    }
+    public function getOptionPartner()
+    {
+        $option = [];
+        $dataAll = self::getAllPartner();
+        if ($dataAll) {
+            foreach ($dataAll as $k => $val) {
+                $option[$val->id] = $val->partner_name;
             }
         }
         return $option;

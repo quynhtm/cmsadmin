@@ -97,7 +97,7 @@ define('CACHE_ONE_YEAR', 31104000);
 define('CACHE_FIVE_YEAR', 155520000);
 
 define('DEFINE_TYPE_DEPART_MEETING',2);
-define('DEFINE_PASSWORD_DEFAULT','Hdi@2020@');
+define('DEFINE_PASSWORD_DEFAULT','DangNhapCms@2022@');
 
 define('SESSION_ADMIN_LOGIN','UserAdminLogin');
 define('SESSION_PROJECT_MENU','SessionProjectMenu');

@@ -35,24 +35,28 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="4%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('ID')}}</th>
-                        <th width="40%" class="text-left">{{viewLanguage('Thông tin User')}}</th>
+                        <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
+                        <th width="25%" class="text-left">{{viewLanguage('Thông tin User')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Kiểu User')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Phone')}}</th>
 
-                        <th width="45%" class="text-left">{{viewLanguage('Thông tin thêm')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('Action')}}</th>
+                        <th width="28%" class="text-left">{{viewLanguage('Thông tin thêm')}}</th>
+                        <th width="10%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-center middle">{{$item->id}}</td>
                             <td class="text-left middle">
-                                U: {{$item->user_name}}<br/>
-                                F: {{$item->full_name}}<br/>
-                                T: @if(isset($arrUserType[$item->user_type])){{$arrUserType[$item->user_type]}}@endif<br/>
+                                [{{$item->id}}] <b>{{$item->user_name}}</b><br/>
+                                {{$item->full_name}}
                             </td>
+                            <td class="text-left middle">@if(isset($arrUserType[$item->user_type])){{$arrUserType[$item->user_type]}}@endif</td>
+                            <td class="text-left middle">{{$item->user_email}}</td>
+                            <td class="text-left middle">{{$item->user_phone}}</td>
+
                             <td class="text-left middle">
                                 P: @if(isset($arrPosition[$item->user_position])){{$arrPosition[$item->user_position]}}@endif<br/>
                                 G: @if(isset($arrGender[$item->user_gender])){{$arrGender[$item->user_gender]}}@endif<br/>

@@ -20,25 +20,33 @@
         <div class="row form-group">
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('User name')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="user_name" id="{{$formName}}user_name">
+                <input type="text" class="form-control input-sm" maxlength="100" required @if($objectId > 0) readonly @endif name="user_name" id="{{$formName}}user_name">
             </div>
-            <div class="col-lg-3">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Password')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" name="password" id="{{$formName}}password">
-            </div>
+
+            @if($objectId == 0)
+                <div class="col-lg-3">
+                    <label for="NAME" class="text-right control-label">{{viewLanguage('Mật khẩu')}} </label><span class="red"> ( {{DEFINE_PASSWORD_DEFAULT}} )</span>
+                    <input type="password" class="form-control input-sm" minlength="6" maxlength="20" name="password" id="{{$formName}}password" value="{{DEFINE_PASSWORD_DEFAULT}}">
+                </div>
+            @endif
+
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Mã NV')}}</label>
                 <input type="text" class="form-control input-sm" maxlength="100" name="user_code" id="{{$formName}}user_code">
             </div>
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Full name')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" name="full_name" id="{{$formName}}full_name">
+                <input type="text" class="form-control input-sm" required maxlength="100" name="full_name" id="{{$formName}}full_name">
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Email')}}</label><span class="red"> (*)</span>
                 <input type="text" class="form-control input-sm" maxlength="100" name="user_email" id="{{$formName}}user_email">
+            </div>
+            <div class="col-lg-3">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Phone')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" name="user_phone" id="{{$formName}}user_phone">
             </div>
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('CMND/CCCD')}}</label>
@@ -48,12 +56,7 @@
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Ngày sinh')}}</label><span class="red"> (*)</span>
                 <input type="text" class="form-control input-sm" maxlength="100" name="user_birthday" id="{{$formName}}user_birthday">
             </div>
-            <div class="col-lg-3">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Giới tính')}}</label>
-                <select  class="form-control input-sm" name="user_gender" id="user_gender">
-                    {!! $optionGender !!}}
-                </select>
-            </div>
+
         </div>
         <div class="row form-group">
             <div class="col-lg-3">
@@ -62,16 +65,30 @@
                     {!! $optionUserType !!}}
                 </select>
             </div>
+            <div class="col-lg-6">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Đối tác')}}</label><span class="red"> (*)</span>
+                <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                    {!! $optionPartner !!}}
+                </select>
+            </div>
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Chức vụ')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="user_position" id="user_position">
                     {!! $optionPosition !!}}
                 </select>
             </div>
+        </div>
+        <div class="row form-group">
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Giới tính')}}</label>
+                <select  class="form-control input-sm" name="user_gender" id="user_gender">
+                    {!! $optionGender !!}}
                 </select>
             </div>
             <div class="col-lg-2">

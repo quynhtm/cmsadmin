@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BackendCms\DefineSystem;
 use App\Library\AdminFunction\CGlobal;
+use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\OpenId\MenuSystem;
@@ -27,9 +28,7 @@ class  BaseAdminController extends Controller
     protected $user_group_menu = array();
     protected $user_tab_id = array();
 
-    protected $arrPackUser = array();
-    protected $arrOrgUser = array();
-    protected $arrProductUser = array();
+    protected $arrPartner = array();
     protected $is_root = false;
     protected $is_boss = false;
     protected $is_tech = false;
@@ -125,9 +124,8 @@ class  BaseAdminController extends Controller
             View::share('user_name', $this->user_name);
             View::share('user', $this->user);
 
-            View::share('arrProductUser', $this->arrProductUser);
-            View::share('arrOrgUser', $this->arrOrgUser);
-            View::share('arrPackUser', $this->arrPackUser);
+            $this->arrPartner = app(ServiceCommon::class)->getOptionPartner();
+            View::share('arrPartner', $this->arrPartner);
 
             View::share('arrMenuTabTop', CGlobal::$arrMenuTabTop);
             View::share('colorWithTab', CGlobal::$colorWithTab);

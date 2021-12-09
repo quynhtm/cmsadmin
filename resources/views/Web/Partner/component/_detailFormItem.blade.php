@@ -32,11 +32,15 @@
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}
                 </select>
+            </div>
+            <div class="col-lg-2">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí')}}</label>
+                <input type="text" class="form-control input-sm" name="partner_order" id="{{$formName}}partner_order">
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Zalo')}}</label>
