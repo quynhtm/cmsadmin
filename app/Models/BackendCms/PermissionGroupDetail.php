@@ -130,19 +130,20 @@ class PermissionGroupDetail extends BaseModel
         if (empty($arrPermissForm) || $group_id <= 0 || $project_code <= 0)
             return $edit;
 
-        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
-            PermissionGroupDetail::where('group_id', $group_id)
-                ->where('project_code', $project_code)->delete();
-        }
-        foreach ($arrPermissForm as $permiss_code => $arrMenu) {
-            foreach ($arrMenu as $k => $menu_id) {
-                $arrInsert['group_id'] = $group_id;
-                $arrInsert['project_code'] = $project_code;
-                $arrInsert['menu_id'] = $menu_id;
-                $arrInsert['permiss_code'] = $permiss_code;
-                $arrInsert['is_active'] = STATUS_INT_MOT;
-                if ($this->editItem($arrInsert)) {
-                    $edit = true;
+        PermissionGroupDetail::where('group_id', $group_id)->where('project_code', $project_code)->delete();
+        $edit = true;
+
+        if(!empty($arrPermissForm)){
+            foreach ($arrPermissForm as $permiss_code => $arrMenu) {
+                foreach ($arrMenu as $k => $menu_id) {
+                    $arrInsert['group_id'] = $group_id;
+                    $arrInsert['project_code'] = $project_code;
+                    $arrInsert['menu_id'] = $menu_id;
+                    $arrInsert['permiss_code'] = $permiss_code;
+                    $arrInsert['is_active'] = STATUS_INT_MOT;
+                    if ($this->editItem($arrInsert)) {
+                        $edit = true;
+                    }
                 }
             }
         }

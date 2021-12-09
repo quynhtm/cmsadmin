@@ -272,7 +272,7 @@ class BackendUserController extends BaseAdminController
                 $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
                 $arrPermissForm = app(PermissionGroup::class)->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
 
-                if(!empty($arrPermissForm) && $user_id >0 && $project_code >0 ){
+                if($user_id >0 && $project_code >0 ){
                     $edit = app(PermissionUser::class)->updatePermissUser($arrPermissForm,$user_id, $project_code);
                 }
                 if ($edit) {

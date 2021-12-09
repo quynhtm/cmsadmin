@@ -16,5 +16,10 @@
         </div>
         {{--Footer--}}
         @include('Frontend.Shop.Layouts.footer')
+        <script>
+            $(document).ready(function() {
+                $('.phpdebugbar-minimized').css('display','none');
+            });
+        </script>
     </body>
 </html>

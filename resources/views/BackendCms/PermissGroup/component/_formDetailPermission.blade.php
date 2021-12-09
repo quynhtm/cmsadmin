@@ -4,11 +4,11 @@
         <?php
             $objectId = (isset($dataDetail['group_id'])) ? $dataDetail['group_id'] : 0;
         ?>
-        <div class="form-group col-lg-4">
+        {{--<div class="form-group col-lg-4">
             <select name="s_project_code" id="s_project_code_menu" class="form-control input-sm" onchange="Admin.getListMenuPermission('{{$objectId}}','{{$urlGetData}}','permissGroup')">
                 {!! $optionTypeMenu !!}}
             </select>
-        </div>
+        </div>--}}
         <div class="form-group col-lg-4">
             <button type="button" class="btn btn-primary" onclick="jqueryCommon.submitFormChildElement('other_{{$form_id}}','{{$urlPostData}}');">{{viewLanguage('Phân quyền')}}</button>
         </div>

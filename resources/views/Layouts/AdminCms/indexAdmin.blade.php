@@ -59,9 +59,8 @@ $imageDefault = Config::get('config.WEB_ROOT').'assets/backend/img/HDInsurance.p
         var WEB_ROOT = "{{URL::to('/')}}";
         $(document).ready(function() {
             @if(!$is_tech)
-            $('.phpdebugbar-minimized').css('display','none');
+                $('.phpdebugbar-minimized').css('display','none');
             @endif
-            //$('#app-container').addClass("closed-sidebar");
         });
 
     </script>

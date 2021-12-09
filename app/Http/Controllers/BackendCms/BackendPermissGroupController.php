@@ -157,6 +157,7 @@ class BackendPermissGroupController extends BaseAdminController
                 $dataDetail = false;
                 $projectCodeMenu = isset($request['projectCodeMenu']) ? (int)$request['projectCodeMenu'] : STATUS_INT_KHONG;
                 $typeSearch = isset($request['typeSearch']) ? $request['typeSearch'] : 'permissGroup';
+
                 $arrMenuSystem = $this->arrMenuSystem[$projectCodeMenu];
                 $arrChooseMenu = $arrCheckMenu = [];
                 if($objectId > STATUS_INT_KHONG){
@@ -239,7 +240,7 @@ class BackendPermissGroupController extends BaseAdminController
                 $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
                 $arrPermissForm = $this->modelObj->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
 
-                if(!empty($arrPermissForm) && $group_id >0 && $project_code >0 ){
+                if($group_id >0 && $project_code >0 ){
                     $edit = $this->modelDetail->updatePermissGroupDetail($arrPermissForm,$group_id, $project_code);
                 }
                 if ($edit) {

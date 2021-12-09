@@ -18,14 +18,14 @@ class CGlobal
     public static $extraFooterCSS = '';
     public static $extraFooterJS = '';
     public static $extraMeta = '';
-    public static $pageAdminTitle = 'HDI';
+    public static $pageAdminTitle = 'CMS Website';
     public static $pageShopTitle = '';
     public static $is_debug = false;
 
-    const web_name = 'HDI - Công ty TNHH bảo hiểm HD';
+    const web_name = 'CMS';
     const web_title_dashboard = 'Chào mừng bạn đến với hệ thống quản trị ';
-    const web_keywords = 'HDI';
-    const web_description = 'HDI';
+    const web_keywords = 'CMS';
+    const web_description = 'CMS';
 
     const email_cskh = 'cmsbackend@gmail.com';
     const phone_hotline = '093.84133.68';
@@ -66,8 +66,8 @@ class CGlobal
         self::selling => 'bg_login_selling',
     ];
     public static $arrTitleProject = [
-        self::dms_portal => '| HDI-System | HD Insurance',
-        self::selling => '| OSSP | HD Insurance',
+        self::dms_portal => '| CMS Website',
+        self::selling => '| CMS Website',
     ];
     public static $arrMenuTabTop = [
         self::dms_portal => 'Open System',
