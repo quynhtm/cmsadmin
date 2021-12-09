@@ -105,7 +105,7 @@
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('userSystem.indexUser')}}"
+                            <a href="{{URL::route('users.index')}}"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
                                 <i class="fa fa-street-view text-primary opacity-7 btn-icon-wrapper mb-2"></i> Users
                             </a>
@@ -124,7 +124,7 @@
                             </a>
                         </div>--}}
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('menuGroup.index')}}"
+                            <a href="{{URL::route('permissGroup.index')}}"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-info">
                                 <i class="lnr-select text-warning opacity-7 btn-icon-wrapper mb-2"></i> Nhóm chức năng
                             </a>
@@ -143,13 +143,13 @@
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('apiSystem.index')}}"
+                            <a href="#"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
                                 <i class="fa fa-random fa-2x text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Config Api
                             </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('databaseConnection.index')}}"
+                            <a href="#"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-dark">
                                 <i class="lnr-database text-dark opacity-7 btn-icon-wrapper mb-2"> </i> Database
                             </a>
@@ -178,13 +178,13 @@
                 <div class="grid-menu grid-menu-2col">
                     <div class="no-gutters row">
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('menu.indexMenu')}}"
+                            <a href="{{URL::route('menu.index')}}"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-success">
                                 <i class="lnr-list text-success opacity-7 btn-icon-wrapper mb-2"> </i>Menu
                             </a>
                         </div>
                         <div class="p-2 col-sm-6">
-                            <a href="{{URL::route('typeDefines.index')}}"
+                            <a href="{{URL::route('defines.index')}}"
                                class="btn-icon-vertical btn-transition-text btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
                                 <i class="lnr-cog text-warning opacity-7 btn-icon-wrapper mb-2"> </i>Cấu hình tham số
                             </a>

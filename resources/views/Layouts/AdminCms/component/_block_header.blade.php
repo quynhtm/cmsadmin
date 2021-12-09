@@ -419,12 +419,12 @@ use App\Library\AdminFunction\CGlobal;
                                             <ul class="nav flex-column">
                                                 <li class="nav-item-header nav-item">Activity</li>
                                                 <li class="nav-item">
-                                                    <a href="javascript:void(0);"class="nav-link dropdown-item" onclick="jqueryCommon.getDataByAjax(this)" data-form-name="changePass" data-load-page="1" data-input="{{json_encode([])}}" title="{{viewLanguage('Đổi mật khẩu: ').$user['user_full_name']}}" data-show="0" data-method="get" data-url="{{URL::route('userSystem.ajaxGetChangePass')}}" data-objectId="{{setStrVar($user['user_id'])}}">
+                                                    <a href="javascript:void(0);"class="nav-link dropdown-item" onclick="jqueryCommon.getDataByAjax(this)" data-form-name="changePass" data-load-page="1" data-input="{{json_encode([])}}" title="{{viewLanguage('Đổi mật khẩu: ').$user['user_full_name']}}" data-show="0" data-method="get" data-url="{{URL::route('users.ajaxGetChangePass')}}" data-objectId="{{setStrVar($user['user_id'])}}">
                                                         Đổi mật khẩu
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link dropdown-item" href="{{URL::route('userSystem.userProfile',array('id' => setStrVar($user['user_id']),'name'=>safe_title($user['user_full_name'])))}}">Thông tin cá nhân</a>
+                                                    <a class="nav-link dropdown-item" href="{{URL::route('users.user_profile',array('id' => setStrVar($user['user_id']),'name'=>safe_title($user['user_full_name'])))}}">Thông tin cá nhân</a>
                                                 </li>
                                                 <li class="nav-item-divider mb-0 nav-item"></li>
                                                 <li class="nav-item">

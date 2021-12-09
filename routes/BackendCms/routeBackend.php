@@ -44,6 +44,19 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::match(['GET', 'POST'], 'index', array('as' => 'users.index', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@index'));
         Route::post('ajaxGetData', array('as' => 'users.ajaxGetData', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxGetData'));
         Route::post('ajaxPostData', array('as' => 'users.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxPostData'));
+
+        Route::get('profile', array('as' => 'users.user_profile', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@getProfile'));
+        Route::post('profile', array('as' => 'users.user_profile', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@postProfile'));
+
+        //change pass
+        Route::get('ajaxGetChangePass', array('as' => 'users.ajaxGetChangePass', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxGetChangePass'));
+        Route::post('ajaxPostChangePass', array('as' => 'users.ajaxPostChangePass', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@ajaxPostChangePass'));
+        Route::post('remove/{id}', array('as' => 'users.user_remove', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@remove'));
+
+        //quan lý nhân viên cấp dưới
+        Route::match(['GET','POST'],'employee/view', array('as' => 'admin.viewEmployee','uses' => DIR_PRO_BACKEND.'\BackendUserController@viewEmployee'));
+        Route::get('employee/edit/{id}',array('as' => 'users.employeeEdit','uses' => DIR_PRO_BACKEND.'\BackendUserController@getEmployee'));
+        Route::post('employee/edit/{id}',array('as' => 'users.employeeEdit','uses' => DIR_PRO_BACKEND.'\BackendUserController@postEmployee'));
     });
 });
 

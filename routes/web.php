@@ -16,13 +16,6 @@ Route::group(array('prefix' => 'manager', 'before' => ''), function () {
     require __DIR__ . '/'.DIR_PRO_BACKEND.'/routeBackend.php';
     require __DIR__ . '/'.DIR_PRO_WEB.'/routeWeb.php';
     require __DIR__ . '/'.DIR_PRO_SHOP.'/routeShop.php';
-
-    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeAdmin.php';
-    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeOpenID.php';
-    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeOpenApi.php';
-    require __DIR__ . '/'.DIR_PRO_SYSTEM.'/routeCoreHdi.php';
-    require __DIR__ . '/'.DIR_PRO_SELLING.'/routeSelling.php';
-    require __DIR__ . '/'.DIR_PRO_SELLING.'/routeReport.php';
 });
 require __DIR__ . '/api.php';
 
