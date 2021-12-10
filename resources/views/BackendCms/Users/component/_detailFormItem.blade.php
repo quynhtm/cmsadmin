@@ -54,10 +54,11 @@
             </div>
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Ngày sinh')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" name="user_birthday" id="{{$formName}}user_birthday">
+                <input type="text" class="form-control input-sm input-date" data-valid = "text" name="user_birthday" id="{{$formName}}user_birthday">
+                <div class="icon_calendar"><i class="fa fa-calendar-alt"></i></div>
             </div>
-
         </div>
+
         <div class="row form-group">
             <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Kiểu người dùng')}}</label><span class="red"> (*)</span>
@@ -107,7 +108,6 @@
 <script type="text/javascript">
     $(document).ready(function(){
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});
-
         showDataIntoForm('{{$formName}}');
     });
 </script>

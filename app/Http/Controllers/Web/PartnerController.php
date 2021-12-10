@@ -81,12 +81,13 @@ class PartnerController extends BaseAdminController
 
         $limit = CGlobal::number_show_20;
         $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit);
+        $result = $this->modelObj->searchByCondition($search, $limit, $offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 

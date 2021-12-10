@@ -6,9 +6,9 @@
                 <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
             @endif
             @if($permission_full || $permission_edit || $permission_add)
-                {{--<a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
+                <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
                     <i class="fa fa-plus"></i>
-                </a>--}}
+                </a>
             @endif
         </div>
     </div>
@@ -44,12 +44,15 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Người gửi')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('Số điện thoại')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Tiêu đề tuyển dụng')}}</th>
+                        <th width="8%" class="text-left">{{viewLanguage('Số lượng')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Vị trí tuyển dụng')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Kinh nghiệm')}}</th>
 
-                        <th width="15%" class="text-left">{{viewLanguage('Tiêu đề')}}</th>
-                        <th width="30%" class="text-left">{{viewLanguage('Nội dung')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Mức lương')}}</th>
+                        <th width="8%" class="text-left">{{viewLanguage('Tỉnh thành')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Ngày bắt đầu')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Ngày kết thúc')}}</th>
 
                         <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
                         <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
@@ -59,15 +62,22 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-left middle">{{$item->contact_user_name_send}}</td>
-                            <td class="text-left middle">{{$item->contact_phone_send}}</td>
-                            <td class="text-left middle">{{$item->contact_email_send}}</td>
-                            <td class="text-left middle">{{$item->contact_title}}</td>
-                            <td class="text-left middle">{!! $item->contact_content !!}</td>
-                            <td class="text-center middle">
-                                @if(isset($arrIsActive[$item->contact_status])){{$arrIsActive[$item->contact_status]}}@endif
+                            <td class="text-left middle">{{$item->recruitment_title}}</td>
+                            <td class="text-left middle">{{$item->recruitment_number}}</td>
+                            <td class="text-left middle">
+                                @if(isset($arrPosition[$item->recruitment_position])){{$arrPosition[$item->recruitment_position]}}@endif
                             </td>
+                            <td class="text-left middle">{{$item->recruitment_experience}}</td>
 
+                            <td class="text-left middle">{{$item->recruitment_salary}}</td>
+                            <td class="text-left middle">{{$item->recruitment_province}}</td>
+                            <td class="text-left middle">{{$item->recruitment_date_start}}</td>
+                            <td class="text-left middle">{{$item->recruitment_date_end}}</td>
+
+                            <td class="text-center middle">
+                                @if(isset($arrIsActive[$item->recruitment_status])){{$arrIsActive[$item->recruitment_status]}}@endif
+
+                            </td>
                             <td class="text-center middle">
                                 @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">

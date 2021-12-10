@@ -45,7 +45,7 @@ class ContactController extends BaseAdminController
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -84,13 +84,14 @@ class ContactController extends BaseAdminController
 
         $limit = CGlobal::number_show_20;
         $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit);
+        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 

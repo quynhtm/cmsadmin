@@ -69,7 +69,6 @@ class BackendUserController extends BaseAdminController
 
     private function _outDataView($request, $data)
     {
-
         $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
         $optionGender = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrGender, isset($data['user_gender']) ? $data['user_gender'] : STATUS_INT_MOT);
         $optionUserType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrUserType, isset($data['user_type']) ? $data['user_type'] : STATUS_INT_BA);
@@ -123,12 +122,13 @@ class BackendUserController extends BaseAdminController
 
         $limit = CGlobal::number_show_20;
         $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['user_name'] = trim(addslashes(Request::get('user_name', '')));
         $search['full_name'] = trim(addslashes(Request::get('full_name', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit);
+        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 

@@ -27,6 +27,7 @@ class RecruitmentController extends BaseAdminController
     private $modelObj = false;
 
     private $arrIsActive = array();
+    private $arrPosition = array();
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
@@ -40,23 +41,27 @@ class RecruitmentController extends BaseAdminController
         parent::__construct();
         $this->modelObj = new Recruitment();
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
+        $this->arrPosition = $this->getArrOptionTypeDefine(DEFINE_VI_TRI_TUYEN_DUNG);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['recruitment_position']) ? $data['recruitment_position'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Quản lý liên hệ';
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Quản lý tuyển dụng';
 
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
             'optionPartner' => $optionPartner,
             'optionIsActive' => $optionIsActive,
             'arrIsActive' => $this->arrIsActive,
+            'optionPosition' => $optionPosition,
+            'arrPosition' => $this->arrPosition,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -84,13 +89,14 @@ class RecruitmentController extends BaseAdminController
 
         $limit = CGlobal::number_show_20;
         $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit);
+        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 
