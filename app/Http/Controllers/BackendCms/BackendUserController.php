@@ -211,7 +211,7 @@ class BackendUserController extends BaseAdminController
     public function ajaxPostData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $request = $_POST;
         $arrAjax = array('success' => 0, 'html' => '', 'message' => '');
@@ -238,13 +238,6 @@ class BackendUserController extends BaseAdminController
                     $arrAjax['divShowInfor'] = '';
                 }else{
                     $arrAjax = returnError($this->error);
-                    /*if(!empty($this->error)){
-                        $str_error = '';
-                        foreach ($this->error as $key=>$msg){
-                            $str_error .= $msg.' <br/> ';
-                        }
-                    }
-                    $arrAjax['message'] = $str_error;*/
                 }
                 //myDebug($arrAjax);
                 break;
@@ -262,6 +255,8 @@ class BackendUserController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = 0;
+                }else{
+                    $arrAjax = returnError(MSG_ERROR);
                 }
                 break;
             case 'updatePermissUser':
@@ -279,6 +274,8 @@ class BackendUserController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['loadPage'] = $load_page;
                     $arrAjax['html'] = '';
+                }else{
+                    $arrAjax = returnError(MSG_ERROR);
                 }
                 break;
             default:
@@ -290,7 +287,7 @@ class BackendUserController extends BaseAdminController
     public function ajaxGetData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $dataRequest = $_POST;
         $functionAction = $dataRequest['functionAction'] ?? '';

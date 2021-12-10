@@ -140,7 +140,7 @@ class PartnerController extends BaseAdminController
     public function ajaxPostData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $request = $_POST;
         $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
@@ -151,17 +151,20 @@ class PartnerController extends BaseAdminController
         switch ($actionUpdate) {
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
+                $isEdit = 0;
                 if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
-                    $idNew = $this->modelObj->editItem($dataForm, $objectId);
+                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
                 }
-                if ($idNew > 0) {
-                    $dataDetail = $this->modelObj->getItemById($idNew);
+                if ($isEdit > 0) {
+                    $dataDetail = $this->modelObj->getItemById($isEdit);
                     $this->_outDataView($request, (array)$dataDetail);
 
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
                     $arrAjax['divShowInfor'] = '';
+                }else{
+                    $arrAjax = returnError($this->error);
                 }
                 break;
             default:
@@ -173,7 +176,7 @@ class PartnerController extends BaseAdminController
     public function ajaxGetData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $dataRequest = $_POST;
         $functionAction = $dataRequest['functionAction'] ?? '';

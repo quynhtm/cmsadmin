@@ -200,7 +200,7 @@ class BackendPermissGroupController extends BaseAdminController
     public function ajaxPostData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $request = $_POST;
         $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
@@ -258,7 +258,7 @@ class BackendPermissGroupController extends BaseAdminController
     public function ajaxGetData()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT],$this->routerIndex)) {
-            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $dataRequest = $_POST;
         $functionAction = $dataRequest['functionAction'] ?? '';
