@@ -9,9 +9,6 @@
 /**************************************************************************************************************
  * định nghĩa Table
  **************************************************************************************************************/
-define('PREFIX_ADM', 'admin_');
-define('PREFIX_DMS', 'dms_');
-
 define('PREFIX_BACKEND', 'backend_');
 define('PREFIX_WEB', 'web_');
 
@@ -26,19 +23,8 @@ define('TABLE_USERS',PREFIX_BACKEND.'users');
 
 //Web
 define('TABLE_PARTNER',PREFIX_WEB.'partner');
+define('TABLE_CONTACT',PREFIX_WEB.'contact');
 
-
-
-define('TABLE_BANNERS', 'web_banner');
-define('TABLE_USER_ADMIN', PREFIX_ADM.'user');
-define('TABLE_GROUP_USER', PREFIX_ADM.'group_user');
-define('TABLE_PERMISSION', PREFIX_ADM.'permission');
-define('TABLE_ROLE_MENU', PREFIX_ADM.'role_menu');
-define('TABLE_ROLE',PREFIX_ADM.'role');
-define('TABLE_DEFINE',PREFIX_ADM.'define');
-define('TABLE_GROUP_USER_PERMISSION', PREFIX_ADM.'group_permission');
-//DMS
-define('TABLE_CALENDAR_WORKING', PREFIX_DMS.'calendar_working');
 
 /*********************************************************************************************************
  * list table API: HDI OPEN ID

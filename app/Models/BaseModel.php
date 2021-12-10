@@ -70,7 +70,7 @@ class BaseModel extends Model
 
     public function getUserName()
     {
-        $user_name = '';
+        $user_name = 'User thường';
         if (Session::has(SESSION_ADMIN_LOGIN)) {
             $user = Session::get(SESSION_ADMIN_LOGIN);
             $user_name = $user['user_name'];
