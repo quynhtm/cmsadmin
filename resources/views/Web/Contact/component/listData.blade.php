@@ -51,7 +51,7 @@
                         <th width="15%" class="text-left">{{viewLanguage('Tiêu đề')}}</th>
                         <th width="30%" class="text-left">{{viewLanguage('Nội dung')}}</th>
 
-                        <th width="8%" class="text-left">{{viewLanguage('Tình trạng')}}</th>
+                        <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
                         <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
@@ -64,7 +64,7 @@
                             <td class="text-left middle">{{$item->contact_email_send}}</td>
                             <td class="text-left middle">{{$item->contact_title}}</td>
                             <td class="text-left middle">{!! $item->contact_content !!}</td>
-                            <td class="text-left middle">
+                            <td class="text-center middle">
                                 @if(isset($arrIsActive[$item->contact_status])){{$arrIsActive[$item->contact_status]}}@endif
                             </td>
 

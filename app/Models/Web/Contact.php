@@ -15,8 +15,10 @@ class Contact extends BaseModel
     {
         try {
             $query = Contact::where($this->primaryKey, '>', STATUS_INT_KHONG);
-            if (isset($dataSearch['contact_title']) && $dataSearch['contact_title'] != '') {
-                $query->where('contact_title', 'LIKE', '%' . $dataSearch['contact_title'] . '%');
+            if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
+                $str_like = trim($dataSearch['p_keyword']);
+                $query->where('contact_title', 'LIKE', '%' . $str_like . '%')
+                    ->orWhere('contact_user_name_send', 'LIKE', '%' . $str_like. '%');
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);

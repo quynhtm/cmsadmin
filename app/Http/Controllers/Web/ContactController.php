@@ -39,7 +39,7 @@ class ContactController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new Contact();
-        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
     }
 
     private function _outDataView($request, $data)
@@ -54,8 +54,8 @@ class ContactController extends BaseAdminController
 
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
-            'optionIsActive' => $optionIsActive,
             'optionPartner' => $optionPartner,
+            'optionIsActive' => $optionIsActive,
             'arrIsActive' => $this->arrIsActive,
 
             'form_id' => $formId,
