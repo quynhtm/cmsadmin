@@ -18,6 +18,14 @@
                 <label for="depart_name">{{viewLanguage('Tìm kiếm')}}</label>
                 <input type="text" class="form-control input-sm" id="p_keyword" name="p_keyword" autocomplete="off" @if(isset($search['p_keyword']))value="{{$search['p_keyword']}}"@endif>
             </div>
+            @if($partner_id == STATUS_INT_KHONG)
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Đối tác')}}</label>
+                <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                    {!! $optionPartner !!}}
+                </select>
+            </div>
+            @endif
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                 <select  class="form-control input-sm" name="is_active" id="is_active">

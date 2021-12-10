@@ -18,7 +18,7 @@ class Contact extends BaseModel
             if (isset($dataSearch['contact_title']) && $dataSearch['contact_title'] != '') {
                 $query->where('contact_title', 'LIKE', '%' . $dataSearch['contact_title'] . '%');
             }
-            if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_MOT) {
+            if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
             if (isset($dataSearch['contact_status']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {

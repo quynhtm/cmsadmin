@@ -32,6 +32,7 @@ class  BaseAdminController extends Controller
     protected $is_tech = false;
     protected $change_pass = false;
     protected $user_id = STATUS_INT_KHONG;
+    protected $partner_id = STATUS_INT_KHONG;
     protected $user_name = '';
     protected $tab_top = STATUS_INT_KHONG;
 
@@ -85,6 +86,9 @@ class  BaseAdminController extends Controller
                     $this->user_id = $this->user['user_id'];
                     $this->user_name = $this->user['user_name'];
                 }
+                if (isset($this->user['partner_id'])) {
+                    $this->partner_id = $this->user['partner_id'];
+                }
                 $this->is_tech = $this->is_boss;
                 $this->is_root = in_array('root', $this->permission) ? false : $this->is_root;
             }
@@ -121,6 +125,7 @@ class  BaseAdminController extends Controller
 
             $this->arrPartner = app(ServiceCommon::class)->getOptionPartner();
             View::share('arrPartner', $this->arrPartner);
+            View::share('partner_id', $this->partner_id);
 
             View::share('arrMenuTabTop', CGlobal::$arrMenuTabTop);
             View::share('colorWithTab', CGlobal::$colorWithTab);
