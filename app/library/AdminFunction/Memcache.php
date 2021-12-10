@@ -43,6 +43,8 @@ class Memcache
 
     const CACHE_RECRUITMENT_ID = 'CACHE_RECRUITMENT_ID_';
 
+    const CACHE_RECRUITMENT_APPLY_ID = 'CACHE_RECRUITMENT_APPLY_ID_';
+
     /************************************************************************************************
      * Cache Admin
      ************************************************************************************************/
