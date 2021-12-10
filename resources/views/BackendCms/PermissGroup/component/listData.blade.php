@@ -53,7 +53,7 @@
                             <td class="text-left middle">{{$item->description}}</td>
                             <td class="text-center middle">{{$item->sort_order}}</td>
                             <td class="text-center middle">
-                                @if($permission_full || $permission_edit || $permission_add)
+                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->group_id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>

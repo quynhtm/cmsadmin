@@ -94,8 +94,8 @@
                             @else
                                 <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
                             @endif
-                            @if($permission_full || $permission_edit || $permission_add || $permission_remove)
-                                @if($permission_full || $permission_edit || $permission_add)
+                            @if($permission_full || $permission_view || $permission_edit || $permission_add || $permission_remove)
+                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                         &nbsp;
                                         <a href="javascript:void(0);"class="color_hdi sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Cập nhật menu ')}} {{$item['menu_name']}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item])}}" data-objectId="{{$item['menu_id']}}">
                                         <i class="fa fa-pencil-square-o fa-2x"></i>

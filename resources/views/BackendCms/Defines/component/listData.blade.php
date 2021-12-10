@@ -70,14 +70,14 @@
                             @else
                                 <a href="javascript:void(0);" style="color: red" title="Ẩn"><i class="fa fa-times fa-2x"></i></a>
                             @endif
-                            @if($permission_full || $permission_edit || $permission_add || $permission_remove)
+                            @if($permission_full || $permission_edit || $permission_add || $permission_remove || $permission_view)
                                 @if($permission_full || $permission_remove)
                                     &nbsp;
                                     <a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa group: ')}}{{$item->TYPE_NAME}}" data-method="post" data-url="{{$urlDeleteItem}}" data-input="{{json_encode(['item'=>$item])}}">
                                         <i class="pe-7s-trash fa-2x"></i>
                                     </a>
                                 @endif
-                                @if($permission_full || $permission_edit || $permission_add)
+                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                     &nbsp;
                                     <a href="javascript:void(0);"class="color_warning sys_show_popup_common" data-size="1" data-form-name="detailItem" title="{{viewLanguage('Thêm định nghĩa')}}" data-method="get" data-url="{{$urlGetItem}}" data-input="{{json_encode(['item'=>$item,'is_copy'=>STATUS_INT_MOT])}}" data-objectId="{{$item->id}}">
                                         <i class="fa fa-copy fa-2x"></i>

@@ -2,14 +2,14 @@
     <div class="ibox-title">
         <h5>{{viewLanguage('Tìm kiếm')}}</h5>
         <div class="ibox-tools marginDownT6">
-            @if($is_root || $permission_view)
-            <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
-                @if($permission_full || $permission_edit || $permission_add)
-                    <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                @endif
-             @endif
+            @if($permission_full || $permission_view)
+                <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
+            @endif
+            @if($permission_full || $permission_edit || $permission_add)
+                <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
+                    <i class="fa fa-plus"></i>
+                </a>
+            @endif
         </div>
     </div>
     <div class="ibox-content">
@@ -58,18 +58,22 @@
                             <td class="text-left middle">{{$item->note}}</td>
 
                             <td class="text-center middle">
-                                @if($permission_full || $permission_edit || $permission_add)
+                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>
-                                    {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
-                                        <i class="pe-7s-trash fa-2x"></i>
-                                    </a>&nbsp;--}}
                                 @endif
+
                                 @if($item->is_active == STATUS_INT_MOT)
                                     <a href="javascript:void(0);" class="green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
                                 @else
                                     <a href="javascript:void(0);" class="red" title="Ẩn"><i class="fa fa-minus fa-2x"></i></a>
+                                @endif
+
+                                @if($permission_full || $permission_remove)
+                                    {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
+                                        <i class="pe-7s-trash fa-2x"></i>
+                                    </a>&nbsp;--}}
                                 @endif
                             </td>
                         </tr>
