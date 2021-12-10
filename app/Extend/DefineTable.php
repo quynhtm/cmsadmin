@@ -24,6 +24,7 @@ define('TABLE_USERS',PREFIX_BACKEND.'users');
 //Web
 define('TABLE_PARTNER',PREFIX_WEB.'partner');
 define('TABLE_CONTACT',PREFIX_WEB.'contact');
+define('TABLE_RECRUITMENT',PREFIX_WEB.'recruitment');
 
 
 /*********************************************************************************************************

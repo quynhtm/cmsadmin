@@ -5,26 +5,26 @@ namespace App\Models\Web;
 use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
-class Contact extends BaseModel
+class Recruitment extends BaseModel
 {
-    protected $table = TABLE_CONTACT;
+    protected $table = TABLE_RECRUITMENT;
     protected $primaryKey = 'id';
     public $timestamps = true;
 
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
-            $query = Contact::where($this->primaryKey, '>', STATUS_INT_KHONG);
+            $query = Recruitment::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $str_like = trim($dataSearch['p_keyword']);
-                $query->where('contact_title', 'LIKE', '%' . $str_like . '%')
+                $query->where('recruitment_title', 'LIKE', '%' . $str_like . '%')
                     ->orWhere('contact_user_name_send', 'LIKE', '%' . $str_like. '%');
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('contact_status', $dataSearch['is_active']);
+                $query->where('recruitment_status', $dataSearch['is_active']);
             }
 
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
@@ -47,7 +47,7 @@ class Contact extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new Contact(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG)? new Recruitment(): self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
@@ -74,11 +74,11 @@ class Contact extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_CONTACT_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_RECRUITMENT_ID.$id);
         if (!$data) {
-            $data = Contact::find($id);
+            $data = Recruitment::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_CONTACT_ID.$id,$data);
+                Memcache::putCache(Memcache::CACHE_RECRUITMENT_ID.$id,$data);
             }
         }
         return $data;
@@ -103,7 +103,7 @@ class Contact extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_CONTACT_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_RECRUITMENT_ID.$id);
         }
     }
     /**************************************************************************************************************************/

@@ -24,5 +24,12 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxGetData', array('as' => 'contact.ajaxGetData', 'uses' => DIR_PRO_WEB . '\ContactController@ajaxGetData'));
         Route::post('ajaxPostData', array('as' => 'contact.ajaxPostData', 'uses' => DIR_PRO_WEB . '\ContactController@ajaxPostData'));
     });
+
+    /* Quản lý tuyển dụng */
+    Route::group(array('prefix' => 'recruitment'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'recruitment.index', 'uses' => DIR_PRO_WEB . '\RecruitmentController@index'));
+        Route::post('ajaxGetData', array('as' => 'recruitment.ajaxGetData', 'uses' => DIR_PRO_WEB . '\RecruitmentController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'recruitment.ajaxPostData', 'uses' => DIR_PRO_WEB . '\RecruitmentController@ajaxPostData'));
+    });
 });
 
