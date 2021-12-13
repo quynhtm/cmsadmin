@@ -44,13 +44,14 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Đối tượng được đánh giá')}}</th>
                         <th width="15%" class="text-left">{{viewLanguage('Người gửi')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('Số điện thoại')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Email')}}</th>
 
-                        <th width="15%" class="text-left">{{viewLanguage('Tiêu đề')}}</th>
                         <th width="30%" class="text-left">{{viewLanguage('Nội dung')}}</th>
+                        <th width="5%" class="text-center">{{viewLanguage('Điểm')}}</th>
 
+                        <th width="12%" class="text-center">{{viewLanguage('Ngày đánh giá')}}</th>
                         <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
                         <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
@@ -59,13 +60,15 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-left middle">{{$item->contact_user_name_send}}</td>
-                            <td class="text-left middle">{{$item->contact_phone_send}}</td>
-                            <td class="text-left middle">{{$item->contact_email_send}}</td>
-                            <td class="text-left middle">{{$item->contact_title}}</td>
-                            <td class="text-left middle">{!! $item->contact_content !!}</td>
+                            <td class="text-left middle">{{$item->object_name}}</td>
+                            <td class="text-left middle">{{$item->assessor}}</td>
+                            <td class="text-left middle">{{$item->email}}</td>
+
+                            <td class="text-left middle">{!! $item->content !!}</td>
+                            <td class="text-left middle">{{$item->star_points}}</td>
+                            <td class="text-left middle">{{$item->created_at}}</td>
                             <td class="text-center middle">
-                                @if(isset($arrIsActive[$item->contact_status])){{$arrIsActive[$item->contact_status]}}@endif
+                                @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif
                             </td>
 
                             <td class="text-center middle">

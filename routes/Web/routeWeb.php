@@ -25,6 +25,14 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostData', array('as' => 'contact.ajaxPostData', 'uses' => DIR_PRO_WEB . '\ContactController@ajaxPostData'));
     });
 
+    /* Quản lý đánh giá bình luận đối tượng: sản phẩm, tin tức */
+    Route::group(array('prefix' => 'reviews'), function () {
+        Route::match(['GET', 'POST'], 'indexProduct', array('as' => 'reviewsProduct.index', 'uses' => DIR_PRO_WEB . '\ReviewsController@indexReviewsProduct'));
+        Route::match(['GET', 'POST'], 'indexNew', array('as' => 'reviewsNew.index', 'uses' => DIR_PRO_WEB . '\ReviewsController@indexReviewsNew'));
+        Route::post('ajaxGetData', array('as' => 'reviews.ajaxGetData', 'uses' => DIR_PRO_WEB . '\ReviewsController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'reviews.ajaxPostData', 'uses' => DIR_PRO_WEB . '\ReviewsController@ajaxPostData'));
+    });
+
     /* Quản lý tuyển dụng */
     Route::group(array('prefix' => 'recruitment'), function () {
         Route::match(['GET', 'POST'], 'index', array('as' => 'recruitment.index', 'uses' => DIR_PRO_WEB . '\RecruitmentController@index'));
