@@ -20,6 +20,11 @@ class Memcache
 
     const CACHE_MENU_BY_ID = 'CACHE_MENU_BY_ID_';
     const CACHE_ALL_MENU = 'CACHE_ALL_MENU';
+    const CACHE_TREE_MENU = 'CACHE_TREE_MENU_';
+
+    const CACHE_CATEGORY_BY_ID = 'CACHE_CATEGORY_BY_ID_';
+    const CACHE_CATEGORY_TREE = 'CACHE_CATEGORY_TREE';
+
 
     const CACHE_PERMISSION_GROUP_ID = 'CACHE_PERMISSION_GROUP_ID_';
     const CACHE_PERMISSION_GROUP_ALL = 'CACHE_PERMISSION_GROUP_ALL';
@@ -51,7 +56,7 @@ class Memcache
     const CACHE_MENU_BY_TAB_ID = 'cache_menu_by_tab_id_';
     const CACHE_LIST_MENU_PERMISSION = 'cache_list_menu_permission';
     const CACHE_ALL_PARENT_MENU = 'cache_all_parent_menu_';
-    const CACHE_TREE_MENU = 'cache_tree_menu_';
+
 
     const CACHE_ALL_USER_ADMIN = 'cache_all_user_admin';
     const CACHE_OPTION_USER = 'cache_option_user';

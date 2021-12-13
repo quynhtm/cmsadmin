@@ -38,5 +38,14 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxGetData', array('as' => 'recruitmentApply.ajaxGetData', 'uses' => DIR_PRO_WEB . '\RecruitmentApplyController@ajaxGetData'));
         Route::post('ajaxPostData', array('as' => 'recruitmentApply.ajaxPostData', 'uses' => DIR_PRO_WEB . '\RecruitmentApplyController@ajaxPostData'));
     });
+
+    /* Quản lý Danh mục */
+    Route::group(array('prefix' => 'category'), function () {
+        Route::match(['GET', 'POST'], 'indexProduct', array('as' => 'categoryProduct.index', 'uses' => DIR_PRO_WEB . '\CategoryController@indexCategoryProduct'));
+        Route::match(['GET', 'POST'], 'indexNew', array('as' => 'categoryNew.index', 'uses' => DIR_PRO_WEB . '\CategoryController@indexCategoryNew'));
+        Route::get('ajaxGetItem', array('as' => 'category.ajaxGetItem', 'uses' => DIR_PRO_WEB . '\CategoryController@ajaxGetItem'));
+        Route::post('ajaxPostItem', array('as' => 'category.ajaxPostItem', 'uses' => DIR_PRO_WEB . '\CategoryController@ajaxPostItem'));
+        Route::post('ajaxDeleteItem', array('as' => 'category.ajaxDeleteItem', 'uses' => DIR_PRO_WEB . '\CategoryController@ajaxDeleteItem'));
+    });
 });
 

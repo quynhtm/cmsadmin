@@ -11,7 +11,7 @@ $(document).ready(function () {
         var formName = $(this).attr('data-form-name');
         var dataInput = $(this).attr('data-input');
 
-        $('#loader').show();
+        //$('#loader').show();
         $.ajax({
             dataType: 'json',
             type: method,
