@@ -11,13 +11,12 @@
  */
 Route::group(array('prefix' => 'backend'), function () {
 
-    /* Quản lý Type product */
-    /*Route::group(array('prefix' => 'product'), function () {
-        Route::match(['GET', 'POST'], 'index', array('as' => 'product.index', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@index'));
-        Route::get('ajaxGetItem', array('as' => 'product.ajaxGetItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxGetItem'));
-        Route::post('ajaxPostItem', array('as' => 'product.ajaxPostItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxPostItem'));
-        Route::post('ajaxDeleteItem', array('as' => 'product.ajaxDeleteItem', 'uses' => DIR_PRO_BACKEND . '\BackendDefinesController@ajaxDeleteItem'));
-    });*/
+    /* Quản lý đăng ký đối tác */
+    Route::group(array('prefix' => 'partnerRegistration'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'partnerRegistration.index', 'uses' => DIR_PRO_SHOP . '\PartnerRegistrationController@index'));
+        Route::post('ajaxGetData', array('as' => 'partnerRegistration.ajaxGetData', 'uses' => DIR_PRO_SHOP . '\PartnerRegistrationController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'partnerRegistration.ajaxPostData', 'uses' => DIR_PRO_SHOP . '\PartnerRegistrationController@ajaxPostData'));
+    });
 
 });
 

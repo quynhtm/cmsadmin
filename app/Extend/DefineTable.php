@@ -11,6 +11,7 @@
  **************************************************************************************************************/
 define('PREFIX_BACKEND', 'backend_');
 define('PREFIX_WEB', 'web_');
+define('PREFIX_SHOP', 'shop_');
 
 //Backend
 define('TABLE_DEFINE_SYSTEM',PREFIX_BACKEND.'define');
@@ -20,6 +21,9 @@ define('TABLE_PERMISSION_GROUP_DETAIL',PREFIX_BACKEND.'perm_group_detail');
 define('TABLE_PERMISSION_USER_GROUP',PREFIX_BACKEND.'perm_user_group');
 define('TABLE_PERMISSION_USER',PREFIX_BACKEND.'perm_user');
 define('TABLE_USERS',PREFIX_BACKEND.'users');
+
+//Shop
+define('TABLE_PARTNER_REGISTRATION',PREFIX_SHOP.'partner_registration');
 
 //Web
 define('TABLE_PARTNER',PREFIX_WEB.'partner');
