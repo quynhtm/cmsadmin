@@ -22,7 +22,6 @@ class Upload
             $name_file = $name ? $name : '';
             $ext = !in_array($file_ext, $_file_ext) ? 0 : 1;
 
-            //$path_folder_upload = env('IS_LIVE') ? env('APP_PATH_UPLOAD') . env('APP_PATH_UPLOAD_MIDDLE', self::APP_PATH_UPLOAD) : Config::get('config.DIR_ROOT') . env('APP_PATH_UPLOAD_MIDDLE', self::APP_PATH_UPLOAD);
             $path_folder_upload = Config::get('config.PATH_FOLDER_UPLOAD');
             if ($file_name != '' && $ext == 1 && $file_size <= $max_file_size) {
                 $_folder = ($folder != '') ? $folder : FOLDER_FILE_DEFAULT;
@@ -54,7 +53,6 @@ class Upload
         }
     }
 
-    //upload đơn
     public static function uploadFile($_name = '', $_folder = '', $idItem = '', $_file_ext = 'jpg,jpeg,png,gif', $_max_file_size = 5 * 1024 * 1024, $is_attack_logo = false)
     {
         if ($_file_ext != '') {
@@ -64,6 +62,7 @@ class Upload
         }
 
         if ($_name != '' && isset($_FILES[$_name]) && count($_FILES[$_name]) > 0) {
+
             $max_file_size = $_max_file_size;
             $file_name = strtolower($_FILES[$_name]['name']);
             $file_tmp = $_FILES[$_name]["tmp_name"];
@@ -76,7 +75,7 @@ class Upload
             if ($file_name != '' && $ext == 1 && $file_size <= $max_file_size) {
                 $path_folder_upload = Config::get('config.PATH_FOLDER_UPLOAD');
                 if ($_folder != '') {
-                    $folder_upload = (trim($idItem) !='') ? $path_folder_upload . $_folder . '/' . $idItem : $path_folder_upload . $_folder;
+                    $folder_upload = (trim($idItem) != '') ? $path_folder_upload . $_folder . '/' . $idItem : $path_folder_upload . $_folder;
                 } else {
                     $folder_upload = $path_folder_upload;
                 }
@@ -91,12 +90,11 @@ class Upload
                 } else {
                     return '';
                 }
-            }else{
+            } else {
                 return '';
             }
         }
     }
-
 
 
     public static function attackLogoInImage($file, $destination, $X = 10, $Y = 10)
@@ -185,33 +183,17 @@ class Upload
         }
         return $path_img;
     }
-    //check file dowload
-    public static function uploadFileHdi($_file_name = '', $_folder = '',$_file_ext = 'jpg,jpeg,png,gif', $_max_file_size = 5 * 1024 * 1024)
+    public function uploadOneImage($name_file, $folder, $id, $image_old = '', $_file_ext = 'jpg,jpeg,png,gif', $_max_file_size = 10 * 1024 * 1024)
     {
-        if ($_file_ext != '') {
-            $_file_ext = explode(',', $_file_ext);
-        } else {
-            $_file_ext = array("jpg", "jpeg", "png", "gif");
-        }
-        if ($_file_name != '' && isset($_FILES[$_file_name]) && count($_FILES[$_file_name]) > 0) {
-            $max_file_size = $_max_file_size;
-            $file_name = strtolower($_FILES[$_file_name]['name']);
-            $file_tmp = $_FILES[$_file_name]["tmp_name"];
-            $file_size = $_FILES[$_file_name]['size'];
-            $file_ext = @end(explode('.', $file_name));
-            $name = time() . '_' . self::preg_replace_string_upload($file_name);
-            $link = $name ? $_folder.'_'.$name : '';
-            $ext = (!in_array($file_ext, $_file_ext)) ? 0 : 1;
-            if ($file_name != '' && $ext == 1 && $file_size <= $max_file_size) {
-                $path_folder_upload = Config::get('config.PATH_FOLDER_UPLOAD');
-                if (move_uploaded_file($file_tmp, $path_folder_upload . '/' . $link)) {
-                    return $link;
-                } else {
-                    return '';
+        if (isset($_FILES[$name_file]) && count($_FILES[$name_file]) > 0 && $_FILES[$name_file]['name'] != '') {
+            $pathFileUpload = app(Upload::class)->uploadFile('banner_image', $folder , $id, $_file_ext, $_max_file_size);
+            if (trim($pathFileUpload) != '') {
+                if ($id > 0 && trim($image_old) != '') {
+                    FunctionLib::deleteFileUpload($image_old, $id, $folder);
                 }
-            }else{
-                return '';
             }
+            return $pathFileUpload;
         }
+        return '';
     }
 }

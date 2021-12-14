@@ -577,9 +577,9 @@ class FunctionLib
     {
         if ($file_name != '') {
             if ($id > 0) {
-                $path = ($folder != '') ? Config::get('config.DIR_ROOT') . '/uploads/' . $folder . '/' . $id : '';
+                $path = ($folder != '') ? Config::get('config.DIR_ROOT') . Config::get('config.DIR_UPLOAD') . $folder . '/' . $id : '';
             } else {
-                $path = ($folder != '') ? Config::get('config.DIR_ROOT') . '/uploads/' . $folder : '';
+                $path = ($folder != '') ? Config::get('config.DIR_ROOT') . Config::get('config.DIR_UPLOAD') . $folder : '';
             }
             if ($file_name != '') {
                 if ($path != '') {
