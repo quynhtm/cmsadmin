@@ -187,6 +187,7 @@ define('DEFINE_USER_TYPE','USER_TYPE');
 define('DEFINE_CHUC_VU','CHUC_VU');
 define('DEFINE_NHAN_VIEN','NHAN_VIEN');
 define('DEFINE_TRANG_THAI','TRANG_THAI');
+define('DEFINE_IMAGE_BANNER','IMAGE_BANNER');
 define('DEFINE_TRANG_THAI_TIN','TRANG_THAI_TIN');
 define('DEFINE_VI_TRI_TUYEN_DUNG','VI_TRI_TUYEN_DUNG');
 define('DEFINE_PERMISSION_ACTION','PERMISSION_ACTION');
@@ -270,6 +271,8 @@ define('STATUS_VOUCHER_USED','USED');//Đã sử dụng
 /**************************************************************************************************************
  * Định nghĩa thư mục chứa file ảnh
  **************************************************************************************************************/
+define('FOLDER_BANNER','folder_banner');
+
 define('FOLDER_FILE_LOG_COMMON','LogCommon');
 define('FOLDER_FILE_DEFAULT','default');
 define('FOLDER_FILE_USER_ADMIN','user_admin');

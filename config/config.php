@@ -37,7 +37,9 @@ return array(
     'PROJECT_CODE' => env('PROJECT_CODE'),
     'DOMAINS_PROJECT' => CGlobal::$arrDomainProject[env('ENVIRONMENT','DEV')],
 
-    'PATH_FOLDER_UPLOAD' => env('IS_LIVE') ? env('APP_PATH_UPLOAD') . env('APP_PATH_UPLOAD_MIDDLE', 'uploads/filesUpload/') : dirname(__DIR__).DIRECTORY_SEPARATOR . env('APP_PATH_UPLOAD_MIDDLE', 'uploads/filesUpload/'),
+    'PATH_FOLDER_UPLOAD' => env('IS_LIVE') ? env('APP_PATH_UPLOAD') . env('DIR_UPLOAD', 'uploads/filesUpload/') : dirname(__DIR__).DIRECTORY_SEPARATOR . env('DIR_UPLOAD', 'uploads/filesUpload/'),
+    'DIR_UPLOAD'=> env('DIR_UPLOAD','/uploads'),
+    'PATH_UPLOAD'=> env('PATH_UPLOAD','/uploads'),
 
     'MAIL_USERNAME'=> env('MAIL_USERNAME','info@hdinsurance.vn'),
     'MAIL_SERVICE'=> env('MAIL_SERVICE','/hdi/service/sendMailWithJson'),

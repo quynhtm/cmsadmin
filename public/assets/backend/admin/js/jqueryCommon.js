@@ -228,7 +228,8 @@ var jqueryCommon = {
         var url_action = $('#url_action').val();
         var form_id = $('#formName').val();
         var load_page = $('#load_page').val();
-        //var form_id = 'form_' + form_name;
+        var isFormFile = $('#isFormFile').val();
+
         if (!jqueryCommon.getFormValidation(form_id, 2)) return;
         var dataForm = jqueryCommon.getDataFormObj(form_id);
         var _token = $('input[name="_token"]').val();
@@ -243,21 +244,23 @@ var jqueryCommon = {
                 return;
             }
         }
-
-       // $('#loaderRight').show();
+        //$('#loaderRight').show();
         //$('.submitFormItem').prop("disabled", true);
-        $.ajax({
-            dataType: 'json',
-            type: 'POST',
-            url: url_action,
-            data: {
-                '_token': _token,
-                'dataForm': dataForm,
-            },
-            success: function (res) {
-                $('#loaderRight').hide();
-                $('.submitFormItem').prop("disabled", false);
-                if (res.success == 1) {
+        if(parseInt(isFormFile) == 1){
+            var form = $('#'+form_id)[0];
+            var data = new FormData(form);
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: url_action,
+                data: data,
+                dataForm: dataForm,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (res) {
+                    $('#loaderRight').hide();
                     jqueryCommon.showMsg('success', res.message);
                     if (load_page == 1 || res.loadPage == 1) {
                         location.reload();
@@ -265,11 +268,37 @@ var jqueryCommon = {
                         $('#' + res.divShowInfor).html(res.html);
                         jqueryCommon.cancelUpdateFormItem();
                     }
-                } else {
-                    jqueryCommon.showMsg('error', '', 'Thông báo lỗi', res.message);
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
                 }
-            }
-        });
+            });
+        }else {
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: url_action,
+                data: {
+                    '_token': _token,
+                    'dataForm': dataForm,
+                },
+                success: function (res) {
+                    $('#loaderRight').hide();
+                    $('.submitFormItem').prop("disabled", false);
+                    if (res.success == 1) {
+                        jqueryCommon.showMsg('success', res.message);
+                        if (load_page == 1 || res.loadPage == 1) {
+                            location.reload();
+                        } else {
+                            $('#' + res.divShowInfor).html(res.html);
+                            jqueryCommon.cancelUpdateFormItem();
+                        }
+                    } else {
+                        jqueryCommon.showMsg('error', '', 'Thông báo lỗi', res.message);
+                    }
+                }
+            });
+        }
     },
     compareDate: function (startDate, endDate) {
         // date = 'd/m/Y'

@@ -966,16 +966,16 @@ function site_js($file_name, $position = 1)
     }
 }
 
-function getLinkImage($folder = FOLDER_FILE_DEFAULT, $file_name = '')
+function getLinkImageShow($folder = FOLDER_FILE_DEFAULT, $file_name = '')
 {
-    $link = Config::get('config.WEB_ROOT') . '/assets/backend/img/HDInsurance.png';
-    if (trim($file_name) != '') {
-        $dir = Config::get('config.DIR_ROOT') . 'uploads/' . $file_name;
-        if (is_file($dir)) {
-            $link = env('APP_URL') . env('APP_PATH_UPLOAD_MIDDLE') . '/' . $file_name;
-        }
-    }
-    return $link;
+    if (!preg_match("/.jpg|.jpeg|.JPEG|.JPG|.png|.gif/", strtolower($file_name))) return ' ';
+    $imagSource = Config::get('config.DIR_ROOT') . Config::get('config.DIR_UPLOAD') . $folder. '/' . $file_name;
+    $imagUrl = Config::get('config.WEB_ROOT') . Config::get('config.PATH_UPLOAD') . $folder. '/' . $file_name;
+
+    $no_image = Config::get('config.WEB_ROOT') . 'assets/frontend/shop/img/no_imge.jpg';
+    $url_img = (file_exists($imagSource)) ? $imagUrl : $no_image;
+
+    return $url_img;
 }
 
 function getDirFile($file_name = '')
@@ -994,18 +994,6 @@ function getLinkFileToStore($file_id = '', $is_dev = true, $is_download = false)
     $is_dev = (Config::get('config.ENVIRONMENT') == 'DEV')? true: false;
     $urlServer = ($is_dev ? Config::get('config.URL_HYPERSERVICES_DEV') : Config::get('config.URL_HYPERSERVICES_LIVE')) . "f/";
     return ($is_download == true) ? $urlServer . $file_id . '?download=true' : $urlServer . $file_id;
-}
-
-function getLinkImageOld($folder = FOLDER_FILE_DEFAULT, $file_name = '')
-{
-    $link = Config::get('config.WEB_ROOT') . '/assets/backend/img/HDInsurance.png';
-    if (trim($file_name) != '') {
-        $dir = Config::get('config.DIR_ROOT') . 'uploads/' . $folder . '/' . $file_name;
-        if (is_file($dir)) {
-            $link = env('APP_URL') . env('APP_PATH_UPLOAD_MIDDLE') . '/' . $folder . '/' . $file_name;
-        }
-    }
-    return $link;
 }
 
 function removeSpecialSpace($string)
