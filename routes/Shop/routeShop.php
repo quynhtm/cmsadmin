@@ -11,6 +11,13 @@
  */
 Route::group(array('prefix' => 'backend'), function () {
 
+    /* Quản lý đơn hàng */
+    Route::group(array('prefix' => 'orders'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'orders.index', 'uses' => DIR_PRO_SHOP . '\OrdersController@index'));
+        Route::post('ajaxGetData', array('as' => 'orders.ajaxGetData', 'uses' => DIR_PRO_SHOP . '\OrdersController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'orders.ajaxPostData', 'uses' => DIR_PRO_SHOP . '\OrdersController@ajaxPostData'));
+    });
+
     /* Quản lý đăng ký đối tác */
     Route::group(array('prefix' => 'partnerRegistration'), function () {
         Route::match(['GET', 'POST'], 'index', array('as' => 'partnerRegistration.index', 'uses' => DIR_PRO_SHOP . '\PartnerRegistrationController@index'));
