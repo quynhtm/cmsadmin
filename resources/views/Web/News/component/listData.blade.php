@@ -20,12 +20,24 @@
             </div>
             @if($partner_id == 0)
             <div class="form-group col-lg-2">
-                <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
+                <label for="status" class="control-label">{{viewLanguage('Đối tác')}}</label>
                 <select  class="form-control input-sm" name="partner_id" id="partner_id">
                     {!! $optionPartner !!}}
                 </select>
             </div>
             @endif
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Kiểu tin')}}</label>
+                <select  class="form-control input-sm" name="news_type" id="news_type">
+                    {!! $optionNewsType !!}}
+                </select>
+            </div>
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Danh mục')}}</label>
+                <select  class="form-control input-sm" name="news_category" id="news_category">
+                    {!! $optionCategory !!}}
+                </select>
+            </div>
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                 <select  class="form-control input-sm" name="is_active" id="is_active">

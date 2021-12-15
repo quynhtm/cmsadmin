@@ -75,8 +75,6 @@
                     </div>
                 @endif
                 <input type="hidden" name="news_image" id="{{$formName}}news_image">
-
-
             </div>
         </div>
         <div class="row form-group">
@@ -85,7 +83,6 @@
                 <textarea class="form-control input-sm" rows="10" name="news_content" id="news_content">@if(isset($dataDetail['news_content'])){{$dataDetail['news_content']}}@endif</textarea>
             </div>
         </div>
-
     </div>
 </div>
 <script type="text/javascript">

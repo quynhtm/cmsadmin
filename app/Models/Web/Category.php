@@ -33,7 +33,7 @@ class Category extends BaseModel
                 $query->where('category_type', $dataSearch['category_type']);
             }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('is_active', $dataSearch['is_active']);
+                $query->where('news_status', $dataSearch['is_active']);
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
             $query->orderBy('is_active', 'desc');

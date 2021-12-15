@@ -55,7 +55,7 @@ class NewsController extends BaseAdminController
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : $this->partner_id);
         $optionCategory = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrCategory, isset($data['news_category']) ? $data['news_category'] : STATUS_INT_KHONG);
         $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionNewsType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrNewsType, isset($data['banner_type']) ? $data['banner_type'] : DEFINE_NULL);
+        $optionNewsType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrNewsType, isset($data['news_type']) ? $data['news_type'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';

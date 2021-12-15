@@ -20,7 +20,7 @@
             </div>
             @if($partner_id == 0)
             <div class="form-group col-lg-2">
-                <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
+                <label for="status" class="control-label">{{viewLanguage('Đối tác')}}</label>
                 <select  class="form-control input-sm" name="partner_id" id="partner_id">
                     {!! $optionPartner !!}}
                 </select>
