@@ -28,6 +28,7 @@ define('TABLE_PARTNER_REGISTRATION',PREFIX_SHOP.'partner_registration');
 //Web
 define('TABLE_PARTNER',PREFIX_WEB.'partner');
 define('TABLE_BANNER',PREFIX_WEB.'banner');
+define('TABLE_NEWS',PREFIX_WEB.'news');
 define('TABLE_CONTACT',PREFIX_WEB.'contact');
 define('TABLE_RECRUITMENT',PREFIX_WEB.'recruitment');
 define('TABLE_RECRUITMENT_APPLY',PREFIX_WEB.'recruitment_apply');

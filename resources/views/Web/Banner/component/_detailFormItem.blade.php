@@ -34,10 +34,10 @@
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Ảnh banner')}}</label>
                 <br/>
-                <input type="file" name="banner_image_upload" id="banner_image_upload">
+                <input type="file" name="file_image_upload" id="file_image_upload">
                 @if($objectId > 0 && trim($dataDetail['banner_image']) != '')
                     <div>
-                        <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$objectId,$dataDetail['banner_image'])}}" width="350" height="200">
+                        <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$objectId,$dataDetail['banner_image'])}}" width="100%" height="200">
                     </div>
                 @endif
                 <input type="hidden" name="banner_image" id="{{$formName}}banner_image">

@@ -18,6 +18,13 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostData', array('as' => 'partner.ajaxPostData', 'uses' => DIR_PRO_WEB . '\PartnerController@ajaxPostData'));
     });
 
+    /* Quản lý tin tức */
+    Route::group(array('prefix' => 'news'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'news.index', 'uses' => DIR_PRO_WEB . '\NewsController@index'));
+        Route::post('ajaxGetData', array('as' => 'news.ajaxGetData', 'uses' => DIR_PRO_WEB . '\NewsController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'news.ajaxPostData', 'uses' => DIR_PRO_WEB . '\NewsController@ajaxPostData'));
+    });
+
     /* Quản lý banner */
     Route::group(array('prefix' => 'banner'), function () {
         Route::match(['GET', 'POST'], 'index', array('as' => 'banner.index', 'uses' => DIR_PRO_WEB . '\BannerController@index'));

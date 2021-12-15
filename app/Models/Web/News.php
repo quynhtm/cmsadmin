@@ -5,28 +5,28 @@ namespace App\Models\Web;
 use App\Models\BaseModel;
 use App\Library\AdminFunction\Memcache;
 
-class Banner extends BaseModel
+class News extends BaseModel
 {
-    protected $table = TABLE_BANNER;
+    protected $table = TABLE_NEWS;
     protected $primaryKey = 'id';
     public $timestamps = true;
 
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
-            $query = Banner::where($this->primaryKey, '>', STATUS_INT_KHONG);
+            $query = News::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
-                $query->where('banner_name', 'LIKE', '%' . $dataSearch['p_keyword'] . '%');
+                $query->where('news_title', 'LIKE', '%' . $dataSearch['p_keyword'] . '%');
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('is_active', $dataSearch['is_active']);
+                $query->where('news_status', $dataSearch['is_active']);
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
 
-            $query->orderBy('banner_order', 'asc');
+            $query->orderBy($this->primaryKey, 'desc');
 
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',', trim($dataSearch['field_get'])) : array();
             if (!empty($fields)) {
@@ -46,7 +46,7 @@ class Banner extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new Banner(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG)? new News(): self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
@@ -73,11 +73,11 @@ class Banner extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_BANNER_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_NEWS_ID.$id);
         if (!$data) {
-            $data = Banner::find($id);
+            $data = News::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_BANNER_ID.$id,$data);
+                Memcache::putCache(Memcache::CACHE_NEWS_ID.$id,$data);
             }
         }
         return $data;
@@ -102,7 +102,7 @@ class Banner extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_BANNER_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_NEWS_ID.$id);
         }
 
         if($data){}

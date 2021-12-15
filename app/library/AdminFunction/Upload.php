@@ -186,7 +186,7 @@ class Upload
     public function uploadOneImage($name_file, $folder, $id, $image_old = '', $_file_ext = 'jpg,jpeg,png,gif', $_max_file_size = 10 * 1024 * 1024)
     {
         if (isset($_FILES[$name_file]) && count($_FILES[$name_file]) > 0 && $_FILES[$name_file]['name'] != '') {
-            $pathFileUpload = app(Upload::class)->uploadFile('banner_image', $folder , $id, $_file_ext, $_max_file_size);
+            $pathFileUpload = app(Upload::class)->uploadFile($name_file, $folder , $id, $_file_ext, $_max_file_size);
             if (trim($pathFileUpload) != '') {
                 if ($id > 0 && trim($image_old) != '') {
                     FunctionLib::deleteFileUpload($image_old, $id, $folder);

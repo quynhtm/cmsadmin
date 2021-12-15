@@ -182,6 +182,7 @@ define('DEFINE_NULL','');
 define('DEFINE_ALL','ALL');
 define('DEFINE_TRUE_FALSE','TRUE_FALSE');
 define('DEFINE_TYPE_MENU','TYPE_MENU');
+define('DEFINE_TYPE_NEWS','TYPE_NEWS');
 define('DEFINE_GIOI_TINH','GIOI_TINH');
 define('DEFINE_USER_TYPE','USER_TYPE');
 define('DEFINE_CHUC_VU','CHUC_VU');
@@ -272,6 +273,7 @@ define('STATUS_VOUCHER_USED','USED');//Đã sử dụng
  * Định nghĩa thư mục chứa file ảnh
  **************************************************************************************************************/
 define('FOLDER_BANNER','folder_banner');
+define('FOLDER_NEWS','folder_news');
 
 define('FOLDER_FILE_LOG_COMMON','LogCommon');
 define('FOLDER_FILE_DEFAULT','default');
@@ -279,7 +281,6 @@ define('FOLDER_FILE_USER_ADMIN','user_admin');
 define('FOLDER_FILE_CREATE_ORDER','file_create_order');
 define('FOLDER_FILE_PRODUCT','product');
 define('FOLDER_FILE_CRONJOB','Cronjob');
-define('FOLDER_NEWS',  'news');
 define('FOLDER_PRODUCT',  'product');
 define('IMAGE_ERROR',  133);
 

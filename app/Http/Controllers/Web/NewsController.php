@@ -13,14 +13,15 @@ use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Upload;
-use App\Models\Web\Banner;
+use App\Models\Web\Category;
+use App\Models\Web\News;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
-class BannerController extends BaseAdminController
+class NewsController extends BaseAdminController
 {
     private $error = array();
     private $dataOutCommon = array();
@@ -28,48 +29,49 @@ class BannerController extends BaseAdminController
     private $modelObj = false;
 
     private $arrIsActive = array();
-    private $arrBannerType = array();
+    private $arrNewsType = array();
     private $arrIsTrueFalse = array();
+    private $arrCategory = array();
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
     private $tabOtherItem4 = 'tabOtherItem4';
 
-    private $routerIndex = 'banner.index';
-    private $templateRoot = DIR_PRO_WEB . '/' . 'Banner.';
+    private $routerIndex = 'news.index';
+    private $templateRoot = DIR_PRO_WEB . '/' . 'News.';
 
     public function __construct()
     {
         parent::__construct();
-        $this->modelObj = new Banner();
+        $this->modelObj = new News();
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
-        $this->arrBannerType = $this->getArrOptionTypeDefine(DEFINE_IMAGE_BANNER);
+        $this->arrNewsType = $this->getArrOptionTypeDefine(DEFINE_TYPE_NEWS);
         $this->arrIsTrueFalse = $this->getArrOptionTypeDefine(DEFINE_TRUE_FALSE);
+        $this->arrCategory = app(Category::class)->getOptionCategoryByType(Category::categoryTypeNew);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : $this->partner_id);
+        $optionCategory = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrCategory, isset($data['news_category']) ? $data['news_category'] : STATUS_INT_KHONG);
         $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionBannerType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrBannerType, isset($data['banner_type']) ? $data['banner_type'] : DEFINE_NULL);
-        $optionIsRel = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_rel']) ? $data['banner_is_rel'] : STATUS_INT_KHONG);
-        $optionIsTarget = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_target']) ? $data['banner_is_target'] : STATUS_INT_KHONG);
+        $optionNewsType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrNewsType, isset($data['banner_type']) ? $data['banner_type'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Banner quảng cáo';
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Quản lý tin bài';
 
         $this->shareListPermission($this->routerIndex);
         return $this->dataOutCommon = [
             'optionIsActive' => $optionIsActive,
-            'optionBannerType' => $optionBannerType,
-            'optionIsRel' => $optionIsRel,
-            'optionIsTarget' => $optionIsTarget,
+            'optionNewsType' => $optionNewsType,
             'optionPartner' => $optionPartner,
+            'optionCategory' => $optionCategory,
             'arrIsActive' => $this->arrIsActive,
             'arrIsTrueFalse' => $this->arrIsTrueFalse,
-            'arrBannerType' => $this->arrBannerType,
+            'arrNewsType' => $this->arrNewsType,
+            'arrCategory' => $this->arrCategory,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -81,8 +83,8 @@ class BannerController extends BaseAdminController
             'tabOtherItem4' => $this->tabOtherItem4,
 
             'urlIndex' => URL::route($this->routerIndex),
-            'urlGetData' => URL::route('banner.ajaxGetData'),
-            'urlPostData' => URL::route('banner.ajaxPostData'),
+            'urlGetData' => URL::route('news.ajaxGetData'),
+            'urlPostData' => URL::route('news.ajaxPostData'),
         ];
     }
 
@@ -135,7 +137,7 @@ class BannerController extends BaseAdminController
                 $dataDetail = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
-                    //$link = getLinkImageShow(FOLDER_BANNER.'/'.$dataDetail->id,$dataDetail->banner_image);
+                   // $link = getLinkImageShow(FOLDER_NEWS.'/'.$dataDetail->id,$dataDetail->news_image);
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
                 $this->_outDataView($request, $dataDetail);
@@ -168,22 +170,22 @@ class BannerController extends BaseAdminController
 
         switch ($actionUpdate) {
             case 'updateData':
-                $folder = FOLDER_BANNER;
+                $folder = FOLDER_NEWS;
                 $objectId = isset($request['objectId']) ? $request['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
-                $banner_image_old = isset($request['banner_image']) ? $request['banner_image'] : '';
+                $image_old = isset($request['news_image']) ? $request['news_image'] : '';
                 if ($this->_validFormData($objectId, $request) && empty($this->error)) {
                     if($objectId > 0 && isset($_FILES['file_image_upload']) && !empty($_FILES['file_image_upload']) && $_FILES['file_image_upload']['name'] != ''){
-                        $banner_image = app(Upload::class)->uploadOneImage('file_image_upload',$folder ,$objectId, $banner_image_old);
-                        $request['banner_image'] = $banner_image;
+                        $image_upload = app(Upload::class)->uploadOneImage('file_image_upload',$folder ,$objectId, $image_old);
+                        $request['news_image'] = $image_upload;
                     }
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
 
                 if ($isEdit > 0) {
                     if($objectId == STATUS_INT_KHONG && isset($_FILES['file_image_upload']) && !empty($_FILES['file_image_upload']) && $_FILES['file_image_upload']['name'] != ''){
-                        $banner_image = app(Upload::class)->uploadOneImage('file_image_upload',$folder ,$isEdit, $banner_image_old);
-                        $updateImage['banner_image'] = $banner_image;
+                        $image_upload = app(Upload::class)->uploadOneImage('file_image_upload',$folder ,$isEdit, $image_old);
+                        $updateImage['news_image'] = $image_upload;
                         $isEdit = $this->modelObj->editItem($updateImage, $isEdit);
                     }
 

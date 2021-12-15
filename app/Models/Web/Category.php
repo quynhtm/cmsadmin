@@ -114,9 +114,33 @@ class Category extends BaseModel
         Memcache::forgetCache(Memcache::CACHE_CATEGORY_BY_ID . $id);
         Memcache::forgetCache(Memcache::CACHE_CATEGORY_TREE);
         if ($data) {
+            Memcache::forgetCache(Memcache::CACHE_CATEGORY_BY_TYPE.$data->category_type);
         }
     }
-
+    /***************************************************************************************************************************************************/
+    public function getCategoryByType($category_type = self::categoryTypeNew){
+        $data = Memcache::getCache(Memcache::CACHE_CATEGORY_BY_TYPE . $category_type);
+        if (!$data) {
+            $data = Category::where('id', '>', STATUS_INT_KHONG)
+                ->where('is_active', STATUS_INT_MOT)
+                ->where('category_type', $category_type)
+                ->orderBy('category_order', 'asc')->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_CATEGORY_BY_TYPE . $category_type, $data);
+            }
+        }
+        return $data;
+    }
+    public function getOptionCategoryByType($category_type = self::categoryTypeNew){
+        $data = self::getCategoryByType($category_type);
+        $option = [];
+        if($data){
+            foreach ($data as $ky=>$val){
+                $option[$val->id] = $val->category_name;
+            }
+        }
+        return $option;
+    }
     public function getOptionCategoryParent($category_type = 1)
     {
         $dataMenu = Category::where('id', '>', STATUS_INT_KHONG)
