@@ -73,6 +73,10 @@
                     <div>
                         <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$objectId,$dataDetail['news_image'])}}" width="100%" height="200">
                     </div>
+                @else
+                    <div>
+                        <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$objectId,$dataDetail['news_image'])}}" width="100%" height="200">
+                    </div>
                 @endif
                 <input type="hidden" name="news_image" id="{{$formName}}news_image">
             </div>

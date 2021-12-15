@@ -968,10 +968,10 @@ function site_js($file_name, $position = 1)
 
 function getLinkImageShow($folder = FOLDER_FILE_DEFAULT, $file_name = '')
 {
-    if (!preg_match("/.jpg|.jpeg|.JPEG|.JPG|.png|.gif/", strtolower($file_name))) return ' ';
+    $no_image = Config::get('config.WEB_ROOT') . 'assets/backend/img/login/no-image.png';
+    if (!preg_match("/.jpg|.jpeg|.JPEG|.JPG|.png|.gif/", strtolower($file_name))) return $no_image;
     $imagSource = Config::get('config.DIR_ROOT') . Config::get('config.DIR_UPLOAD') . $folder. '/' . $file_name;
     $imagUrl = Config::get('config.WEB_ROOT') . Config::get('config.PATH_UPLOAD') . $folder. '/' . $file_name;
-    $no_image = Config::get('config.WEB_ROOT') . 'assets/frontend/shop/img/no_imge.jpg';
     $url_img = (file_exists($imagSource)) ? $imagUrl : $no_image;
     return $url_img;
 }
