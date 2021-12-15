@@ -42,8 +42,8 @@ class CategoryController extends BaseAdminController
 
     private function _outDataView($request, $data)
     {
-        $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : $this->partner_id);
+        $optionActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
         $optionShowMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsLink, isset($data['category_menu_right']) ? $data['category_menu_right'] : STATUS_INT_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
@@ -86,7 +86,7 @@ class CategoryController extends BaseAdminController
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
-        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
+        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
         $search['category_type'] = $categoryType;
 
         $search['project_code'] = trim(addslashes(Request::get('project_code', STATUS_INT_HAI)));

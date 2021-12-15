@@ -63,6 +63,7 @@
                         <td class="text-center middle">{{$item['id']}}</td>
                         <td class="text-left middle">
                             {!! $item['padding_left'].$item['category_name'] !!}
+                            @if($partner_id == 0) @if(isset($arrPartner[$item['partner_id']]))<br><span class="font_10">{{$arrPartner[$item['partner_id']]}}</span> @endif @endif
                         </td>
                         <td class="text-center middle">
                             @if($item['category_menu_right'] == STATUS_INT_MOT)

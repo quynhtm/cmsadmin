@@ -43,10 +43,20 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Order')}}</label>
                             <input type="text" class="form-control input-sm" name="category_order" @if($objectId > 0) id="{{$form_id}}category_order" @else value="1" @endif>
                         </div>
+                        @if($partner_id == 0)
+                            <div class="col-lg-4">
+                                <label for="NAME" class="text-right control-label">{{viewLanguage('Đối tác')}}</label>
+                                <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                                    {!! $optionPartner !!}}
+                                </select>
+                            </div>
+                        @else
+                            <input type="hidden" name="partner_id"  @if($objectId > 0) id="{{$formName}}partner_id" @else value="{{$partner_id}}" @endif>
+                        @endif
                         <div class="col-lg-4">
                             <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái')}}</label>
                             <select class="form-control input-sm" name="is_active" id="is_active" >

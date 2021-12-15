@@ -47,7 +47,7 @@ class RecruitmentController extends BaseAdminController
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
         $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['recruitment_position']) ? $data['recruitment_position'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';

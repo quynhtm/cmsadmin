@@ -49,7 +49,8 @@ class BannerController extends BaseAdminController
 
     private function _outDataView($request, $data)
     {
-        $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : $this->partner_id);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
         $optionBannerType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrBannerType, isset($data['banner_type']) ? $data['banner_type'] : DEFINE_NULL);
         $optionIsRel = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_rel']) ? $data['banner_is_rel'] : STATUS_INT_KHONG);
         $optionIsTarget = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_target']) ? $data['banner_is_target'] : STATUS_INT_KHONG);
@@ -65,6 +66,7 @@ class BannerController extends BaseAdminController
             'optionBannerType' => $optionBannerType,
             'optionIsRel' => $optionIsRel,
             'optionIsTarget' => $optionIsTarget,
+            'optionPartner' => $optionPartner,
             'arrIsActive' => $this->arrIsActive,
             'arrIsTrueFalse' => $this->arrIsTrueFalse,
             'arrBannerType' => $this->arrBannerType,
@@ -98,6 +100,7 @@ class BannerController extends BaseAdminController
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
+        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
         $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
@@ -132,10 +135,9 @@ class BannerController extends BaseAdminController
                 $dataDetail = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
-                    $link = getLinkImageShow(FOLDER_BANNER.'/'.$dataDetail->id,$dataDetail->banner_image);
+                    //$link = getLinkImageShow(FOLDER_BANNER.'/'.$dataDetail->id,$dataDetail->banner_image);
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
-                //myDebug($link);
                 $this->_outDataView($request, $dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon, [
@@ -169,16 +171,22 @@ class BannerController extends BaseAdminController
                 $folder = FOLDER_BANNER;
                 $objectId = isset($request['objectId']) ? $request['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
+                $banner_image_old = isset($request['banner_image']) ? $request['banner_image'] : '';
                 if ($this->_validFormData($objectId, $request) && empty($this->error)) {
-                    if($objectId > 0){
-                        $banner_image_old = isset($request['banner_image_old']) ? $request['banner_image_old'] : '';
-                        $banner_image = app(Upload::class)->uploadOneImage('banner_image',$folder ,$objectId, $banner_image_old);
+                    if($objectId > 0 && isset($_FILES['banner_image_upload']) && !empty($_FILES['banner_image_upload']) && $_FILES['banner_image_upload']['name'] != ''){
+                        $banner_image = app(Upload::class)->uploadOneImage('banner_image_upload',$folder ,$objectId, $banner_image_old);
                         $request['banner_image'] = $banner_image;
                     }
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
 
                 if ($isEdit > 0) {
+                    if($objectId == STATUS_INT_KHONG && isset($_FILES['banner_image_upload']) && !empty($_FILES['banner_image_upload']) && $_FILES['banner_image_upload']['name'] != ''){
+                        $banner_image = app(Upload::class)->uploadOneImage('banner_image_upload',$folder ,$isEdit, $banner_image_old);
+                        $updateImage['banner_image'] = $banner_image;
+                        $isEdit = $this->modelObj->editItem($updateImage, $isEdit);
+                    }
+
                     $dataDetail = $this->modelObj->getItemById($isEdit);
                     $this->_outDataView($request, (array)$dataDetail);
 

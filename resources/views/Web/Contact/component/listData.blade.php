@@ -62,7 +62,10 @@
                             <td class="text-left middle">{{$item->contact_user_name_send}}</td>
                             <td class="text-left middle">{{$item->contact_phone_send}}</td>
                             <td class="text-left middle">{{$item->contact_email_send}}</td>
-                            <td class="text-left middle">{{$item->contact_title}}</td>
+                            <td class="text-left middle">
+                                {{$item->contact_title}}
+                                @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
+                            </td>
                             <td class="text-left middle">{!! $item->contact_content !!}</td>
                             <td class="text-center middle">
                                 @if(isset($arrIsActive[$item->contact_status])){{$arrIsActive[$item->contact_status]}}@endif

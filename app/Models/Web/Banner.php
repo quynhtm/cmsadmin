@@ -18,6 +18,9 @@ class Banner extends BaseModel
             if (isset($dataSearch['banner_name']) && $dataSearch['banner_name'] != '') {
                 $query->where('banner_name', 'LIKE', '%' . $dataSearch['banner_name'] . '%');
             }
+            if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
+                $query->where('partner_id', $dataSearch['partner_id']);
+            }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('is_active', $dataSearch['is_active']);
             }

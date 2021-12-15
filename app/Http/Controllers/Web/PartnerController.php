@@ -44,7 +44,7 @@ class PartnerController extends BaseAdminController
 
     private function _outDataView($request, $data)
     {
-        $optionIsActive = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';

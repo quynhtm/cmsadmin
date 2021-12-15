@@ -60,7 +60,10 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-left middle">{{$item->object_name}}</td>
+                            <td class="text-left middle">
+                                {{$item->object_name}}
+                                @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
+                            </td>
                             <td class="text-left middle">{{$item->assessor}}</td>
                             <td class="text-left middle">{{$item->email}}</td>
 

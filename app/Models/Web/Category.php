@@ -32,7 +32,7 @@ class Category extends BaseModel
             if (isset($dataSearch['category_type']) && $dataSearch['category_type'] > STATUS_INT_KHONG) {
                 $query->where('category_type', $dataSearch['category_type']);
             }
-            if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_DEFAULT) {
+            if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('is_active', $dataSearch['is_active']);
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
@@ -161,6 +161,7 @@ class Category extends BaseModel
                     'id' => $value->id,
                     'category_level' => $value->category_level,
                     'category_parent_id' => $value->category_parent_id,
+                    'partner_id' => $value->partner_id,
                     'is_parent' => $value->is_parent,
                     'controller_name' => $value->controller_name,
                     'category_type' => $value->category_type,

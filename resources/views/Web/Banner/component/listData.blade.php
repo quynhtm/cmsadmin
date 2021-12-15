@@ -18,6 +18,14 @@
                 <label for="depart_name">{{viewLanguage('Tìm kiếm')}}</label>
                 <input type="text" class="form-control input-sm" id="p_keyword" name="p_keyword" autocomplete="off" @if(isset($search['p_keyword']))value="{{$search['p_keyword']}}"@endif>
             </div>
+            @if($partner_id == 0)
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
+                <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                    {!! $optionPartner !!}}
+                </select>
+            </div>
+            @endif
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
@@ -35,8 +43,8 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="5%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="5%" class="text-left">{{viewLanguage('Ảnh')}}</th>
+                        <th width="3%" class="text-center">{{viewLanguage('STT')}}</th>
+                        <th width="7%" class="text-left">{{viewLanguage('Ảnh')}}</th>
                         <th width="15%" class="text-center">{{viewLanguage('Loại banner')}}</th>
 
                         <th width="20%" class="text-center">{{viewLanguage('Tên banner')}}</th>
@@ -54,13 +62,16 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-left middle">
-                                <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$item->id,$item->banner_image)}}" width="30" height="40">
+                            <td class="text-center middle">
+                                <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$item->id,$item->banner_image)}}" width="70" height="40">
                             </td>
                             <td class="text-left middle">
                                 @if(isset($arrBannerType[$item->banner_type])){{$arrBannerType[$item->banner_type]}}@endif
                             </td>
-                            <td class="text-left middle">{{$item->banner_name}}</td>
+                            <td class="text-left middle">
+                                {{$item->banner_name}}
+                                @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
+                            </td>
                             <td class="text-left middle">{{$item->banner_link}}</td>
                             <td class="text-center middle">{{$item->banner_order}}</td>
 
