@@ -11,6 +11,10 @@ class OrdersItem extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = true;
 
+    public function orders()
+    {
+        return $this->belongsTo(Orders::class);
+    }
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {

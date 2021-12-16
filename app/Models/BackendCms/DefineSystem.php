@@ -29,9 +29,9 @@ class DefineSystem extends BaseModel
             }
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
 
+            $query->orderBy('created_at', 'desc');
             $query->orderBy('define_code', 'asc');
             $query->orderBy('sort_order', 'asc');
-            //$query->orderBy('created_at', 'desc');
 
 
             $fields = (isset($dataSearch['field_get']) && trim($dataSearch['field_get']) != '') ? explode(',', trim($dataSearch['field_get'])) : array();

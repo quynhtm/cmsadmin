@@ -965,7 +965,50 @@ function site_js($file_name, $position = 1)
             \App\Library\AdminFunction\CGlobal::$extraFooterJS .= $html . "\n";
     }
 }
+/**
+ * Build link cho Shop frontend
+ */
+function buildLinkHome(){
+    return \Illuminate\Support\Facades\URL::route('site.home');
+}
+function buildLinkDetailNew($new_id = 0, $new_name = 'tin tức', $cat_id = 0){
+    if($new_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.detailNew', array('cat_id'=>$cat_id, 'new_name'=>strtolower(safe_title($new_name)), 'new_id'=>$new_id));
+    }
+    return '#';
+}
+function buildLinkDetailProduct($pro_id = 0,$pro_name = 'sản phẩm',$cat_name = 'danh mục'){
+    if($pro_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.detailProduct', array('cat'=>strtolower(safe_title($cat_name)),'name'=>strtolower(safe_title($pro_name)),'id'=>$pro_id));
+    }
+    return '#';
+}
 
+function buildLinkProductWithDepart($depart_id = 0,$depart_name = 'danh muc'){
+    if($depart_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.listProductWithDepart', array('depart_id'=>(int)$depart_id,'depart_name'=>strtolower(safe_title($depart_name))));
+    }
+    return '#';
+}
+
+function buildLinkProductWithCategory($category_id = 0,$category_name = 'danh muc'){
+    if($category_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.listProductWithCategory', array('id'=>strtolower(safe_title($category_id)),'name'=>strtolower(safe_title($category_name))));
+    }
+    return '#';
+}
+function buildLinkProductWithTag($tag_id = 0,$tag_name = 'hashtag'){
+    if($tag_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.listProductWithTag', array('tag_id'=>strtolower(safe_title($tag_id)),'tag_name'=>strtolower(safe_title($tag_name))));
+    }
+    return '#';
+}
+function buildLinkProductWithCampaign($camp_id = 0,$camp_name = 'campaign'){
+    if($camp_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.listProductWithCampaign', array('camp_id'=>strtolower(safe_title($camp_id)),'camp_name'=>strtolower(safe_title($camp_name))));
+    }
+    return '#';
+}
 function getLinkImageShow($folder = FOLDER_FILE_DEFAULT, $file_name = '')
 {
     $no_image = Config::get('config.WEB_ROOT') . 'assets/backend/img/login/no-image.png';

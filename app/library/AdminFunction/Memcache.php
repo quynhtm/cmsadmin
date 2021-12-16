@@ -26,7 +26,6 @@ class Memcache
     const CACHE_CATEGORY_BY_TYPE = 'CACHE_CATEGORY_BY_TYPE_';
     const CACHE_CATEGORY_TREE = 'CACHE_CATEGORY_TREE';
 
-
     const CACHE_PERMISSION_GROUP_ID = 'CACHE_PERMISSION_GROUP_ID_';
     const CACHE_PERMISSION_GROUP_ALL = 'CACHE_PERMISSION_GROUP_ALL';
 
@@ -51,13 +50,20 @@ class Memcache
 
     const CACHE_NEWS_ID = 'CACHE_NEWS_ID_';
 
-    const CACHE_PARTNER_REGISTRATION_ID = 'CACHE_PARTNER_REGISTRATION_ID_';
-
     const CACHE_REVIEWS_ID = 'CACHE_REVIEWS_ID_';
 
     const CACHE_RECRUITMENT_ID = 'CACHE_RECRUITMENT_ID_';
 
     const CACHE_RECRUITMENT_APPLY_ID = 'CACHE_RECRUITMENT_APPLY_ID_';
+
+    /************************************************************************************************
+     * Cache Shop
+     ************************************************************************************************/
+    const CACHE_PARTNER_REGISTRATION_ID = 'CACHE_PARTNER_REGISTRATION_ID_';
+
+    const CACHE_ORDER_ID = 'CACHE_ORDER_ID_';
+
+    const CACHE_ORDERS_ITEM_ID = 'CACHE_ORDERS_ITEM_ID_';
 
     /************************************************************************************************
      * Cache Admin

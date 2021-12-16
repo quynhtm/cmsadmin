@@ -27,6 +27,10 @@ class OrdersController extends BaseAdminController
     private $modelObj = false;
 
     private $arrIsActive = array();
+    private $arrCodOrder = array();
+    private $arrStatusOrder = array();
+    private $arrTypeOrder = array();
+
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
@@ -39,13 +43,18 @@ class OrdersController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new Orders();
-        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
+        $this->arrCodOrder = $this->getArrOptionTypeDefine(DEFINE_ORDER_COD);
+        $this->arrStatusOrder = $this->getArrOptionTypeDefine(DEFINE_ORDER_STATUS);
+        $this->arrTypeOrder = $this->getArrOptionTypeDefine(DEFINE_ORDER_TYPE);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
+
+        $optionStatusOrder = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrStatusOrder, isset($data['order_status']) ? $data['order_status'] : STATUS_INT_AM_MOT);
+        $optionCodOrder = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrCodOrder, isset($data['order_is_cod']) ? $data['order_is_cod'] : STATUS_INT_AM_MOT);
+        $optionTypeOrder = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrTypeOrder, isset($data['order_type']) ? $data['order_type'] : STATUS_INT_AM_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -55,8 +64,13 @@ class OrdersController extends BaseAdminController
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
             'optionPartner' => $optionPartner,
-            'optionIsActive' => $optionIsActive,
-            'arrIsActive' => $this->arrIsActive,
+
+            'optionStatusOrder' => $optionStatusOrder,
+            'arrStatusOrder' => $this->arrStatusOrder,
+            'optionCodOrder' => $optionCodOrder,
+            'arrCodOrder' => $this->arrCodOrder,
+            'optionTypeOrder' => $optionTypeOrder,
+            'arrTypeOrder' => $this->arrTypeOrder,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -82,18 +96,27 @@ class OrdersController extends BaseAdminController
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
 
-        $limit = CGlobal::number_show_20;
+        $limit = CGlobal::number_show_15;
         $page_no = (int)Request::get('page_no', 1);
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
-        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['order_status'] = trim(addslashes(Request::get('order_status', STATUS_INT_AM_MOT)));
+        $search['order_is_cod'] = trim(addslashes(Request::get('order_is_cod', STATUS_INT_AM_MOT)));
+        $search['order_type'] = trim(addslashes(Request::get('order_type', STATUS_INT_AM_MOT)));
+        $search['order_product_id'] = trim(addslashes(Request::get('order_product_id', '')));
+        $search['order_id'] = trim(addslashes(Request::get('order_id', '')));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
         $result = $this->modelObj->searchByCondition($search, $limit,$offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
+        if($total > 0){
+            foreach ($dataList as $k => &$val){
+                $val->list_pro = $this->modelObj->getItemById($val->id);
+            }
+        }
 
         $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
         $this->_outDataView($_GET, $search);
