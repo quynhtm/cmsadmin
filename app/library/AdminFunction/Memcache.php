@@ -61,6 +61,8 @@ class Memcache
      ************************************************************************************************/
     const CACHE_PARTNER_REGISTRATION_ID = 'CACHE_PARTNER_REGISTRATION_ID_';
 
+    const CACHE_PRODUCTS_ID = 'CACHE_PRODUCTS_ID_';
+
     const CACHE_ORDER_ID = 'CACHE_ORDER_ID_';
 
     const CACHE_ORDERS_ITEM_ID = 'CACHE_ORDERS_ITEM_ID_';
