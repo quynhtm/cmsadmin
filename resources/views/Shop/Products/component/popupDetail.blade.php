@@ -19,17 +19,17 @@
                             <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">1</span>
                                 <div class="vertical-timeline-element-content bounce-in" >
-                                    @include('BackendCms.Users.component._detailFormItem')
+                                    @include('Shop.PartnerRegistration.component._detailFormItem')
                                 </div>
                             </div>
                         </form>
 
                         {{---Block 2---}}
-                        <div class="vertical-timeline-item vertical-timeline-element">
+                        {{--<div class="vertical-timeline-item vertical-timeline-element">
                             <div>
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline @if($objectId > 0) timeline-active @endif">2</span>
                                 <div class="vertical-timeline-element-content bounce-in">
-                                    {{---tạo mới tổ chứ---}}
+                                    --}}{{---tạo mới tổ chứ---}}{{--
                                     @if($objectId <= 0)
                                         <div class="card-header"> Thông tin khác</div>
                                         <div class="marginT15">
@@ -52,20 +52,21 @@
                                                 </ul>
                                             </div>
                                             <div class="tab-content marginT10" >
-                                                {{--Phân quyền theo nhóm---}}
+                                                --}}{{--Phân quyền theo nhóm---}}{{--
                                                 <div class="tab-pane tabs-animation fade show active" id="tab-content-2" role="tabpanel">
-                                                    @include('BackendCms.Users.component._formDetailPermissGroup')
+                                                    @include('Web.Partner.component._formDetailPermissGroup')
                                                 </div>
-                                                {{--Phân quyền theo chức năng---}}
+                                                --}}{{--Phân quyền theo chức năng---}}{{--
                                                 <div class="tab-pane tabs-animation fade" id="tab-content-3" role="tabpanel">
-                                                    @include('BackendCms.Users.component._formDetailPermission')
+                                                    @include('Web.Partner.component._formDetailPermission')
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
+
                     </div>
                 </div>
             </div>

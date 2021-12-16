@@ -6,14 +6,13 @@
 * @Version   : 1.0
 */
 
-namespace App\Http\Controllers\CoreHdi;
+namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\BaseAdminController;
-use App\Models\BContracts\Products;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
-use App\Library\AdminFunction\Define;
 use App\Library\AdminFunction\Pagging;
+use App\Models\Shop\Products;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -27,139 +26,192 @@ class ProductsController extends BaseAdminController
     private $pageTitle = '';
     private $modelObj = false;
 
-    private $arrStatus = array();
-    private $arrBankParent = array();
+    private $arrIsActive = array();
+    private $tabOtherItem1 = 'tabOtherItem1';
+    private $tabOtherItem2 = 'tabOtherItem2';
+    private $tabOtherItem3 = 'tabOtherItem3';
+    private $tabOtherItem4 = 'tabOtherItem4';
 
-    private $templateRoot = DIR_PRO_CORE_HDI.'/'. 'products.';
+    private $routerIndex = 'products.index';
+    private $templateRoot = DIR_PRO_SHOP . '/' . 'Products.';
 
     public function __construct()
     {
         parent::__construct();
         $this->modelObj = new Products();
-        $this->arrStatus = $this->getArrOptionTypeDefine(DEFINE_STATUS);
-        $this->arrBankParent = [];
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
     }
 
     private function _outDataView($request, $data)
     {
-        $optionStatus = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrStatus, isset($data['IS_ACTIVE']) ? $data['IS_ACTIVE'] : STATUS_INT_MOT);
-        $optionBankParent = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrBankParent, isset($data['PARENT_CODE']) ? $data['PARENT_CODE'] : '');
+        $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
 
-        $formName = $request['formName'] ?? 'formPopup';
+        $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
-        return $this->dataOutCommon = [
-            'optionStatus' => $optionStatus,
-            'optionBankParent' => $optionBankParent,
-            'arrStatus' => $this->arrStatus,
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Đăng ký đối tác';
 
-            'formName' => $formName,
+        $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
+        return $this->dataOutCommon = [
+            'optionPartner' => $optionPartner,
+            'optionIsActive' => $optionIsActive,
+            'arrIsActive' => $this->arrIsActive,
+
+            'form_id' => $formId,
             'title_popup' => $titlePopup,
             'objectId' => $objectId,
-            'urlAjaxGetData' => '',
-            'urlIndex' => URL::route('products.index'),
-            'urlGetItem' => URL::route('products.ajaxGetItem'),
+            'pageTitle' => $this->pageTitle,
+            'tabOtherItem1' => $this->tabOtherItem1,
+            'tabOtherItem2' => $this->tabOtherItem2,
+            'tabOtherItem3' => $this->tabOtherItem3,
+            'tabOtherItem4' => $this->tabOtherItem4,
+
+            'urlIndex' => URL::route($this->routerIndex),
+            'urlGetData' => URL::route('products.ajaxGetData'),
+            'urlPostData' => URL::route('products.ajaxPostData'),
         ];
     }
 
-    private function _validFormData($type = STATUS_INT_MOT, $data = array())
+    /*********************************************************************************************************
+     * Quản lý đối tác web
+     *********************************************************************************************************/
+    public function index()
     {
-        switch ($type) {
-            case STATUS_INT_MOT: //danh mục tổ chức
-                if (!empty($data)) {
-                    if (isset($data['depart_name']) && trim($data['depart_name']) == '') {
-                        $this->error[] = 'Tên depart không được bỏ trống';
-                    }
-                    if (isset($data['depart_alias']) && trim($data['depart_alias']) == '') {
-                        $this->error[] = 'Tên viết tắt không được bỏ trống';
-                    }
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
+            return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
+        }
+
+        $limit = CGlobal::number_show_20;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
+        $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
+
+        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+
+        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+        $this->_outDataView($_GET, $search);
+        return view($this->templateRoot . 'viewIndex', array_merge([
+            'data' => $dataList,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+        ], $this->dataOutCommon));
+    }
+
+    private function _functionGetData($request)
+    {
+        $formName = isset($request['formName']) ? $request['formName'] : 'formName';
+        $titlePopup = isset($request['titlePopup']) ? $request['titlePopup'] : 'Thông tin chung';
+        $objectId = isset($request['objectId']) ? (int)$request['objectId'] : STATUS_INT_KHONG;
+
+        $dataInput = isset($request['dataInput']) ? json_decode($request['dataInput'], true) : false;
+        $funcAction = isset($dataInput['funcAction']) ? $dataInput['funcAction'] : (isset($request['funcAction']) ? $request['funcAction'] : '');
+        $paramSearch = isset($dataInput['paramSearch']) ? $dataInput['paramSearch'] : [];
+
+        $htmlView = '';
+        switch ($funcAction) {
+            case 'getDetailItem':
+                $dataDetail = false;
+                if ($objectId > STATUS_INT_KHONG) {
+                    $dataDetail = $this->modelObj->getItemById($objectId);
+                    $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
+                }
+
+                $this->_outDataView($request, $dataDetail);
+                $htmlView = View::make($this->templateRoot . 'component.popupDetail')
+                    ->with(array_merge($this->dataOutCommon, [
+                        'dataDetail' => $dataDetail,
+
+                        'paramSearch' => $paramSearch,
+                        'objectId' => $objectId,
+                        'formName' => $formName,
+                        'titlePopup' => $titlePopup,
+                    ]))->render();
+                break;
+            default:
+                break;
+        }
+        return $htmlView;
+    }
+
+    public function ajaxPostData()
+    {
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
+        }
+        $request = $_POST;
+        $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
+        $actionUpdate = 'actionUpdate';
+        $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+        $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
+
+        switch ($actionUpdate) {
+            case 'updateData':
+                $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
+                $isEdit = 0;
+                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
+                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
+                }
+                if ($isEdit > 0) {
+                    $dataDetail = $this->modelObj->getItemById($isEdit);
+                    $this->_outDataView($request, (array)$dataDetail);
+
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = '';
+                    $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
+                    $arrAjax['divShowInfor'] = '';
+                }else{
+                    $arrAjax = returnError($this->error);
                 }
                 break;
             default:
                 break;
         }
-        return true;
-    }
-
-    /*********************************************************************************************************
-     * Danh mục: Banks
-     *********************************************************************************************************/
-    public function index()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_VIEW])) {
-            return Redirect::route('admin.dashboard', array('error' => Define::ERROR_PERMISSION));
-        }
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Danh sách sản phẩm HDI';
-        $page_no = (int)Request::get('page_no', 1);
-        $search['page_no'] = $page_no;
-        $search['p_status'] = addslashes(Request::get('p_status', ''));
-        $search['p_keyword'] = addslashes(Request::get('p_keyword', ''));
-
-        $dataList = [];
-        $total = 0;
-        $limit = CGlobal::number_show_10;
-        $result = $this->modelObj->searchProduct($search);
-
-        if ($result['Success'] == STATUS_INT_MOT) {
-            $dataList = $result['Data']['data'] ?? $dataList;
-            $total = $result['Data']['total'] ?? $total;
-        }
-        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
-
-        $this->_outDataView($_GET, $search);
-        return view($this->templateRoot . 'view', array_merge([
-            'data' => $dataList,
-            'search' => $search,
-            'total' => $total,
-            'stt' => ($page_no - 1) * $limit,
-            'paging' => $paging,
-
-            'pageTitle' => $this->pageTitle,
-
-        ], $this->dataOutCommon));
-    }
-
-    public function ajaxGetItem()
-    {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
-        }
-        $request = $_GET;
-        $objectId = $request['objectId'] ?? 0;
-        $data = ($objectId > 0) ? $this->modelObj->getItemByKey($objectId) : false;
-        $this->_outDataView($request, (array)$data);
-
-        $html = View::make($this->templateRoot . 'component.popupDetail')
-            ->with(array_merge([
-                'data' => $data,
-                'url_action' => URL::route('products.ajaxPostItem'),
-            ], $this->dataOutCommon))->render();
-        $arrAjax = array('success' => 1, 'html' => $html);
         return Response::json($arrAjax);
     }
 
-    public function ajaxPostItem()
+    public function ajaxGetData()
     {
-        if (!$this->checkMultiPermiss([PERMISS_ADD,PERMISS_EDIT])) {
-            return Response::json(returnError(viewLanguage('Bạn không có quyền thao tác.')));
+        if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW, PERMISS_ADD, PERMISS_EDIT], $this->routerIndex)) {
+            return Response::json(returnError(MSG_PERMISSION_ERROR));
         }
         $dataRequest = $_POST;
-
-        $dataForm = $dataRequest['dataForm'] ?? [];
-        $id = $dataForm['objectId'] ?? 0;
-        if (empty($dataForm)) {
-            return Response::json(returnError(viewLanguage('Dữ liệu đầu vào không đúng')));
-        }
-
-        if ($this->_validFormData(STATUS_INT_MOT, $dataForm) && empty($this->error)) {
-            $result = $this->modelObj->editItem($dataForm, ($id > 0) ? 'EDIT' : 'ADD');
-            if ($result['Success'] == STATUS_INT_MOT) {
-                return Response::json(returnSuccess());
+        $functionAction = $dataRequest['functionAction'] ?? '';
+        $html = '';
+        $success = STATUS_INT_KHONG;
+        if (trim($functionAction) != '') {
+            $html = $this->$functionAction($dataRequest);
+            if (is_array($html)) {
+                return Response::json($html);
             } else {
-                return Response::json(returnError($result['Message']));
+                $success = STATUS_INT_MOT;
             }
-        } else {
-            return Response::json(returnError($this->error));
         }
+        $arrAjax = array('success' => $success, 'html' => $html);
+        return Response::json($arrAjax);
+    }
+
+    private function _validFormData($id = 0, &$data = array())
+    {
+        if (!empty($data)) {
+            if (isset($data['USER_TYPE']) && trim($data['USER_TYPE']) == '') {
+                $this->error[] = 'Kiểu người dùng không được bỏ trống';
+            }
+
+            if (isset($data['PHONE']) && trim($data['PHONE']) != '') {
+                if (!validatePhoneNumber(trim($data['PHONE']))) {
+                    $this->error[] = 'PHONE không đúng định dạng';
+                }
+            }
+        }
+        return true;
     }
 }

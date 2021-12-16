@@ -2,14 +2,14 @@
     <div class="ibox-title">
         <h5>{{viewLanguage('Tìm kiếm')}}</h5>
         <div class="ibox-tools marginDownT6">
-            @if($is_root || $permission_view)
-            <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
-                @if($permission_full || $permission_edit || $permission_add)
-                    <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
-                        <i class="fa fa-plus"></i>
-                    </a>
-                @endif
-             @endif
+            @if($permission_full || $permission_view)
+                <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
+            @endif
+            @if($permission_full || $permission_edit || $permission_add)
+                {{--<a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
+                    <i class="fa fa-plus"></i>
+                </a>--}}
+            @endif
         </div>
     </div>
     <div class="ibox-content">
@@ -18,9 +18,17 @@
                 <label for="depart_name">{{viewLanguage('Tìm kiếm')}}</label>
                 <input type="text" class="form-control input-sm" id="p_keyword" name="p_keyword" autocomplete="off" @if(isset($search['p_keyword']))value="{{$search['p_keyword']}}"@endif>
             </div>
+            @if($partner_id == STATUS_INT_KHONG)
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Đối tác')}}</label>
+                <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                    {!! $optionPartner !!}}
+                </select>
+            </div>
+            @endif
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
-                <select  class="form-control input-sm" name="IS_ACTIVE" id="IS_ACTIVE">
+                <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}
                 </select>
             </div>
@@ -35,41 +43,47 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="4%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('ID')}}</th>
-                        <th width="40%" class="text-left">{{viewLanguage('Thông tin User')}}</th>
+                        <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Người đăng ký')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Người đại diện')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
 
-                        <th width="45%" class="text-left">{{viewLanguage('Thông tin thêm')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('Action')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Phone')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('CMND/CCCD')}}</th>
+                        <th width="30%" class="text-left">{{viewLanguage('Địa chỉ')}}</th>
+
+                        <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
+                        <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-center middle">{{$item->id}}</td>
                             <td class="text-left middle">
-                                U: {{$item->user_name}}<br/>
-                                F: {{$item->full_name}}<br/>
-                                T: @if(isset($arrUserType[$item->user_type])){{$arrUserType[$item->user_type]}}@endif<br/>
+                                {{$item->shop_name}}
+                                @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
                             </td>
-                            <td class="text-left middle">
-                                P: @if(isset($arrPosition[$item->user_position])){{$arrPosition[$item->user_position]}}@endif<br/>
-                                G: @if(isset($arrGender[$item->user_gender])){{$arrGender[$item->user_gender]}}@endif<br/>
-                            </td>
+                            <td class="text-left middle">{{$item->shop_representative}}</td>
+                            <td class="text-left middle">{{$item->shop_email}}</td>
+
+                            <td class="text-left middle">{{$item->shop_phone}}</td>
+                            <td class="text-left middle">{{$item->shop_idcard}}</td>
+                            <td class="text-left middle">{!! $item->shop_address !!}</td>
                             <td class="text-center middle">
-                                @if($permission_full || $permission_edit || $permission_add)
-                                    <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
+                                @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif
+                            </td>
+
+                            <td class="text-center middle">
+                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
+                                    {{--<a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
-                                    </a>
+                                    </a>--}}
+                                @endif
+                                @if($permission_full || $permission_remove)
                                     {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
                                         <i class="pe-7s-trash fa-2x"></i>
                                     </a>&nbsp;--}}
-                                @endif
-                                @if($item->is_active == STATUS_INT_MOT)
-                                    <a href="javascript:void(0);" class="green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
-                                @else
-                                    <a href="javascript:void(0);" class="red" title="Ẩn"><i class="fa fa-minus fa-2x"></i></a>
                                 @endif
                             </td>
                         </tr>
