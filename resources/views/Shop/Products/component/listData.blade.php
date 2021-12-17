@@ -6,9 +6,9 @@
                 <button class="btn btn-primary" type="submit" name="submit" value="1"><i class="fa fa-search"></i> {{viewLanguage('Search')}}</button>
             @endif
             @if($permission_full || $permission_edit || $permission_add)
-                {{--<a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
+                <a href="javascript:void(0);"  class="btn btn-success" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>[]])}}" data-objectId="0" title="{{viewLanguage('Thêm mới')}}">
                     <i class="fa fa-plus"></i>
-                </a>--}}
+                </a>
             @endif
         </div>
     </div>
@@ -44,41 +44,62 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Người đăng ký')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('Người đại diện')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
+                        <th width="8%" class="text-center">{{viewLanguage('Ảnh')}}</th>
+                        <th width="50%" class="text-left">{{viewLanguage('Thông tin sản phẩm')}}</th>
+                        <th width="15%" class="text-center">{{viewLanguage('Giá')}}</th>
 
-                        <th width="10%" class="text-left">{{viewLanguage('Phone')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('CMND/CCCD')}}</th>
-                        <th width="30%" class="text-left">{{viewLanguage('Địa chỉ')}}</th>
-
-                        <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
-                        <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
+                        <th width="15%" class="text-center">{{viewLanguage('Đối tác')}}</th>
+                        <th width="10%" class="text-center">{{viewLanguage('Action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
+                            <td class="text-center middle">
+                                <img src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$item->id,$item->product_image)}}" width="70" height="40">
+                            </td>
                             <td class="text-left middle">
-                                {{$item->shop_name}}
-                                @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
-                            </td>
-                            <td class="text-left middle">{{$item->shop_representative}}</td>
-                            <td class="text-left middle">{{$item->shop_email}}</td>
-
-                            <td class="text-left middle">{{$item->shop_phone}}</td>
-                            <td class="text-left middle">{{$item->shop_idcard}}</td>
-                            <td class="text-left middle">{!! $item->shop_address !!}</td>
-                            <td class="text-center middle">
-                                @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif
+                                @if($item->product_status == STATUS_INT_MOT)
+                                    [<b>{{ $item->id }}</b>]
+                                    <a href="{{buildLinkDetailProduct($item->id, $item->product_name, $item->category_name)}}" target="_blank" title="Chi tiết sản phẩm">
+                                        {{ $item->product_name }}
+                                    </a>
+                                @else
+                                    [<b>{{ $item->id }}</b>] {{ $item->product_name }}
+                                @endif
                             </td>
 
+                            <td class="text-right middle">
+                                @if($item->product_price_market > 0)
+                                    Thị trường: <b class="green">{{ numberFormat($item->product_price_market) }}</b><br/>
+                                @endif
+                                    Bán: <b class="red">{{numberFormat($item->product_price_sell) }}</b>
+                                @if($item->product_price_input > 0)
+                                     <br/>Nhập: <b>{{ numberFormat($item->product_price_input) }}</b>
+                                @endif
+                                @if(isset($arrTypePrice[$item->product_type_price]))
+                                    <br/><b class="red">{{ $arrTypePrice[$item->product_type_price] }}</b>
+                                @endif
+                                @if(isset($arrTypeProduct[$item->product_is_hot]) && $item->product_is_hot != STATUS_INT_MOT)
+                                    <br/><b class="red">{{ $arrTypeProduct[$item->product_is_hot] }}</b>
+                                @endif
+                            </td>
                             <td class="text-center middle">
+                                @if(isset($arrPartner[$item->partner_id]))<span>{{$arrPartner[$item->partner_id]}}</span> @endif
+                            </td>
+
+                            <td class="text-center middle">
+                                @if($item->product_status == STATUS_INT_MOT)
+                                    <a href="javascript:void(0);" class="green" title="Hiện"><i class="fa fa-check fa-2x"></i></a>
+                                @else
+                                    <a href="javascript:void(0);" class="red" title="Ẩn"><i class="fa fa-minus fa-2x"></i></a>
+                                @endif
+                                &nbsp;
                                 @if($permission_full || $permission_view || $permission_edit || $permission_add)
-                                    {{--<a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
-                                        <i class="fa fa-eye "></i>
-                                    </a>--}}
+                                    <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
+                                        <i class="fa fa-eye fa-2x"></i>
+                                    </a>
                                 @endif
                                 @if($permission_full || $permission_remove)
                                     {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">

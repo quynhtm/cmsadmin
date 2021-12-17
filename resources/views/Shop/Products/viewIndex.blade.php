@@ -6,9 +6,9 @@
         {{ csrf_field() }}
 
     {{--Search---}}
-        @include('Shop.PartnerRegistration.component.formSearch')
+        @include('Shop.Products.component.formSearch')
 
         {{--list data---}}
-        @include('Shop.PartnerRegistration.component.listData')
+        @include('Shop.Products.component.listData')
     {{ Form::close() }}
 @stop

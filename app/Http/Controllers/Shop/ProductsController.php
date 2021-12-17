@@ -50,7 +50,7 @@ class ProductsController extends BaseAdminController
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
-        $this->pageTitle = CGlobal::$pageAdminTitle = 'Đăng ký đối tác';
+        $this->pageTitle = CGlobal::$pageAdminTitle = 'Sản phẩm';
 
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [

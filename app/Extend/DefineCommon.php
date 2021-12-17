@@ -276,6 +276,7 @@ define('STATUS_VOUCHER_USED','USED');//Đã sử dụng
  **************************************************************************************************************/
 define('FOLDER_BANNER','folder_banner');
 define('FOLDER_NEWS','folder_news');
+define('FOLDER_PRODUCT',  'folder_product');
 
 define('FOLDER_FILE_LOG_COMMON','LogCommon');
 define('FOLDER_FILE_DEFAULT','default');
@@ -283,7 +284,7 @@ define('FOLDER_FILE_USER_ADMIN','user_admin');
 define('FOLDER_FILE_CREATE_ORDER','file_create_order');
 define('FOLDER_FILE_PRODUCT','product');
 define('FOLDER_FILE_CRONJOB','Cronjob');
-define('FOLDER_PRODUCT',  'product');
+
 define('IMAGE_ERROR',  133);
 
 define('GIOI_TINH_NAM',  'M');
