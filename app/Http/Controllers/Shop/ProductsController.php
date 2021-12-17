@@ -122,13 +122,37 @@ class ProductsController extends BaseAdminController
                 $dataDetail = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
-                    $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
+                $arrViewImgOther = [];
+                $imagePrimary = $imageHover = '';
+                if(isset($dataDetail->id)){
+                    //lay ảnh khác của san phẩm
+                    if (!empty($dataDetail->product_image_other)) {
+                        $arrImagOther = unserialize($dataDetail->product_image_other);
+                        if (!empty($arrImagOther)) {
+                            foreach ($arrImagOther as $k => $val) {
+                                $url_thumb = getLinkImageShow(FOLDER_PRODUCT.'/'. $dataDetail->id, $val);
+                                $arrViewImgOther[] = array('img_other' => $val, 'src_img_other' => $url_thumb);
+                            }
+                        }
+                    }
+                    //ảnh sản phẩm chính
+                    $imagePrimary = $dataDetail->product_image;
+                    $imageHover = $dataDetail->product_image_hover;
 
+                    //check hash tag null
+                    /*if(empty($product->list_tag_id)){
+                        $product->list_tag_id = app(Product::class)->getTagIdWithCate($product->category_id);
+                    }*/
+                }
+                $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 $this->_outDataView($request, $dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon, [
                         'dataDetail' => $dataDetail,
+                        'arrViewImgOther' => $arrViewImgOther,
+                        'imagePrimary' => $imagePrimary,
+                        'imageHover' => $imageHover,
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,
