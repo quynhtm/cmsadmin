@@ -196,4 +196,55 @@ class Upload
         }
         return '';
     }
+
+    public static function uploadMultipleFile($_name = '', $_folder = '', $idItem = '', $_file_ext = 'jpg,jpeg,png,gif', $_max_file_size = 5 * 1024 * 1024, $is_attack_logo = false)
+    {
+        $arrUploadSuccess = [];
+        if ($_name != '' && isset($_FILES[$_name]) && !empty($_FILES[$_name])) {
+            if ($_file_ext != '') {
+                $_file_ext = explode(',', $_file_ext);
+            } else {
+                $_file_ext = array("jpg", "jpeg", "png", "gif");
+            }
+            $total_file = count($_FILES[$_name]['name']);
+            $infor_img = $_FILES[$_name];
+
+            for ($i = 0; $i < $total_file; $i++) {
+
+                $file_name = strtolower($infor_img['name'][$i]);
+                $file_tmp = $infor_img["tmp_name"][$i];
+                $file_size = $infor_img['size'][$i];
+
+                $max_file_size = $_max_file_size;
+                $file_ext = @end(explode('.', $file_name));
+                $name = time() . '_' . self::preg_replace_string_upload($file_name);
+                $link = $name ? $name : '';
+                $ext = (!in_array($file_ext, $_file_ext)) ? 0 : 1;
+
+                if ($file_name != '' && $ext == 1 && $file_size <= $max_file_size) {
+                    $path_folder_upload = Config::get('config.PATH_FOLDER_UPLOAD');
+
+                    if ($_folder != '') {
+                        $folder_upload = (trim($idItem) != '') ? $path_folder_upload . $_folder . '/' . $idItem : $path_folder_upload . $_folder;
+                    } else {
+                        $folder_upload = $path_folder_upload;
+                    }
+
+                    if (!is_dir($folder_upload)) {
+                        //@mkdir($folder_upload);
+                        @mkdir($folder_upload, 0777, true);
+                        chmod($folder_upload, 0777);
+                    }
+                    if (move_uploaded_file($file_tmp, $folder_upload . '/' . $link)) {
+                        $arrUploadSuccess[$i] = $link;
+                    } else {
+                        $arrUploadSuccess[$i] = '';
+                    }
+                } else {
+                    $arrUploadSuccess[$i] = '';
+                }
+            }
+        }
+        return $arrUploadSuccess;
+    }
 }
