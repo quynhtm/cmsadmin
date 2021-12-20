@@ -2,7 +2,7 @@
 @section('content')
     {{---breadcrumbs---}}
     @include('Layouts.AdminCms.breadcrumbs')
-    {{ Form::open(array('method' => 'POST', 'role'=>'form')) }}
+    {{ Form::open(array('method' => 'POST', 'role'=>'form', "enctype"=>"multipart/form-data")) }}
         {{ csrf_field() }}
 
     {{--Search---}}

@@ -87,6 +87,8 @@
 <script src="{{URL::asset('assets/backend/admin/lib/highcharts/highcharts.js').$ver}}"></script>
 <script src="{{URL::asset('assets/backend/admin/lib/highcharts/highcharts-3d.js').$ver}}"></script>
 <script src="{{URL::asset('assets/backend/admin/lib/highcharts/exporting.js').$ver}}"></script>
+<script src="{{URL::asset('assets/backend/admin/lib/upload/jquery.form.uploadfile.js').$ver}}"></script>
+<script src="{{URL::asset('assets/backend/admin/lib/upload/jquery.uploadfile.js').$ver}}"></script>
 
 <script src="{{URL::asset('assets/backend/theme/assets/js/plugins/chosen/chosen.jquery.js').$ver}}"></script>
 <script src="{{URL::asset('assets/backend/theme/assets/js/plugins/jquery-ui/jquery-ui.min.js').$ver}}"></script>

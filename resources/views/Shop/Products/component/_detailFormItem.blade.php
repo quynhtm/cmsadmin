@@ -7,6 +7,7 @@
         <input type="hidden" id="data_item" name="data_item" value="{{json_encode($dataDetail)}}">
 
         <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
+        <input type="hidden" id="isFormFile" name="isFormFile" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
@@ -74,9 +75,12 @@
                 <div class="row form-group">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <input name="image_primary" type="hidden" id="image_primary" value="@if(isset($dataDetail['product_image'])){{$dataDetail['product_image']}}@endif">
+                            <input name="product_image" type="hidden" id="image_primary" value="@if(isset($dataDetail['product_image'])){{$dataDetail['product_image']}}@endif">
                             <input name="product_image_hover" type="hidden" id="image_primary_hover" value="@if(isset($dataDetail['product_image_hover'])){{$dataDetail['product_image_hover']}}@endif">
-                            <a href="javascript:;"class="btn btn-primary" onclick="Admin.uploadMultipleImages(2);">Upload ảnh</a>
+                            <input name="product_image_other" type="hidden" id="product_image_other" value="@if(isset($dataDetail['product_image_other'])){{$dataDetail['product_image_other']}}@endif">
+
+                            <input type="file" name="file_image_upload[]" id="file_image_upload" multiple="multiple">
+                            <input type="hidden" id="id_hiden" name="id_hiden" value="{{$objectId}}"/>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -128,9 +132,32 @@
                 <textarea class="form-control input-sm" rows="10" name="product_content" id="{{$formName}}product_content"></textarea>
             </div>
         </div>
-
     </div>
 </div>
+
+<!--Popup anh khac de chen vao noi dung bai viet-->
+<div class="modal fade" id="sys_PopupImgOtherInsertContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Click ảnh để chèn vào nội dung</h4>
+            </div>
+            <div class="modal-body">
+                <form name="uploadImage" method="post" action="#" enctype="multipart/form-data">
+                    <div class="form_group">
+                        <div class="clearfix"></div>
+                        <div class="clearfix" style='margin: 5px 10px; width:100%;'>
+                            <div id="div_image_insert_content" class="float_left"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- chen anh vào noi dung-->
+
 <script type="text/javascript">
     $(document).ready(function(){
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});

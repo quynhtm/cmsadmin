@@ -175,7 +175,7 @@ class NewsController extends BaseAdminController
                 $isEdit = 0;
                 $image_old = isset($request['news_image']) ? $request['news_image'] : '';
                 if ($this->_validFormData($objectId, $request) && empty($this->error)) {
-                    if($objectId > 0 && isset($_FILES['file_image_upload']) && !empty($_FILES['file_image_upload']) && $_FILES['file_image_upload']['name'] != ''){
+                    if($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']) && !empty($_FILES['file_image_upload']) && $_FILES['file_image_upload']['name'] != ''){
                         $image_upload = app(Upload::class)->uploadOneImage('file_image_upload',$folder ,$objectId, $image_old);
                         $request['news_image'] = $image_upload;
                     }

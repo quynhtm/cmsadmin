@@ -12,6 +12,7 @@ use App\Http\Controllers\BaseAdminController;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
+use App\Library\AdminFunction\Upload;
 use App\Models\Shop\Products;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -122,6 +123,8 @@ class ProductsController extends BaseAdminController
                 $dataDetail = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
+                    /*$link = getLinkImageShow(FOLDER_PRODUCT.'/'.$dataDetail->id,$dataDetail->product_image);
+                    myDebug($link);*/
                 }
                 $arrViewImgOther = [];
                 $imagePrimary = $imageHover = '';
@@ -159,7 +162,8 @@ class ProductsController extends BaseAdminController
                         'formName' => $formName,
                         'titlePopup' => $titlePopup,
                     ]))->render();
-                break;
+            break;
+
             default:
                 break;
         }
@@ -179,12 +183,35 @@ class ProductsController extends BaseAdminController
 
         switch ($actionUpdate) {
             case 'updateData':
-                $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
+                $objectId = isset($request['objectId']) ? $request['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
-                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
-                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
+                $folder = FOLDER_PRODUCT;
+                $arrImagOther = unserialize($request['product_image_other']);
+                if ($this->_validFormData($objectId, $request) && empty($this->error)) {
+                    if($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name']) &&  !empty($_FILES['file_image_upload']['name'])){
+                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$objectId);
+                        if(!empty($arUpload) && !empty($arrImagOther)){
+                            $arrImagUpdate = array_merge($arUpload,$arrImagOther);
+                        }else{
+                            $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
+                        }
+                        $request['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
+                    }
+                    $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
                 if ($isEdit > 0) {
+
+                    if($objectId == STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'])  && !empty($_FILES['file_image_upload']['name'])){
+                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$objectId);
+                        if(!empty($arUpload) && !empty($arrImagOther)){
+                            $arrImagUpdate = array_merge($arUpload,$arrImagOther);
+                        }else{
+                            $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
+                        }
+                        $updateImage['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
+                        $isEdit = $this->modelObj->editItem($updateImage, $isEdit);
+                    }
+
                     $dataDetail = $this->modelObj->getItemById($isEdit);
                     $this->_outDataView($request, (array)$dataDetail);
 
@@ -226,14 +253,19 @@ class ProductsController extends BaseAdminController
     private function _validFormData($id = 0, &$data = array())
     {
         if (!empty($data)) {
-            if (isset($data['USER_TYPE']) && trim($data['USER_TYPE']) == '') {
-                $this->error[] = 'Kiểu người dùng không được bỏ trống';
+            if (isset($data['product_price_sell']) && trim($data['product_price_sell']) == '') {
+                $this->error[] = 'Giá bán không được bỏ trống';
+            }else{
+                $data['product_price_sell'] = (int)str_replace('.', '', trim($data['product_price_sell']));
             }
-
-            if (isset($data['PHONE']) && trim($data['PHONE']) != '') {
-                if (!validatePhoneNumber(trim($data['PHONE']))) {
-                    $this->error[] = 'PHONE không đúng định dạng';
-                }
+            if (isset($data['product_price_market']) && trim($data['product_price_market']) !== '') {
+                $data['product_price_market'] = (int)str_replace('.', '', trim($data['product_price_market']));
+            }
+            if (isset($data['product_price_input']) && trim($data['product_price_input']) !== '') {
+                $data['product_price_input'] = (int)str_replace('.', '', trim($data['product_price_input']));
+            }
+            if (isset($data['product_price_provider_sell']) && trim($data['product_price_provider_sell']) !== '') {
+                $data['product_price_provider_sell'] = (int)str_replace('.', '', trim($data['product_price_provider_sell']));
             }
         }
         return true;
