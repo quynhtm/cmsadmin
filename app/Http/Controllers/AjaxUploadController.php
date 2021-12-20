@@ -7,8 +7,10 @@
 */
 namespace App\Http\Controllers;
 
+use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\Upload;
 use App\Library\PHPThumb\ThumbImg;
+use App\Models\Shop\Products;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -16,6 +18,43 @@ use Illuminate\Support\Facades\Response;
 class AjaxUploadController extends BaseAdminController
 {
     private  $sizeImageShowUpload = 100;
+
+    public function removeImageCommon(){
+        $request = $_POST;
+        $item_id = (int)$request['id'];
+        $type = (int)$request['type'];
+        $nameImage = trim($request['nameImage']);
+        $key = $request['key'];
+        $aryData = array();
+        $aryData['intIsOK'] = -1;
+        if($item_id > 0 && $nameImage != '' && $key != ''){
+            switch( $type ){
+                case 2:
+                    //img product
+                    $inforProduct = app(Products::class)->getItemById($item_id);
+                    //if(sizeof($inforProduct) >0){
+                    if(!empty($inforProduct)){
+                        $arrImagOther = unserialize($inforProduct->product_image_other);
+                        if(!empty($arrImagOther)){
+                            foreach($arrImagOther as $k=>$v){
+                                if($v == $nameImage){
+                                    unset($arrImagOther[$k]);
+                                    //xoa anh upload
+                                    FunctionLib::deleteFileUpload($nameImage,$item_id,FOLDER_PRODUCT);
+                                }
+                            }
+                        }
+                        $proUpdate['product_image_other'] = (!empty($arrImagOther))?serialize($arrImagOther):'';
+                        app(Products::class)->editItem($proUpdate,$item_id);
+                    }
+                    $aryData['intIsOK'] = 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return Response::json($aryData);
+    }
     function uploadImage() {
         $id_hiden = Request::get('id', 0);
         $type = Request::get('type', 1);

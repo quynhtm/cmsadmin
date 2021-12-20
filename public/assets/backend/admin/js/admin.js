@@ -1115,10 +1115,11 @@ var Admin = {
         }
 
         if (confirm('Bạn có chắc chắn xóa ảnh này?')) {
+            var _token = $('input[name="_token"]').val();
             jQuery.ajax({
                 type: "POST",
                 url: WEB_ROOT + '/ajax/removeImageCommon',
-                data: {key: key, id: id, nameImage: nameImage, type: type},
+                data: {_token: _token,key: key, id: id, nameImage: nameImage, type: type},
                 responseType: 'json',
                 success: function (data) {
                     if (data.intIsOK === 1) {

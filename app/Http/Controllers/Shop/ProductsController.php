@@ -188,7 +188,7 @@ class ProductsController extends BaseAdminController
                 $folder = FOLDER_PRODUCT;
                 $arrImagOther = unserialize($request['product_image_other']);
                 if ($this->_validFormData($objectId, $request) && empty($this->error)) {
-                    if($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name']) &&  !empty($_FILES['file_image_upload']['name'])){
+                    if($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'][0]) &&  trim($_FILES['file_image_upload']['name'][0]) != ''){
                         $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$objectId);
                         if(!empty($arUpload) && !empty($arrImagOther)){
                             $arrImagUpdate = array_merge($arUpload,$arrImagOther);
@@ -196,6 +196,8 @@ class ProductsController extends BaseAdminController
                             $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
                         }
                         $request['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
+                    }else{
+                        unset($request['product_image_other']);
                     }
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }

@@ -89,25 +89,27 @@
                         <ul id="sys_drag_sort" class="ul_drag_sort">
                             @if(isset($arrViewImgOther))
                                 @foreach ($arrViewImgOther as $key => $imgNew)
-                                    <li id="sys_div_img_other_{{$key}}" style="margin: 1px!important;">
-                                        <div class='block_img_upload'>
-                                            <img src="{{$imgNew['src_img_other']}}" height='100' width='100'>
-                                            <input type="hidden" id="img_other_{{$key}}" name="img_other[]" value="{{$imgNew['img_other']}}" class="sys_img_other">
-                                            <div class='clear'></div>
-                                            <input type="radio" id="chẹcked_image_{{$key}}" name="chẹcked_image" value="{{$key}}" @if(isset($imagePrimary) && $imagePrimary == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImage('{{$imgNew['img_other']}}','{{$key}}');">
-                                            <label for="chẹcked_image_{{$key}}" style='font-weight:normal'>Ảnh đại diện</label>
+                                    @if(trim($imgNew['img_other']) != '')
+                                        <li id="sys_div_img_other_{{$key}}" style="margin: 1px!important;">
+                                            <div class='block_img_upload'>
+                                                <img src="{{$imgNew['src_img_other']}}" height='100' width='100'>
+                                                <input type="hidden" id="img_other_{{$key}}" name="img_other[]" value="{{$imgNew['img_other']}}" class="sys_img_other">
+                                                <div class='clear'></div>
+                                                <input type="radio" id="chẹcked_image_{{$key}}" name="chẹcked_image" value="{{$key}}" @if(isset($imagePrimary) && $imagePrimary == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImage('{{$imgNew['img_other']}}','{{$key}}');">
+                                                <label for="chẹcked_image_{{$key}}" style='font-weight:normal'>Ảnh đại diện</label>
 
-                                            <div class="clearfix"></div>
-                                            <input type="radio" id="chẹcked_image_hover_{{$key}}" name="chẹcked_image_hover" value="{{$key}}" @if(isset($imageHover) && $imageHover == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImageHover('{{$imgNew['img_other']}}','{{$key}}');">
-                                            <label for="chẹcked_image_hover_{{$key}}" style='font-weight:normal'>Ảnh hover</label>
+                                                <div class="clearfix"></div>
+                                                <input type="radio" id="chẹcked_image_hover_{{$key}}" name="chẹcked_image_hover" value="{{$key}}" @if(isset($imageHover) && $imageHover == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImageHover('{{$imgNew['img_other']}}','{{$key}}');">
+                                                <label for="chẹcked_image_hover_{{$key}}" style='font-weight:normal'>Ảnh hover</label>
 
-                                            <div class="clearfix"></div>
-                                            <a href="javascript:void(0);" onclick="Admin.removeImage({{$key}},{{$objectId}},'{{$imgNew['img_other']}}',2);">Xóa ảnh</a>
-                                            <span style="display: none"><b>{{$key}}</b></span>
-                                        </div>
-                                    </li>
-                                    @if(isset($imagePrimary) && $imagePrimary == $imgNew['img_other'] )
-                                        <input type="hidden" id="products_images_key_upload" name="products_images_key_upload" value="{{$key}}">
+                                                <div class="clearfix"></div>
+                                                <a href="javascript:void(0);" onclick="Admin.removeImage({{$key}},{{$objectId}},'{{$imgNew['img_other']}}',2);">Xóa ảnh</a>
+                                                <span style="display: none"><b>{{$key}}</b></span>
+                                            </div>
+                                        </li>
+                                        @if(isset($imagePrimary) && $imagePrimary == $imgNew['img_other'] )
+                                            <input type="hidden" id="products_images_key_upload" name="products_images_key_upload" value="{{$key}}">
+                                        @endif
                                     @endif
                                 @endforeach
                             @else
