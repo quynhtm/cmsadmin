@@ -20,6 +20,19 @@
                     </div>
                 </div>
 
+                @if($partner_id == 0)
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label for="NAME" class="text-right control-label">{{viewLanguage('Đối tác')}}</label>
+                        <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                            {!! $optionPartner !!}}
+                        </select>
+                    </div>
+                </div>
+                @else
+                    <input type="hidden" name="partner_id"  @if($objectId > 0) id="{{$formName}}partner_id" @else value="{{$partner_id}}" @endif>
+                @endif
+
                 <div class="row form-group">
                     <div class="col-lg-3">
                         <label for="NAME" class="text-right control-label">{{viewLanguage('Kiểu giá')}}</label><span class="red"> (*)</span>

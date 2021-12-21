@@ -110,7 +110,7 @@ class ProductsController extends BaseAdminController
         $search['limit'] = $limit;
         $search['product_status'] = (int)trim(addslashes(Request::get('product_status', STATUS_INT_AM_MOT)));
         $search['category_id'] = (int)trim(addslashes(Request::get('category_id', STATUS_INT_AM_MOT)));
-        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
+        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
         $result = $this->modelObj->searchByCondition($search, $limit,$offset);
