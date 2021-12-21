@@ -245,7 +245,7 @@ var jqueryCommon = {
             }
         }
         //$('#loaderRight').show();
-        //$('.submitFormItem').prop("disabled", true);
+        $('.submitFormItem').prop("disabled", true);
         if(parseInt(isFormFile) == 1){
             var form = $('#'+form_id)[0];
             var data = new FormData(form);
@@ -261,15 +261,16 @@ var jqueryCommon = {
                 timeout: 600000,
                 success: function (res) {
                     $('#loaderRight').hide();
+                    $('.submitFormItem').prop("disabled", false);
                     jqueryCommon.showMsg('success', res.message);
                     if (load_page == 1 || res.loadPage == 1) {
                         location.reload();
                     } else {
                         $('#' + res.divShowInfor).html(res.html);
-                        jqueryCommon.cancelUpdateFormItem();
                     }
                 },
                 error: function (e) {
+                    $('.submitFormItem').prop("disabled", false);
                     console.log("ERROR : ", e);
                 }
             });
@@ -291,9 +292,10 @@ var jqueryCommon = {
                             location.reload();
                         } else {
                             $('#' + res.divShowInfor).html(res.html);
-                            jqueryCommon.cancelUpdateFormItem();
+                            //jqueryCommon.cancelUpdateFormItem();
                         }
                     } else {
+                        $('.submitFormItem').prop("disabled", false);
                         jqueryCommon.showMsg('error', '', 'Thông báo lỗi', res.message);
                     }
                 }

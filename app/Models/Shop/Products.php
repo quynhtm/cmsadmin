@@ -17,13 +17,17 @@ class Products extends BaseModel
             $query = Products::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $str_like = trim($dataSearch['p_keyword']);
-                $query->where('product_name', 'LIKE', '%' . $str_like . '%');
+                $query->where('product_name', 'LIKE', '%' . $str_like . '%')
+                    ->orWhere('created_name', 'LIKE', '%' . $str_like . '%');
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
-            if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('product_status', $dataSearch['is_active']);
+            if (isset($dataSearch['category_id']) && $dataSearch['category_id'] > STATUS_INT_KHONG) {
+                $query->where('category_id', $dataSearch['category_id']);
+            }
+            if (isset($dataSearch['product_status']) && $dataSearch['product_status'] > STATUS_INT_AM_MOT) {
+                $query->where('product_status', $dataSearch['product_status']);
             }
 
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;

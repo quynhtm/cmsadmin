@@ -332,8 +332,8 @@ i.metismenu-icon{
 
 .ul_drag_sort { margin:0px; padding:0px; margin-left:20px; }
 #sys_drag_sort{ width:100%; list-style-type:none; margin:0px; }
-#sys_drag_sort li{ float:left; padding:5px; width:130px; margin:5px;}
-.block_img_upload{margin: 5px 10px 5px 0;padding:6px; width: 130px;overflow-x:hidden;float: left;text-align:center;border: 1px solid #eee;}
+#sys_drag_sort li{ float:left; margin:5px;}
+.block_img_upload{margin: 5px 10px 5px 0;padding-top:6px;padding-bottom:4px; width: 133px;overflow-x:hidden;float: left;text-align:center;border: 1px solid #eee;}
 .block_img_upload>img{
     height:80px!important;
     width:auto!important

@@ -26,9 +26,15 @@
                 </select>
             </div>
             @endif
+            <div class="form-group col-lg-4">
+                <label for="status" class="control-label">{{viewLanguage('Danh mục')}}</label>
+                <select  class="form-control input-sm" name="category_id" id="category_id">
+                    {!! $optionCategory !!}}
+                </select>
+            </div>
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
-                <select  class="form-control input-sm" name="is_active" id="is_active">
+                <select  class="form-control input-sm" name="product_status" id="product_status">
                     {!! $optionIsActive !!}}
                 </select>
             </div>
@@ -68,25 +74,32 @@
                                 @else
                                     [<b>{{ $item->id }}</b>] {{ $item->product_name }}
                                 @endif
+                                @if(isset($arrCategory[$item->category_id]))
+                                    <br/><b class="font_10">{{ $arrCategory[$item->category_id] }}</b>
+                                @endif
                             </td>
 
                             <td class="text-right middle">
-                                @if($item->product_price_market > 0)
-                                    Thị trường: <b class="green">{{ numberFormat($item->product_price_market) }}</b><br/>
+                                @if($item->product_type_price == STATUS_INT_MOT)
+                                    @if($item->product_price_market > 0)
+                                        Thị trường: <b class="green">{{ numberFormat($item->product_price_market) }}</b><br/>
+                                    @endif
+                                        Bán: <b class="red">{{numberFormat($item->product_price_sell) }}</b>
+                                    @if($item->product_price_input > 0)
+                                         <br/>Nhập: <b>{{ numberFormat($item->product_price_input) }}</b>
+                                    @endif
+                                @else
+                                    @if(isset($arrProductPrice[$item->product_type_price]))
+                                        <b class="font_10 red">{{ $arrProductPrice[$item->product_type_price] }}</b>
+                                    @endif
                                 @endif
-                                    Bán: <b class="red">{{numberFormat($item->product_price_sell) }}</b>
-                                @if($item->product_price_input > 0)
-                                     <br/>Nhập: <b>{{ numberFormat($item->product_price_input) }}</b>
-                                @endif
-                                @if(isset($arrTypePrice[$item->product_type_price]))
-                                    <br/><b class="red">{{ $arrTypePrice[$item->product_type_price] }}</b>
-                                @endif
-                                @if(isset($arrTypeProduct[$item->product_is_hot]) && $item->product_is_hot != STATUS_INT_MOT)
-                                    <br/><b class="red">{{ $arrTypeProduct[$item->product_is_hot] }}</b>
-                                @endif
+
                             </td>
                             <td class="text-center middle">
                                 @if(isset($arrPartner[$item->partner_id]))<span>{{$arrPartner[$item->partner_id]}}</span> @endif
+                                @if(isset($arrProductType[$item->product_is_hot]) && $item->product_is_hot != STATUS_INT_MOT)
+                                    <br/><b class="font_10">{{ $arrProductType[$item->product_is_hot] }}</b>
+                                @endif
                             </td>
 
                             <td class="text-center middle">

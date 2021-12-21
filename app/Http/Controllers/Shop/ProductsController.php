@@ -14,6 +14,7 @@ use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Upload;
 use App\Models\Shop\Products;
+use App\Models\Web\Category;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -28,6 +29,10 @@ class ProductsController extends BaseAdminController
     private $modelObj = false;
 
     private $arrIsActive = array();
+    private $arrProductPrice = array();
+    private $arrProductType = array();
+    private $arrProductSale = array();
+    private $arrCategory = array();
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
@@ -40,13 +45,21 @@ class ProductsController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new Products();
-        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
+        $this->arrProductPrice = $this->getArrOptionTypeDefine(DEFINE_PRODUCT_PRICE);
+        $this->arrProductType = $this->getArrOptionTypeDefine(DEFINE_PRODUCT_TYPE);
+        $this->arrProductSale = $this->getArrOptionTypeDefine(DEFINE_PRODUCT_SALE);
+        $this->arrCategory = app(Category::class)->getOptionCategoryByType(Category::categoryTypeProduct);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
-        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
+        $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['product_status']) ? $data['product_status'] : STATUS_INT_MOT);
+        $optionProductPrice = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrProductPrice, isset($data['product_type_price']) ? $data['product_type_price'] : STATUS_INT_MOT);
+        $optionProductType = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrProductType, isset($data['product_is_hot']) ? $data['product_is_hot'] : STATUS_INT_MOT);
+        $optionProductSale = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrProductSale, isset($data['product_selloff']) ? $data['product_selloff'] : STATUS_INT_MOT);
+        $optionCategory = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrCategory, isset($data['category_id']) ? $data['category_id'] : STATUS_INT_AM_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -56,8 +69,15 @@ class ProductsController extends BaseAdminController
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
             'optionPartner' => $optionPartner,
+            'optionProductPrice' => $optionProductPrice,
+            'optionProductType' => $optionProductType,
+            'optionProductSale' => $optionProductSale,
             'optionIsActive' => $optionIsActive,
+            'optionCategory' => $optionCategory,
             'arrIsActive' => $this->arrIsActive,
+            'arrCategory' => $this->arrCategory,
+            'arrProductType' => $this->arrProductType,
+            'arrProductPrice' => $this->arrProductPrice,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,
@@ -88,7 +108,8 @@ class ProductsController extends BaseAdminController
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
-        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['product_status'] = (int)trim(addslashes(Request::get('product_status', STATUS_INT_AM_MOT)));
+        $search['category_id'] = (int)trim(addslashes(Request::get('category_id', STATUS_INT_AM_MOT)));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
@@ -262,11 +283,14 @@ class ProductsController extends BaseAdminController
     private function _validFormData($id = 0, &$data = array())
     {
         if (!empty($data)) {
-            if (isset($data['product_price_sell']) && trim($data['product_price_sell']) == '') {
-                $this->error[] = 'Giá bán không được bỏ trống';
-            }else{
-                $data['product_price_sell'] = (int)str_replace('.', '', trim($data['product_price_sell']));
+            if (isset($data['product_type_price']) && $data['product_type_price'] == STATUS_INT_MOT) {
+                if (isset($data['product_type_price']) && $data['product_type_price'] == STATUS_INT_MOT && isset($data['product_price_sell']) && trim($data['product_price_sell']) == '') {
+                    $this->error[] = 'Giá bán không được bỏ trống';
+                }else{
+                    $data['product_price_sell'] = (int)str_replace('.', '', trim($data['product_price_sell']));
+                }
             }
+
             if (isset($data['product_price_market']) && trim($data['product_price_market']) !== '') {
                 $data['product_price_market'] = (int)str_replace('.', '', trim($data['product_price_market']));
             }
