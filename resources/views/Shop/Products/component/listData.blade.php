@@ -44,8 +44,8 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('Ảnh')}}</th>
-                        <th width="50%" class="text-left">{{viewLanguage('Thông tin sản phẩm')}}</th>
+                        <th width="6%" class="text-center">{{viewLanguage('Ảnh')}}</th>
+                        <th width="55%" class="text-left">{{viewLanguage('Thông tin sản phẩm')}}</th>
                         <th width="15%" class="text-center">{{viewLanguage('Giá')}}</th>
 
                         <th width="15%" class="text-center">{{viewLanguage('Đối tác')}}</th>
@@ -57,14 +57,14 @@
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
                             <td class="text-center middle">
-                                <img src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$item->id,$item->product_image)}}" width="70" height="40">
+                                <img src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$item->id,$item->product_image)}}" width="60" height="40">
                             </td>
                             <td class="text-left middle">
                                 @if($item->product_status == STATUS_INT_MOT)
                                     [<b>{{ $item->id }}</b>]
-                                    <a href="{{buildLinkDetailProduct($item->id, $item->product_name, $item->category_name)}}" target="_blank" title="Chi tiết sản phẩm">
+                                    {{--<a href="{{buildLinkDetailProduct($item->id, $item->product_name, $item->category_name)}}" target="_blank" title="Chi tiết sản phẩm">--}}
                                         {{ $item->product_name }}
-                                    </a>
+                                    {{--</a>--}}
                                 @else
                                     [<b>{{ $item->id }}</b>] {{ $item->product_name }}
                                 @endif

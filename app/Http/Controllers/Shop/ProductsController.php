@@ -179,6 +179,7 @@ class ProductsController extends BaseAdminController
         $arrAjax = array('success' => 0, 'html' => '', 'msg' => '');
         $actionUpdate = 'actionUpdate';
         $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
+        $loadPage = isset($dataForm['load_page']) ? $dataForm['load_page'] : STATUS_INT_MOT;
         $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
 
         switch ($actionUpdate) {
@@ -201,15 +202,21 @@ class ProductsController extends BaseAdminController
                     }
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
-                if ($isEdit > 0) {
 
+                if ($isEdit > 0) {
                     if($objectId == STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'])  && !empty($_FILES['file_image_upload']['name'])){
-                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$objectId);
+                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$isEdit);
                         if(!empty($arUpload) && !empty($arrImagOther)){
                             $arrImagUpdate = array_merge($arUpload,$arrImagOther);
                         }else{
                             $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
                         }
+                        if(!empty($arrImagUpdate)){
+                            $product_image = isset($arrImagUpdate[0])?$arrImagUpdate[0]:'';
+                            $updateImage['product_image'] = $product_image;
+                            $updateImage['product_image_hover'] = $product_image;
+                        }
+
                         $updateImage['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
                         $isEdit = $this->modelObj->editItem($updateImage, $isEdit);
                     }
@@ -219,7 +226,7 @@ class ProductsController extends BaseAdminController
 
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
-                    $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
+                    $arrAjax['loadPage'] = $loadPage;
                     $arrAjax['divShowInfor'] = '';
                 }else{
                     $arrAjax = returnError($this->error);

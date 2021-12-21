@@ -6,7 +6,7 @@
         <input type="hidden" id="formName" name="formName" value="{{$formName}}">
         <input type="hidden" id="data_item" name="data_item" value="{{json_encode($dataDetail)}}">
 
-        <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
+        <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_KHONG}}">
         <input type="hidden" id="isFormFile" name="isFormFile" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">

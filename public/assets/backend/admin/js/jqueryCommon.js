@@ -263,7 +263,7 @@ var jqueryCommon = {
                     $('#loaderRight').hide();
                     jqueryCommon.showMsg('success', res.message);
                     if (load_page == 1 || res.loadPage == 1) {
-                        //location.reload();
+                        location.reload();
                     } else {
                         $('#' + res.divShowInfor).html(res.html);
                         jqueryCommon.cancelUpdateFormItem();
