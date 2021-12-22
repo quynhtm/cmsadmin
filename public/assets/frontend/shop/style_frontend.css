@@ -1,6 +1,6 @@
 @charset "UTF-8";
 body {
-    font-family: "Mulish Regular", sans-serif;
+    font-family: "Mulish Regular", sans-serif
 }
 
 @font-face {
@@ -1222,18 +1222,18 @@ body {
     background: #52B4F3
 }
 
-.catalog__txtSearch, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc {
+.catalog__txtSearch, .chitietsanpham__btnwishList span, .chitiettintuc__article p, .chitiettintuc__box1 a, .chitiettintuc__boxComment__btn > *, .chitiettintuc__boxComment__checkTxt, .chitiettintuc__boxComment__dc, .chitiettintuc__boxComment__input, .chitiettintuc__boxComment__textarea, .chitiettintuc__boxComment__titleName, .chitiettuyendung__cardLeft__article p, .chitiettuyendung__cardLeft__txt, .chitiettuyendung__cardRight__table tr > :first-child, .chitiettuyendung__cardRight__table tr > :last-child, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .giohang__card__btn span, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__nav__txt, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__order__txt, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc, .tuyendung__table__btn > *, .xacnhandonhang__txt1 {
     font-size: 14px !important
 }
 
 @media screen and (min-width: 640px) {
-    .catalog__txtSearch, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc {
+    .catalog__txtSearch, .chitietsanpham__btnwishList span, .chitiettintuc__article p, .chitiettintuc__box1 a, .chitiettintuc__boxComment__btn > *, .chitiettintuc__boxComment__checkTxt, .chitiettintuc__boxComment__dc, .chitiettintuc__boxComment__input, .chitiettintuc__boxComment__textarea, .chitiettintuc__boxComment__titleName, .chitiettuyendung__cardLeft__article p, .chitiettuyendung__cardLeft__txt, .chitiettuyendung__cardRight__table tr > :first-child, .chitiettuyendung__cardRight__table tr > :last-child, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .giohang__card__btn span, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__nav__txt, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__order__txt, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc, .tuyendung__table__btn > *, .xacnhandonhang__txt1 {
         font-size: calc(14px + 0 * ((100vw - 640px) / 560)) !important
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .catalog__txtSearch, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc {
+    .catalog__txtSearch, .chitietsanpham__btnwishList span, .chitiettintuc__article p, .chitiettintuc__box1 a, .chitiettintuc__boxComment__btn > *, .chitiettintuc__boxComment__checkTxt, .chitiettintuc__boxComment__dc, .chitiettintuc__boxComment__input, .chitiettintuc__boxComment__textarea, .chitiettintuc__boxComment__titleName, .chitiettuyendung__cardLeft__article p, .chitiettuyendung__cardLeft__txt, .chitiettuyendung__cardRight__table tr > :first-child, .chitiettuyendung__cardRight__table tr > :last-child, .faq__accordion__content p, .footer__bottom__txtCopyright, .footer__center__desc, .footer__center__list1 > li, .footer__center__list2 > li, .footer__center__list > li > a, .footer__center__title1, .footer__dc1, .fz-14, .giohang__card__btn span, .header__bottom__box1__txt2, .header__offcanvas__nav .uk-nav-sub a, .header__offcanvas__nav > li > a, .header__top .uk-navbar-nav > li > a, .header__top__language > span, .home__nav__txt, .home__product__card__label, .home__product__card__title, .home__tintuc__date, .home__tuvan__desc, .lienhe__section2__card__desc, .lienhe__section2__item__list > li, .lienhe__section2__item__txt, .lienhe__section3__btn > *, .lienhe__section3__desc, .lienhe__section3__list > li, .modal__order__txt, .modal__quickView__addCart > *, .modal__quickView__boxTag > *, .modal__quickView__desc, .modal__quickView__label, .modal__quickView__titleTag, .modal__wishList__desc, .modal__wishList__form__btnSelect, .modal__wishList__form__btnSend > *, .modal__wishList__form__input, .pagination > li > *, .quantam__btnBack > *, .quantam__table__price, .quantam__table__title, .quantam__table tr th, .tintuc__asideCard__search__input, .tintuc__card__desc, .tuyendung__table__btn > *, .xacnhandonhang__txt1 {
         font-size: 14px !important
     }
 }
@@ -1254,34 +1254,34 @@ body {
     }
 }
 
-.catalog__card__txt, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__quickView__input, .notification__content__txt, .tintuc__asideCard__nav > li > a {
+.catalog__card__txt, .chitietsanpham__cardContent__body__form__label, .chitietsanpham__cardContent__body__item__txt1, .chitietsanpham__cardContent__body__item__txt2, .chitiettuyendung__cardRight__title, .dangky__box1__title, .dathang__box__title, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__order__dc1, .modal__order__title, .modal__order__title1, .modal__quickView__input, .notification__content__txt, .thanhtoan__txt, .tintuc__asideCard__nav > li > a, .tuyendung__section1__boxFile span, .tuyendung__table__title, .tuyendung__table__txt, .xacnhandonhang__edit {
     font-size: 16px !important
 }
 
 @media screen and (min-width: 640px) {
-    .catalog__card__txt, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__quickView__input, .notification__content__txt, .tintuc__asideCard__nav > li > a {
+    .catalog__card__txt, .chitietsanpham__cardContent__body__form__label, .chitietsanpham__cardContent__body__item__txt1, .chitietsanpham__cardContent__body__item__txt2, .chitiettuyendung__cardRight__title, .dangky__box1__title, .dathang__box__title, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__order__dc1, .modal__order__title, .modal__order__title1, .modal__quickView__input, .notification__content__txt, .thanhtoan__txt, .tintuc__asideCard__nav > li > a, .tuyendung__section1__boxFile span, .tuyendung__table__title, .tuyendung__table__txt, .xacnhandonhang__edit {
         font-size: calc(16px + 0 * ((100vw - 640px) / 560)) !important
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .catalog__card__txt, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__quickView__input, .notification__content__txt, .tintuc__asideCard__nav > li > a {
+    .catalog__card__txt, .chitietsanpham__cardContent__body__form__label, .chitietsanpham__cardContent__body__item__txt1, .chitietsanpham__cardContent__body__item__txt2, .chitiettuyendung__cardRight__title, .dangky__box1__title, .dathang__box__title, .faq__tab > li > a, .fz-16, .header__bottom__close--text:before, .header__dropdown .uk-nav > li > a, .home__header__link > *, .home__header__switch > li > a, .home__product__card__contact, .home__product__card__outStock__label > *, .home__product__card__price, .lienhe__section2__item__title, .lienhe__section3__title1, .modal__order__dc1, .modal__order__title, .modal__order__title1, .modal__quickView__input, .notification__content__txt, .thanhtoan__txt, .tintuc__asideCard__nav > li > a, .tuyendung__section1__boxFile span, .tuyendung__table__title, .tuyendung__table__txt, .xacnhandonhang__edit {
         font-size: 16px !important
     }
 }
 
-.faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
+.chitietsanpham__cardContent__tab > li > a, .chitiettintuc__title, .faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
     font-size: 16.2px !important
 }
 
 @media screen and (min-width: 640px) {
-    .faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
+    .chitietsanpham__cardContent__tab > li > a, .chitiettintuc__title, .faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
         font-size: calc(16.2px + 1.8 * ((100vw - 640px) / 560)) !important
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
+    .chitietsanpham__cardContent__tab > li > a, .chitiettintuc__title, .faq__accordion__title, .fz-18, .header__bottom__box1__txt1, .header__offcanvas__user span, .home__danhmuc__title, .home__tintuc__title, .modal__quickView__title, .tintuc__card__title {
         font-size: 18px !important
     }
 }
@@ -1302,18 +1302,18 @@ body {
     }
 }
 
-.catalog__card__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
+.catalog__card__title, .chitietsanpham__section .modal__quickView__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
     font-size: 19.2px !important
 }
 
 @media screen and (min-width: 640px) {
-    .catalog__card__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
+    .catalog__card__title, .chitietsanpham__section .modal__quickView__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
         font-size: calc(19.2px + 4.8 * ((100vw - 640px) / 560)) !important
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .catalog__card__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
+    .catalog__card__title, .chitietsanpham__section .modal__quickView__title, .faq__title, .footer__center__title, .fz-24, .home__header__title, .ketquasearch__title, .modal__quickView__price, .modal__wishList__title, .quantam__title, .tintuc__title {
         font-size: 24px !important
     }
 }
@@ -1334,18 +1334,18 @@ body {
     }
 }
 
-.fz-36, .home__tuvan__title, .lienhe__section3__title {
+.chitietsanpham__section .modal__quickView__price, .fz-36, .home__tuvan__title, .lienhe__section3__title {
     font-size: 25.2px !important
 }
 
 @media screen and (min-width: 640px) {
-    .fz-36, .home__tuvan__title, .lienhe__section3__title {
+    .chitietsanpham__section .modal__quickView__price, .fz-36, .home__tuvan__title, .lienhe__section3__title {
         font-size: calc(25.2px + 10.8 * ((100vw - 640px) / 560)) !important
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .fz-36, .home__tuvan__title, .lienhe__section3__title {
+    .chitietsanpham__section .modal__quickView__price, .fz-36, .home__tuvan__title, .lienhe__section3__title {
         font-size: 36px !important
     }
 }
@@ -1416,6 +1416,10 @@ body {
 
 .uk-modal-dialog-m {
     width: 800px
+}
+
+.uk-modal-dialog-s {
+    width: 500px
 }
 
 .modal__quickView__nav {
@@ -1702,6 +1706,43 @@ body {
     font-family: "Mulish SemiBold", sans-serif
 }
 
+.modal__order__body, .modal__order__dc, .modal__order__header {
+    padding: 15px
+}
+
+@media (min-width: 960px) {
+    .modal__order__body, .modal__order__dc, .modal__order__header {
+        padding: 16px 24px
+    }
+}
+
+.modal__order__dc1, .modal__order__title, .modal__order__title1 {
+    color: #212121;
+    line-height: 1.5
+}
+
+.modal__order__title {
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+.modal__order__title1 {
+    font-family: "Mulish Bold", sans-serif
+}
+
+.modal__order__txt {
+    color: #888888;
+    line-height: 1.5
+}
+
+.modal__order__iconSuccess {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_58_20414)'%3E%3Cpath d='M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z' fill='%2332BA7C'/%3E%3Cpath d='M29.7793 58.044L50.3471 78.6118C67.3818 74.0692 80.0001 58.5487 80.0001 39.9998C80.0001 39.6213 80.0001 39.2427 80.0001 38.8642L63.8487 23.9746L29.7793 58.044Z' fill='%230AA06E'/%3E%3Cpath d='M41.0095 48.9588C42.776 50.7253 42.776 53.7537 41.0095 55.5203L37.3502 59.1796C35.5836 60.9461 32.5552 60.9461 30.7886 59.1796L14.7634 43.0282C12.9968 41.2616 12.9968 38.2332 14.7634 36.4666L18.4227 32.8073C20.1893 31.0408 23.2177 31.0408 24.9842 32.8073L41.0095 48.9588Z' fill='white'/%3E%3Cpath d='M55.0158 21.0725C56.7824 19.3059 59.8108 19.3059 61.5774 21.0725L65.2367 24.7318C67.0032 26.4983 67.0032 29.5267 65.2367 31.2933L37.4764 58.9274C35.7098 60.6939 32.6815 60.6939 30.9149 58.9274L27.2556 55.2681C25.489 53.5015 25.489 50.4731 27.2556 48.7065L55.0158 21.0725Z' fill='white'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_58_20414'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A")
+}
+
 .line-clamp-1 {
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -1814,6 +1855,41 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15.75 8C15.75 3.75 12.25 0.25 8 0.25C3.71875 0.25 0.25 3.75 0.25 8C0.25 12.2812 3.71875 15.75 8 15.75C12.25 15.75 15.75 12.2812 15.75 8ZM7.09375 12.125C6.90625 12.3125 6.5625 12.3125 6.375 12.125L3.125 8.875C2.9375 8.6875 2.9375 8.34375 3.125 8.15625L3.84375 7.46875C4.03125 7.25 4.34375 7.25 4.53125 7.46875L6.75 9.65625L11.4375 4.96875C11.625 4.75 11.9375 4.75 12.125 4.96875L12.8438 5.65625C13.0312 5.84375 13.0312 6.1875 12.8438 6.375L7.09375 12.125Z' fill='%23329945'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-position: top 4px left
+}
+
+#rating {
+    border: none;
+    float: left
+}
+
+#rating > input {
+    display: none
+}
+
+#rating > label:before {
+    margin: 5px;
+    font-size: 15px;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: ""
+}
+
+#rating > .half:before {
+    content: "";
+    position: absolute
+}
+
+#rating > label {
+    color: #ddd;
+    float: right
+}
+
+#rating:not(:checked) > label:hover, #rating:not(:checked) > label:hover ~ label, #rating > input:checked ~ label {
+    color: #FFD700
+}
+
+#rating > input:checked + label:hover, #rating > input:checked ~ label:hover, #rating > input:checked ~ label:hover ~ label, #rating > label:hover ~ input:checked ~ label {
+    color: #FFED85
 }
 
 .header .uk-container {
@@ -2305,14 +2381,37 @@ body {
     font-family: "Mulish Bold", sans-serif
 }
 
+.home__nav__a {
+    position: relative;
+    padding: 10px 0 !important;
+    padding-left: 35px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='9' height='13' viewBox='0 0 9 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.91797 7.21484C8.16406 6.96875 8.16406 6.55859 7.91797 6.3125L2.61328 0.980469C2.33984 0.734375 1.92969 0.734375 1.68359 0.980469L1.05469 1.60938C0.808594 1.85547 0.808594 2.26562 1.05469 2.53906L5.26562 6.75L1.05469 10.9883C0.808594 11.2617 0.808594 11.6719 1.05469 11.918L1.68359 12.5469C1.92969 12.793 2.33984 12.793 2.61328 12.5469L7.91797 7.21484Z' fill='%23888888'/%3E%3C/svg%3E%0A");
+    background-position: center right;
+    background-repeat: no-repeat
+}
+
+.home__nav__a:hover {
+    background-image: url("data:image/svg+xml,%3Csvg width='9' height='13' viewBox='0 0 9 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.91797 7.21484C8.16406 6.96875 8.16406 6.55859 7.91797 6.3125L2.61328 0.980469C2.33984 0.734375 1.92969 0.734375 1.68359 0.980469L1.05469 1.60938C0.808594 1.85547 0.808594 2.26562 1.05469 2.53906L5.26562 6.75L1.05469 10.9883C0.808594 11.2617 0.808594 11.6719 1.05469 11.918L1.68359 12.5469C1.92969 12.793 2.33984 12.793 2.61328 12.5469L7.91797 7.21484Z' fill='%237BB98D'/%3E%3C/svg%3E%0A")
+}
+
+.home__nav__txt {
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.home__nav__a:hover .home__nav__txt, .uk-active .home__nav__txt {
+    color: #7BB98D;
+    font-family: "Mulish Bold", sans-serif
+}
+
 .home__section {
     padding-bottom: 40px
 }
 
 @media (min-width: 960px) {
     .home__section {
-        /*padding-top: 24px;*/
-        padding-top: 0px;
+        padding-top: 24px;
         padding-bottom: 60px
     }
 }
@@ -2339,7 +2438,7 @@ body {
     color: #7BB98D;
     line-height: 1.5;
     font-family: "Mulish Bold", sans-serif;
-    margin-bottom: 16px
+    margin-bottom: 10px
 }
 
 .home__slider .uk-slideshow-items {
@@ -3026,6 +3125,10 @@ body {
     background-position: center left 12px
 }
 
+#modal-address .quantam__btnBack, .dangnhap__section .quantam__btnBack {
+    background-image: none
+}
+
 .quantam__btnBack > * {
     line-height: 1.5;
     font-family: "Mulish SemiBold", sans-serif
@@ -3043,6 +3146,12 @@ body {
 .quantam__table tr td {
     padding-left: 0;
     padding-right: 0
+}
+
+@media (min-width: 960px) {
+    .quantam__table tr td:not(:first-child) {
+        text-align: center
+    }
 }
 
 @media (min-width: 960px) {
@@ -3066,6 +3175,14 @@ body {
     line-height: 1.5
 }
 
+.quantam__table__price--c1 {
+    color: #DA2128
+}
+
+.quantam__table__price--c2 {
+    font-family: "Mulish Bold", sans-serif
+}
+
 .quantam__table__cover {
     background: #FFFFFF;
     border: 1px solid #EEEEEE;
@@ -3077,7 +3194,8 @@ body {
 .quantam__table__title {
     line-height: 1.5;
     font-family: "Mulish Bold", sans-serif;
-    margin-bottom: 8px
+    margin-bottom: 8px;
+    color: #212121
 }
 
 .quantam__table__title a {
@@ -3251,6 +3369,16 @@ body {
     background: #F8F8F8
 }
 
+.tintuc__section.chitiettintuc__section {
+    padding-top: 0
+}
+
+@media (min-width: 960px) {
+    .tintuc__section.chitiettintuc__section {
+        padding-top: 24px
+    }
+}
+
 @media (min-width: 960px) {
     .tintuc__section {
         padding-bottom: 60px
@@ -3351,6 +3479,715 @@ body {
     color: #888888;
     line-height: 1.5;
     margin-top: 16px
+}
+
+.chitiettintuc__card {
+    background: #FFFFFF;
+    margin-left: calc(0px - 15px);
+    margin-right: calc(0px - 15px)
+}
+
+@media (min-width: 960px) {
+    .chitiettintuc__card {
+        margin-left: 0;
+        margin-right: 0;
+        border: 1px solid #EEEEEE;
+        border-radius: 8px
+    }
+}
+
+.chitiettintuc__card__body {
+    padding: 15px;
+    padding-bottom: 5px
+}
+
+@media (min-width: 960px) {
+    .chitiettintuc__card__body {
+        padding: 24px;
+        padding-bottom: 8px
+    }
+}
+
+.chitiettintuc__title {
+    margin-bottom: 12px;
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.chitiettintuc__article p {
+    color: #888888;
+    line-height: 1.5;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.chitiettintuc__item8 {
+    margin: 0
+}
+
+.chitiettintuc__item8:nth-child(n+2) {
+    margin-top: 8px
+}
+
+.chitiettintuc__box1 {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0;
+    padding-top: 16px;
+    padding-bottom: 16px
+}
+
+.chitiettintuc__box1 a {
+    color: #52B4F3;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.chitiettintuc__boxComment {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.chitiettintuc__boxComment__titleName {
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.chitiettintuc__boxComment__input {
+    height: 38px
+}
+
+.chitiettintuc__boxComment__dc, .chitiettintuc__boxComment__input, .chitiettintuc__boxComment__textarea {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: #888888
+}
+
+@media (min-width: 960px) {
+    .chitiettintuc__boxComment__column.uk-grid-margin {
+        margin-top: 16px !important
+    }
+}
+
+.chitiettintuc__boxComment__label {
+    padding-left: 25px;
+    position: relative;
+    display: block
+}
+
+@media (min-width: 960px) {
+    .chitiettintuc__boxComment__label {
+        padding-left: 30px
+    }
+}
+
+.chitiettintuc__boxComment__check {
+    position: absolute;
+    top: 8px;
+    left: 0
+}
+
+.chitiettintuc__boxComment__checkTxt {
+    line-height: 1.5;
+    color: #212121
+}
+
+.chitiettintuc__boxComment__btn {
+    background: #52B4F3;
+    border-radius: 8px;
+    line-height: calc(38px - 2px);
+    text-transform: inherit;
+    color: #FFFFFF
+}
+
+@media (min-width: 960px) {
+    .dathang__section .chitiettintuc__boxComment__btn {
+        min-width: 284px
+    }
+}
+
+.chitiettintuc__boxComment__btn > * {
+    line-height: 1.5;
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+.tuyendung__section {
+    background: #F9F9F9;
+    padding-bottom: 24px
+}
+
+@media (min-width: 960px) {
+    .tuyendung__section {
+        padding-bottom: 60px
+    }
+}
+
+@media (min-width: 960px) {
+    .tuyendung__section1 {
+        padding-top: 60px;
+        padding-bottom: 60px
+    }
+}
+
+.tuyendung__section1 .uk-container-small {
+    max-width: 1070px !important
+}
+
+.tuyendung__section1__card {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 24px 16px
+}
+
+@media (min-width: 960px) {
+    .tuyendung__section1__card {
+        padding: 40px 110px
+    }
+}
+
+.tuyendung__section1__boxFile {
+    background: #F9F9F9;
+    border-radius: 6px;
+    min-height: 44px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+.tuyendung__section1__boxFile span {
+    display: inline-block;
+    padding-left: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 4.25V0H0.75C0.3125 0 0 0.34375 0 0.75V15.25C0 15.6875 0.3125 16 0.75 16H11.25C11.6562 16 12 15.6875 12 15.25V5H7.75C7.3125 5 7 4.6875 7 4.25ZM9.03125 11.0312H7V13.5312C7 13.7812 6.75 14.0312 6.5 14.0312H5.5C5.21875 14.0312 5 13.7812 5 13.5312V11.0312H2.9375C2.5 11.0312 2.28125 10.4688 2.59375 10.1562L5.59375 7.15625C5.8125 6.96875 6.15625 6.96875 6.375 7.15625L9.375 10.1562C9.6875 10.4688 9.46875 11.0312 9.03125 11.0312ZM11.7812 3.28125L8.71875 0.21875C8.5625 0.09375 8.375 0 8.1875 0H8V4H12V3.8125C12 3.625 11.9062 3.4375 11.7812 3.28125Z' fill='%23888888'/%3E%3C/svg%3E%0A");
+    background-position: center left;
+    background-repeat: no-repeat;
+    color: #888888;
+    line-height: 1.5
+}
+
+.tuyendung__card {
+    padding: 15px;
+    margin-left: calc(0px - 15px);
+    margin-right: calc(0px - 15px);
+    background: #FFFFFF;
+    -webkit-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.12)
+}
+
+@media (min-width: 960px) {
+    .tuyendung__card {
+        padding: 24px 15px;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 10px;
+        margin-top: -43px
+    }
+}
+
+.tuyendung__table tr td {
+    padding-left: 0;
+    padding-right: 0
+}
+
+@media (min-width: 960px) {
+    .tuyendung__table tr td:last-child {
+        text-align: right
+    }
+}
+
+.tuyendung__table__map {
+    padding-left: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='17' viewBox='0 0 12 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.375 15.6875C5.65625 16.125 6.3125 16.125 6.59375 15.6875C11.1562 9.125 12 8.4375 12 6C12 2.6875 9.3125 0 6 0C2.65625 0 0 2.6875 0 6C0 8.4375 0.8125 9.125 5.375 15.6875ZM6 8.5C4.59375 8.5 3.5 7.40625 3.5 6C3.5 4.625 4.59375 3.5 6 3.5C7.375 3.5 8.5 4.625 8.5 6C8.5 7.40625 7.375 8.5 6 8.5Z' fill='%23888888'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center left
+}
+
+.tuyendung__table__catalog {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='14' viewBox='0 0 16 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 14H12V1.5C12 0.6875 11.3125 0 10.5 0H5.5C4.65625 0 4 0.6875 4 1.5V14ZM6 2H10V3H6V2ZM16 4.5C16 3.6875 15.3125 3 14.5 3H13V14H14.5C15.3125 14 16 13.3438 16 12.5V4.5ZM3 14V3H1.5C0.65625 3 0 3.6875 0 4.5V12.5C0 13.3438 0.65625 14 1.5 14H3Z' fill='%23888888'/%3E%3C/svg%3E%0A");
+    padding-left: 25px;
+    background-repeat: no-repeat;
+    background-position: center left
+}
+
+.tuyendung__table__txt {
+    line-height: 1.5;
+    color: #888888;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.tuyendung__table__title {
+    color: #2B2B2B;
+    line-height: 1.5;
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+.tuyendung__table__title a {
+    color: #2B2B2B
+}
+
+.tuyendung__table__btn {
+    text-transform: inherit;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #52B4F3;
+    line-height: calc(38px - 2px);
+    padding: 0 16px;
+    width: 100%
+}
+
+@media (min-width: 960px) {
+    .tuyendung__table__btn {
+        width: inherit
+    }
+}
+
+.tuyendung__table__btn.uk-active, .tuyendung__table__btn:hover {
+    background: #52B4F3;
+    border-color: #52B4F3;
+    color: #FFFFFF
+}
+
+.tuyendung__table__btn > * {
+    line-height: 1.5;
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+@media (min-width: 960px) {
+    .chitiettuyendung__section {
+        padding-top: 40px !important
+    }
+}
+
+.chitiettuyendung__card-dc, .chitiettuyendung__cardLeft, .chitiettuyendung__cardRight {
+    background: #FFFFFF;
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+    border-radius: 0;
+    padding: 15px
+}
+
+@media (min-width: 960px) {
+    .chitiettuyendung__card-dc, .chitiettuyendung__cardLeft, .chitiettuyendung__cardRight {
+        padding: 24px;
+        border-radius: 10px
+    }
+}
+
+.chitiettuyendung__cardLeft {
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+@media (min-width: 960px) {
+    .chitiettuyendung__cardLeft {
+        margin-left: 0;
+        margin-right: 0
+    }
+}
+
+.chitiettuyendung__cardLeft > :nth-child(n+2) {
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+@media (min-width: 960px) {
+    .chitiettuyendung__cardLeft > :nth-child(n+2) {
+        padding-top: 24px;
+        margin-top: 24px
+    }
+}
+
+.chitiettuyendung__cardLeft__article p, .chitiettuyendung__cardLeft__txt {
+    color: #888888;
+    line-height: 1.5;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.chitiettuyendung__cardLeft__article p {
+    margin: 0
+}
+
+.chitiettuyendung__cardLeft__article p:nth-child(n+2) {
+    margin-top: 15px
+}
+
+.chitiettuyendung__cardRight {
+    border-radius: 10px
+}
+
+.chitiettuyendung__cardRight > :nth-child(n+2) {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.chitiettuyendung__cardRight__title {
+    margin: 0;
+    color: #212121;
+    line-height: 1.5;
+    text-transform: uppercase
+}
+
+.chitiettuyendung__cardRight__table {
+    margin: 0
+}
+
+.chitiettuyendung__cardRight__table tr > * {
+    text-transform: inherit
+}
+
+.chitiettuyendung__cardRight__table tr > :first-child {
+    padding-left: 0;
+    color: #212121;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.chitiettuyendung__cardRight__table tr > :last-child {
+    color: #888888;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.chitietsanpham__section {
+    padding-top: 16px
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__section {
+        padding-top: 40px;
+        padding-bottom: 60px
+    }
+}
+
+.chitietsanpham__cardContent {
+    background: #F9F9F9;
+    border: 1px solid #EEEEEE;
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__cardContent {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 8px
+    }
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__cardContent__tab > li:first-child {
+        margin-left: 24px
+    }
+}
+
+.chitietsanpham__cardContent__tab > li > a {
+    text-transform: inherit;
+    color: #888888
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__cardContent__tab > li > a {
+        padding: 16px 10px
+    }
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__cardContent__body {
+        padding: 24px
+    }
+}
+
+.chitietsanpham__cardContent__body__form__label {
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.chitietsanpham__cardContent__body__item {
+    border: 1px solid #e5e5e5;
+    padding: 6px 12px
+}
+
+.chitietsanpham__cardContent__body__item.uk-grid-margin {
+    border-top: none
+}
+
+.chitietsanpham__cardContent__body__item.uk-first-column {
+    border-right: none
+}
+
+@media (min-width: 960px) {
+    .chitietsanpham__cardContent__body__item {
+        padding: 12px 15px
+    }
+}
+
+.chitietsanpham__cardContent__body__item__txt1 {
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.chitietsanpham__cardContent__body__item__txt2 {
+    line-height: 1.5;
+    color: #888888
+}
+
+.chitietsanpham__btnwishList {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+    line-height: calc(38px - 2px);
+    color: #888888;
+    text-transform: inherit;
+    padding: 0 16px
+}
+
+.chitietsanpham__btnwishList:before {
+    position: relative;
+    top: 5px;
+    content: "";
+    display: inline-block;
+    margin-right: 5px;
+    width: 14px;
+    height: 21px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='13' viewBox='0 0 16 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.6328 1.47266C12.1289 0.1875 9.91406 0.433594 8.51953 1.85547L8 2.40234L7.45312 1.85547C6.08594 0.433594 3.84375 0.1875 2.33984 1.47266C0.617188 2.94922 0.535156 5.57422 2.06641 7.16016L7.37109 12.6289C7.69922 12.9844 8.27344 12.9844 8.60156 12.6289L13.9062 7.16016C15.4375 5.57422 15.3555 2.94922 13.6328 1.47266Z' fill='%23888888'/%3E%3C/svg%3E%0A")
+}
+
+.chitietsanpham__btnwishList span {
+    line-height: 1.5;
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+.giohang__card {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 15px
+}
+
+.giohang__card__btn {
+    padding: 0 16px;
+    background: rgba(82, 180, 243, 0.1);
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 8px;
+    line-height: calc(38px - 2px);
+    text-transform: inherit
+}
+
+.giohang__card__btn span {
+    color: #52B4F3;
+    line-height: 1.5
+}
+
+.giohang__card__item:nth-child(n+2) {
+    margin-top: 16px
+}
+
+.giohang__card__item--divider {
+    padding-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.dathang__section {
+    background: #F8F8F9;
+    padding-top: 24px;
+    padding-bottom: 40px
+}
+
+@media (min-width: 960px) {
+    .dathang__section {
+        padding-bottom: 60px
+    }
+}
+
+.dathang__box {
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+@media (min-width: 960px) {
+    .dathang__box {
+        margin-left: 0;
+        margin-right: 0
+    }
+}
+
+.dathang__box__item {
+    position: relative;
+    padding: 15px;
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE
+}
+
+@media (min-width: 960px) {
+    .dathang__box__item {
+        padding: 16px 24px;
+        border-radius: 8px
+    }
+}
+
+.dathang__box__item:nth-child(n+2) {
+    margin-top: 16px
+}
+
+.dathang__box__title {
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif;
+    margin: 0
+}
+
+.xacnhandonhang__txt1 {
+    color: #888888;
+    line-height: 1.5
+}
+
+.xacnhandonhang__edit {
+    top: 16px;
+    right: 24px;
+    color: #52B4F3;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
+}
+
+.xacnhandonhang__box {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 2px
+}
+
+.thanhtoan__box1 {
+    background: #F9F9F9;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 2px
+}
+
+@media (min-width: 960px) {
+    .thanhtoan__box1 {
+        padding-left: 16px;
+        padding-right: 16px
+    }
+}
+
+.thanhtoan__radio:checked ~ .thanhtoan__txt {
+    color: #212121;
+    font-family: "Mulish SemiBold", sans-serif
+}
+
+.thanhtoan__txt {
+    color: #888888;
+    line-height: 1.5;
+    font-family: "Mulish Regular", sans-serif
+}
+
+.dangnhap__section {
+    padding-top: 24px;
+    padding-bottom: 24px
+}
+
+@media (min-width: 960px) {
+    .dangnhap__section {
+        padding-top: 40px;
+        padding-bottom: 40px
+    }
+}
+
+.dangnhap__card {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 16px
+}
+
+@media (min-width: 960px) {
+    .dangnhap__card {
+        padding: 24px
+    }
+}
+
+.dangky__card {
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 8px;
+    padding: 16px
+}
+
+@media (min-width: 960px) {
+    .dangky__card {
+        padding: 40px 24px
+    }
+}
+
+.dangky__box, .dangky__box1 {
+    background: #F9F9F9;
+    border: 1px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 2px
+}
+
+.dangky__box1 {
+    min-height: 273px;
+    padding: 12px 16px
+}
+
+.dangky__box1__actionIcon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center
+}
+
+.dangky__box1__actionIcon:nth-child(n+2) {
+    margin-left: 8px
+}
+
+.dangky__box1__actionIcon--edit {
+    background-image: url("data:image/svg+xml,%3Csvg width='19' height='17' viewBox='0 0 19 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.5625 3.625C12.4375 3.5 12.25 3.5 12.125 3.625L5.3125 10.4375L5 13.3438C4.9375 13.7188 5.28125 14.0625 5.65625 14L8.5625 13.6875L15.375 6.875C15.5 6.75 15.5 6.5625 15.375 6.4375L12.5625 3.625ZM17.625 2.90625L16.0938 1.375C15.625 0.90625 14.8438 0.90625 14.375 1.375L13.2812 2.46875C13.1562 2.59375 13.1562 2.78125 13.2812 2.90625L16.0938 5.71875C16.2188 5.84375 16.4062 5.84375 16.5312 5.71875L17.625 4.625C18.0938 4.15625 18.0938 3.375 17.625 2.90625ZM12 11.8438V15H2V5H9.15625C9.28125 5 9.375 4.96875 9.4375 4.90625L10.6875 3.65625C10.9062 3.40625 10.75 3 10.4062 3H1.5C0.65625 3 0 3.6875 0 4.5V15.5C0 16.3438 0.65625 17 1.5 17H12.5C13.3125 17 14 16.3438 14 15.5V10.5938C14 10.25 13.5938 10.0938 13.3438 10.3125L12.0938 11.5625C12.0312 11.625 12 11.7188 12 11.8438Z' fill='%2352B4F3'/%3E%3C/svg%3E%0A")
+}
+
+.dangky__box1__actionIcon--delete {
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.0625 6L11.1875 2.875C11.5938 2.5 11.5938 1.875 11.1875 1.5L10.5 0.8125C10.125 0.40625 9.5 0.40625 9.125 0.8125L6 3.9375L2.84375 0.8125C2.46875 0.40625 1.84375 0.40625 1.46875 0.8125L0.78125 1.5C0.375 1.875 0.375 2.5 0.78125 2.875L3.90625 6L0.78125 9.15625C0.375 9.53125 0.375 10.1562 0.78125 10.5312L1.46875 11.2188C1.84375 11.625 2.46875 11.625 2.84375 11.2188L6 8.09375L9.125 11.2188C9.5 11.625 10.125 11.625 10.5 11.2188L11.1875 10.5312C11.5938 10.1562 11.5938 9.53125 11.1875 9.15625L8.0625 6Z' fill='%23DA2128'/%3E%3C/svg%3E%0A")
+}
+
+.dangky__box1__item {
+    padding-bottom: 12px;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.dangky__box1__title {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #212121;
+    line-height: 1.5;
+    font-family: "Mulish Bold", sans-serif
 }
 
 /*# sourceMappingURL=style.css.map */

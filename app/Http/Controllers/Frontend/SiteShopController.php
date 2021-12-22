@@ -43,6 +43,17 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.listNews');
     }
 
+
+
+
+
+
+
+
+
+
+
+
     public function listProductNew()
     {
         $titleSearchName = env('PROJECT_NAME') . ' - Sản phẩm mới';

@@ -1,10 +1,58 @@
-<div class="home__item40">
+<div class="home__section" uk-height-viewport="offset-top: true;offset-bottom: true">
     <div class="uk-container uk-padding-remove">
         <div class="uk-grid-30-m uk-grid-match" uk-grid>
             <div class="uk-width-1-4@m uk-visible@m">
                 <div class="uk-card uk-card-default uk-padding-small home__danhmuc">
                     <h3 class="uk-h3 home__danhmuc__title">Danh mục</h3>
-
+                    <ul class="home__nav uk-nav uk-nav-default">
+                        <?php
+                        $dataMenu = array(
+                            array(
+                                'txt' => 'Danh mục 1',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-1.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 2',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-2.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 3',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-3.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 4',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-4.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 5',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-5.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 6',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-5.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 7',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-5.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 8',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-5.png',
+                            ),
+                            array(
+                                'txt' => 'Danh mục 9',
+                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png',
+                            ),
+                        );
+                        foreach ($dataMenu as $k=>$v): ?>
+                        <li class="home__nav__li <?= ($k==0)?'uk-active':'' ?>">
+                            <a href="#" class="home__nav__a">
+                                <img class="home__nav__img uk-position-center-left" src="<?= $v['icon'] ?>" alt="">
+                                <span class="home__nav__txt"><?= $v['txt'] ?></span>
+                            </a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
             </div>
             <div class="uk-width-expand">
