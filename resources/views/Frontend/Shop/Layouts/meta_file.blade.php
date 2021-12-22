@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 <link rel="stylesheet" href="{{URL::asset('assets/frontend/shop/style_frontend.css')}}">
+<link rel="stylesheet" href="{{URL::asset('assets/frontend/shop/modify_frontend.css')}}">
 
 <!--JS-->
 <script src="https://cdn.jsdelivr.net/npm/@shinsenter/defer.js/dist/defer_plus.min.js"></script>

@@ -1,7 +1,7 @@
 @extends('Frontend.Shop.Layouts.index')
 @section('content')
     @include('Frontend.Shop.Layouts.breadcrumb')
-    <div class="home__section" uk-height-viewport="offset-top: true;offset-bottom: true">
+    <div class="home__section paddingTop0" uk-height-viewport="offset-top: true;offset-bottom: true">
         <div class="tintuc__section" uk-height-viewport="offset-top: true;offset-bottom: true">
             <div class="uk-container">
                 <h1 class="uk-h1 tintuc__title">Tin hoạt động Poke</h1>

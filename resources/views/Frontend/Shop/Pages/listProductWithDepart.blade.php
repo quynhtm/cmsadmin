@@ -1,35 +1,35 @@
 @extends('Frontend.Shop.Layouts.index')
 @section('content')
     @include('Frontend.Shop.Layouts.breadcrumb')
-    <div class="home__section" uk-height-viewport="offset-top: true;offset-bottom: true">
+    <div class="home__section paddingTop0" uk-height-viewport="offset-top: true;offset-bottom: true">
         <div class="catalog__section" uk-height-viewport="offset-top: true;offset-bottom: true">
         <div class="uk-container">
             <div class="home__item40">
                 <div class="uk-child-width-1-4@m uk-grid-small uk-grid-30-m" uk-grid>
                     <div>
                         <div class="uk-cover-container">
-                            <img src="images/baner1.jpg" alt="" uk-cover>
+                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/baner1.jpg" alt="" uk-cover>
                             <canvas width="600" height="300"></canvas>
                             <a href="" class="uk-position-cover"></a>
                         </div>
                     </div>
                     <div class="uk-visible@m">
                         <div class="uk-cover-container">
-                            <img src="images/baner2.jpg" alt="" uk-cover>
+                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/baner2.jpg" alt="" uk-cover>
                             <canvas width="600" height="300"></canvas>
                             <a href="" class="uk-position-cover"></a>
                         </div>
                     </div>
                     <div class="uk-visible@m">
                         <div class="uk-cover-container">
-                            <img src="images/baner3.jpg" alt="" uk-cover>
+                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/baner3.jpg" alt="" uk-cover>
                             <canvas width="600" height="300"></canvas>
                             <a href="" class="uk-position-cover"></a>
                         </div>
                     </div>
                     <div class="uk-visible@m">
                         <div class="uk-cover-container">
-                            <img src="images/baner4.jpg" alt="" uk-cover>
+                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/baner4.jpg" alt="" uk-cover>
                             <canvas width="600" height="300"></canvas>
                             <a href="" class="uk-position-cover"></a>
                         </div>
@@ -78,43 +78,43 @@
                             <?php
                             $data = array(
                                 array(
-                                    'src' => 'images/spnoibat/img1.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img1.png',
                                     'title' => 'Solgar ESTER 250 PLUS Kapsul 500MG A50',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img2.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img2.png',
                                     'title' => 'Hand Creams for Dry, Sensitive Skin',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img3.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img3.png',
                                     'title' => 'EllaOne Film-Coated tablet Contraception',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img4.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img4.png',
                                     'title' => 'Ibuprofen 150mg Capsule',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img5.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img5.png',
                                     'title' => 'Bioderma Atoderm Intensive Gel 250ml',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img6.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img6.png',
                                     'title' => 'Ibuprofen 250mg capsules x18',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img7.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img7.png',
                                     'title' => 'VICHY LIFTACTIV Supreme Serum 10 30ML',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img8.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img8.png',
                                     'title' => 'Ibuprofen 500mg Capsule',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img9.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img9.png',
                                     'title' => 'Film-coated tablet 250 mg 30 pieces',
                                 ),
                                 array(
-                                    'src' => 'images/spnoibat/img10.png',
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img10.png',
                                     'title' => 'Cetirizine 25mg Film-coated Tablets',
                                 ),
                             );

@@ -1,334 +1,773 @@
-@extends('site.SiteLayouts.index')
+@extends('Frontend.Shop.Layouts.index')
 @section('content')
-    <section class="bread-crumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <ul class="breadcrumb">
-                        <li class="home">
-                            <a href="{{buildLinkHome()}}">
-                                <span>Trang chủ</span>
-                            </a>
-                            <span><i class="fa">/</i></span>
-                        </li>
-                        @if(isset($product->category_id))
-                            <li>
-                                <a href="{{buildLinkProductWithCategory($product->category_id,$product->category_name)}}">
-                                    <span>{{$product->category_name}}</span>
-                                </a>
-                                <span><i class="fa">/</i></span>
-                            </li>
-                        @endif
-                        @if(isset($product->product_name))
-                            <li><strong>{{$product->product_name}}</strong></li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+    @include('Frontend.Shop.Layouts.breadcrumb')
+    <div class="chitietsanpham__section" uk-height-viewport="offset-top: true;offset-bottom: true">
+        <div class="uk-container">
+            <div class="home__item40">
+                <div class="footer__center__item24">
+                    <div class="uk-grid-small uk-grid-37-m" uk-grid>
+                        <div class="uk-width-2-5@m">
+                            <div class="uk-position-relative uk-visible-toggle uk-slideshow" tabindex="-1" uk-slideshow="ratio: 1:1;animation: fade;">
 
-    <div class="container">
-        <div class="main-product-page">
-            <div class="row">
-                <div class="details-product">
-                    <div id="content" class="col-sm-12 col-xs-12 col-md-12">
-                        <div class="rows">
-                            <!---image product-->
-                            <div class="product-detail-left product-images col-xs-12 col-sm-6 col-md-5 col-lg-5">
-                                <div class="row"> <!-- product images -->
-                                    <div class="col_large_default large-image">
-                                        <a href="javascript:void(0);" class="large_image_url checkurl" data-rel="prettyPhoto[product-gallery]">
-                                            <div style="height:460.5px;width:460.5px;" class="zoomWrapper">
-                                                <?php $url_img = \App\Library\PHPThumb\ThumbImg::getImageThumb(FOLDER_PRODUCT, $product->product_id, $product->product_image)?>
-                                                <img id="img_product_big" class="img-responsive" alt="{{$product->product_name}}" src="{{$url_img}}" data-zoom-image="{{$url_img}}" style="position: absolute; width: 460.5px; height: 460.5px;">
+                                <div class="uk-position-relative modal__quickView__left__imgFor modal__wishList__item">
+                                    <ul class="uk-slideshow-items" style="min-height: 436px;">
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
                                             </div>
-                                        </a>
-                                        <div class="hidden"></div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                        <li tabindex="-1">
+                                            <div class="">
+                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="uk-slider modal__wishList__item" uk-slider="">
+
+                                    <div class="uk-position-relative">
+
+                                        <div class="uk-slider-container">
+                                            <ul class="uk-thumbnav uk-slider-items uk-child-width-1-4 uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-small uk-grid-16-m uk-grid" uk-grid="" style="transform: translate3d(-111.875px, 0px, 0px);">
+                                                <li uk-slideshow-item="0" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="1" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="2" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="3" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="4" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="5" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                                <li uk-slideshow-item="6" tabindex="-1">
+                                                    <div class="uk-cover-container modal__quickView__left__img">
+                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                        <canvas width="200" height="200"></canvas>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="">
+                                            <a class="modal__quickView__nav modal__quickView__nav--prev uk-position-center-left uk-position-small uk-icon uk-slidenav-previous uk-slidenav" href="#" uk-slidenav-previous="" uk-slider-item="previous"><svg width="14" height="24" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23 "></polyline></svg></a>
+                                            <a class="modal__quickView__nav modal__quickView__nav--next uk-position-center-right uk-position-small uk-icon uk-slidenav-next uk-slidenav" href="#" uk-slidenav-next="" uk-slider-item="next"><svg width="14" height="24" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="1.225,23 12.775,12 1.225,1 "></polyline></svg></a>
+                                        </div>
+
                                     </div>
 
-                                    <!---list ảnh khác-->
-                                    <?php
-                                        $product_image_other = unserialize($product->product_image_other);
-                                    ?>
-                                    @if(!empty($product_image_other))
-                                        <div class="product-detail-thumb">
-                                            <div id="gallery_02"class="owl-carousel owl-theme thumbnail-product thumb_product_details not-dqowl owl-loaded owl-drag" data-loop="false" data-lg-items="4" data-md-items="4" data-sm-items="3" data-xs-items="3" data-xxs-items="3">
-                                                @foreach($product_image_other as $key_other => $imge_other)
-                                                    <?php $url_img_other = \App\Library\PHPThumb\ThumbImg::getImageThumb(FOLDER_PRODUCT, $product->product_id, $imge_other);?>
-                                                    <div class="owl-stage-outer">
-                                                        <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 116px;">
-                                                            <div class="owl-item active" style="width: 115.625px;">
-                                                                <div class="item">
-                                                                    <a href="javascript:void(0);" onclick="Shopcuatui.onchangeViewImageDetail({{$product->product_id}},'{{$url_img_other}}')" data-image="{{$url_img_other}}" data-zoom-image="{{$url_img_other}}"class="active">
-                                                                        <img data-img="{{$url_img_other}}" src="{{$url_img_other}}" alt="{{$product->product_name}}">
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
+                                </div>
 
-                                                <div class="owl-dots disabled"></div>
+                            </div>
+                        </div>
+                        <div class="uk-width-expand">
+                            <div class="modal__wishList__item">
+                                <div class="uk-child-width-auto uk-grid-small" uk-grid>
+                                    <div>
+                                        <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                            <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                            <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                            <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                            <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                            <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                            <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 100%">
+                                                <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
                                             </div>
                                         </div>
-                                    @endif
+                                    </div>
+                                    <div>
+                                        <span class="modal__quickView__desc">(1 đánh giá)</span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7 details-pro">
-                                <h1 class="title-product">{{$product->product_name}}</h1>
-                                <div class="social-buttons">
-                                    <a rel="nofollow" target="_blank"  href="https://www.facebook.com/sharer/sharer.php?u={{buildLinkDetailProduct($product->product_id, $product->product_name, $product->category_name)}}" title="Chia sẻ lên Facebook">
-                                        <img alt="Chia sẻ lên Facebook" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/icon/facebook.png" width="25">
-                                    </a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a rel="nofollow" target="_blank" href="https://mail.google.com/mail/u/0/?view=cm&amp;fs=1&amp;to&amp;su=&amp;body={{$product->product_sort_desc}}" title="Chia sẻ lên Gmail">
-                                        <img alt="Chia sẻ lên Gmail" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/icon/gmail.png" width="25">
-                                    </a>
-                                </div>
-                                <style type="text/css"> .social-buttons {
-                                        display: block;
-                                        width: 100%;
-                                    }
-                                    .social-buttons a {
-                                        display: inline-block;
-                                        border-radius: 5px;
-                                    } </style>
-                                {{--Link danh mục--}}
-                                <div class="group-status">
-                                    <span class="first_status">
-                                        <a href="{{buildLinkProductWithCategory($product->category_id,$product->category_name)}}" title="{{$product->category_name}}">{{$product->category_name}}</a>
-                                    </span>
-                                </div>
-
-                                <div class="price-box product-box">
-                                    @if($product->product_type_price == STATUS_INT_MOT)
-                                        <span class="special-price">
-                                            <span class="price product-price">{{numberFormat($product->product_price_sell)}}đ</span>
-                                            @if($product->product_price_market > 0 && $product->product_price_market > $product->product_price_sell)
-                                                <span class="price product-price-old">{{numberFormat($product->product_price_market)}}đ</span>
-                                            @endif
-                                        </span>
-                                    @else
-                                        <span class="special-price">
-                                            <span class="price product-price">Liên hệ</span>
-                                            <p>
-                                                <a class="rc yeloww" href="tel:0985101026">Ms. Giang: 0985.1010.26</a>
-                                                <br/>
-                                                <a class="rc yeloww" href="tel:0903187988">Ms. Bình: 0903.187.988</a>
-                                            </p>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="product-summary product_description margin-bottom-0">
-                                    {{--<p>{!! $product->product_sort_desc !!}</p>--}}
-                                    <p>{!! limit_text_word($product->product_sort_desc) !!}</p>
-                                </div>
-
-                                @if($product->product_type_price == STATUS_INT_MOT)
-                                <div id="product" class="form-product col-sm-12">
-                                    <div class="form-group form_button_details">
-                                        <div class="form_hai ">
-                                            <div class="custom input_number_product custom-btn-number form-control">
-                                                <button class="btn_num num_1 button button_qty" type="button" onclick="var result = document.getElementById('input_quantity');var qtypro = result.value;if(!isNaN(qtypro) &amp;&amp; qtypro > 1) result.value--;return false;">
-                                                    -
-                                                </button>
-                                                <input type="text" name="quantity" value="1" id="input_quantity" class="form-control prd_quantity">
-                                                <button class="btn_num num_2 button button_qty" type="button" onclick="var result = document.getElementById('input_quantity');var qtypro = result.value;if(!isNaN(qtypro)) result.value++;return false;">
-                                                    +
-                                                </button>
+                            <div class="modal__wishList__item">
+                                <h1 class="uk-modal-title modal__quickView__title">Hand Creams for Dry, Sensitive Skin</h1>
+                                <div class="modal__quickView__price">55.000đ</div>
+                            </div>
+                            <div class="modal__wishList__item">
+                                <p class="modal__quickView__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                            <div class="modal__wishList__item">
+                                <div class="modal__quickView__box1">
+                                    <div class="modal__wishList__item">
+                                        <div class="uk-child-width-auto uk-grid-small uk-flex-middle" uk-grid>
+                                            <div>
+                                                <div class="modal__quickView__label">Số lượng:</div>
                                             </div>
-                                            <div class="button_actions">
-                                                <input type="hidden" name="product_id" value="213">
-                                                <button type="button" id="button-cart" data-loading-text="Đang tải..." onclick="Shopcuatui.detailAddtoCart('{{setStrVar($product->product_id)}}');" class="btn btn-lg btn-block btn-cart button_cart_buy_enable add_to_cart btn_buy">
-                                                    <span class="btn-content">Thêm vào giỏ</span>
-                                                </button>
+                                            <div>
+                                                <div class="uk-position-relative">
+                                                    <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--minues"></a>
+                                                    <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--plus"></a>
+                                                    <input class="uk-input uk-form-width-small modal__quickView__input" type="text" placeholder="" value="1">
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <button type="button" class="modal__quickView__addCart uk-button uk-button-default uk-border-rounded"><span>Thêm giỏ hàng</span></button>
+                                            </div>
+                                            <div class="uk-width-auto@s">
+                                                <button class="uk-button uk-button-default chitietsanpham__btnwishList"><span class="uk-visible@m">Quan tâm</span></button>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="modal__wishList__item">
+                                        <div class="modal__quickView__label">Thành tiền: <span>55.000đ</span></div>
+                                    </div>
                                 </div>
-                                @endif
+                            </div>
+                            <div class="modal__wishList__item">
+                                <h3 class="uk-h3 modal__quickView__titleTag">Tags:</h3>
+                                <div class="modal__quickView__boxTag">
+                                    <a href="" class="uk-button uk-button-default uk-button-small uk-border-pill">Kem</a>
+                                    <a href="" class="uk-button uk-button-default uk-button-small uk-border-pill">Bôi</a>
+                                    <a href="" class="uk-button uk-button-default uk-button-small uk-border-pill">Dưỡng da</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer__center__item24">
+                    <div class="uk-card chitietsanpham__cardContent">
+                        <ul class="uk-margin-remove-bottom chitietsanpham__cardContent__tab" uk-tab="connect: #my-tab">
+                            <li class="uk-active"><a href="#">Mô tả</a></li>
+                            <li><a href="#">Các thông tin khác</a></li>
+                            <li><a href="#">Đánh giá</a></li>
+                        </ul>
 
-                                {{--hash tag--}}
-                                <?php
-                                $arrHashtagChose = (isset($product->list_tag_id) && trim($product->list_tag_id) != '')? explode(',',$product->list_tag_id): [];
-                                $count = count($arrHashtagChose);
-                                ?>
-
-                                <!--Thông tin người bán hàng--->
-                                <div id="block-tab-infor" class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 no-padding">
-                                            <div class="product-tab e-tabs">
-                                                <ul class="tabs tabs-title clearfix">
-                                                    <li class="tab-link current" data-tab="tab-description">
-                                                        <h3>
-                                                            <span>Thông tin mua hàng</span>
-                                                        </h3>
-                                                    </li>
-                                                </ul>
-                                                <div class="tab-content current" id="tab-description">
-                                                    <div class="rte2">
-                                                        <p><b>Thông tin liên hệ: </b></p>
-                                                        <p><a class="rc yeloww" href="tel:0985101026">Ms. Giang: 0985.1010.26</a></p>
-                                                        <p><a class="rc yeloww" href="tel:0903187988">Ms. Bình: 0903.187.988</a></p>
-                                                        <p>Địa chỉ: {{\App\Library\AdminFunction\CGlobal::address_shop}}</p>
-                                                    </div>
+                        <div class="uk-padding-small uk-card-body chitietsanpham__cardContent__body">
+                            <ul class="uk-switcher" id="my-tab">
+                                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                                <li>
+                                    <div class="uk-child-width-1-2 uk-grid-collapse uk-background-default uk-grid" uk-grid="">
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Weight</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">0.25 kg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Dimensions</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">10 × 15 × 15 cm</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Size</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">100ml, 150ml, 200ml</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Brand</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Bioderma</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Type</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Bottle</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Active substance</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Q10</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Usage</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Hand cream</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
+                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Side Effects</span>
+                                                </div>
+                                                <div>
+                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Non-drowsy</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{--Quảng cáo--}}
-                        <?php
-                        $dataCampaignBlock = [];
-                        if(isset($arrShowCampaign) && !empty($arrShowCampaign)){
-                            $dataCampaignBlock = array_shift($arrShowCampaign);
-                        }
-                        ?>
-                        @include('site.SiteShop.adverCampaign')
-
-                        {{---Mô tả ngắn---}}
-                        <div id="block-tab-infor" class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
-                            <div class="row margin-top-20 xs-margin-top-15">
-                                <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 no-padding">
-                                    <div class="product-tab e-tabs">
-                                        <ul class="tabs tabs-title clearfix">
-                                            <li class="tab-link current" data-tab="tab-description">
-                                                <h3>
-                                                    <span>Mô tả</span>
-                                                    @if(!empty($userAdmin))
-                                                        <a href="{{URL::route('shop.productEdit',array('id' => $product->product_id))}}" style="color: red;" title="Sửa sản phẩm" target="_blank">(Sửa SP)</a>
-                                                    @endif
-                                                </h3>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content current" id="tab-description">
-                                            <div class="rte">
-                                                {!! $product->product_content !!}
-
-                                                {{--hash tag--}}
-                                                @if(!empty($arrHashtagChose))
-                                                    <div class="clearfix"></div>
-                                                    <div class="group-status">
-                                                        <span class="first_status">
-                                                            @foreach($arrHashtagChose as $ke=>$tag_ids)
-                                                                @if(isset($arrHashTag[$tag_ids]))
-                                                                    <a style="color: #337ab7;" href="{{buildLinkProductWithTag($tag_ids,$arrHashTag[$tag_ids])}}" title="{{$arrHashTag[$tag_ids]}}">#{{$arrHashTag[$tag_ids]}}</a>
-                                                                    @if($count > ($ke+1)), @endif
-                                                                @endif
-                                                            @endforeach
-                                                        </span>
-                                                    </div>
-                                                @endif
+                                </li>
+                                <li>
+                                    <div class="uk-child-width-1-2@m" uk-grid>
+                                        <div>
+                                            <div class="footer__center__item16">
+                                                <h3 class="uk-h3 home__header__title">Đánh giá</h3>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-
-        {{--Quảng cáo--}}
-        <?php
-        //$dataCampaignBlock = [];
-        if(isset($arrShowCampaign) && !empty($arrShowCampaign)){
-            $dataCampaignBlock = array_shift($arrShowCampaign);
-        }
-        ?>
-        @include('site.SiteShop.adverCampaign')
-
-        <!--Sản phẩm liên quan--->
-        @if(isset($arrRelatedProducts) && !empty($arrRelatedProducts))
-        <div class="row">
-            <section class="awe-section-3 " id="category_custom-1">
-                <section class="section_like_product">
-                    <div class="container">
-                        <div class="row row-noGutter-2">
-                            <div class="heading tab_link_module">
-                                <h2 class="title-head pull-left">
-                                    <span>Sản phẩm liên quan</span>
-                                </h2>
-
-                                <div class="tabs-content tabs-content-featured col-md-12 col-sm-12 col-xs-12 no-padding">
-                                    <div id="content-tabb10" class="content-tab content-tab-proindex" style="">
-                                        <div class="row">
-                                            @foreach($arrRelatedProducts as $key=>$item)
-                                                <?php $number = $key+1;?>
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-20 custom-mobile">
-                                                    <div class="wrp_item_small product-col">
-                                                        <div class="product-box">
-                                                            <div class="product-thumbnail">
-                                                                @if($item->product_price_market > 0 && $item->product_type_price == STATUS_INT_MOT && $item->product_price_market > $item->product_price_sell)
-                                                                    <span class="sale-off">
-                                                                        -{{ number_format(100 - ((float)$item->product_price_sell/(float)$item->product_price_market)*100, 1) }}%
-                                                                    </span>
-                                                                @endif
-                                                                <a class="image_link display_flex" href="{{buildLinkDetailProduct($item->product_id, $item->product_name, $item->category_name)}}" title="{{$item->product_name}}">
-                                                                    <?php $url_img = \App\Library\PHPThumb\ThumbImg::getImageThumb(FOLDER_PRODUCT, $item->product_id, $item->product_image)?>
-                                                                    <img src="{{$url_img}}" data-lazyload="{{$url_img}}" alt="{{$item->product_name}}">
-                                                                </a>
-                                                                @if($item->product_type_price == STATUS_INT_MOT)
-                                                                <div class="product-action-grid clearfix">
-                                                                    <form class="variants form-nut-grid">
+                                            <div class="footer__center__item16">
+                                                <div class="uk-grid uk-grid-16" uk-grid="">
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                                            <div class="uk-width-auto">
+                                                                <div class="uk-cover-container uk-border-circle">
+                                                                    <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                                    <canvas width="36" height="36"></canvas>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="chitiettintuc__item8">
+                                                                    <div class="uk-child-width-auto uk-flex-middle uk-grid-small" uk-grid>
                                                                         <div>
-                                                                            <button class="btn-cart button_wh_40 left-to" title="Mua ngay" type="button" onclick="Shopcuatui.addOneProductToCart('{{setStrVar($item->product_id)}}',1);">
-                                                                                Mua ngay
-                                                                            </button>
+                                                                            <h4 class="uk-h4 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
                                                                         </div>
-                                                                    </form>
-                                                                </div>
-                                                                @endif
-                                                            </div>
-                                                            <div class="product-info effect a-left">
-                                                                <div class="info_hhh">
-                                                                    <h3 class="product-name ">
-                                                                        <a href="{{buildLinkDetailProduct($item->product_id, $item->product_name, $item->category_name)}}" title="{{$item->product_name}}">{{$item->product_name}}</a>
-                                                                    </h3>
-                                                                    <div class="price-box clearfix">
-                                                                        @if($item->product_type_price == STATUS_INT_MOT)
-                                                                            <span class="price product-price">{{numberFormat($item->product_price_sell)}}đ</span>
-                                                                            @if($item->product_price_market > 0 && $item->product_price_market > $item->product_price_sell)
-                                                                                <span class="price product-price-old">{{numberFormat($item->product_price_market)}}đ</span>
-                                                                            @endif
-                                                                        @else
-                                                                            <span class="price product-price">Liên hệ</span>
-                                                                        @endif
+                                                                        <div>
+                                                                            <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 100%">
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                    <span class="product-category">
-                                                                        <a href="{{buildLinkProductWithCategory($item->category_id, $item->category_name)}}" title="Danh sách sản phẩm {{$item->category_name}}">{{$item->category_name}}</a>
-                                                                    </span>
-                                                                    @if(!empty($userAdmin))
-                                                                        <br/><a href="{{URL::route('shop.productEdit',array('id' => $item->product_id))}}" style="color: red;" title="Sửa sản phẩm" target="_blank">(Sửa SP)</a>
-                                                                    @endif
+                                                                </div>
+                                                                <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                                <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                                            <div class="uk-width-auto">
+                                                                <div class="uk-cover-container uk-border-circle">
+                                                                    <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                                    <canvas width="36" height="36"></canvas>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="chitiettintuc__item8">
+                                                                    <div class="uk-child-width-auto uk-flex-middle uk-grid-small" uk-grid>
+                                                                        <div>
+                                                                            <h4 class="uk-h4 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 80%">
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                                <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                                            <div class="uk-width-auto">
+                                                                <div class="uk-cover-container uk-border-circle">
+                                                                    <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                                    <canvas width="36" height="36"></canvas>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="chitiettintuc__item8">
+                                                                    <div class="uk-child-width-auto uk-flex-middle uk-grid-small" uk-grid>
+                                                                        <div>
+                                                                            <h4 class="uk-h4 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 60%">
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                                <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                                            <div class="uk-width-auto">
+                                                                <div class="uk-cover-container uk-border-circle">
+                                                                    <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                                    <canvas width="36" height="36"></canvas>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="chitiettintuc__item8">
+                                                                    <div class="uk-child-width-auto uk-flex-middle uk-grid-small" uk-grid>
+                                                                        <div>
+                                                                            <h4 class="uk-h4 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                                                <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 80%">
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                    <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                                                                <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-1-1">
+                                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                                            <div class="uk-width-auto">
+                                                                <div class="uk-cover-container uk-border-circle">
+                                                                    <img hidden src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                                    <canvas width="36" height="36"></canvas>
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="uk-text-center uk-padding-small chitiettintuc__box1">
+                                                                    <a href="">Xem thêm</a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if(($number%2)==0)
-                                                    <div class="clearfix hidden-sm hidden-md hidden-lg"></div>
-                                                @else
-                                                    <div class="clearfix hidden-xs hidden-lg"></div>
-                                                @endif
-                                            @endforeach
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="footer__center__item16">
+                                                <h3 class="uk-h3 home__header__title">Thêm đánh giá</h3>
+                                            </div>
+                                            <div class="footer__center__item16">
+                                                <form class="uk-grid-small uk-grid-30-m" uk-grid>
+                                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column">
+                                                        <div class="uk-grid-small uk-child-width-auto uk-flex-middle" uk-grid>
+                                                            <div>
+                                                                <span class="chitietsanpham__cardContent__body__form__label">Đánh giá</span>
+                                                            </div>
+                                                            <div>
+                                                                <div id="rating">
+                                                                    <input type="radio" id="star5" name="rating" value="5" />
+                                                                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+
+                                                                    <input type="radio" id="star4" name="rating" value="4" />
+                                                                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+
+                                                                    <input type="radio" id="star3" name="rating" value="3" />
+                                                                    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+
+                                                                    <input type="radio" id="star2" name="rating" value="2" />
+                                                                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                                                                    <input type="radio" id="star1" name="rating" value="1" />
+                                                                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                                                                </div>
+                                                                <div class="uk-clearfix"></div>
+                                                                <script>
+                                                                    function calcRate(r) {
+                                                                        const f = ~~r,//Tương tự Math.floor(r)
+                                                                            id = 'star' + f + (r % f ? 'half' : '')
+                                                                        id && (document.getElementById(id).checked = !0)
+                                                                    }
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
+                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Họ tên">
+                                                    </div>
+                                                    <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
+                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Email">
+                                                    </div>
+                                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column">
+                                                        <textarea class="uk-textarea chitiettintuc__boxComment__textarea" rows="5" placeholder="Bình luận"></textarea>
+                                                    </div>
+                                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column">
+                                                        <label class="chitiettintuc__boxComment__label"><input class="uk-checkbox chitiettintuc__boxComment__check" type="checkbox" checked> <span class="chitiettintuc__boxComment__checkTxt">Tôi đồng ý rằng dữ liệu của tôi đã gửi đang được thu thập và lưu trữ. Để biết thêm chi tiết về việc xử lý dữ liệu người dùng, hãy xem Chính sách quyền riêng tư của chúng tôi.</span></label>
+                                                    </div>
+                                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column">
+                                                        <button type="submit" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đánh giá</span></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home__item40">
+                <div class="home__header">
+                    <div class="uk-flex-middle uk-grid-24-m" uk-grid>
+                        <div class="uk-width-expand">
+                            <h3 class="uk-h3 home__header__title">Bán chạy</h3>
+                        </div>
+                        <div class="uk-width-auto">
+                            <a href="" class="home__header__link uk-button uk-button-default uk-border-pill"><span>Xem tất cả</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-child-width-1-2 uk-grid-match uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-small uk-grid-30-m" uk-grid>
+                    <div class="home__product__column">
+                        <div class="uk-card home__product__card uk-transition-toggle">
+                            <div class="uk-grid-match uk-grid-collapse uk-height-1-1 uk-flex-column" uk-grid>
+                                <div class="uk-width-1-1">
+                                    <div class="uk-cover-container home__product__card__cover">
+                                        <div class="uk-position-cover uk-flex uk-flex-middle uk-flex-center">
+                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img1.png" alt="">
+                                        </div>
+                                        <canvas width="468" height="360"></canvas>
+                                        <div class="uk-transition-fade uk-position-cover home__product__card__stock uk-flex uk-flex-middle uk-flex-center">
+                                            <div>
+                                                <a href="#modal-quickView" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>
+                                                <a href="" class="home__product__card__stock__icon home__product__card__stock__icon--cart uk-border-circle"></a>
+                                                <a href="#modal-wishList" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--wishList uk-border-circle"></a>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-flex-auto uk-padding-small">
+                                    <div class="uk-grid-match uk-grid-12 uk-flex-column" uk-grid>
+                                        <div class="uk-width-1-1 uk-flex-auto">
+                                            <div>
+                                                <div class="uk-text-center">
+                                                    <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 60%">
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php">Solgar ESTER 250 PLUS Kapsul 500MG A50</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-1">
+                                            <div class="home__product__card__price">32.000đ</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-            </section>
+                    <div class="home__product__column">
+                        <div class="uk-card home__product__card uk-transition-toggle">
+                            <div class="uk-grid-match uk-grid-collapse uk-height-1-1 uk-flex-column" uk-grid>
+                                <div class="uk-width-1-1">
+                                    <div class="uk-cover-container home__product__card__cover">
+                                        <div class="uk-position-cover uk-flex uk-flex-middle uk-flex-center">
+                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img2.png" alt="">
+                                        </div>
+                                        <canvas width="468" height="360"></canvas>
+                                        <div class="uk-position-cover home__product__card__outStock uk-flex uk-flex-middle uk-flex-center">
+                                            <div class="home__product__card__outStock__label uk-border-pill"><span>Hết hàng</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-flex-auto uk-padding-small">
+                                    <div class="uk-grid-match uk-grid-12 uk-flex-column" uk-grid>
+                                        <div class="uk-width-1-1 uk-flex-auto">
+                                            <div>
+                                                <div class="uk-text-center">
+                                                    <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 100%">
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php">Hand Creams for Dry, Sensitive Skin</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-1">
+                                            <div class="home__product__card__price">49.000đ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home__product__column">
+                        <div class="uk-card home__product__card uk-transition-toggle">
+                            <div class="uk-grid-match uk-grid-collapse uk-height-1-1 uk-flex-column" uk-grid>
+                                <div class="uk-width-1-1">
+                                    <div class="uk-cover-container home__product__card__cover">
+                                        <div class="uk-position-cover uk-flex uk-flex-middle uk-flex-center">
+                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img3.png" alt="">
+                                        </div>
+                                        <canvas width="468" height="360"></canvas>
+                                        <div class="uk-position-cover home__product__card__outStock uk-flex uk-flex-middle uk-flex-center">
+                                            <div class="home__product__card__outStock__label uk-border-pill"><span>Hết hàng</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-flex-auto uk-padding-small">
+                                    <div class="uk-grid-match uk-grid-12 uk-flex-column" uk-grid>
+                                        <div class="uk-width-1-1 uk-flex-auto">
+                                            <div>
+                                                <div class="uk-text-center">
+                                                    <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 20%">
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php">EllaOne Film-Coated tablet Contraception</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-1">
+                                            <div class="home__product__card__price">19.000đ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home__product__column">
+                        <div class="uk-card home__product__card uk-transition-toggle">
+                            <div class="uk-grid-match uk-grid-collapse uk-height-1-1 uk-flex-column" uk-grid>
+                                <div class="uk-width-1-1">
+                                    <div class="uk-cover-container home__product__card__cover">
+                                        <div class="uk-position-cover uk-flex uk-flex-middle uk-flex-center">
+                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img5.png" alt="">
+                                        </div>
+                                        <canvas width="468" height="360"></canvas>
+                                        <div class="uk-transition-fade uk-position-cover home__product__card__stock uk-flex uk-flex-middle uk-flex-center">
+                                            <div>
+                                                <a href="#modal-quickView" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>
+                                                <a href="" class="home__product__card__stock__icon home__product__card__stock__icon--cart uk-border-circle"></a>
+                                                <a href="#modal-wishList" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--wishList uk-border-circle"></a>
+                                            </div>
+                                        </div>
+
+                                        <span class="home__product__card__label uk-border-pill uk-position-top-left uk-label uk-label-success">Mới</span>
+
+
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-flex-auto uk-padding-small">
+                                    <div class="uk-grid-match uk-grid-12 uk-flex-column" uk-grid>
+                                        <div class="uk-width-1-1 uk-flex-auto">
+                                            <div>
+                                                <div class="uk-text-center">
+                                                    <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 60%">
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php">Bioderma Atoderm Intensive Gel 250ml</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-1">
+                                            <div class="home__product__card__contact">Liên hệ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home__product__column">
+                        <div class="uk-card home__product__card uk-transition-toggle">
+                            <div class="uk-grid-match uk-grid-collapse uk-height-1-1 uk-flex-column" uk-grid>
+                                <div class="uk-width-1-1">
+                                    <div class="uk-cover-container home__product__card__cover">
+                                        <div class="uk-position-cover uk-flex uk-flex-middle uk-flex-center">
+                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img4.png" alt="">
+                                        </div>
+                                        <canvas width="468" height="360"></canvas>
+                                        <div class="uk-position-cover home__product__card__outStock uk-flex uk-flex-middle uk-flex-center">
+                                            <div class="home__product__card__outStock__label uk-border-pill"><span>Hết hàng</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-flex-auto uk-padding-small">
+                                    <div class="uk-grid-match uk-grid-12 uk-flex-column" uk-grid>
+                                        <div class="uk-width-1-1 uk-flex-auto">
+                                            <div>
+                                                <div class="uk-text-center">
+                                                    <div class="uk-position-relative uk-display-inline-block home__product__card__rate">
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <i class="home__product__card__rate__icon home__product__card__rate__star-o"></i>
+                                                        <div class="uk-position-cover uk-text-nowrap uk-position-z-index uk-overflow-hidden" style="width: 20%">
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                            <i class="home__product__card__rate__icon home__product__card__rate__star"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php">Ibuprofen 150mg Capsule</a></h3>
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-1">
+                                            <div class="home__product__card__contact">Liên hệ</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        @endif
     </div>
 @stop
-@include('site.SiteShop.chatOnline')

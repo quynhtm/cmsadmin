@@ -37,11 +37,26 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.listProductWithDepart');
     }
+    public function indexDetailProduct()
+    {
+        return view('Frontend.Shop.Pages.detailProduct');
+    }
+
 
     public function indexNew()
     {
         return view('Frontend.Shop.Pages.listNews');
     }
+    public function indexDetailNews()
+    {
+        return view('Frontend.Shop.Pages.detailNews');
+    }
+
+    public function indexDetailRecruitment()
+    {
+        return view('Frontend.Shop.Pages.detailRecruitment');
+    }
+
 
 
 

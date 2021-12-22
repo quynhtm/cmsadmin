@@ -3,6 +3,10 @@ Route::get('/', array('as' => 'site.home','uses' => DIR_PRO_FRONTEND.'\SiteShopC
 Route::get('/tim-kiem-san-pham.html', array('as' => 'site.searchProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@searchProduct'));
 Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
 
+Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));
+Route::get('chi-tiet-tin-tuc.html',array('as' => 'site.indexDetailNews','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailNews'));
+Route::get('chi-tiet-tuyen-dung.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
+
 
 
 Route::get('/{cat}/{id}-{name}.html',array('as' => 'site.detailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@detailProduct'));//chi tiết sản phẩm
