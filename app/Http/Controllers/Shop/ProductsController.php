@@ -103,7 +103,7 @@ class ProductsController extends BaseAdminController
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
 
-        $limit = CGlobal::number_show_20;
+        $limit = CGlobal::number_show_15;
         $page_no = (int)Request::get('page_no', 1);
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
