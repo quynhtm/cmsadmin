@@ -6,6 +6,9 @@ Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEN
 Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));
 Route::get('chi-tiet-tin-tuc.html',array('as' => 'site.indexDetailNews','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailNews'));
 Route::get('chi-tiet-tuyen-dung.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
+Route::get('dang-nhap.html',array('as' => 'site.indexLoginShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexLoginShop'));
+Route::get('dang-ky.html',array('as' => 'site.indexRegistrationShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRegistrationShop'));
+
 
 
 
@@ -21,13 +24,17 @@ Route::get('/lien-he-voi-shopcuatui.html', array('as' => 'site.contactShop','use
 Route::post('/lien-he-voi-shopcuatui.html', array('as' => 'site.contactShop','uses' => DIR_PRO_FRONTEND.'\SiteShopController@contactShop'));
 
 //Gio hang
+Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCart'));
+Route::get('/dat-hang.html', array('as' => 'site.indexCartOrder1','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder1'));
+Route::get('/xac-nhan-dat-hang.html', array('as' => 'site.indexCartOrder2','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder2'));
+Route::get('/thanh-toan.html', array('as' => 'site.indexCartOrder3','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder3'));
+
 Route::post('/ajaxAddCart', array('as' => 'site.ajaxAddCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@ajaxAddCart'));
-Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@cartProduct'));
-Route::post('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@cartProduct'));
-Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@deleteOneItemInCart'));
-Route::get('/thong-tin-thanh-toan.html', array('as' => 'site.inforRepaymentsOrder','uses' => DIR_PRO_FRONTEND.'\SiteShopController@inforRepaymentsOrder'));
-Route::post('/sendOrderToCart',array('as' => 'site.sendOrderToCart','uses' =>DIR_PRO_FRONTEND.'\ShopCartController@sendOrderToCart'));
-Route::get('/dat-hang-thanh-cong.html',array('as' => 'site.thanksBuy','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@thanksBuy'));
+//Route::post('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@cartProduct'));
+//Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@deleteOneItemInCart'));
+//Route::get('/thong-tin-thanh-toan.html', array('as' => 'site.inforRepaymentsOrder','uses' => DIR_PRO_FRONTEND.'\SiteShopController@inforRepaymentsOrder'));
+//Route::post('/sendOrderToCart',array('as' => 'site.sendOrderToCart','uses' =>DIR_PRO_FRONTEND.'\ShopCartController@sendOrderToCart'));
+//Route::get('/dat-hang-thanh-cong.html',array('as' => 'site.thanksBuy','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@thanksBuy'));
 
 //Route::get('n-{id}/{name}.html',array('as' => 'site.listNewSearch','uses' =>'SiteHomeController@listNewSearch'))->where('id', '[0-9]+');
 

@@ -33,6 +33,7 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.home');
     }
 
+    //sản phẩm
     public function searchProduct()
     {
         return view('Frontend.Shop.Pages.listProductWithDepart');
@@ -42,7 +43,7 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.detailProduct');
     }
 
-
+    //tin tức
     public function indexNew()
     {
         return view('Frontend.Shop.Pages.listNews');
@@ -52,9 +53,39 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.detailNews');
     }
 
+    //Khác
     public function indexDetailRecruitment()
     {
         return view('Frontend.Shop.Pages.detailRecruitment');
+    }
+    public function indexLoginShop()
+    {
+        return view('Frontend.Shop.Pages.loginShop');
+    }
+    public function indexRegistrationShop()
+    {
+        return view('Frontend.Shop.Pages.registrationShop');
+    }
+
+    //giỏ hàng
+    public function indexCart()
+    {
+        return view('Frontend.Shop.Pages.cart');
+    }
+    //đặt hàng
+    public function indexCartOrder1()
+    {
+        return view('Frontend.Shop.Pages.cartOrder1');
+    }
+    //Xác nhận đơn hàng
+    public function indexCartOrder2()
+    {
+        return view('Frontend.Shop.Pages.cartOrder2');
+    }
+    //thanh toán
+    public function indexCartOrder3()
+    {
+        return view('Frontend.Shop.Pages.cartOrder3');
     }
 
 

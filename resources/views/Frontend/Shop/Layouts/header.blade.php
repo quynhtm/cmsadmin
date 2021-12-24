@@ -88,7 +88,7 @@
                     </a>
                     <div class="uk-navbar-item header__bottom__marginLeft uk-visible@m">
                         <div class="header__bottom__box1 header__bottom__box1--cart">
-                            <div class="header__bottom__box1__txt1"><a class="uk-link-toggle" href="">Giỏ hàng</a></div>
+                            <div class="header__bottom__box1__txt1"><a class="uk-link-toggle" href="{{URL::route('site.cartProduct')}}">Giỏ hàng</a></div>
                             <div class="header__bottom__box1__txt2">0 sản phẩm</div>
                         </div>
                     </div>
@@ -109,8 +109,8 @@
                                 <li><a href="#">Thông tin tài khoản</a></li>
                                 <li><a href="#">Đăng xuất</a></li>
                                 <?php else: ?>
-                                <li><a href="#">Đăng nhập</a></li>
-                                <li><a href="#">Đăng ký</a></li>
+                                <li><a href="{{URL::route('site.indexLoginShop')}}">Đăng nhập</a></li>
+                                <li><a href="{{URL::route('site.indexRegistrationShop')}}">Đăng ký</a></li>
                                 <?php endif; ?>
                             </ul>
                         </div>
