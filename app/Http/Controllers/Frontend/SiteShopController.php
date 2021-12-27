@@ -70,9 +70,17 @@ class SiteShopController extends BaseSiteController
     }
 
     //Khác
+    public function indexRecruitment()
+    {
+        return view('Frontend.Shop.Pages.ListRecruitment');
+    }
     public function indexDetailRecruitment()
     {
         return view('Frontend.Shop.Pages.detailRecruitment');
+    }
+    public function indexContact()
+    {
+        return view('Frontend.Shop.Pages.contact');
     }
     public function indexLoginShop()
     {
@@ -541,7 +549,7 @@ class SiteShopController extends BaseSiteController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function contactShop()
+    public function contactShop222()
     {
         //seo
         $titleSearchName = env('PROJECT_NAME') . ' - ' . ' Liên hệ với shopcuatui';

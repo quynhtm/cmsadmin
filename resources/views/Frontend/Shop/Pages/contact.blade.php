@@ -1,115 +1,158 @@
-@extends('site.SiteLayouts.index')
+@extends('Frontend.Shop.Layouts.index')
 @section('content')
-    <section class="bread-crumb">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <ul class="breadcrumb">
-                        <li class="home"><a href="{{buildLinkHome()}}"> <span> Trang chủ</span>
-                            </a> <span><i class="fa">/</i></span></li>
-                        <li><strong>Liên hệ với chúng tôi</strong></li>
-                    </ul>
-                </div>
+    @include('Frontend.Shop.Layouts.breadcrumb')
+    <div class="uk-position-relative uk-background-center-center uk-background-norepeat uk-background-cover" data-src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/Customer-service1.jpg" uk-img>
+        <div class="uk-position-cover lienhe__section1__overlay"></div>
+        <div class="uk-section-small lienhe__section1">
+            <div class="uk-container">
+                <h1 class="uk-h1 lienhe__section1__title">Liên hệ với chúng tôi</h1>
             </div>
         </div>
-    </section>
-    <section class="margin-top-0">
-        <div class="container contact-page">
-            <div class="row">
-                <div id="content" class="col-sm-12 col-xs-12 col-md-12">
-                    <div class="row"><h1 class="title-section-page hidden">Liên hệ với chúng tôi</h1>
-                        <div class="section_maps col-lg-12 col-md-12 col-sm-12 col-xs-12" style="display: none">
-                            <div class="box-maps">
-                                <div class="iFrameMap">
-                                    <div class="google-map">
-                                        <div id="contact_map" class="map">
-                                            <style> .container_iframe_google_map iframe {
-                                                    width: 100% !important;
-                                                    height: 300px !important;
-                                                } </style>
-                                            <div class="container_iframe_google_map">
-                                                <iframe src="https://www.google.com/maps/place/Ph%E1%BB%91+L%E1%BB%87+M%E1%BA%ADt,+Vi%E1%BB%87t+H%C6%B0ng,+Long+Bi%C3%AAn,+H%C3%A0+N%E1%BB%99i/@21.0542646,105.8952319,16z/data=!4m5!3m4!1s0x3135a9a2189b546f:0x3c682688fc4a04c2!8m2!3d21.0533486!4d105.9009639" style="border:0"
-                                                        allowfullscreen="" width="600" height="450"
-                                                        frameborder="0">
-                                                </iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    </div>
+    <div class="lienhe__section2 uk-background-center-center uk-background-norepeat uk-background-cover" data-src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/bg_lienheMaskGroup.png" uk-img>
+        <div class="uk-container">
+            <div class="lienhe__section2__card uk-card uk-card-body">
+                <div class="uk-grid-24 uk-grid-30-m uk-child-width-1-2@m uk-grid-match" uk-grid>
+                    <div>
+                        <div class="lienhe__section2__card1 uk-card uk-card-body">
+                            <div class="lienhe__section2__item">
+                                <div class="lienhe__section2__item__title">Pharmacy City Center</div>
+                                <ul class="uk-list uk-list-bullet lienhe__section2__item__list">
+                                    <li>Thứ 2 đến Chủ nhật (8h-18h)</li>
+                                    <li>45 Hudson Street Villa Rica, GA 30180</li>
+                                </ul>
+                            </div>
+                            <div class="lienhe__section2__item">
+                                <div class="lienhe__section2__item__title">Pharmacy Old Town</div>
+                                <ul class="uk-list uk-list-bullet lienhe__section2__item__list">
+                                    <li>Thứ 2 đến Chủ nhật (8h-18h)</li>
+                                    <li>95 East Baker Street Union City, NJ 07087</li>
+                                </ul>
+                            </div>
+                            <div class="lienhe__section2__item">
+                                <div class="lienhe__section2__item__title">E-mail</div>
+                                <div class="lienhe__section2__item__txt">customercare@pharmacy.com</div>
+                            </div>
+                            <div class="lienhe__section2__item">
+                                <div class="lienhe__section2__item__title">Số điện thoại</div>
+                                <div class="lienhe__section2__item__txt">+(84) 534-2319</div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="page_cotact"><h2 class="title-head-contact a-left">
-                            <span>Địa chỉ của chúng tôi</span></h2></div>
-                            <div class="content">
-                                <div class="intro"><span><strong>Shopcuatui.com.vn</strong></span></div>
-                                <div class="item_contact">
-                                    <div class="body_contact">
-                                        <span class="contact_info">
-                                            <span>
-                                                <strong>Địa chỉ: </strong>{{\App\Library\AdminFunction\CGlobal::address_shop}}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="body_contact item_2_contact">
-                                        <span class="contact_info">
-                                            <strong>Ms Giang:</strong>
-                                            <a href="tel:0985101026">0985.1010.26</a>
-                                            <div class="clear"></div>
-                                            <strong>Ms Bình:</strong>
-                                            <a href="tel:0903187988">0903.187.988</a>
-                                        </span>
-                                    </div>
+                    </div>
+                    <div>
+                        <p class="lienhe__section2__card__desc">Hãy để lại thông tin và đội ngũ CSKH của chúng tôi sẽ liên lạc để hỗ trợ, tư vấn quý khách 1 cách nhiệt tình nhất</p>
+                        <form class="uk-grid-16 uk-grid-30-m" uk-grid>
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
+                                    <select>
+                                        <option value="">Danh xưng</option>
+                                        <option value="1">Ông (Mr.)</option>
+                                        <option value="2">Bà (Mrs.)</option>
+                                    </select>
+                                    <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
+                                        <span></span>
+                                        <span class="uk-position-center-right" uk-icon="icon: chevron-down"></span>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="page-login page_cotact">
-                                <h2 class="title-head-contact a-left">
-                                    <span>Thông tin liên hệ</span>
-                                </h2>
-                                @if(trim($msg_succ) != '')
-                                    <span style="color: #FF5622">
-                                        {!! $msg_succ !!}
-                                    </span>
-                                @endif
-                                <div id="pagelogin">
-                                    <form action="{{URL::route('site.contactShop')}}" method="post" enctype="multipart/form-data" class="" id="contact">
-                                        {{csrf_field()}}
-                                        <div class="form-signup clearfix">
-                                            <div class="row group_contact">
-                                                <fieldset class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input type="text" name="contact_user_name_send" id="contact_user_name_send" class="form-control form-control-lg" required="" placeholder="Tên của bạn">
-                                                </fieldset>
-                                                <fieldset class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                    <input type="text" name="contact_phone_send" class="form-control form-control-lg" placeholder="Số điện thoại" id="contact_phone_send" required="">
-                                                </fieldset>
-                                                <fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" name="contact_email_send" class="form-control form-control-lg" placeholder="Địa chỉ Email" id="contact_email_send" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" data-validation="email" required="">
-                                                </fieldset>
-                                                <fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <input type="text" name="contact_title" class="form-control form-control-lg" placeholder="Tiêu đề liên hệ" id="contact_title" required="">
-                                                </fieldset>
-                                                <fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <textarea name="contact_content" rows="5" id="contact_content" placeholder="Nội dung" class="form-control content-area form-control-lg"  required=""></textarea>
-                                                </fieldset>
-                                                <fieldset class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12"></fieldset>
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-10">
-                                                    <button type="submit" class="btn btn-primary">Gửi liên hệ</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <input class="uk-input modal__wishList__form__input" type="text" placeholder="Họ tên *">
                             </div>
-                        </div>
-
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <input class="uk-input modal__wishList__form__input" type="text" placeholder="Số điện thoại *">
+                            </div>
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <input class="uk-input modal__wishList__form__input" type="text" placeholder="Email">
+                            </div>
+                            <div class="uk-width-1-1 home__tuvan__column">
+                                <textarea class="uk-textarea modal__wishList__form__input" rows="5" placeholder="Lời nhắn *"></textarea>
+                            </div>
+                            <div class="uk-width-1-2@s home__tuvan__column">
+                                <button onclick="wishListNotification()" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <div class="lienhe__section3">
+        <div class="uk-container uk-container-expand-right uk-padding-remove">
+            <div class="uk-grid-24 uk-grid-30-m uk-flex-middle uk-grid-match" uk-grid>
+                <div class="uk-width-expand uk-flex-last@m">
+                    <div class="uk-cover-container">
+                        <canvas width="945" height="642"></canvas>
+                        <iframe class="uk-position-cover" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d29749.62043544398!2d105.3949952!3d21.243640449999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1637650714767!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="uk-width-auto@m">
+                    <div class="lienhe__section3__card uk-card uk-card-body">
+                        <h2 class="uk-h2 lienhe__section3__title">Danh sách đại lý</h2>
+                        <p class="lienhe__section3__desc">Tìm địa chỉ đại lý của chúng tôi ở gần quý khác nhất</p>
+                        <form class="lienhe__section3__form uk-grid-16 uk-grid-30-m" uk-grid>
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
+                                    <select>
+                                        <option value="">Tỉnh/ Thành phố</option>
+                                        <option value="1">Ông (Mr.)</option>
+                                        <option value="2">Bà (Mrs.)</option>
+                                    </select>
+                                    <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
+                                        <span></span>
+                                        <span class="uk-position-center-right" uk-icon="icon: chevron-down"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-2 home__tuvan__column">
+                                <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
+                                    <select>
+                                        <option value="">Quận/ Huyện</option>
+                                        <option value="1">Ông (Mr.)</option>
+                                        <option value="2">Bà (Mrs.)</option>
+                                    </select>
+                                    <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
+                                        <span></span>
+                                        <span class="uk-position-center-right" uk-icon="icon: chevron-down"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <?php
+                            $dataList = array(
+                                array(
+                                    'txt' => '01 Nguyễn Chí Thanh, quận Cầu Giấy, Hà Nội',
+                                    'tel' => 'Tel: (024) 3789 7890',
+                                ),
+                                array(
+                                    'txt' => '01 Nguyễn Chí Thanh, quận Cầu Giấy, Hà Nội',
+                                    'tel' => 'Tel: (024) 3789 7891',
+                                ),
+                                array(
+                                    'txt' => '01 Nguyễn Chí Thanh, quận Cầu Giấy, Hà Nội',
+                                    'tel' => 'Tel: (024) 3789 7891',
+                                ),
+                            );
+                            foreach ($dataList as $k=>$v): ?>
+                            <div class="lienhe__section3__item">
+                                <div class="uk-grid-16" uk-grid>
+                                    <div class="uk-width-expand">
+                                        <h3 class="uk-h3 lienhe__section3__title1">Đại lý <?= $k+1 ?></h3>
+                                        <ul class="uk-list lienhe__section3__list">
+                                            <li><?= $v['txt'] ?></li>
+                                            <li><?= $v['tel'] ?></li>
+                                        </ul>
+                                    </div>
+                                    <div class="uk-width-auto@m">
+                                        <a href="" class="lienhe__section3__btn uk-button uk-button-default"><span>Chỉ đường</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
-@include('site.SiteShop.chatOnline')

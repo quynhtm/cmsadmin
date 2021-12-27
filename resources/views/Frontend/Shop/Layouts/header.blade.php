@@ -18,7 +18,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="{{URL::route('site.indexRecruitment')}}">Tuyển dụng</a></li>
                         <li><a href="{{URL::route('site.contactShop')}}">Liên hệ</a></li>
                         <li><a href="{{URL::route('site.indexDetailFaq')}}">FAQ</a></li>
                     </ul>
@@ -55,7 +55,7 @@
                     <a href="#offcanvas-menumobile" class="uk-navbar-item uk-hidden@m" uk-toggle>
                         <div class="header__bottom__box2 header__bottom__box2--menu"></div>
                     </a>
-                    <a href="." class="uk-navbar-item uk-logo">
+                    <a href="{{buildLinkHome()}}" class="uk-navbar-item uk-logo">
                         <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/logo_h.png" alt="" >
                     </a>
                 </div>

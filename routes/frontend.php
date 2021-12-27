@@ -1,16 +1,24 @@
 <?php
 Route::get('/', array('as' => 'site.home','uses' => DIR_PRO_FRONTEND.'\SiteShopController@index'));
-Route::get('/tim-kiem-san-pham.html', array('as' => 'site.searchProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@searchProduct'));
-Route::get('/san-pham.html', array('as' => 'site.indexProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexProduct'));
-Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
 
+Route::get('/san-pham.html', array('as' => 'site.indexProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexProduct'));
+Route::get('/tim-kiem-san-pham.html', array('as' => 'site.searchProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@searchProduct'));
 Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));
 Route::get('san-pham-quan-tam.html',array('as' => 'site.indexProductCare','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexProductCare'));
+
+Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
 Route::get('chi-tiet-tin-tuc.html',array('as' => 'site.indexDetailNews','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailNews'));
 Route::get('thong-tin-faq.html',array('as' => 'site.indexDetailFaq','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailFaq'));
+
+Route::get('tuyen-dung.html',array('as' => 'site.indexRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRecruitment'));
 Route::get('chi-tiet-tuyen-dung.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
+
 Route::get('dang-nhap.html',array('as' => 'site.indexLoginShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexLoginShop'));
 Route::get('dang-ky.html',array('as' => 'site.indexRegistrationShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRegistrationShop'));
+
+Route::get('/lien-he.html', array('as' => 'site.contactShop','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexContact'));
+Route::post('/lien-he.html', array('as' => 'site.contactShop','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexContact'));
+
 
 
 
@@ -23,8 +31,7 @@ Route::get('/san-pham-moi.html', array('as' => 'site.listProductNew','uses' => D
 Route::get('/hashtag/tag-{tag_id}/{tag_name}.html',array('as' => 'site.listProductWithTag','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithTag'));//list sản phẩm theo hashtag
 Route::get('/campaign/c{camp_id}/{camp_name}.html',array('as' => 'site.listProductWithCampaign','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithCampaign'));//list sản phẩm theo campagn
 
-Route::get('/lien-he-voi-shopcuatui.html', array('as' => 'site.contactShop','uses' => DIR_PRO_FRONTEND.'\SiteShopController@contactShop'));
-Route::post('/lien-he-voi-shopcuatui.html', array('as' => 'site.contactShop','uses' => DIR_PRO_FRONTEND.'\SiteShopController@contactShop'));
+
 
 //Gio hang
 Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCart'));
