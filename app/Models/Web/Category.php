@@ -113,11 +113,39 @@ class Category extends BaseModel
     {
         Memcache::forgetCache(Memcache::CACHE_CATEGORY_BY_ID . $id);
         Memcache::forgetCache(Memcache::CACHE_CATEGORY_TREE);
-        if ($data) {
+        if(isset($data->id)){
             Memcache::forgetCache(Memcache::CACHE_CATEGORY_BY_TYPE.$data->category_type);
+            Memcache::forgetCache(Memcache::CACHE_ALL_CATEGORY_BY_PARTNER.$data->partner_id);
         }
     }
     /***************************************************************************************************************************************************/
+    public function getAllData($partner = STATUS_INT_MOT)
+    {
+        $data = Memcache::getCache(Memcache::CACHE_ALL_CATEGORY_BY_PARTNER.$partner);
+        if (!$data) {
+            $data = Category::where($this->primaryKey, '>', STATUS_INT_KHONG)
+                ->where('partner_id', $partner)
+                ->orderBy('category_order', 'asc')->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_ALL_CATEGORY_BY_PARTNER.$partner, $data);
+            }
+        }
+        return $data;
+    }
+
+    public function getSiteCategoryByType($categoryType = self::categoryTypeProduct, $partner = STATUS_INT_MOT){
+        $dataAll = self::getAllData($partner);
+        $dataOut = [];
+        if($dataAll){
+            foreach ($dataAll as $k => $val){
+                if($val->category_type == $categoryType){
+                    $dataOut[] = $val;
+                }
+            }
+        }
+        return $dataOut;
+    }
+
     public function getCategoryByType($category_type = self::categoryTypeNew){
         $data = Memcache::getCache(Memcache::CACHE_CATEGORY_BY_TYPE . $category_type);
         if (!$data) {

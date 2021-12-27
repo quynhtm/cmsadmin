@@ -12,6 +12,7 @@ use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Security;
 
+use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -21,16 +22,25 @@ class SiteShopController extends BaseSiteController
 {
     private $outDataCommon = [];
     private $commonService;
+    private $partner = STATUS_INT_MOT;
 
     public function __construct()
     {
         parent::__construct();
-        //$this->commonService = new ShopCuaTuiService();
+        $this->commonService = new ServiceCommon();
     }
 
     public function index()
     {
-        return view('Frontend.Shop.Pages.home');
+        $arrCategoryProduct = $this->commonService->getCategoryProduct($this->partner);
+        $arrBannerBig = $this->commonService->getBannerHeaderBig($this->partner);
+        $arrBannerSmall = $this->commonService->getBannerHeaderSmall($this->partner);
+
+        return view('Frontend.Shop.Pages.home', array_merge([
+            'arrBannerBig' => $arrBannerBig,
+            'arrBannerSmall' => $arrBannerSmall,
+            'arrCategoryProduct' => $arrCategoryProduct,
+        ], $this->outDataCommon));
     }
 
     //sản phẩm

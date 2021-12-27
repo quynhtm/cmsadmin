@@ -11,6 +11,10 @@ class Banner extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = true;
 
+    const bannerLeftBig = STATUS_INT_MOT;
+    const bannerRightSmall = STATUS_INT_HAI;
+    const bannerPageProduct = STATUS_INT_BA;
+
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
@@ -103,10 +107,37 @@ class Banner extends BaseModel
     {
         if ($id > STATUS_INT_KHONG) {
             Memcache::forgetCache(Memcache::CACHE_BANNER_ID.$id);
-        }
 
-        if($data){}
+        }
+        if(isset($data->id)){
+            Memcache::forgetCache(Memcache::CACHE_ALL_BANNER_BY_PARTNER.$data->partner_id);
+        }
     }
     /**************************************************************************************************************************/
+    public function getAllData($partner = STATUS_INT_MOT)
+    {
+        $data = Memcache::getCache(Memcache::CACHE_ALL_BANNER_BY_PARTNER.$partner);
+        if (!$data) {
+            $data = Banner::where($this->primaryKey, '>', STATUS_INT_KHONG)
+                ->where('partner_id', $partner)
+                ->orderBy('banner_order', 'asc')->get();
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_ALL_BANNER_BY_PARTNER.$partner, $data);
+            }
+        }
+        return $data;
+    }
 
+    public function getBannerByType($typeSize = STATUS_INT_MOT, $partner = STATUS_INT_MOT){
+        $dataAll = self::getAllData($partner);
+        $dataOut = [];
+        if($dataOut){
+            foreach ($dataAll as $k => $val){
+                if($val->banner_type == $typeSize){
+                    $dataOut[] = $val;
+                }
+            }
+        }
+        return $dataOut;
+    }
 }
