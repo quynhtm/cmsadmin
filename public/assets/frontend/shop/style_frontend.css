@@ -2412,7 +2412,7 @@ body {
 @media (min-width: 960px) {
     .home__section {
         padding-top: 24px;
-        padding-bottom: 60px
+        /*padding-bottom: 60px*/
     }
 }
 

@@ -37,10 +37,6 @@
                             ),
                             array(
                                 'txt' => 'Danh mục 8',
-                                'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-5.png',
-                            ),
-                            array(
-                                'txt' => 'Danh mục 9',
                                 'icon' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png',
                             ),
                         );
@@ -71,10 +67,8 @@
                                     <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/light.jpg" alt="" uk-cover>
                                 </li>
                             </ul>
-
                             <a class="home__slider__nav home__slider__nav--prev uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
                             <a class="home__slider__nav home__slider__nav--next uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-
                         </div>
                     </div>
                     <div class="uk-width-auto@m home__banner__width">
