@@ -1,6 +1,6 @@
 
 <!--footer-->
-<div id="footer" class="footer" data-src="images/MaskGroup__footer.png" uk-img>
+<div id="footer" class="footer" data-src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/MaskGroup__footer.png" uk-img>
     <!--footer__top-->
     <div class="footer__top"></div>
     <!--/footer__top-->
@@ -11,7 +11,7 @@
             <div class="uk-grid-small uk-grid-30-m" uk-grid>
                 <div class="uk-width-1-3@m">
                     <div class="footer__center__item24">
-                        <figure class="uk-margin-remove"><a href=""><img src="images/logo_f.png" alt=""></a></figure>
+                        <figure class="uk-margin-remove"><a href=""><img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/logo_f.png" alt=""></a></figure>
                     </div>
                     <div class="footer__center__item24">
                         <p class="footer__center__desc">If you’re in need of medicines – we’re here by your side.
@@ -49,12 +49,12 @@
                             <h5 class="uk-h5 footer__center__title">Chức năng</h5>
                             <ul class="uk-list footer__center__list uk-list-bullet">
                                 <li><a href="">Về chúng tôi</a></li>
-                                <li><a href="catalog.php">Sản phẩm</a></li>
-                                <li><a href="tintuc.php">Tin hoạt động Poke</a></li>
-                                <li><a href="">Thông tin y dược</a></li>
-                                <li><a href="">Tuyển dụng</a></li>
-                                <li><a href="lienhe.php">Liên hệ</a></li>
-                                <li><a href="faq.php">FAQ</a></li>
+                                <li><a href="{{URL::route('site.indexProduct')}}">Sản phẩm</a></li>
+                                <li><a href="{{URL::route('site.indexNew')}}">Tin hoạt động Poke</a></li>
+                                <li><a href="{{URL::route('site.indexNew')}}">Thông tin y dược</a></li>
+                                <li><a href="{{URL::route('site.indexRecruitment')}}">Tuyển dụng</a></li>
+                                <li><a href="{{URL::route('site.contactShop')}}">Liên hệ</a></li>
+                                <li><a href="{{URL::route('site.indexDetailFaq')}}">FAQ</a></li>
                             </ul>
                         </div>
                         <div class="uk-width-expand">
@@ -98,7 +98,7 @@
                             <?php for ($i=0;$i<=6;$i++): ?>
                             <li tabindex="-1">
                                 <div class="">
-                                    <img src="images/h1-product2-featured.png" alt="" uk-cover>
+                                    <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
                                 </div>
                             </li>
                             <?php endfor; ?>
@@ -114,7 +114,7 @@
                                     <?php for ($i=0;$i<=6;$i++): ?>
                                     <li uk-slideshow-item="<?= $i ?>" tabindex="-1">
                                         <div class="uk-cover-container modal__quickView__left__img">
-                                            <img src="images/h1-product2-featured.png" alt="" uk-cover>
+                                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
                                             <canvas width="100" height="100"></canvas>
                                         </div>
                                     </li>
@@ -206,8 +206,8 @@
         <div class="uk-child-width-1-2@m uk-grid-match uk-grid-collapse uk-flex-middle" uk-grid>
             <div>
                 <div class="uk-cover-container">
-                    <img class="uk-visible@m" src="images/bg_wishList.png" alt="" uk-cover>
-                    <img class="uk-hidden@m" src="images/bg_wishList_mb.png" alt="" uk-cover>
+                    <img class="uk-visible@m" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/bg_wishList.png" alt="" uk-cover>
+                    <img class="uk-hidden@m" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/bg_wishList_mb.png" alt="" uk-cover>
                     <canvas class="uk-visible@m" width="385" height="433"></canvas>
                     <canvas class="uk-hidden@m" width="344" height="172"></canvas>
                     <div class="modal__wishList__mask uk-position-right"></div>
