@@ -36,11 +36,23 @@ class SiteShopController extends BaseSiteController
     //sản phẩm
     public function searchProduct()
     {
-        return view('Frontend.Shop.Pages.listProductWithDepart');
+        return view('Frontend.Shop.Pages.listProduct', array_merge([
+            'pageType' => STATUS_INT_HAI,
+        ], $this->outDataCommon));
+    }
+    public function indexProduct()
+    {
+        return view('Frontend.Shop.Pages.listProduct', array_merge([
+            'pageType' => STATUS_INT_MOT,
+        ], $this->outDataCommon));
     }
     public function indexDetailProduct()
     {
         return view('Frontend.Shop.Pages.detailProduct');
+    }
+    public function indexProductCare()
+    {
+        return view('Frontend.Shop.Pages.productCare');
     }
 
     //tin tức
@@ -51,6 +63,10 @@ class SiteShopController extends BaseSiteController
     public function indexDetailNews()
     {
         return view('Frontend.Shop.Pages.detailNews');
+    }
+    public function indexDetailFaq()
+    {
+        return view('Frontend.Shop.Pages.detailFAQ');
     }
 
     //Khác

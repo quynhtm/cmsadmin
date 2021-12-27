@@ -1,9 +1,9 @@
 @extends('Frontend.Shop.Layouts.index')
 @section('content')
     @include('Frontend.Shop.Layouts.breadcrumb')
-    <div class="home__section paddingTop0" uk-height-viewport="offset-top: true;offset-bottom: true">
-        <div class="catalog__section" uk-height-viewport="offset-top: true;offset-bottom: true">
+    <div class="catalog__section" uk-height-viewport="offset-top: true;offset-bottom: true">
         <div class="uk-container">
+            @if($pageType == STATUS_INT_MOT)
             <div class="home__item40">
                 <div class="uk-child-width-1-4@m uk-grid-small uk-grid-30-m" uk-grid>
                     <div>
@@ -36,20 +36,12 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="home__item40">
                 <div class="uk-grid-small uk-grid-30-m" uk-grid>
                     <div class="uk-width-1-4@m uk-visible@m">
                         <div class="uk-card uk-card-body catalog__card">
-                            <h3 class="uk-h3 catalog__card__title">Bộ lọc</h3>
-                            <div class="uk-margin-remove-top uk-grid-10 uk-child-width-1-1 uk-grid" uk-grid>
-                                <label><input class="uk-checkbox" type="checkbox" checked> <span class="catalog__card__txt">Danh mục 1</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục 2</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục 3</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục 4</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục 5</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục 6</span></label>
-                                <label><input class="uk-checkbox" type="checkbox"> <span class="catalog__card__txt">Danh mục khác</span></label>
-                            </div>
+                            @include('Frontend.Shop.Pages.listProductFillter')
                         </div>
                     </div>
                     <div class="uk-width-expand">
@@ -108,6 +100,14 @@
                                 array(
                                     'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img8.png',
                                     'title' => 'Ibuprofen 500mg Capsule',
+                                ),
+                                array(
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img9.png',
+                                    'title' => 'Film-coated tablet 250 mg 30 pieces',
+                                ),
+                                array(
+                                    'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img10.png',
+                                    'title' => 'Cetirizine 25mg Film-coated Tablets',
                                 ),
                                 array(
                                     'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img9.png',
@@ -191,7 +191,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <h3 class="uk-h3 home__product__card__title"><a href=""><?= $v['title'] ?></a></h3>
+                                                        <h3 class="uk-h3 home__product__card__title"><a href="chitietsanpham.php"><?= $v['title'] ?></a></h3>
                                                     </div>
                                                 </div>
                                                 <div class="uk-width-1-1">
@@ -225,6 +225,11 @@
             </div>
         </div>
     </div>
+    <div id="offcanvas-flip-boloc" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close header__bottom__close header__bottom__close--text" type="button" uk-close></button>
+            @include('Frontend.Shop.Pages.listProductFillter')
+        </div>
     </div>
 @stop
 

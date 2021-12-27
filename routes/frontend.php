@@ -1,10 +1,13 @@
 <?php
 Route::get('/', array('as' => 'site.home','uses' => DIR_PRO_FRONTEND.'\SiteShopController@index'));
 Route::get('/tim-kiem-san-pham.html', array('as' => 'site.searchProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@searchProduct'));
+Route::get('/san-pham.html', array('as' => 'site.indexProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexProduct'));
 Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
 
 Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));
+Route::get('san-pham-quan-tam.html',array('as' => 'site.indexProductCare','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexProductCare'));
 Route::get('chi-tiet-tin-tuc.html',array('as' => 'site.indexDetailNews','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailNews'));
+Route::get('thong-tin-faq.html',array('as' => 'site.indexDetailFaq','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailFaq'));
 Route::get('chi-tiet-tuyen-dung.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
 Route::get('dang-nhap.html',array('as' => 'site.indexLoginShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexLoginShop'));
 Route::get('dang-ky.html',array('as' => 'site.indexRegistrationShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRegistrationShop'));

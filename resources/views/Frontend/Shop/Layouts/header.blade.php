@@ -8,19 +8,19 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <li><a href="#">Về chúng tôi</a></li>
-                        <li><a href="catalog.php">Sản phẩm</a></li>
+                        <li><a href="{{URL::route('site.indexProduct')}}">Sản phẩm</a></li>
                         <li>
-                            <a href="tintuc.php">Tin tức</a>
+                            <a href="{{URL::route('site.indexNew')}}">Tin tức</a>
                             <div class="uk-navbar-dropdown header__dropdown">
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li><a href="tintuc.php">Tin hoạt động Poke</a></li>
-                                    <li><a href="tintuc.php">Thông tin y dược</a></li>
+                                    <li><a href="{{URL::route('site.indexNew')}}">Tin hoạt động Poke</a></li>
+                                    <li><a href="{{URL::route('site.indexNew')}}">Thông tin y dược</a></li>
                                 </ul>
                             </div>
                         </li>
                         <li><a href="#">Tuyển dụng</a></li>
-                        <li><a href="lienhe.php">Liên hệ</a></li>
-                        <li><a href="faq.php">FAQ</a></li>
+                        <li><a href="{{URL::route('site.contactShop')}}">Liên hệ</a></li>
+                        <li><a href="{{URL::route('site.indexDetailFaq')}}">FAQ</a></li>
                     </ul>
                 </div>
 
@@ -63,7 +63,7 @@
                 <div class="uk-navbar-right">
                     <!--search-->
                     <div class="uk-navbar-item uk-visible@m">
-                        <form action="ketquasearch.php" class="uk-position-relative header__bottom__search">
+                        <form action="{{URL::route('site.searchProduct')}}" class="uk-position-relative header__bottom__search">
                             <input class="uk-input uk-border-pill header__bottom__search__input" type="text" placeholder="Bạn cần tìm gì">
                             <button type="submit" class="header__bottom__search__btn uk-button uk-button-default uk-position-center-right"></button>
                         </form>
@@ -71,19 +71,19 @@
                     <!--/search-->
 
                     <!--quantam-->
-                    <a href="quantam.php" class="uk-navbar-item uk-hidden@m">
+                    <a href="{{URL::route('site.indexProductCare')}}" class="uk-navbar-item uk-hidden@m">
                         <div class="header__bottom__box2 header__bottom__box2--wishList"></div>
                     </a>
                     <div class="uk-navbar-item header__bottom__marginLeft uk-visible@m">
                         <div class="header__bottom__box1 header__bottom__box1--wishList">
-                            <div class="header__bottom__box1__txt1"><a class="uk-link-toggle" href="quantam.php">Quan tâm</a></div>
+                            <div class="header__bottom__box1__txt1"><a class="uk-link-toggle" href="{{URL::route('site.indexProductCare')}}">Quan tâm</a></div>
                             <div class="header__bottom__box1__txt2">0 sản phẩm</div>
                         </div>
                     </div>
                     <!--/quantam-->
 
                     <!--giohang-->
-                    <a href="" class="uk-navbar-item uk-hidden@m">
+                    <a href="{{URL::route('site.cartProduct')}}" class="uk-navbar-item uk-hidden@m">
                         <div class="header__bottom__box2 header__bottom__box2--cart"></div>
                     </a>
                     <div class="uk-navbar-item header__bottom__marginLeft uk-visible@m">
