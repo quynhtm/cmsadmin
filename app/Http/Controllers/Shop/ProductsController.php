@@ -221,6 +221,13 @@ class ProductsController extends BaseAdminController
                     }else{
                         unset($request['product_image_other']);
                     }
+
+                    if(!empty($arrImagUpdate)){
+                        $product_image = isset($arrImagUpdate[0])?$arrImagUpdate[0]:'';
+                        $request['product_image'] = (trim($request['product_image']) != '')? $request['product_image']: $product_image;
+                        $request['product_image_hover'] = (trim($request['product_image_hover']) != '')? $request['product_image_hover']:  $product_image;
+                    }
+
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
 

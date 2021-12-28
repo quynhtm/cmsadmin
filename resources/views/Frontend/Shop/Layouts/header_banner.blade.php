@@ -16,13 +16,11 @@
                             6 => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png',
                             7 => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png',
                         );
-
                         ?>
-
                         @if(!empty($arrCategoryProduct))
                             @foreach ($arrCategoryProduct as $keyP => $catePr)
                             <?php
-                                $iconMenu = isset($dataIconsMenu[$keyP])? $dataIconsMenu[$keyP]: Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png';
+                                $iconMenu = isset($dataIconsMenu[$keyP]) ? $dataIconsMenu[$keyP]: Config::get('config.WEB_ROOT').'assets/frontend/shop/images/menu/verticalmenu-icon-11.png';
                             ?>
                             <li class="home__nav__li <?= ($keyP==0)?'uk-active':'' ?>">
                                 <a href="{{buildLinkProductWithCategory($catePr->id,$catePr->category_name)}}" class="home__nav__a">
