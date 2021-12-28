@@ -25,6 +25,9 @@ class Banner extends BaseModel
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
+            if (isset($dataSearch['banner_type']) && $dataSearch['banner_type'] > STATUS_INT_AM_MOT) {
+                $query->where('banner_type', $dataSearch['banner_type']);
+            }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('is_active', $dataSearch['is_active']);
             }
@@ -131,9 +134,9 @@ class Banner extends BaseModel
     public function getBannerByType($typeSize = STATUS_INT_MOT, $partner = STATUS_INT_MOT){
         $dataAll = self::getAllData($partner);
         $dataOut = [];
-        if($dataOut){
+        if($dataAll){
             foreach ($dataAll as $k => $val){
-                if($val->banner_type == $typeSize){
+                if($val->is_active == STATUS_INT_MOT && $val->banner_type == $typeSize){
                     $dataOut[] = $val;
                 }
             }

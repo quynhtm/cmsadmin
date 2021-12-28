@@ -27,6 +27,12 @@
             </div>
             @endif
             <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Loại banner')}}</label>
+                <select  class="form-control input-sm" name="banner_type" id="banner_type">
+                    {!! $optionBannerType !!}}
+                </select>
+            </div>
+            <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}

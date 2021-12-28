@@ -51,7 +51,7 @@ class BannerController extends BaseAdminController
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : $this->partner_id);
         $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionBannerType = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrBannerType, isset($data['banner_type']) ? $data['banner_type'] : DEFINE_NULL);
+        $optionBannerType = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrBannerType, isset($data['banner_type']) ? $data['banner_type'] : STATUS_INT_AM_MOT);
         $optionIsRel = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_rel']) ? $data['banner_is_rel'] : STATUS_INT_KHONG);
         $optionIsTarget = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrIsTrueFalse, isset($data['banner_is_target']) ? $data['banner_is_target'] : STATUS_INT_KHONG);
 
@@ -101,7 +101,8 @@ class BannerController extends BaseAdminController
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
-        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['banner_type'] = (int)trim(addslashes(Request::get('banner_type', STATUS_INT_AM_MOT)));
+        $search['is_active'] = (int)trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
         $result = $this->modelObj->searchByCondition($search, $limit, $offset);

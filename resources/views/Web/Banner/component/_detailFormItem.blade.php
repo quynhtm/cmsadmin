@@ -20,7 +20,7 @@
         {{ csrf_field() }}
         <div class="row form-group">
             <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Kiểu banner')}}</label><span class="red"> (*)</span>
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Loại banner')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="banner_type" id="banner_type">
                     {!! $optionBannerType !!}}
                 </select>

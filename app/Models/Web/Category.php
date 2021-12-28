@@ -138,7 +138,7 @@ class Category extends BaseModel
         $dataOut = [];
         if($dataAll){
             foreach ($dataAll as $k => $val){
-                if($val->category_type == $categoryType){
+                if($val->is_active == STATUS_INT_MOT && $val->category_type == $categoryType){
                     $dataOut[] = $val;
                 }
             }
