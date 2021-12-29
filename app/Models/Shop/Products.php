@@ -11,6 +11,10 @@ class Products extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = true;
 
+    const productTypeNew = 1;//sp mới
+    const productTypeHighlights = 2; //nổi bật
+    const productTypeDiscount = 3;//giảm giá
+
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
@@ -22,6 +26,9 @@ class Products extends BaseModel
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
+            }
+            if (isset($dataSearch['product_is_hot']) && $dataSearch['product_is_hot'] > STATUS_INT_KHONG) {
+                $query->where('product_is_hot', $dataSearch['product_is_hot']);
             }
             if (isset($dataSearch['category_id']) && $dataSearch['category_id'] > STATUS_INT_KHONG) {
                 $query->where('category_id', $dataSearch['category_id']);

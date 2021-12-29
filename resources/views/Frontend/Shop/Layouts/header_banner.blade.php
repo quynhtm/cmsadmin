@@ -42,7 +42,7 @@
                             <ul class="uk-slideshow-items">
                                 @foreach ($arrBannerBig as $keyB => $bannerBig)
                                     <li>
-                                        <a href="{{$bannerBig->banner_link}}" @if($bannerBig->banner_is_target == STATUS_INT_MOT) target="_blank" @endif>
+                                        <a href="{{$bannerBig->banner_link}}" title="{{$bannerBig->banner_name}}" @if($bannerBig->banner_is_target == STATUS_INT_MOT) target="_blank" @endif>
                                             <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$bannerBig->id,$bannerBig->banner_image)}}" alt="{{$bannerBig->banner_name}}" uk-cover>
                                         </a>
                                     </li>
@@ -62,7 +62,7 @@
                                     <div class="home__banner__card uk-cover-container">
                                         <img src="{{getLinkImageShow(FOLDER_BANNER.'/'.$bannerSmall->id,$bannerSmall->banner_image)}}" alt="" uk-cover>
                                         <canvas width="380" height="190"></canvas>
-                                        <a href="{{$bannerSmall->banner_link}}" @if($bannerSmall->banner_is_target == STATUS_INT_MOT) target="_blank" @endif class="uk-position-cover"></a>
+                                        <a href="{{$bannerSmall->banner_link}}" title="{{$bannerSmall->banner_name}}" @if($bannerSmall->banner_is_target == STATUS_INT_MOT) target="_blank" @endif class="uk-position-cover"></a>
                                     </div>
                                 </div>
                                 @endforeach

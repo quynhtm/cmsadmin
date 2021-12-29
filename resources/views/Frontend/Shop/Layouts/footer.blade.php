@@ -106,9 +106,7 @@
                     </div>
 
                     <div class="uk-slider modal__wishList__item" uk-slider="">
-
                         <div class="uk-position-relative">
-
                             <div class="uk-slider-container">
                                 <ul class="uk-thumbnav uk-slider-items uk-child-width-1-4 uk-grid-small uk-grid-16-m uk-grid" uk-grid="" style="transform: translate3d(-111.875px, 0px, 0px);">
                                     <?php for ($i=0;$i<=6;$i++): ?>

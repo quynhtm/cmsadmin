@@ -8,10 +8,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\BaseSiteController;
+use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Security;
 
+use App\Models\Shop\Products;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -32,13 +34,44 @@ class SiteShopController extends BaseSiteController
 
     public function index()
     {
-        $arrCategoryProduct = $this->commonService->getCategoryProduct($this->partner);
-        $arrBannerBig = $this->commonService->getBannerHeaderBig($this->partner);
-        $arrBannerSmall = $this->commonService->getBannerHeaderSmall($this->partner);
+        //sản phẩm mới nhất
+        $arrProduct = $this->commonService->getSiteProduct(Products::productTypeNew, CGlobal::number_show_30, $this->partner);
+        //myDebug($arrProductNew);
+        $arrProductNew = $arrProductBlock1 = $arrProductBlock2 = $arrProductBlock3 = [];
+        if(!empty($arrProduct)){
+            foreach ($arrProduct as $key =>$val){
+                if($key < 10){
+                    $arrProductNew[] = $val;
+                }elseif($key >= 10 && $key < 16){
+                    $arrProductBlock1[] = $val;
+                }elseif($key >= 16 && $key < 22){
+                    $arrProductBlock2[] = $val;
+                }elseif($key >= 22 && $key < 28){
+                    $arrProductBlock3[] = $val;
+                }
+            }
+        }
+
+        //sản phẩm đặc biệt
+        $arrProductAd = [
+                1=>['title'=>'Bán chạy','arrProduct'=>$arrProductBlock1],
+                2=>['title'=>'Mới','arrProduct'=>$arrProductBlock2],
+                3=>['title'=>'Khác','arrProduct'=>$arrProductBlock3]
+            ];
+
+        //header
+        $arrCategoryProduct = $this->commonService->getSiteCategoryProduct($this->partner);
+        $arrBannerBig = $this->commonService->getSiteBannerHeaderBig($this->partner);
+        $arrBannerSmall = $this->commonService->getSiteBannerHeaderSmall($this->partner);
+        $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
 
         return view('Frontend.Shop.Pages.home', array_merge([
+            'arrProductNew' => $arrProductNew,
+            'arrProductAd' => $arrProductAd,
+
             'arrBannerBig' => $arrBannerBig,
             'arrBannerSmall' => $arrBannerSmall,
+            'arrBannerContent' => $arrBannerContent,
             'arrCategoryProduct' => $arrCategoryProduct,
         ], $this->outDataCommon));
     }

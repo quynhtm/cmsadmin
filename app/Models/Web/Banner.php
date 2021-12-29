@@ -13,7 +13,7 @@ class Banner extends BaseModel
 
     const bannerLeftBig = STATUS_INT_MOT;
     const bannerRightSmall = STATUS_INT_HAI;
-    const bannerPageProduct = STATUS_INT_BA;
+    const bannerPageContent = STATUS_INT_BA;
 
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
