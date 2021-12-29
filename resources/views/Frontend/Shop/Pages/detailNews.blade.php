@@ -8,25 +8,18 @@
                     <div class="uk-width-expand">
                         <div class="chitiettintuc__card uk-card">
                             <div class="uk-cover-container">
-                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/image193.png" alt="" uk-cover>
+                                <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$dataDetail->id,$dataDetail->news_image)}}" alt="" uk-cover>
                                 <canvas width="960" height="541"></canvas>
                             </div>
                             <div class="uk-card-body chitiettintuc__card__body">
                                 <div class="footer__center__item24">
-                                    <h1 class="uk-h1 chitiettintuc__title">Khám sức khỏe định kỳ - Giải pháp chăm sóc sức khỏe toàn diện</h1>
-                                    <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
+                                    <h1 class="uk-h1 chitiettintuc__title">{{$dataDetail->news_title}}</h1>
+                                    <div class="home__tintuc__date">{{getDateShow($dataDetail->created_at)}}</div>
                                 </div>
                                 <article class="chitiettintuc__article uk-article footer__center__item24">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris pharetra et ultrices neque. Id aliquet lectus proin nibh nisl condimentum id venenatis a. Arcu non sodales neque sodales ut. Purus non enim praesent elementum facilisis. Donec ac odio tempor orci. Eu consequat ac felis donec et odio pellentesque diam volutpat. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris ultrices. Nisi est sit amet facilisis magna etiam tempor orci. Congue nisi vitae suscipit tellus mauris. Vel facilisis volutpat est velit egestas dui. Maecenas accumsan lacus vel facilisis volutpat est velit egestas. Facilisis mauris sit amet massa vitae tortor condimentum lacinia quis. Metus vulputate eu scelerisque felis.</p>
-
-                                    <p>Tincidunt ornare massa eget egestas purus viverra. Ut pharetra sit amet aliquam id diam maecenas ultricies mi. Sit amet porttitor eget dolor morbi. Vulputate ut pharetra sit amet. Quam pellentesque nec nam aliquam sem. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. A arcu cursus vitae congue. Fringilla urna porttitor rhoncus dolor purus. Justo donec enim diam vulputate ut. Ipsum dolor sit amet consectetur adipiscing elit. Viverra maecenas accumsan lacus vel. Diam maecenas ultricies mi eget. Nulla facilisi etiam dignissim diam quis. Non sodales neque sodales ut etiam sit.</p>
-
-                                    <p>In egestas erat imperdiet sed euismod nisi porta lorem mollis. Commodo odio aenean sed adipiscing diam. Nunc sed augue lacus viverra vitae congue eu. Amet nulla facilisi morbi tempus iaculis urna id volutpat. Aliquam nulla facilisi cras fermentum odio. Aliquam id diam maecenas ultricies mi. Viverra mauris in aliquam sem fringilla. In hac habitasse platea dictumst vestibulum rhoncus. Libero nunc consequat interdum varius sit amet mattis vulputate enim. Et leo duis ut diam. Tortor vitae purus faucibus ornare suspendisse sed. Integer vitae justo eget magna. Eu nisl nunc mi ipsum faucibus vitae aliquet nec. Sem nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper.</p>
-
-                                    <p>Cursus mattis molestie a iaculis. Nisi scelerisque eu ultrices vitae. Quam nulla porttitor massa id neque aliquam. Posuere lorem ipsum dolor sit amet. Tincidunt dui ut ornare lectus sit amet est placerat. Maecenas accumsan lacus vel facilisis volutpat est velit. Purus ut faucibus pulvinar elementum. Cursus eget nunc scelerisque viverra mauris in aliquam sem fringilla. Et sollicitudin ac orci phasellus egestas tellus rutrum. Tempus quam pellentesque nec nam aliquam sem. Porttitor lacus luctus accumsan tortor posuere ac ut consequat. Sed risus ultricies tristique nulla aliquet enim. Velit euismod in pellentesque massa placerat duis ultricies lacus sed. Elit eget gravida cum sociis natoque penatibus et. Sed arcu non odio euismod lacinia. Nec ultrices dui sapien eget mi proin sed libero. Vulputate odio ut enim blandit. Suscipit adipiscing bibendum est ultricies integer quis. Purus in massa tempor nec feugiat nisl.</p>
-
-                                    <p>Elit sed vulputate mi sit amet mauris commodo quis imperdiet. Cursus in hac habitasse platea dictumst quisque sagittis. Urna neque viverra justo nec ultrices. In est ante in nibh mauris cursus mattis molestie. Vitae auctor eu augue ut lectus arcu. Semper quis lectus nulla at volutpat diam. Risus quis varius quam quisque id. Molestie at elementum eu facilisis. Orci porta non pulvinar neque laoreet suspendisse interdum consectetur libero. At tempor commodo ullamcorper a lacus. Sed turpis tincidunt id aliquet risus. Arcu non sodales neque sodales ut etiam. Scelerisque varius morbi enim nunc faucibus. Fames ac turpis egestas integer. Sed turpis tincidunt id aliquet risus feugiat. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Gravida dictum fusce ut placerat orci nulla pellentesque. Convallis tellus id interdum velit laoreet id donec. Risus ultricies tristique nulla aliquet enim. Sed libero enim sed faucibus turpis in eu mi bibendum.</p>
+                                    {!! $dataDetail->news_content !!}
                                 </article>
+
                                 <div class="footer__center__item24">
                                     <div class="chitiettintuc__boxComment">
                                         <h3 class="uk-h3 home__header__title">Để lại bình luận</h3>

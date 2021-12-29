@@ -22,6 +22,7 @@ class CGlobal
     public static $pageShopTitle = '';
     public static $is_debug = false;
 
+    const site_name = '';
     const web_name = 'CMS';
     const web_title_dashboard = 'Chào mừng bạn đến với hệ thống quản trị ';
     const web_keywords = 'CMS';
@@ -31,6 +32,7 @@ class CGlobal
     const phone_hotline = '093.84133.68';
     const copy_right = '<b>Copyright</b>&nbsp;CMS backend &copy;2022';
 
+    const number_show_4 = 4;
     const number_show_10 = 10;
     const number_show_15 = 15;
     const number_show_20 = 20;

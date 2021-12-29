@@ -36,53 +36,6 @@
                         </ul>
                     </div>
                     <div class="uk-child-width-1-2 uk-grid-match uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-small uk-grid-30-m" uk-grid>
-                        <?php
-                        $data = array(
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img1.png',
-                                'title' => 'Solgar ESTER 250 PLUS Kapsul 500MG A50',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img2.png',
-                                'title' => 'Hand Creams for Dry, Sensitive Skin',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img3.png',
-                                'title' => 'EllaOne Film-Coated tablet Contraception',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img4.png',
-                                'title' => 'Ibuprofen 150mg Capsule',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img5.png',
-                                'title' => 'Bioderma Atoderm Intensive Gel 250ml',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img6.png',
-                                'title' => 'Ibuprofen 250mg capsules x18',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img7.png',
-                                'title' => 'VICHY LIFTACTIV Supreme Serum 10 30ML',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img8.png',
-                                'title' => 'Ibuprofen 500mg Capsule',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img9.png',
-                                'title' => 'Film-coated tablet 250 mg 30 pieces',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/spnoibat/img10.png',
-                                'title' => 'Cetirizine 25mg Film-coated Tablets',
-                            ),
-                        );
-                        shuffle($data);
-
-                        ?>
-
                         @if(!empty($arrProductNew))
                             @foreach($arrProductNew as $k=>$product)
                                 @include('Frontend.Shop.Pages._itemProduct')
@@ -129,7 +82,6 @@
                                                                 @include('Frontend.Shop.Pages._itemProduct2')
                                                             @endif
                                                         @endforeach
-
                                                     </div>
                                                 </li>
                                             @endfor
@@ -211,7 +163,7 @@
                                 <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$new->id,$new->news_image)}}" alt="{{$new->news_title}}" uk-cover>
                                 <canvas width="600" height="338"></canvas>
                             </div>
-                            <h4 class="uk-h4 home__tintuc__title"><a href="">{{$new->news_title}}</a></h4>
+                            <h4 class="uk-h4 home__tintuc__title"><a href="{{buildLinkDetailNew($new->id,$new->news_title,$new->news_category)}}">{{$new->news_title}}</a></h4>
                             <div class="home__tintuc__date">{{getDateShow($new->created_at)}}</div>
                         </div>
                         @endforeach
@@ -238,7 +190,7 @@
                                     <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$news->id,$news->news_image)}}" alt="{{$news->news_title}}" uk-cover>
                                     <canvas width="600" height="338"></canvas>
                                 </div>
-                                <h4 class="uk-h4 home__tintuc__title"><a href="">{{$news->news_title}}</a></h4>
+                                <h4 class="uk-h4 home__tintuc__title"><a href="{{buildLinkDetailNew($news->id,$news->news_title,$news->news_category)}}">{{$news->news_title}}</a></h4>
                                 <div class="home__tintuc__date">{{getDateShow($news->created_at)}}</div>
                             </div>
                         @endforeach

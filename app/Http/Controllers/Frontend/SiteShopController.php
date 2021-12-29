@@ -115,9 +115,27 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.listNews');
     }
 
-    public function indexDetailNews()
+    public function indexDetailNews($cat_id = 0, $new_id = 0, $new_name='tiêu đề')
     {
-        return view('Frontend.Shop.Pages.detailNews');
+        if ($new_id <= 0) {
+            return Redirect::route('site.home');
+        }
+        $inforNew = app(News::class)->getItemById($new_id);
+        if (!isset($inforNew->id)) {
+            return Redirect::route('site.home');
+        }
+        //seo
+        $titleSearchName = env('PROJECT_NAME') . ' - ' . $inforNew->news_title;
+        $meta_title = $titleSearchName;
+        $meta_keywords = $titleSearchName;
+        $meta_description = limit_text_word($inforNew->news_desc_sort);
+        $meta_img = getLinkImageShow(FOLDER_NEWS.'/'.$inforNew->id,$inforNew->news_image);
+        $url_detail = buildLinkDetailNew($inforNew->id, $inforNew->news_title, $inforNew->news_category);
+        $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
+
+        return view('Frontend.Shop.Pages.detailNews', array_merge([
+            'dataDetail' => $inforNew,
+        ], $this->outDataCommon));
     }
 
     public function indexDetailFaq()

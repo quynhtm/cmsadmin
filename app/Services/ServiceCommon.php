@@ -50,7 +50,7 @@ class ServiceCommon
         return $result['data'] ?? [];
     }
 
-    public function getSiteNew($news_type = News::newsTypeCommon, $limit = CGlobal::number_show_4,$partner = STATUS_INT_MOT){
+    public function getSiteNew($news_type = News::newsTypeCommon, $limit = CGlobal::number_show_4, $partner = STATUS_INT_MOT){
         $offset = STATUS_INT_KHONG;
         $search['limit'] = $limit;
         $search['news_status'] = STATUS_INT_MOT;
@@ -59,6 +59,54 @@ class ServiceCommon
 
         $result = app(News::class)->searchByCondition($search, $limit, $offset);
         return $result['data'] ?? [];
+    }
+    public function getSeoSite($img = '', $meta_title = '', $meta_keywords = '', $meta_description = '', $url = '')
+    {
+        if ($img == '') {
+            $img = Config::get('config.WEB_ROOT') . 'assets/frontend/shop/img/shopcuatui.png';
+        }
+        if ($meta_title == '') {
+            $meta_title = env('PROJECT_NAME') . '-' . CGlobal::meta_title;
+        }
+        if ($meta_keywords == '') {
+            $meta_keywords = env('PROJECT_NAME') . '-' . CGlobal::meta_keywords;
+        }
+        if ($meta_description == '') {
+            $meta_description = env('PROJECT_NAME') . '-' . CGlobal::meta_description;
+        }
+
+        $str = '';
+        $str .= '<title>' . $meta_title . '</title>';
+        $str .= "\n" . '<meta name="robots" content="index,follow">';
+        $str .= "\n" . '<meta http-equiv="REFRESH" content="1800">';
+        $str .= "\n" . '<meta name="revisit-after" content="days">';
+        $str .= "\n" . '<meta http-equiv="content-language" content="vi"/>';
+        $str .= "\n" . '<meta name="copyright" content="' . CGlobal::site_name . '">';
+        $str .= "\n" . '<meta name="author" content="' . CGlobal::site_name . '">';
+
+        //Google
+        $str .= "\n" . '<meta name="keywords" content="' . $meta_keywords . '">';
+        $str .= "\n" . '<meta name="description" content="' . $meta_description . '">';
+
+        //Facebook
+        $str .= "\n" . '<meta property="og:type" content="article" >';
+        $str .= "\n" . '<meta property="og:title" content="' . $meta_title . '" >';
+        $str .= "\n" . '<meta property="og:description" content="' . $meta_description . '" >';
+        $str .= "\n" . '<meta property="og:site_name" content="' . CGlobal::site_name . '" >';
+        $str .= "\n" . '<meta itemprop="thumbnailUrl" property="og:image" content="' . $img . '" >';
+
+        //Twitter
+        $str .= "\n" . '<meta name="twitter:title" content="' . $meta_title . '">';
+        $str .= "\n" . '<meta name="twitter:description" content="' . $meta_description . '">';
+        $str .= "\n" . '<meta name="twitter:image" content="' . $img . '">';
+
+        $url = (trim($url) == '') ? buildLinkHome() : $url;
+        if ($url != '') {
+            $str .= "\n" . '<link rel="canonical" href="' . $url . '">';
+            $str .= "\n" . '<meta property="og:url" itemprop="url" content="' . $url . '">';
+            $str .= "\n" . '<meta name="twitter:url" content="' . $url . '">';
+        }
+        CGlobal::$extraMeta = $str;
     }
 }
 
