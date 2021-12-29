@@ -14,6 +14,7 @@ use App\Library\AdminFunction\Memcache;
 use App\Models\Shop\Products;
 use App\Models\Web\Banner;
 use App\Models\Web\Category;
+use App\Models\Web\News;
 use App\Models\Web\Partner;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
@@ -41,12 +42,22 @@ class ServiceCommon
     public function getSiteProduct($product_is_hot = Products::productTypeNew, $limit = CGlobal::number_show_10,$partner = STATUS_INT_MOT){
         $offset = STATUS_INT_KHONG;
         $search['limit'] = $limit;
-        $search['product_status'] = STATUS_INT_AM_MOT;
+        $search['product_status'] = STATUS_INT_MOT;
         $search['product_is_hot'] = $product_is_hot;
         $search['partner_id'] = $partner;
-        $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
         $result = app(Products::class)->searchByCondition($search, $limit, $offset);
+        return $result['data'] ?? [];
+    }
+
+    public function getSiteNew($news_type = News::newsTypeCommon, $limit = CGlobal::number_show_4,$partner = STATUS_INT_MOT){
+        $offset = STATUS_INT_KHONG;
+        $search['limit'] = $limit;
+        $search['news_status'] = STATUS_INT_MOT;
+        $search['news_type'] = $news_type;
+        $search['partner_id'] = $partner;
+
+        $result = app(News::class)->searchByCondition($search, $limit, $offset);
         return $result['data'] ?? [];
     }
 }

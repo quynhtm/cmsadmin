@@ -205,36 +205,16 @@
                         </div>
                     </div>
                     <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid-16 uk-grid-30-m" uk-grid>
-                        <?php
-                        $dataNews = array(
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/news1.png',
-                                'txt' => 'Tầm soát ung thư - Giải pháp bảo vệ sức khoẻ toàn diện',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/news2.png',
-                                'txt' => 'Dạy con cách tự bảo vệ bản thân trước những nguy hiểm',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/news3.png',
-                                'txt' => 'Sản phẩm bảo hiểm tốt nhất cho gia đình hiện nay',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/news4.png',
-                                'txt' => 'Khám sức khỏe định kỳ - Giải pháp chăm sóc sức khỏe toàn diện',
-                            ),
-                        );
-                        shuffle($dataNews);
-                        foreach ($dataNews as $k=>$v): ?>
+                        @foreach($arrNewCommon as $kn =>$new)
                         <div>
                             <div class="uk-cover-container home__tintuc__coverContainer">
-                                <img src="<?= $v['src'] ?>" alt="" uk-cover>
+                                <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$new->id,$new->news_image)}}" alt="{{$new->news_title}}" uk-cover>
                                 <canvas width="600" height="338"></canvas>
                             </div>
-                            <h4 class="uk-h4 home__tintuc__title"><a href=""><?= $v['txt'] ?></a></h4>
-                            <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
+                            <h4 class="uk-h4 home__tintuc__title"><a href="">{{$new->news_title}}</a></h4>
+                            <div class="home__tintuc__date">{{getDateShow($new->created_at)}}</div>
                         </div>
-                        <?php endforeach; ?>
+                        @endforeach
                     </div>
                 </div>
                 <!--/Tin tức-->
@@ -252,36 +232,16 @@
                         </div>
                     </div>
                     <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid-16 uk-grid-30-m" uk-grid>
-                        <?php
-                        $dataNews = array(
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/info1.png',
-                                'txt' => 'Tầm soát ung thư - Giải pháp bảo vệ sức khoẻ toàn diện',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/info2.png',
-                                'txt' => 'Dạy con cách tự bảo vệ bản thân trước những nguy hiểm',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/info3.png',
-                                'txt' => 'Sản phẩm bảo hiểm tốt nhất cho gia đình hiện nay',
-                            ),
-                            array(
-                                'src' => Config::get('config.WEB_ROOT').'assets/frontend/shop/images/info4.png',
-                                'txt' => 'Khám sức khỏe định kỳ - Giải pháp chăm sóc sức khỏe toàn diện',
-                            ),
-                        );
-                        shuffle($dataNews);
-                        foreach ($dataNews as $k=>$v): ?>
-                        <div>
-                            <div class="uk-cover-container home__tintuc__coverContainer">
-                                <img src="<?= $v['src'] ?>" alt="" uk-cover>
-                                <canvas width="600" height="338"></canvas>
+                        @foreach($arrNewSite as $ks =>$news)
+                            <div>
+                                <div class="uk-cover-container home__tintuc__coverContainer">
+                                    <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$news->id,$news->news_image)}}" alt="{{$news->news_title}}" uk-cover>
+                                    <canvas width="600" height="338"></canvas>
+                                </div>
+                                <h4 class="uk-h4 home__tintuc__title"><a href="">{{$news->news_title}}</a></h4>
+                                <div class="home__tintuc__date">{{getDateShow($news->created_at)}}</div>
                             </div>
-                            <h4 class="uk-h4 home__tintuc__title"><a href=""><?= $v['txt'] ?></a></h4>
-                            <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
-                        </div>
-                        <?php endforeach; ?>
+                        @endforeach
                     </div>
                 </div>
                 <!--/Thông tin y dược-->

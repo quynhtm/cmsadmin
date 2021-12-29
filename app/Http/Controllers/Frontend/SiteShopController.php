@@ -14,6 +14,7 @@ use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Security;
 
 use App\Models\Shop\Products;
+use App\Models\Web\News;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -34,19 +35,19 @@ class SiteShopController extends BaseSiteController
 
     public function index()
     {
-        //sản phẩm mới nhất
+        //30 sản phẩm mới nhất
         $arrProduct = $this->commonService->getSiteProduct(Products::productTypeNew, CGlobal::number_show_30, $this->partner);
-        //myDebug($arrProductNew);
+
         $arrProductNew = $arrProductBlock1 = $arrProductBlock2 = $arrProductBlock3 = [];
-        if(!empty($arrProduct)){
-            foreach ($arrProduct as $key =>$val){
-                if($key < 10){
+        if (!empty($arrProduct)) {
+            foreach ($arrProduct as $key => $val) {
+                if ($key < 10) {
                     $arrProductNew[] = $val;
-                }elseif($key >= 10 && $key < 16){
+                } elseif ($key >= 10 && $key < 16) {
                     $arrProductBlock1[] = $val;
-                }elseif($key >= 16 && $key < 22){
+                } elseif ($key >= 16 && $key < 22) {
                     $arrProductBlock2[] = $val;
-                }elseif($key >= 22 && $key < 28){
+                } elseif ($key >= 22 && $key < 28) {
                     $arrProductBlock3[] = $val;
                 }
             }
@@ -54,16 +55,20 @@ class SiteShopController extends BaseSiteController
 
         //sản phẩm đặc biệt
         $arrProductAd = [
-                1=>['title'=>'Bán chạy','arrProduct'=>$arrProductBlock1],
-                2=>['title'=>'Mới','arrProduct'=>$arrProductBlock2],
-                3=>['title'=>'Khác','arrProduct'=>$arrProductBlock3]
-            ];
+            1 => ['title' => 'Bán chạy', 'arrProduct' => $arrProductBlock1],
+            2 => ['title' => 'Mới', 'arrProduct' => $arrProductBlock2],
+            3 => ['title' => 'Khác', 'arrProduct' => $arrProductBlock3]
+        ];
 
         //header
         $arrCategoryProduct = $this->commonService->getSiteCategoryProduct($this->partner);
         $arrBannerBig = $this->commonService->getSiteBannerHeaderBig($this->partner);
         $arrBannerSmall = $this->commonService->getSiteBannerHeaderSmall($this->partner);
         $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
+
+        //tin tức
+        $arrNewCommon = $this->commonService->getSiteNew(News::newsTypeCommon, CGlobal::number_show_4, $this->partner);
+        $arrNewSite = $this->commonService->getSiteNew(News::newsTypeSite, CGlobal::number_show_4, $this->partner);
 
         return view('Frontend.Shop.Pages.home', array_merge([
             'arrProductNew' => $arrProductNew,
@@ -73,6 +78,9 @@ class SiteShopController extends BaseSiteController
             'arrBannerSmall' => $arrBannerSmall,
             'arrBannerContent' => $arrBannerContent,
             'arrCategoryProduct' => $arrCategoryProduct,
+
+            'arrNewCommon' => $arrNewCommon,
+            'arrNewSite' => $arrNewSite,
         ], $this->outDataCommon));
     }
 
@@ -83,16 +91,19 @@ class SiteShopController extends BaseSiteController
             'pageType' => STATUS_INT_HAI,
         ], $this->outDataCommon));
     }
+
     public function indexProduct()
     {
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'pageType' => STATUS_INT_MOT,
         ], $this->outDataCommon));
     }
+
     public function indexDetailProduct()
     {
         return view('Frontend.Shop.Pages.detailProduct');
     }
+
     public function indexProductCare()
     {
         return view('Frontend.Shop.Pages.productCare');
@@ -103,10 +114,12 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.listNews');
     }
+
     public function indexDetailNews()
     {
         return view('Frontend.Shop.Pages.detailNews');
     }
+
     public function indexDetailFaq()
     {
         return view('Frontend.Shop.Pages.detailFAQ');
@@ -117,18 +130,22 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.ListRecruitment');
     }
+
     public function indexDetailRecruitment()
     {
         return view('Frontend.Shop.Pages.detailRecruitment');
     }
+
     public function indexContact()
     {
         return view('Frontend.Shop.Pages.contact');
     }
+
     public function indexLoginShop()
     {
         return view('Frontend.Shop.Pages.loginShop');
     }
+
     public function indexRegistrationShop()
     {
         return view('Frontend.Shop.Pages.registrationShop');
@@ -139,32 +156,24 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.cart');
     }
+
     //đặt hàng
     public function indexCartOrder1()
     {
         return view('Frontend.Shop.Pages.cartOrder1');
     }
+
     //Xác nhận đơn hàng
     public function indexCartOrder2()
     {
         return view('Frontend.Shop.Pages.cartOrder2');
     }
+
     //thanh toán
     public function indexCartOrder3()
     {
         return view('Frontend.Shop.Pages.cartOrder3');
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public function listProductNew()
@@ -189,7 +198,7 @@ class SiteShopController extends BaseSiteController
         $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
         $arrListCampaign = $this->commonService->getCampaignOnsite();
-        FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+        FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
 
         return view('site.SiteShop.listProductWithDepart', array_merge([
             'paging' => $paging,
@@ -223,9 +232,9 @@ class SiteShopController extends BaseSiteController
             }
             //check hash tag null
             //check hash tag null
-            if(empty($product->list_tag_id)){
+            if (empty($product->list_tag_id)) {
                 $str_has_tag = app(Product::class)->getTagIdWithCate($product->category_id);
-                if(trim($str_has_tag) != ''){
+                if (trim($str_has_tag) != '') {
                     $dataSave['list_tag_id'] = $str_has_tag;
                     if (app(Product::class)->updateItem($product->product_id, $dataSave)) {
                         $product = app(Product::class)->getItemById($pro_id);
@@ -247,7 +256,7 @@ class SiteShopController extends BaseSiteController
 
             //campaing
             $arrListCampaign = $this->commonService->getCampaignOnsite();
-            FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+            FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
 
             $this->getCommonSite();
             $arrHashTag = app(Tag::class)->getOptionTag();
@@ -301,7 +310,7 @@ class SiteShopController extends BaseSiteController
                 $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
                 $arrListCampaign = $this->commonService->getCampaignOnsite();
-                FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+                FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
 
                 $this->getCommonSite();
                 return view('site.SiteShop.listProductWithDepart', array_merge([
@@ -334,7 +343,7 @@ class SiteShopController extends BaseSiteController
             $tagNameCheck = FunctionLib::stringtitle(trim($name));
             $tag_name = isset($arrTagCode[$tag_id]) ? $arrTagCode[$tag_id] : '';
             if (in_array($tagNameCheck, $arrTagCode) && strcmp(trim($tagNameCheck), trim($tag_name)) == 0) {
-                $tagName = '#'.((isset($arrTagName[$tag_id])) ? $arrTagName[$tag_id] : $name);
+                $tagName = '#' . ((isset($arrTagName[$tag_id])) ? $arrTagName[$tag_id] : $name);
                 $pageNo = (int)Request::get('page_no', 1);
                 $limit = LIMIT_RECORD_40;
                 $offset = ($pageNo - 1) * $limit;
@@ -356,7 +365,7 @@ class SiteShopController extends BaseSiteController
                 $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
                 $arrListCampaign = $this->commonService->getCampaignOnsite();
-                FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+                FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
 
                 $this->getCommonSite();
                 return view('site.SiteShop.listProductWithDepart', array_merge([
@@ -388,7 +397,7 @@ class SiteShopController extends BaseSiteController
         if ($camp_id > 0 && trim($name) != '') {
             $arrListCampaign = $this->commonService->getCampaignOnsite();
             $campNameCheck = FunctionLib::stringtitle(trim($name));
-            $campName = isset($arrListCampaign[$camp_id]['campaign_name'])?$arrListCampaign[$camp_id]['campaign_name']:'';
+            $campName = isset($arrListCampaign[$camp_id]['campaign_name']) ? $arrListCampaign[$camp_id]['campaign_name'] : '';
 
             if (!empty($arrListCampaign) && in_array($camp_id, array_keys($arrListCampaign)) && strcmp(trim($campNameCheck), FunctionLib::stringtitle(strtolower(safe_title($campName)))) == 0) {
                 $tagName = ((isset($arrListCampaign[$camp_id]['campaign_name'])) ? $arrListCampaign[$camp_id]['campaign_name'] : $name);
@@ -409,7 +418,7 @@ class SiteShopController extends BaseSiteController
                 $meta_title = $titleSearchName;
                 $meta_keywords = $titleSearchName;
                 $meta_description = $titleSearchName;
-                $meta_img = getLinkImage(FOLDER_CAMPAIGN.'/'.$arrListCampaign[$camp_id]['campaign_id'], $arrListCampaign[$camp_id]['campaign_image']);
+                $meta_img = getLinkImage(FOLDER_CAMPAIGN . '/' . $arrListCampaign[$camp_id]['campaign_id'], $arrListCampaign[$camp_id]['campaign_image']);
                 $url_detail = buildLinkProductWithCampaign($camp_id, $name);
                 $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
@@ -477,7 +486,7 @@ class SiteShopController extends BaseSiteController
                 $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
                 $arrListCampaign = $this->commonService->getCampaignOnsite();
-                FunctionLib::randomlyMergeData($arrListCampaign,$arrShowCampaign);
+                FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
 
                 $this->getCommonSite();
                 return view('site.SiteShop.listProductWithDepart', array_merge([
@@ -618,8 +627,8 @@ class SiteShopController extends BaseSiteController
                         'contact_phone_send' => $contact_phone_send,
                         'contact_time_creater' => time(),
                         'contact_email_send' => $contact_email_send];
-                    if(self::checkDataContactInput($dataInsert)){
-                        if(app(Contact::class)->createItem($dataInsert)){
+                    if (self::checkDataContactInput($dataInsert)) {
+                        if (app(Contact::class)->createItem($dataInsert)) {
                             $msg_succ = 'Liên hệ của bạn đã được gửi tới Shopcuatui <br> Shopcuatui sẽ liên hệ với bạn sớm nhất.<br> Cám ơn bạn đã quan tâm đến shopcuatui.';
                         }
                     }
@@ -633,18 +642,19 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
     }
 
-    private function checkDataContactInput($dataInsert){
+    private function checkDataContactInput($dataInsert)
+    {
         $isOk = true;
-        if(!empty($dataInsert)){
-            if(strcmp($dataInsert['contact_phone_send'],$dataInsert['contact_user_name_send']) == 0 ||
-                strcmp($dataInsert['contact_phone_send'],$dataInsert['contact_email_send']) == 0 ||
-                strcmp($dataInsert['contact_email_send'],$dataInsert['contact_user_name_send']) == 0){
+        if (!empty($dataInsert)) {
+            if (strcmp($dataInsert['contact_phone_send'], $dataInsert['contact_user_name_send']) == 0 ||
+                strcmp($dataInsert['contact_phone_send'], $dataInsert['contact_email_send']) == 0 ||
+                strcmp($dataInsert['contact_email_send'], $dataInsert['contact_user_name_send']) == 0) {
                 return false;
             }
-            if(!FunctionLib::checkPhoneNumber($dataInsert['contact_phone_send'])){
+            if (!FunctionLib::checkPhoneNumber($dataInsert['contact_phone_send'])) {
                 return false;
             }
-            if(!FunctionLib::checkRegexEmail($dataInsert['contact_email_send'])){
+            if (!FunctionLib::checkRegexEmail($dataInsert['contact_email_send'])) {
                 return false;
             }
         }
@@ -668,7 +678,7 @@ class SiteShopController extends BaseSiteController
 
     /***************************************************************************************************
      * Phần tin tức
-    *****************************************************************************************************/
+     *****************************************************************************************************/
     public function detailNew($cat_id, $new_id, $new_name)
     {
         if ($new_id <= 0) {
@@ -703,16 +713,16 @@ class SiteShopController extends BaseSiteController
             $search['news_type'] = (int)Request::get('news_type', STATUS_DEFAULT);
             $search['field_get'] = 'news_id,news_title,news_type,news_desc_sort,news_image';//cac truong can lay
             $data = app(News::class)->searchByCondition($search, $limit, $offset, true);
-            if($data['data']){
-                foreach ($data['data'] as $key =>$news){
-                    if($inforNew->news_id != $news->news_id){
-                        if($key < 4){
-                            array_push($dataTop,$news);
-                        }elseif ($key < 10){
-                            array_push($dataCenter,$news);
-                        }elseif ($key < LIMIT_RECORD_30){
-                            array_push($dataLeft,$news);
-                        }else{
+            if ($data['data']) {
+                foreach ($data['data'] as $key => $news) {
+                    if ($inforNew->news_id != $news->news_id) {
+                        if ($key < 4) {
+                            array_push($dataTop, $news);
+                        } elseif ($key < 10) {
+                            array_push($dataCenter, $news);
+                        } elseif ($key < LIMIT_RECORD_30) {
+                            array_push($dataLeft, $news);
+                        } else {
                             break;
                         }
                     }

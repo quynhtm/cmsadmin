@@ -11,6 +11,10 @@ class News extends BaseModel
     protected $primaryKey = 'id';
     public $timestamps = true;
 
+    const newsTypeCommon = STATUS_INT_MOT;//tin chung
+    const newsTypeSite = STATUS_INT_HAI;//tin nội bộ
+    const newsTypeFAQ = STATUS_INT_BA;//tin FAQ
+
     public function searchByCondition($dataSearch = array(), $limit = STATUS_INT_MUOI, $offset = STATUS_INT_KHONG, $is_total = true)
     {
         try {
@@ -20,6 +24,9 @@ class News extends BaseModel
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
+            }
+            if (isset($dataSearch['news_type']) && $dataSearch['news_type'] > STATUS_INT_KHONG) {
+                $query->where('news_type', $dataSearch['news_type']);
             }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('news_status', $dataSearch['is_active']);
