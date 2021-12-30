@@ -133,8 +133,16 @@ class SiteShopController extends BaseSiteController
         $url_detail = buildLinkDetailNew($inforNew->id, $inforNew->news_title, $inforNew->news_category);
         $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
+        //tin liên quan
+        $arrNewInvolve = $this->commonService->getSiteNew($inforNew->news_type, CGlobal::number_show_8, $this->partner);
+
+        //danh mục tin tức
+        $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
+
         return view('Frontend.Shop.Pages.detailNews', array_merge([
             'dataDetail' => $inforNew,
+            'arrNewInvolve' => $arrNewInvolve,
+            'arrCategoryNews' => $arrCategoryNews,
         ], $this->outDataCommon));
     }
 

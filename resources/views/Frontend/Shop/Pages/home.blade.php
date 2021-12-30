@@ -158,14 +158,7 @@
                     </div>
                     <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid-16 uk-grid-30-m" uk-grid>
                         @foreach($arrNewCommon as $kn =>$new)
-                        <div>
-                            <div class="uk-cover-container home__tintuc__coverContainer">
-                                <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$new->id,$new->news_image)}}" alt="{{$new->news_title}}" uk-cover>
-                                <canvas width="600" height="338"></canvas>
-                            </div>
-                            <h4 class="uk-h4 home__tintuc__title"><a href="{{buildLinkDetailNew($new->id,$new->news_title,$new->news_category)}}">{{$new->news_title}}</a></h4>
-                            <div class="home__tintuc__date">{{getDateShow($new->created_at)}}</div>
-                        </div>
+                            @include('Frontend.Shop.Pages._itemNews')
                         @endforeach
                     </div>
                 </div>
@@ -184,15 +177,8 @@
                         </div>
                     </div>
                     <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid-16 uk-grid-30-m" uk-grid>
-                        @foreach($arrNewSite as $ks =>$news)
-                            <div>
-                                <div class="uk-cover-container home__tintuc__coverContainer">
-                                    <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$news->id,$news->news_image)}}" alt="{{$news->news_title}}" uk-cover>
-                                    <canvas width="600" height="338"></canvas>
-                                </div>
-                                <h4 class="uk-h4 home__tintuc__title"><a href="{{buildLinkDetailNew($news->id,$news->news_title,$news->news_category)}}">{{$news->news_title}}</a></h4>
-                                <div class="home__tintuc__date">{{getDateShow($news->created_at)}}</div>
-                            </div>
+                        @foreach($arrNewSite as $ks =>$new)
+                            @include('Frontend.Shop.Pages._itemNews')
                         @endforeach
                     </div>
                 </div>

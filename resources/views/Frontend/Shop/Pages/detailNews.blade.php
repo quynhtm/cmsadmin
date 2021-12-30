@@ -125,6 +125,8 @@
                             </div>
                         </div>
                     </div>
+
+                    @if(!empty($arrCategoryNews))
                     <div class="uk-width-1-4@m">
                         <div class="uk-card tintuc__asideCard">
                             <div class="tintuc__asideCard__item">
@@ -135,18 +137,18 @@
                             </div>
                             <div class="tintuc__asideCard__item">
                                 <ul class="uk-nav uk-nav-default tintuc__asideCard__nav">
-                                    <li class="uk-active"><a href="#">Danh mục bài viết 1</a></li>
-                                    <li><a href="#">Danh mục bài viết 2</a></li>
-                                    <li><a href="#">Danh mục bài viết 3</a></li>
-                                    <li><a href="#">Danh mục bài viết 4</a></li>
-                                    <li><a href="#">Danh mục bài viết 5</a></li>
-                                    <li><a href="#">Danh mục bài viết 6</a></li>
+                                    @foreach($arrCategoryNews as $kyc=>$catNew)
+                                        <li @if($kyc == 0)class="uk-active"@endif><a href="#">{{$catNew->category_name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
-                        </div>                </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
             <!--Tin tức-->
+            @if(!empty($arrNewInvolve))
             <div class="home__item40">
                 <div class="home__header">
                     <div class="uk-flex-middle uk-grid-24-m" uk-grid>
@@ -159,39 +161,12 @@
                     </div>
                 </div>
                 <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid-16 uk-grid-30-m" uk-grid>
-                    <div>
-                        <div class="uk-cover-container home__tintuc__coverContainer">
-                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/news4.png" alt="" uk-cover>
-                            <canvas width="600" height="338"></canvas>
-                        </div>
-                        <h4 class="uk-h4 home__tintuc__title"><a href="">Khám sức khỏe định kỳ - Giải pháp chăm sóc sức khỏe toàn diện</a></h4>
-                        <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
-                    </div>
-                    <div>
-                        <div class="uk-cover-container home__tintuc__coverContainer">
-                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/news2.png" alt="" uk-cover>
-                            <canvas width="600" height="338"></canvas>
-                        </div>
-                        <h4 class="uk-h4 home__tintuc__title"><a href="">Dạy con cách tự bảo vệ bản thân trước những nguy hiểm</a></h4>
-                        <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
-                    </div>
-                    <div>
-                        <div class="uk-cover-container home__tintuc__coverContainer">
-                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/news1.png" alt="" uk-cover>
-                            <canvas width="600" height="338"></canvas>
-                        </div>
-                        <h4 class="uk-h4 home__tintuc__title"><a href="">Tầm soát ung thư - Giải pháp bảo vệ sức khoẻ toàn diện</a></h4>
-                        <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
-                    </div>
-                    <div>
-                        <div class="uk-cover-container home__tintuc__coverContainer">
-                            <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/news3.png" alt="" uk-cover>
-                            <canvas width="600" height="338"></canvas>
-                        </div>
-                        <h4 class="uk-h4 home__tintuc__title"><a href="">Sản phẩm bảo hiểm tốt nhất cho gia đình hiện nay</a></h4>
-                        <div class="home__tintuc__date">Thứ 2 ,08/07/2019</div>
-                    </div>
-                </div>        </div>
+                    @foreach($arrNewInvolve as $kn =>$new)
+                        @include('Frontend.Shop.Pages._itemNews')
+                    @endforeach
+                </div>
+            </div>
+            @endif
             <!--/Tin tức-->
         </div>
     </div>

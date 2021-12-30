@@ -38,6 +38,9 @@ class ServiceCommon
     public function getSiteCategoryProduct($partner = STATUS_INT_MOT){
         return app(Category::class)->getSiteCategoryByType(Category::categoryTypeProduct,$partner);
     }
+    public function getSiteCategoryNew($partner = STATUS_INT_MOT){
+        return app(Category::class)->getSiteCategoryByType(Category::categoryTypeNew,$partner);
+    }
 
     public function getSiteProduct($product_is_hot = Products::productTypeNew, $limit = CGlobal::number_show_10,$partner = STATUS_INT_MOT){
         $offset = STATUS_INT_KHONG;
