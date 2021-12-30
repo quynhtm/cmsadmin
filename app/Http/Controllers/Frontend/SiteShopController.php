@@ -112,7 +112,62 @@ class SiteShopController extends BaseSiteController
     //tin tức
     public function indexNew()
     {
-        return view('Frontend.Shop.Pages.listNews');
+        $limit = CGlobal::number_show_12;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['partner_id'] = $this->partner;
+
+        $result = app(News::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+
+        //danh mục tin tức
+        $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
+
+        return view('Frontend.Shop.Pages.listNews', array_merge([
+            'dataList' => $dataList,
+            'cat_id' => 0,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'arrCategoryNews' => $arrCategoryNews,
+        ], $this->outDataCommon));
+
+    }
+    public function indexNewWithCategory($cat_id = 0, $cat_name='danh mục tin tức')
+    {
+        if ($cat_id <= 0) {
+            return Redirect::route('site.home');
+        }
+        $limit = CGlobal::number_show_12;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['news_category'] = $cat_id;
+        $search['partner_id'] = $this->partner;
+
+        $result = app(News::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+
+        //danh mục tin tức
+        $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
+
+        return view('Frontend.Shop.Pages.listNews', array_merge([
+            'dataList' => $dataList,
+            'cat_id' => $cat_id,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'arrCategoryNews' => $arrCategoryNews,
+        ], $this->outDataCommon));
     }
 
     public function indexDetailNews($cat_id = 0, $new_id = 0, $new_name='tiêu đề')
@@ -139,8 +194,12 @@ class SiteShopController extends BaseSiteController
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
 
+        //danh mục tin tức
+        $arrCommentNews = $this->commonService->getSiteCommentNew($new_id,$this->partner);
+
         return view('Frontend.Shop.Pages.detailNews', array_merge([
             'dataDetail' => $inforNew,
+            'arrCommentNews' => $arrCommentNews,
             'arrNewInvolve' => $arrNewInvolve,
             'arrCategoryNews' => $arrCategoryNews,
         ], $this->outDataCommon));

@@ -16,6 +16,7 @@ use App\Models\Web\Banner;
 use App\Models\Web\Category;
 use App\Models\Web\News;
 use App\Models\Web\Partner;
+use App\Models\Web\Reviews;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 
@@ -61,6 +62,18 @@ class ServiceCommon
         $search['partner_id'] = $partner;
 
         $result = app(News::class)->searchByCondition($search, $limit, $offset);
+        return $result['data'] ?? [];
+    }
+
+    public function getSiteCommentNew($object_id = 0, $limit = CGlobal::number_show_8, $partner = STATUS_INT_MOT){
+        $offset = STATUS_INT_KHONG;
+        $search['limit'] = $limit;
+        $search['is_active'] = STATUS_INT_MOT;
+        $search['object_id'] = $object_id;
+        $search['type_review'] = Reviews::typeReviewNew;
+        $search['partner_id'] = $partner;
+
+        $result = app(Reviews::class)->searchByCondition($search, $limit, $offset);
         return $result['data'] ?? [];
     }
     public function getSeoSite($img = '', $meta_title = '', $meta_keywords = '', $meta_description = '', $url = '')

@@ -7,8 +7,8 @@ Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','use
 Route::get('san-pham-quan-tam.html',array('as' => 'site.indexProductCare','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexProductCare'));
 
 Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
+Route::get('/tin-danh-muc/c-{cat_id}/{cat_name}.html',array('as' => 'site.indexNewWithCategory','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNewWithCategory'));//list sản phẩm theo danh mục
 Route::get('tin-tuc/c{cat_id}/{new_id}-{new_name}.html',array('as' => 'site.indexDetailNews','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailNews'));
-//Route::get('tin-tuc/c{cat_id}/{new_id}-{new_name}.html',array('as' => 'site.detailNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@detailNew'))->where('cat_id', '[0-9]+')->where('new_id', '[0-9]+');
 Route::get('thong-tin-faq.html',array('as' => 'site.indexDetailFaq','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailFaq'));
 
 Route::get('tuyen-dung.html',array('as' => 'site.indexRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRecruitment'));

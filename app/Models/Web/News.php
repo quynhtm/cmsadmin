@@ -28,6 +28,9 @@ class News extends BaseModel
             if (isset($dataSearch['news_type']) && $dataSearch['news_type'] > STATUS_INT_KHONG) {
                 $query->where('news_type', $dataSearch['news_type']);
             }
+            if (isset($dataSearch['news_category']) && $dataSearch['news_category'] > STATUS_INT_KHONG) {
+                $query->where('news_category', $dataSearch['news_category']);
+            }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('news_status', $dataSearch['is_active']);
             }

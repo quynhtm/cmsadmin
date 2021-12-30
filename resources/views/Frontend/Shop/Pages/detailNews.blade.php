@@ -1,6 +1,7 @@
 @extends('Frontend.Shop.Layouts.index')
 @section('content')
     @include('Frontend.Shop.Layouts.breadcrumb')
+
     <div class="tintuc__section chitiettintuc__section" uk-height-viewport="offset-top: true;offset-bottom: true">
         <div class="uk-container">
             <div class="home__item40">
@@ -42,112 +43,44 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="footer__center__item24">
-                                    <h3 class="uk-h3 home__header__title">Bình luận</h3>
-                                    <div class="uk-grid uk-grid-16" uk-grid="">
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-grid uk-grid-16" uk-grid="">
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container uk-border-circle">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
-                                                        <canvas width="36" height="36"></canvas>
+
+                                {{----Bình luận tin---}}
+                                @if(!empty($arrCommentNews))
+                                    <div class="footer__center__item24">
+                                        <h3 class="uk-h3 home__header__title">Bình luận</h3>
+                                        <div class="uk-grid uk-grid-16" uk-grid="">
+                                            @foreach($arrCommentNews as $kyc=>$comment)
+                                                <div class="uk-width-1-1">
+                                                    <div class="uk-grid uk-grid-16" uk-grid="">
+                                                        <div class="uk-width-auto">
+                                                            <div class="uk-cover-container uk-border-circle">
+                                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/icons/avatar-boy.png" alt="" uk-cover>
+                                                                <canvas width="36" height="36"></canvas>
+                                                            </div>
+                                                        </div>
+                                                        <div class="uk-width-expand">
+                                                            <h4 class="uk-h4 chitiettintuc__item8 chitiettintuc__boxComment__titleName">{{$comment->assessor}}</h4>
+                                                            <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">{!! $comment->content !!}</div>
+                                                            <div class="chitiettintuc__item8 tintuc__card__desc">{{getDateShow($comment->created_at)}}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 chitiettintuc__item8 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
-                                                    <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                                    <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-grid uk-grid-16" uk-grid="">
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container uk-border-circle">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
-                                                        <canvas width="36" height="36"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 chitiettintuc__item8 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
-                                                    <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                                    <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-grid uk-grid-16" uk-grid="">
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container uk-border-circle">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
-                                                        <canvas width="36" height="36"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 chitiettintuc__item8 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
-                                                    <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                                    <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-grid uk-grid-16" uk-grid="">
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container uk-border-circle">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
-                                                        <canvas width="36" height="36"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 chitiettintuc__item8 chitiettintuc__boxComment__titleName">Trần Văn A</h4>
-                                                    <div class="chitiettintuc__item8 chitiettintuc__boxComment__checkTxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                                                    <div class="chitiettintuc__item8 tintuc__card__desc">12 phút trước</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-width-1-1">
-                                            <div class="uk-grid uk-grid-16" uk-grid="">
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container uk-border-circle">
-                                                        <img hidden src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
-                                                        <canvas width="36" height="36"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <div class="uk-text-center uk-padding-small chitiettintuc__box1">
-                                                        <a href="">Xem thêm</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
 
+                    {{----tìm kiếm theo danh mục tin tức---}}
                     @if(!empty($arrCategoryNews))
-                    <div class="uk-width-1-4@m">
-                        <div class="uk-card tintuc__asideCard">
-                            <div class="tintuc__asideCard__item">
-                                <div class="uk-position-relative tintuc__asideCard__search">
-                                    <input class="uk-input tintuc__asideCard__search__input" type="text" placeholder="Tìm kiếm">
-                                    <button type="button" class="tintuc__asideCard__search__btn uk-button uk-button-default uk-position-right"></button>
-                                </div>
-                            </div>
-                            <div class="tintuc__asideCard__item">
-                                <ul class="uk-nav uk-nav-default tintuc__asideCard__nav">
-                                    @foreach($arrCategoryNews as $kyc=>$catNew)
-                                        <li @if($kyc == 0)class="uk-active"@endif><a href="#">{{$catNew->category_name}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        @include('Frontend.Shop.Pages._listCateNew')
                     @endif
                 </div>
             </div>
-            <!--Tin tức-->
+
+            <!--Tin tức liên quan-->
             @if(!empty($arrNewInvolve))
             <div class="home__item40">
                 <div class="home__header">
@@ -156,7 +89,7 @@
                             <h3 class="uk-h3 home__header__title">Tin tức</h3>
                         </div>
                         <div class="uk-width-auto">
-                            <a href="" class="home__header__link uk-button uk-button-default uk-border-pill"><span>Xem tất cả</span></a>
+                            <a href="{{buildLinkNewsWithCategory($dataDetail->news_category)}}" class="home__header__link uk-button uk-button-default uk-border-pill"><span>Xem tất cả</span></a>
                         </div>
                     </div>
                 </div>

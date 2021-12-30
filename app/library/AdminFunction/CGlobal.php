@@ -33,7 +33,9 @@ class CGlobal
     const copy_right = '<b>Copyright</b>&nbsp;CMS backend &copy;2022';
 
     const number_show_4 = 4;
+    const number_show_8 = 8;
     const number_show_10 = 10;
+    const number_show_12 = 12;
     const number_show_15 = 15;
     const number_show_20 = 20;
     const number_show_30 = 30;

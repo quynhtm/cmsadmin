@@ -971,6 +971,12 @@ function site_js($file_name, $position = 1)
 function buildLinkHome(){
     return \Illuminate\Support\Facades\URL::route('site.home');
 }
+function buildLinkNewsWithCategory($cat_id = 0,$cat_name = 'danh muc'){
+    if($cat_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.indexNewWithCategory', array('cat_id'=>$cat_id,'cat_name'=>strtolower(safe_title($cat_name))));
+    }
+    return '#';
+}
 function buildLinkDetailNew($new_id = 0, $new_name = 'tin tức', $cat_id = 0){
     if($new_id > 0){
         return \Illuminate\Support\Facades\URL::route('site.indexDetailNews', array( 'new_id'=>$new_id,'new_name'=>strtolower(safe_title($new_name)),'cat_id'=>$cat_id));

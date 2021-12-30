@@ -26,11 +26,14 @@ class Reviews extends BaseModel
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
+            if (isset($dataSearch['object_id']) && $dataSearch['object_id'] > STATUS_INT_KHONG) {
+                $query->where('object_id', $dataSearch['object_id']);
+            }
             if (isset($dataSearch['type_review']) && $dataSearch['type_review'] > STATUS_INT_KHONG) {
                 $query->where('type_review', $dataSearch['type_review']);
             }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('contact_status', $dataSearch['is_active']);
+                $query->where('is_active', $dataSearch['is_active']);
             }
 
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;
