@@ -3,7 +3,7 @@ Route::get('/', array('as' => 'site.home','uses' => DIR_PRO_FRONTEND.'\SiteShopC
 
 Route::get('/san-pham.html', array('as' => 'site.indexProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexProduct'));
 Route::get('/tim-kiem-san-pham.html', array('as' => 'site.searchProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@searchProduct'));
-Route::get('chi-tiet-san-pham.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));
+Route::get('/{cat_name}/{id}-{name}.html',array('as' => 'site.indexDetailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailProduct'));//chi tiết sản phẩm
 Route::get('san-pham-quan-tam.html',array('as' => 'site.indexProductCare','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexProductCare'));
 
 Route::get('tin-tuc.html',array('as' => 'site.indexNew','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexNew'));
@@ -24,7 +24,7 @@ Route::post('/lien-he.html', array('as' => 'site.contactShop','uses' => DIR_PRO_
 
 
 
-Route::get('/{cat}/{id}-{name}.html',array('as' => 'site.detailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@detailProduct'));//chi tiết sản phẩm
+//Route::get('/{cat}/{id}-{name}.html',array('as' => 'site.detailProduct','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@detailProduct'));//chi tiết sản phẩm
 Route::get('/depart/nhapkhau-{depart_id}/{depart_name}.html',array('as' => 'site.listProductWithDepart','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithDepart'));//list sản phẩm theo depart
 Route::get('/hang-nhap-khau/c-{category_id}/{category_name}.html',array('as' => 'site.listProductWithCategory','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithCategory'));//list sản phẩm theo danh mục
 Route::get('/san-pham-moi.html', array('as' => 'site.listProductNew','uses' => DIR_PRO_FRONTEND.'\SiteShopController@listProductNew'));

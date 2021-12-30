@@ -985,7 +985,7 @@ function buildLinkDetailNew($new_id = 0, $new_name = 'tin tức', $cat_id = 0){
 }
 function buildLinkDetailProduct($pro_id = 0,$pro_name = 'sản phẩm',$cat_name = 'danh mục'){
     if($pro_id > 0){
-        return \Illuminate\Support\Facades\URL::route('site.detailProduct', array('cat'=>strtolower(safe_title($cat_name)),'name'=>strtolower(safe_title($pro_name)),'id'=>$pro_id));
+        return \Illuminate\Support\Facades\URL::route('site.indexDetailProduct', array('cat_name'=>strtolower(safe_title($cat_name)),'id'=>$pro_id,'name'=>strtolower(safe_title($pro_name))));
     }
     return '#';
 }

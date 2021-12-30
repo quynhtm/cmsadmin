@@ -15,6 +15,7 @@ use App\Library\AdminFunction\Security;
 
 use App\Models\Shop\Products;
 use App\Models\Web\News;
+use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -99,9 +100,56 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
     }
 
-    public function indexDetailProduct()
+    public function indexDetailProduct($cat_name = 'danh mục',$pro_id = 0, $pro_name = 'sản phẩm')
     {
-        return view('Frontend.Shop.Pages.detailProduct');
+        if ($pro_id <= 0) {
+            return Redirect::route('site.home');
+        }
+        $product = app(Products::class)->getItemById($pro_id);
+        if (isset($product->id)) {
+            //check sản phẩm lỗi
+            if ((isset($product->product_status) && $product->product_status == STATUS_INT_KHONG) || (isset($product->is_block) && $product->is_block == STATUS_INT_KHONG)) {
+                return Redirect::route('site.home');
+            }
+            //check hash tag null
+            //check hash tag null
+            /*if (empty($product->list_tag_id)) {
+                $str_has_tag = app(Product::class)->getTagIdWithCate($product->category_id);
+                if (trim($str_has_tag) != '') {
+                    $dataSave['list_tag_id'] = $str_has_tag;
+                    if (app(Product::class)->updateItem($product->product_id, $dataSave)) {
+                        $product = app(Product::class)->getItemById($pro_id);
+                    }
+                }
+            }*/
+            //seo
+            $titleSearchName = env('PROJECT_NAME') . ' - ' . $product->product_name;
+            $meta_title = $titleSearchName;
+            $meta_keywords = $titleSearchName;
+            $meta_description = limit_text_word($product->product_sort_desc);
+            $meta_img = getLinkImageShow(FOLDER_PRODUCT.'/'.$product->id,$product->product_image);
+            $url_detail = buildLinkDetailProduct($product->id, $product->product_name, $product->category_name);
+            $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
+
+            //sản phẩm liên quan
+            $arrProductInvolve = $this->commonService->getSiteProduct(Products::productTypeNew, CGlobal::number_show_5, $this->partner);
+
+            //campaing
+            //$arrListCampaign = $this->commonService->getCampaignOnsite();
+            //FunctionLib::randomlyMergeData($arrListCampaign, $arrShowCampaign);
+
+            //$this->getCommonSite();
+
+            //bình luận và đánh giá sản phẩm
+            $arrCommentProduct = $this->commonService->getSiteCommentItem($pro_id,Reviews::typeReviewProduct, $this->partner,CGlobal::number_show_4);
+
+            return view('Frontend.Shop.Pages.detailProduct', array_merge([
+                'dataDetail' => $product,
+                'arrCommentProduct' => $arrCommentProduct,
+                'arrProductInvolve' => $arrProductInvolve,
+                'pro_id' => $pro_id,
+            ], $this->outDataCommon));
+        }
     }
 
     public function indexProductCare()
@@ -195,7 +243,7 @@ class SiteShopController extends BaseSiteController
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
 
         //danh mục tin tức
-        $arrCommentNews = $this->commonService->getSiteCommentNew($new_id,$this->partner);
+        $arrCommentNews = $this->commonService->getSiteCommentItem($new_id,Reviews::typeReviewNew, $this->partner);
 
         return view('Frontend.Shop.Pages.detailNews', array_merge([
             'dataDetail' => $inforNew,
@@ -259,6 +307,10 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.cartOrder3');
     }
+
+
+
+
 
 
     public function listProductNew()

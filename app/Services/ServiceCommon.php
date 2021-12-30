@@ -51,7 +51,7 @@ class ServiceCommon
         $search['partner_id'] = $partner;
 
         $result = app(Products::class)->searchByCondition($search, $limit, $offset);
-        return $result['data'] ?? [];
+        return ($result['total'] > 0) ? $result['data'] : false;
     }
 
     public function getSiteNew($news_type = News::newsTypeCommon, $limit = CGlobal::number_show_4, $partner = STATUS_INT_MOT){
@@ -62,20 +62,21 @@ class ServiceCommon
         $search['partner_id'] = $partner;
 
         $result = app(News::class)->searchByCondition($search, $limit, $offset);
-        return $result['data'] ?? [];
+        return ($result['total'] > 0) ? $result['data'] : false;
     }
 
-    public function getSiteCommentNew($object_id = 0, $limit = CGlobal::number_show_8, $partner = STATUS_INT_MOT){
+    public function getSiteCommentItem($object_id = 0, $type_review = Reviews::typeReviewNew, $partner = STATUS_INT_MOT, $limit = CGlobal::number_show_8){
         $offset = STATUS_INT_KHONG;
         $search['limit'] = $limit;
         $search['is_active'] = STATUS_INT_MOT;
         $search['object_id'] = $object_id;
-        $search['type_review'] = Reviews::typeReviewNew;
+        $search['type_review'] = $type_review;
         $search['partner_id'] = $partner;
 
         $result = app(Reviews::class)->searchByCondition($search, $limit, $offset);
-        return $result['data'] ?? [];
+        return ($result['total'] > 0) ? $result['data'] : false;
     }
+
     public function getSeoSite($img = '', $meta_title = '', $meta_keywords = '', $meta_description = '', $url = '')
     {
         if ($img == '') {

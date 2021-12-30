@@ -10,7 +10,8 @@
                     @if($product->product_sale == STATUS_INT_MOT)
                     <div class="uk-transition-fade uk-position-cover home__product__card__stock uk-flex uk-flex-middle uk-flex-center">
                         <div>
-                            <a href="#modal-quickView" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>
+                            {{--<a href="#modal-quickView" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>--}}
+                            <a href="{{buildLinkDetailProduct($product->id,$product->product_name,$product->category_name)}}" title="{{$product->product_name}}" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>
                             <a href="" class="home__product__card__stock__icon home__product__card__stock__icon--cart uk-border-circle"></a>
                             <a href="#modal-wishList" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--wishList uk-border-circle"></a>
                         </div>
@@ -47,7 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h3 class="uk-h3 home__product__card__title"><a href="">{{$product->product_name}}</a></h3>
+                                <h3 class="uk-h3 home__product__card__title"><a href="{{buildLinkDetailProduct($product->id,$product->product_name,$product->category_name)}}" title="{{$product->product_name}}">{{$product->product_name}}</a></h3>
                             </div>
                         </div>
                         <div class="uk-width-1-1">
