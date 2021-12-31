@@ -997,9 +997,9 @@ function buildLinkProductWithDepart($depart_id = 0,$depart_name = 'danh muc'){
     return '#';
 }
 
-function buildLinkProductWithCategory($category_id = 0,$category_name = 'danh muc'){
-    if($category_id > 0){
-        return \Illuminate\Support\Facades\URL::route('site.listProductWithCategory', array('category_id'=>strtolower(safe_title($category_id)),'category_name'=>strtolower(safe_title($category_name))));
+function buildLinkProductWithCategory($cat_id = 0,$cat_name = 'danh muc'){
+    if($cat_id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.indexProductWithCategory', array('cat_id'=>(int)$cat_id,'cat_name'=>strtolower(safe_title($cat_name))));
     }
     return '#';
 }

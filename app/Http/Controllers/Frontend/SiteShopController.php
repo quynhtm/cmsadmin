@@ -34,6 +34,7 @@ class SiteShopController extends BaseSiteController
         $this->commonService = new ServiceCommon();
     }
 
+    //done
     public function index()
     {
         //30 sản phẩm mới nhất
@@ -86,13 +87,42 @@ class SiteShopController extends BaseSiteController
     }
 
     //sản phẩm
+    //done
     public function searchProduct()
     {
+        $p_keyword = trim(addslashes(Request::get('keyword_search', '')));
+        if (trim($p_keyword) == '') {
+            return Redirect::route('site.home');
+        }
+        $limit = CGlobal::number_show_12;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['p_keyword'] = $p_keyword;
+        $search['product_status'] = STATUS_INT_MOT;
+        $search['partner_id'] = $this->partner;
+
+        $result = app(Products::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
+
+        //danh mục sản phẩm
+        $arrProductCate = $this->commonService->getSiteCategoryProduct($this->partner);
+
         return view('Frontend.Shop.Pages.listProduct', array_merge([
+            'keyword_search' => $p_keyword,
+            'dataList' => $dataList,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'arrProductCate' => $arrProductCate,
             'pageType' => STATUS_INT_HAI,
         ], $this->outDataCommon));
     }
-
+    //done
     public function indexProduct()
     {
         $limit = CGlobal::number_show_12;
@@ -123,9 +153,48 @@ class SiteShopController extends BaseSiteController
             'arrBannerContent' => $arrBannerContent,
             'pageType' => STATUS_INT_MOT,
         ], $this->outDataCommon));
+    }
+    //done
+    public function indexProductWithCategory($cat_id = 0, $cat_name = '')
+    {
+        if ($cat_id <= 0) {
+            return Redirect::route('site.home');
+        }
+        $limit = CGlobal::number_show_12;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['category_id'] = $cat_id;
+        $search['cat_id'] = $cat_id;
+        $search['cat_name'] = $cat_name;
+        $search['product_status'] = STATUS_INT_MOT;
+        $search['partner_id'] = $this->partner;
+
+        $result = app(Products::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
+
+        //danh mục sản phẩm
+        $arrProductCate = $this->commonService->getSiteCategoryProduct($this->partner);
+
+        //banner quảng cáo
+        $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
+
+        return view('Frontend.Shop.Pages.listProduct', array_merge([
+            'dataList' => $dataList,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'arrProductCate' => $arrProductCate,
+            'arrBannerContent' => $arrBannerContent,
+            'pageType' => STATUS_INT_MOT,
+        ], $this->outDataCommon));
 
     }
-
+    //done
     public function indexDetailProduct($cat_name = 'danh mục',$pro_id = 0, $pro_name = 'sản phẩm')
     {
         if ($pro_id <= 0) {
@@ -184,6 +253,7 @@ class SiteShopController extends BaseSiteController
     }
 
     //tin tức
+    //done
     public function indexNew()
     {
         $limit = CGlobal::number_show_12;
@@ -212,6 +282,7 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
 
     }
+    //done
     public function indexNewWithCategory($cat_id = 0, $cat_name='danh mục tin tức')
     {
         if ($cat_id <= 0) {
@@ -243,7 +314,7 @@ class SiteShopController extends BaseSiteController
             'arrCategoryNews' => $arrCategoryNews,
         ], $this->outDataCommon));
     }
-
+    //done
     public function indexDetailNews($cat_id = 0, $new_id = 0, $new_name='tiêu đề')
     {
         if ($new_id <= 0) {

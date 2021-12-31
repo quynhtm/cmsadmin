@@ -3,7 +3,10 @@
     @if(isset($arrProductCate) && !empty($arrProductCate))
         @foreach($arrProductCate as $keypc => $proCate)
             <label>
-                <input class="uk-checkbox" type="checkbox" checked value="{{$proCate->id}}"> <span class="catalog__card__txt">{{$proCate->category_name}}</span>
+                <input class="uk-checkbox" type="checkbox" checked value="{{$proCate->id}}">
+                <a href="{{buildLinkProductWithCategory($proCate->id, $proCate->category_name)}}">
+                    <span class="catalog__card__txt">{{$proCate->category_name}}</span>
+                </a>
             </label>
         @endforeach
     @endif
