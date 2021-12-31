@@ -1,10 +1,3 @@
-<?php
-$stock = rand(true,false);
-$isPrice = rand(true,false);
-$price = array('27.000đ','49.000đ','310.000đ','17.500đ','250.000đ','320.000đ','19.000đ','32.000đ');
-$percent = array(20,40,60,80,100);
-$label = array('new','hot','sale','notSale');
-?>
 
 <div class="home__product__column">
     <div class="uk-card home__product__card uk-transition-toggle">

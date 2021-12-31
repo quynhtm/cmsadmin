@@ -95,9 +95,35 @@ class SiteShopController extends BaseSiteController
 
     public function indexProduct()
     {
+        $limit = CGlobal::number_show_12;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['partner_id'] = $this->partner;
+
+        $result = app(Products::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
+
+        //danh mục sản phẩm
+        $arrProductCate = $this->commonService->getSiteCategoryProduct($this->partner);
+
+        //banner quảng cáo
+        $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
+
         return view('Frontend.Shop.Pages.listProduct', array_merge([
+            'dataList' => $dataList,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'arrProductCate' => $arrProductCate,
+            'arrBannerContent' => $arrBannerContent,
             'pageType' => STATUS_INT_MOT,
         ], $this->outDataCommon));
+
     }
 
     public function indexDetailProduct($cat_name = 'danh mục',$pro_id = 0, $pro_name = 'sản phẩm')
@@ -170,7 +196,7 @@ class SiteShopController extends BaseSiteController
         $result = app(News::class)->searchByCondition($search, $limit, $offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
-        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
@@ -202,7 +228,7 @@ class SiteShopController extends BaseSiteController
         $result = app(News::class)->searchByCondition($search, $limit, $offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
-        $paging = $total > 0 ? Pagging::getNewPager(3, $page_no, $total, $limit, $search) : '';
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
@@ -307,6 +333,9 @@ class SiteShopController extends BaseSiteController
     {
         return view('Frontend.Shop.Pages.cartOrder3');
     }
+
+
+
 
 
 
@@ -432,7 +461,7 @@ class SiteShopController extends BaseSiteController
                 $data = app(Product::class)->getProductForSite($search, $limit, $offset, true);
                 $total = $data['total'];
                 $dataSearch = $data['data'];
-                $paging = $total > 0 ? Pagging::getNewPager(3, $pageNo, $total, $limit, $search) : '';
+                $paging = $total > 0 ? Pagging::pagingFrontend(3, $pageNo, $total, $limit, $search) : '';
 
                 //danh mục của sản phẩm theo departs
                 $dataCateWithDepart = ($total > 0) ? app(Product::class)->getListCateByDepart($depart_id) : [];
@@ -490,7 +519,7 @@ class SiteShopController extends BaseSiteController
                 $data = app(Product::class)->searchWithProductTags($search, $limit, $offset, true);
                 $total = $data['total'];
                 $dataSearch = $data['data'];
-                $paging = $total > 0 ? Pagging::getNewPager(3, $pageNo, $total, $limit, $search) : '';
+                $paging = $total > 0 ? Pagging::pagingFrontend(3, $pageNo, $total, $limit, $search) : '';
 
                 //seo
                 $titleSearchName = env('PROJECT_NAME') . ' - ' . $tagName;
@@ -611,7 +640,7 @@ class SiteShopController extends BaseSiteController
                 }
                 $department = app(Department::class)->getItemById($departId);
                 $departName = isset($department->department_id) ? $department->department_name : '';
-                $paging = $total > 0 ? Pagging::getNewPager(3, $pageNo, $total, $limit, $search) : '';
+                $paging = $total > 0 ? Pagging::pagingFrontend(3, $pageNo, $total, $limit, $search) : '';
 
                 //seo
                 $titleSearchName = env('PROJECT_NAME') . ' - ' . $categoryName;
