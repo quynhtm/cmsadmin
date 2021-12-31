@@ -60,6 +60,69 @@ class Pagging
     }
 
     // phan trang tren site
+    public static function pagingFrontend($numPageShow = 10, $page = 1,$total = 1,$limit = 1,$dataSearch, $page_name = 'page_no'){
+        /*<ul class="uk-pagination uk-flex-center pagination" uk-margin>
+            <li><a href="#"><span uk-pagination-previous></span></a></li>
+            <li><a href="#">1</a></li>
+            <li class="uk-disabled"><span>...</span></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li class="uk-active"><span>7</span></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#"><span uk-pagination-next></span></a></li>
+        </ul>*/
+
+        $total_page = ceil($total/$limit);
+        if($total_page == 1) return '';
+        $next = '';
+        $last = '';
+        $prev = '';
+        $first= '';
+        $left_dot  = '';
+        $right_dot = '';
+        $from_page = $page - $numPageShow;
+        $to_page = $page + $numPageShow;
+
+        //get prev & first link
+        if($page > 1){
+            $prev = self::parseFrontendLink($page-1, '', 'Trước',"<span uk-pagination-previous></span>", $page_name,$dataSearch);
+            $first= self::parseFrontendLink(1, '', 'Đầu',"<span uk-pagination-previous></span> <span uk-pagination-previous></span>", $page_name,$dataSearch);
+        }
+        //get next & last link
+        if($page < $total_page){
+            $next = self::parseFrontendLink($page+1, '', "Sau","<span uk-pagination-next></span>", $page_name,$dataSearch);
+            $last = self::parseFrontendLink($total_page, '', "Cuối","<span uk-pagination-next></span> <span uk-pagination-next></span>", $page_name,$dataSearch);
+        }
+        //get dots & from_page & to_page
+        if($from_page > 0)	{
+            $left_dot = ($from_page > 1) ? '<li class="uk-disabled"><span>...</span></li>' : '';
+        }else{
+            $from_page = 1;
+        }
+
+        if($to_page < $total_page)	{
+            $right_dot = '<li class="uk-disabled"><span>...</span></li>';
+        }else{
+            $to_page = $total_page;
+        }
+        $pagerHtml = '';
+        for($i=$from_page;$i<=$to_page;$i++){
+            $pagerHtml .= self::parseFrontendLink($i, (($page == $i) ? 'active' : ''), $i, $i, $page_name,$dataSearch);
+        }
+        return '<ul class="uk-pagination uk-flex-center pagination" uk-margin> '.$first.$prev.$left_dot.$pagerHtml.$right_dot.$next.$last.'</ul>';
+    }
+    static function parseFrontendLink($page = 1, $class =" ", $title="", $icons="", $page_name = 'page_no',$dataSearch){
+        $param = $dataSearch;
+        $action = self::getRouteAction();
+        $param[$page_name] = $page;
+        $class_page = '';
+        if($class == 'active'){
+            $class_page = $class_page.$class;
+            return '<li class="uk-active"><a class="page-link" href="#" title="xem trang '.$title.'">'.$icons.'</a></li>';
+        }
+        return '<li class="'.$class_page.'"><a class="page-link" href="'.action($action, $param).'" title="xem trang '.$title.'">'.$icons.'</a></li>';
+    }
+
 
     public static function getPagerSite($numPageShow = 4, $page = 1,$total = 1,$limit = 1,$page_name = 'page_no',$param){
         $total_page = ceil($total/$limit);
@@ -117,3 +180,4 @@ class Pagging
         return $action;
     }
 }
+
