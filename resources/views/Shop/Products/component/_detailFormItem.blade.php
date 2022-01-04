@@ -129,9 +129,9 @@
                                                     <input type="radio" id="chẹcked_image_{{$key}}" name="chẹcked_image" value="{{$key}}" @if(isset($imagePrimary) && $imagePrimary == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImage('{{$imgNew['img_other']}}','{{$key}}');">
                                                     <label for="chẹcked_image_{{$key}}" style='font-weight:normal'>Ảnh đại diện</label>
 
-                                                    <div class="clearfix"></div>
+                                                    {{--<div class="clearfix"></div>
                                                     <input type="radio" id="chẹcked_image_hover_{{$key}}" name="chẹcked_image_hover" value="{{$key}}" @if(isset($imageHover) && $imageHover == $imgNew['img_other'] ) checked="checked" @endif onclick="Admin.checkedImageHover('{{$imgNew['img_other']}}','{{$key}}');">
-                                                    <label for="chẹcked_image_hover_{{$key}}" style='font-weight:normal'>Ảnh hover</label>
+                                                    <label for="chẹcked_image_hover_{{$key}}" style='font-weight:normal'>Ảnh hover</label>--}}
 
                                                     <div class="clearfix"></div>
                                                     <a href="javascript:void(0);" class="red" onclick="Admin.removeImage({{$key}},{{$objectId}},'{{$imgNew['img_other']}}',2);">Xóa ảnh ({{$key+1}})</a>

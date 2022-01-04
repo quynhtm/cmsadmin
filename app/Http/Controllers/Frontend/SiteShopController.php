@@ -206,8 +206,25 @@ class SiteShopController extends BaseSiteController
             if ((isset($product->product_status) && $product->product_status == STATUS_INT_KHONG) || (isset($product->is_block) && $product->is_block == STATUS_INT_KHONG)) {
                 return Redirect::route('site.home');
             }
+            //danh sách ảnh sản phẩm
+            $arrImagProduct = [];
+            if(trim($product->product_image) != ''){
+                $arrImagProduct[] = $product->product_image;
+            }
+            if(trim($product->product_image_hover) != '' && !empty($arrImagProduct) && !in_array($product->product_image_hover,$arrImagProduct)){
+                $arrImagProduct[] = $product->product_image_hover;
+            }
+            $arrImagOther = unserialize($product->product_image_other);
+            if(!empty($arrImagOther)){
+                foreach ($arrImagOther as $key =>$pro_img){
+                    if(!in_array(trim($pro_img),$arrImagProduct)){
+                        $arrImagProduct[] = $pro_img;
+                    }
+                }
+            }
+
             //check hash tag null
-            //check hash tag null
+            //myDebug($product->list_tag_id);
             /*if (empty($product->list_tag_id)) {
                 $str_has_tag = app(Product::class)->getTagIdWithCate($product->category_id);
                 if (trim($str_has_tag) != '') {
@@ -240,6 +257,7 @@ class SiteShopController extends BaseSiteController
 
             return view('Frontend.Shop.Pages.detailProduct', array_merge([
                 'dataDetail' => $product,
+                'arrImagProduct' => $arrImagProduct,
                 'arrCommentProduct' => $arrCommentProduct,
                 'arrProductInvolve' => $arrProductInvolve,
                 'pro_id' => $pro_id,

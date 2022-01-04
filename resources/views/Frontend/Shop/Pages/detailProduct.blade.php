@@ -10,16 +10,13 @@
                             <div class="uk-position-relative uk-visible-toggle uk-slideshow" tabindex="-1" uk-slideshow="ratio: 1:1;animation: fade;">
                                 <div class="uk-position-relative modal__quickView__left__imgFor modal__wishList__item">
                                     <ul class="uk-slideshow-items" style="min-height: 436px;">
+                                        @foreach($arrImagProduct as $kim =>$imgp)
                                         <li tabindex="-1">
                                             <div class="">
-                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
+                                                <img src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$dataDetail->id,$imgp)}}" alt="{{$dataDetail->product_name}}" uk-cover>
                                             </div>
                                         </li>
-                                        <li tabindex="-1">
-                                            <div class="">
-                                                <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img4.png" alt="" uk-cover>
-                                            </div>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
 
@@ -27,18 +24,14 @@
                                     <div class="uk-position-relative">
                                         <div class="uk-slider-container">
                                             <ul class="uk-thumbnav uk-slider-items uk-child-width-1-4 uk-child-width-1-4@m uk-child-width-1-5@l uk-grid-small uk-grid-16-m uk-grid" uk-grid="" style="transform: translate3d(-111.875px, 0px, 0px);">
-                                                <li uk-slideshow-item="0" tabindex="-1">
-                                                    <div class="uk-cover-container modal__quickView__left__img">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/h1-product2-featured.png" alt="" uk-cover>
-                                                        <canvas width="200" height="200"></canvas>
-                                                    </div>
-                                                </li>
-                                                <li uk-slideshow-item="1" tabindex="-1">
-                                                    <div class="uk-cover-container modal__quickView__left__img">
-                                                        <img src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img4.png" alt="" uk-cover>
-                                                        <canvas width="200" height="200"></canvas>
-                                                    </div>
-                                                </li>
+                                                @foreach($arrImagProduct as $kyim =>$imgpr)
+                                                    <li uk-slideshow-item="{{$kyim}}" tabindex="-1">
+                                                        <div class="uk-cover-container modal__quickView__left__img">
+                                                            <img src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$dataDetail->id,$imgpr)}}" alt="{{$dataDetail->product_name}}" uk-cover>
+                                                            <canvas width="200" height="200"></canvas>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <div class="">

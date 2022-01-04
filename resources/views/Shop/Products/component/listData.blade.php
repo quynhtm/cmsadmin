@@ -68,9 +68,9 @@
                             <td class="text-left middle">
                                 @if($item->product_status == STATUS_INT_MOT)
                                     [<b>{{ $item->id }}</b>]
-                                    {{--<a href="{{buildLinkDetailProduct($item->id, $item->product_name, $item->category_name)}}" target="_blank" title="Chi tiết sản phẩm">--}}
+                                    <a href="{{buildLinkDetailProduct($item->id, $item->product_name, $item->category_name)}}" target="_blank" title="Chi tiết sản phẩm">
                                         {{ $item->product_name }}
-                                    {{--</a>--}}
+                                    </a>
                                 @else
                                     [<b>{{ $item->id }}</b>] {{ $item->product_name }}
                                 @endif

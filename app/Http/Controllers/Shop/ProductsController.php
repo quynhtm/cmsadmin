@@ -110,10 +110,10 @@ class ProductsController extends BaseAdminController
         $search['limit'] = $limit;
         $search['product_status'] = (int)trim(addslashes(Request::get('product_status', STATUS_INT_AM_MOT)));
         $search['category_id'] = (int)trim(addslashes(Request::get('category_id', STATUS_INT_AM_MOT)));
-        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
+        $search['partner_id'] = ($this->partner_id > 0) ? $this->partner_id : trim(addslashes(Request::get('partner_id', STATUS_INT_KHONG)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
+        $result = $this->modelObj->searchByCondition($search, $limit, $offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
 
@@ -149,13 +149,13 @@ class ProductsController extends BaseAdminController
                 }
                 $arrViewImgOther = [];
                 $imagePrimary = $imageHover = '';
-                if(isset($dataDetail->id)){
+                if (isset($dataDetail->id)) {
                     //lay ảnh khác của san phẩm
                     if (!empty($dataDetail->product_image_other)) {
                         $arrImagOther = unserialize($dataDetail->product_image_other);
                         if (!empty($arrImagOther)) {
                             foreach ($arrImagOther as $k => $val) {
-                                $url_thumb = getLinkImageShow(FOLDER_PRODUCT.'/'. $dataDetail->id, $val);
+                                $url_thumb = getLinkImageShow(FOLDER_PRODUCT . '/' . $dataDetail->id, $val);
                                 $arrViewImgOther[] = array('img_other' => $val, 'src_img_other' => $url_thumb);
                             }
                         }
@@ -183,7 +183,7 @@ class ProductsController extends BaseAdminController
                         'formName' => $formName,
                         'titlePopup' => $titlePopup,
                     ]))->render();
-            break;
+                break;
 
             default:
                 break;
@@ -210,42 +210,42 @@ class ProductsController extends BaseAdminController
                 $folder = FOLDER_PRODUCT;
                 $arrImagOther = unserialize($request['product_image_other']);
                 if ($this->_validFormData($objectId, $request) && empty($this->error)) {
-                    if($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'][0]) &&  trim($_FILES['file_image_upload']['name'][0]) != ''){
-                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$objectId);
-                        if(!empty($arUpload) && !empty($arrImagOther)){
-                            $arrImagUpdate = array_merge($arUpload,$arrImagOther);
-                        }else{
-                            $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
+                    if ($objectId > STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'][0]) && trim($_FILES['file_image_upload']['name'][0]) != '') {
+                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload', $folder, $objectId);
+                        if (!empty($arUpload) && !empty($arrImagOther)) {
+                            $arrImagUpdate = array_merge($arrImagOther, $arUpload);
+                        } else {
+                            $arrImagUpdate = !empty($arUpload) ? $arUpload : $arrImagOther;
                         }
-                        $request['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
-                    }else{
+                        $request['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate) : '';
+                    } else {
                         unset($request['product_image_other']);
                     }
 
-                    if(!empty($arrImagUpdate)){
-                        $product_image = isset($arrImagUpdate[0])?$arrImagUpdate[0]:'';
-                        $request['product_image'] = (trim($request['product_image']) != '')? $request['product_image']: $product_image;
-                        $request['product_image_hover'] = (trim($request['product_image_hover']) != '')? $request['product_image_hover']:  $product_image;
+                    if (!empty($arrImagUpdate)) {
+                        $product_image = isset($arrImagUpdate[0]) ? $arrImagUpdate[0] : '';
+                        $request['product_image'] = (trim($request['product_image']) != '') ? $request['product_image'] : $product_image;
+                        $request['product_image_hover'] = (trim($request['product_image_hover']) != '') ? $request['product_image_hover'] : $product_image;
                     }
 
                     $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
 
                 if ($isEdit > 0) {
-                    if($objectId == STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name'])  && !empty($_FILES['file_image_upload']['name'])){
-                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload',$folder ,$isEdit);
-                        if(!empty($arUpload) && !empty($arrImagOther)){
-                            $arrImagUpdate = array_merge($arUpload,$arrImagOther);
-                        }else{
-                            $arrImagUpdate = !empty($arUpload)? $arUpload: $arrImagOther;
+                    if ($objectId == STATUS_INT_KHONG && isset($_FILES['file_image_upload']['name']) && !empty($_FILES['file_image_upload']['name'])) {
+                        $arUpload = app(Upload::class)->uploadMultipleFile('file_image_upload', $folder, $isEdit);
+                        if (!empty($arUpload) && !empty($arrImagOther)) {
+                            $arrImagUpdate = array_merge($arUpload, $arrImagOther);
+                        } else {
+                            $arrImagUpdate = !empty($arUpload) ? $arUpload : $arrImagOther;
                         }
-                        if(!empty($arrImagUpdate)){
-                            $product_image = isset($arrImagUpdate[0])?$arrImagUpdate[0]:'';
+                        if (!empty($arrImagUpdate)) {
+                            $product_image = isset($arrImagUpdate[0]) ? $arrImagUpdate[0] : '';
                             $updateImage['product_image'] = $product_image;
                             $updateImage['product_image_hover'] = $product_image;
                         }
 
-                        $updateImage['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate): '';
+                        $updateImage['product_image_other'] = !empty($arrImagUpdate) ? serialize($arrImagUpdate) : '';
                         $isEdit = $this->modelObj->editItem($updateImage, $isEdit);
                     }
 
@@ -256,7 +256,7 @@ class ProductsController extends BaseAdminController
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = $loadPage;
                     $arrAjax['divShowInfor'] = '';
-                }else{
+                } else {
                     $arrAjax = returnError($this->error);
                 }
                 break;
@@ -293,7 +293,7 @@ class ProductsController extends BaseAdminController
             if (isset($data['product_type_price']) && $data['product_type_price'] == STATUS_INT_MOT) {
                 if (isset($data['product_type_price']) && $data['product_type_price'] == STATUS_INT_MOT && isset($data['product_price_sell']) && trim($data['product_price_sell']) == '') {
                     $this->error[] = 'Giá bán không được bỏ trống';
-                }else{
+                } else {
                     $data['product_price_sell'] = (int)str_replace('.', '', trim($data['product_price_sell']));
                 }
             }
@@ -306,6 +306,11 @@ class ProductsController extends BaseAdminController
             }
             if (isset($data['product_price_provider_sell']) && trim($data['product_price_provider_sell']) !== '') {
                 $data['product_price_provider_sell'] = (int)str_replace('.', '', trim($data['product_price_provider_sell']));
+            }
+            if (isset($data['category_id']) && (int)trim($data['category_id']) <= 0) {
+                $this->error[] = 'Danh mục sản phẩm chưa được chọn';
+            } else {
+                $data['category_name'] = isset($this->arrCategory[(int)trim($data['category_id'])]) ? $this->arrCategory[(int)trim($data['category_id'])] : 'Danh mục sản phẩm';
             }
         }
         return true;
