@@ -13,6 +13,7 @@ use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Security;
 
+use App\Models\BackendCms\Users;
 use App\Models\Shop\Products;
 use App\Models\Web\News;
 use App\Models\Web\Reviews;
@@ -32,6 +33,15 @@ class SiteShopController extends BaseSiteController
     {
         parent::__construct();
         $this->commonService = new ServiceCommon();
+        $this->getInforCommoneSite();
+    }
+    public function getInforCommoneSite()
+    {
+        $dataCart = $this->countNumCart();
+
+        return $this->outDataCommon = [
+            'totalItemCart' => isset($dataCart['total_cart']) ? $dataCart['total_cart'] : STATUS_INT_KHONG,
+        ];
     }
 
     //done
@@ -72,6 +82,7 @@ class SiteShopController extends BaseSiteController
         $arrNewCommon = $this->commonService->getSiteNew(News::newsTypeCommon, CGlobal::number_show_4, $this->partner);
         $arrNewSite = $this->commonService->getSiteNew(News::newsTypeSite, CGlobal::number_show_4, $this->partner);
 
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.home', array_merge([
             'arrProductNew' => $arrProductNew,
             'arrProductAd' => $arrProductAd,
@@ -110,7 +121,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục sản phẩm
         $arrProductCate = $this->commonService->getSiteCategoryProduct($this->partner);
-
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'keyword_search' => $p_keyword,
             'dataList' => $dataList,
@@ -122,6 +133,7 @@ class SiteShopController extends BaseSiteController
             'pageType' => STATUS_INT_HAI,
         ], $this->outDataCommon));
     }
+
     //done
     public function indexProduct()
     {
@@ -142,7 +154,7 @@ class SiteShopController extends BaseSiteController
 
         //banner quảng cáo
         $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
-
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'dataList' => $dataList,
             'total' => $total,
@@ -154,6 +166,7 @@ class SiteShopController extends BaseSiteController
             'pageType' => STATUS_INT_MOT,
         ], $this->outDataCommon));
     }
+
     //done
     public function indexProductWithCategory($cat_id = 0, $cat_name = '')
     {
@@ -181,7 +194,7 @@ class SiteShopController extends BaseSiteController
 
         //banner quảng cáo
         $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
-
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'dataList' => $dataList,
             'total' => $total,
@@ -194,8 +207,9 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
 
     }
+
     //done
-    public function indexDetailProduct($cat_name = 'danh mục',$pro_id = 0, $pro_name = 'sản phẩm')
+    public function indexDetailProduct($cat_name = 'danh mục', $pro_id = 0, $pro_name = 'sản phẩm')
     {
         if ($pro_id <= 0) {
             return Redirect::route('site.home');
@@ -208,16 +222,16 @@ class SiteShopController extends BaseSiteController
             }
             //danh sách ảnh sản phẩm
             $arrImagProduct = [];
-            if(trim($product->product_image) != ''){
+            if (trim($product->product_image) != '') {
                 $arrImagProduct[] = $product->product_image;
             }
-            if(trim($product->product_image_hover) != '' && !empty($arrImagProduct) && !in_array($product->product_image_hover,$arrImagProduct)){
+            if (trim($product->product_image_hover) != '' && !empty($arrImagProduct) && !in_array($product->product_image_hover, $arrImagProduct)) {
                 $arrImagProduct[] = $product->product_image_hover;
             }
             $arrImagOther = unserialize($product->product_image_other);
-            if(!empty($arrImagOther)){
-                foreach ($arrImagOther as $key =>$pro_img){
-                    if(!in_array(trim($pro_img),$arrImagProduct)){
+            if (!empty($arrImagOther)) {
+                foreach ($arrImagOther as $key => $pro_img) {
+                    if (!in_array(trim($pro_img), $arrImagProduct)) {
                         $arrImagProduct[] = $pro_img;
                     }
                 }
@@ -239,7 +253,7 @@ class SiteShopController extends BaseSiteController
             $meta_title = $titleSearchName;
             $meta_keywords = $titleSearchName;
             $meta_description = limit_text_word($product->product_sort_desc);
-            $meta_img = getLinkImageShow(FOLDER_PRODUCT.'/'.$product->id,$product->product_image);
+            $meta_img = getLinkImageShow(FOLDER_PRODUCT . '/' . $product->id, $product->product_image);
             $url_detail = buildLinkDetailProduct($product->id, $product->product_name, $product->category_name);
             $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
@@ -253,8 +267,8 @@ class SiteShopController extends BaseSiteController
             //$this->getCommonSite();
 
             //bình luận và đánh giá sản phẩm
-            $arrCommentProduct = $this->commonService->getSiteCommentItem($pro_id,Reviews::typeReviewProduct, $this->partner,CGlobal::number_show_4);
-
+            $arrCommentProduct = $this->commonService->getSiteCommentItem($pro_id, Reviews::typeReviewProduct, $this->partner, CGlobal::number_show_4);
+            $this->getInforCommoneSite();
             return view('Frontend.Shop.Pages.detailProduct', array_merge([
                 'dataDetail' => $product,
                 'arrImagProduct' => $arrImagProduct,
@@ -267,6 +281,7 @@ class SiteShopController extends BaseSiteController
 
     public function indexProductCare()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.productCare');
     }
 
@@ -288,7 +303,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
-
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.listNews', array_merge([
             'dataList' => $dataList,
             'cat_id' => 0,
@@ -300,8 +315,9 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
 
     }
+
     //done
-    public function indexNewWithCategory($cat_id = 0, $cat_name='danh mục tin tức')
+    public function indexNewWithCategory($cat_id = 0, $cat_name = 'danh mục tin tức')
     {
         if ($cat_id <= 0) {
             return Redirect::route('site.home');
@@ -321,7 +337,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
-
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.listNews', array_merge([
             'dataList' => $dataList,
             'cat_id' => $cat_id,
@@ -332,8 +348,9 @@ class SiteShopController extends BaseSiteController
             'arrCategoryNews' => $arrCategoryNews,
         ], $this->outDataCommon));
     }
+
     //done
-    public function indexDetailNews($cat_id = 0, $new_id = 0, $new_name='tiêu đề')
+    public function indexDetailNews($cat_id = 0, $new_id = 0, $new_name = 'tiêu đề')
     {
         if ($new_id <= 0) {
             return Redirect::route('site.home');
@@ -347,7 +364,7 @@ class SiteShopController extends BaseSiteController
         $meta_title = $titleSearchName;
         $meta_keywords = $titleSearchName;
         $meta_description = limit_text_word($inforNew->news_desc_sort);
-        $meta_img = getLinkImageShow(FOLDER_NEWS.'/'.$inforNew->id,$inforNew->news_image);
+        $meta_img = getLinkImageShow(FOLDER_NEWS . '/' . $inforNew->id, $inforNew->news_image);
         $url_detail = buildLinkDetailNew($inforNew->id, $inforNew->news_title, $inforNew->news_category);
         $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
@@ -358,8 +375,8 @@ class SiteShopController extends BaseSiteController
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
 
         //danh mục tin tức
-        $arrCommentNews = $this->commonService->getSiteCommentItem($new_id,Reviews::typeReviewNew, $this->partner);
-
+        $arrCommentNews = $this->commonService->getSiteCommentItem($new_id, Reviews::typeReviewNew, $this->partner);
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.detailNews', array_merge([
             'dataDetail' => $inforNew,
             'arrCommentNews' => $arrCommentNews,
@@ -370,32 +387,38 @@ class SiteShopController extends BaseSiteController
 
     public function indexDetailFaq()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.detailFAQ');
     }
 
     //Khác
     public function indexRecruitment()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.ListRecruitment');
     }
 
     public function indexDetailRecruitment()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.detailRecruitment');
     }
 
     public function indexContact()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.contact');
     }
 
     public function indexLoginShop()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.loginShop');
     }
 
     public function indexRegistrationShop()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.registrationShop');
     }
 
@@ -423,9 +446,8 @@ class SiteShopController extends BaseSiteController
                 }
             }
         }
-        $this->getCommonSite();
-        //$this->commonService->getSeoSite();
 
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cart', array_merge([
             'cartShop' => $cartShop,
         ], $this->outDataCommon));
@@ -435,23 +457,23 @@ class SiteShopController extends BaseSiteController
     //đặt hàng
     public function indexCartOrder1()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder1');
     }
 
     //Xác nhận đơn hàng
     public function indexCartOrder2()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder2');
     }
 
     //thanh toán
     public function indexCartOrder3()
     {
+        $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder3');
     }
-
-
-
 
 
 
@@ -945,12 +967,12 @@ class SiteShopController extends BaseSiteController
 
     public function getCommonSite($action = STATUS_INT_KHONG)
     {
-        $userAdmin = app(User::class)->user_login();
+        /*$userAdmin = app(Users::class)->user_login();
         return $this->outDataCommon = [
             'userAdmin' => !empty($userAdmin) ? $userAdmin : [],
             'header' => $this->header($action),
             'footer' => $this->footer($action),
-        ];
+        ];*/
     }
 
     public function actionRouter($catname, $catid)

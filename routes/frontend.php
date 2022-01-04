@@ -36,6 +36,7 @@ Route::get('/campaign/c{camp_id}/{camp_name}.html',array('as' => 'site.listProdu
 
 //Action site
 Route::post('/ajaxAddCart', array('as' => 'site.ajaxAddCart','uses' => DIR_PRO_FRONTEND.'\AjaxActionShopController@ajaxAddCart'));
+Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart','uses' => DIR_PRO_FRONTEND.'\AjaxActionShopController@deleteOneItemInCart'));
 
 //Gio hang
 Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCart'));

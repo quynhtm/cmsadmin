@@ -30,7 +30,7 @@
                                     <td>
                                         <div class="uk-flex-middle uk-grid-small uk-grid-24-m" uk-grid>
                                             <div class="uk-width-auto">
-                                                <a href="" class="quantam__table__close"></a>
+                                                <a href="javascript:void(0)" class="quantam__table__close" onclick="ActionSite.removeOneItemCart('{{setStrVar($pro_cart->product_id)}}');"></a>
                                             </div>
                                             <div class="uk-width-expand">
                                                 <div class="uk-grid-small uk-grid-20-m uk-flex-middle" uk-grid>

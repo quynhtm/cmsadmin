@@ -1,8 +1,8 @@
-var ActinSite = {
+var ActionSite = {
     detailAddtoCart: function (str_pro_id) {
         var input_quantity = $('#input_quantity').val();
         if(parseInt(input_quantity) > 0 && str_pro_id.trim() != ''){
-            ActinSite.addOneProductToCart(str_pro_id,input_quantity);
+            ActionSite.addOneProductToCart(str_pro_id,input_quantity);
         }else {
             alert('Bạn chưa chọn được sản phẩm vào giỏ hàng');
         }
