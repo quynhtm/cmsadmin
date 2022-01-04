@@ -13,7 +13,7 @@
                             <div>
                                 {{--<a href="#modal-quickView" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>--}}
                                 <a href="{{buildLinkDetailProduct($product->id,$product->product_name,$product->category_name)}}" title="{{$product->product_name}}" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--quick uk-border-circle"></a>
-                                <a href="" class="home__product__card__stock__icon home__product__card__stock__icon--cart uk-border-circle"></a>
+                                <a href="javascript:void(0)" onclick="ActinSite.addOneProductToCart('{{setStrVar($product->id)}}',1);" class="home__product__card__stock__icon home__product__card__stock__icon--cart uk-border-circle"></a>
                                 <a href="#modal-wishList" uk-toggle class="home__product__card__stock__icon home__product__card__stock__icon--wishList uk-border-circle"></a>
                             </div>
                         </div>

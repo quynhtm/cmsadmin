@@ -16,6 +16,8 @@ define('MSG_PERMISSION_ERROR','Bạn không có quyền thao tác.');
 define('IMAGE_DIRECTORY','uploads');
 define('AUDIO_DIRECTORY','demo');
 
+define('SESSION_SHOP_CART','shopping_cart');
+
 define('ES_TYPE', '_doc');
 define('LIMIT_ES_MAX', 100);
 define('PAGE_SCROLL', 3);

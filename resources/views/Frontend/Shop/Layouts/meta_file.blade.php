@@ -1,6 +1,7 @@
 <title>Pharmacy - <?= /** @var TYPE_NAME  */
     (isset($data['title'])) ? $data['title'] : ''; ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
 <!--CSS-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- UIkit CSS -->
@@ -18,3 +19,6 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.6/dist/js/uikit-icons.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="{{URL::asset('assets/frontend/shop/js/app.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/frontend/shop/js/ActionSite.js')}}"></script>
+
+

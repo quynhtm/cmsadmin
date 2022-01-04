@@ -34,6 +34,8 @@ Route::get('/hashtag/tag-{tag_id}/{tag_name}.html',array('as' => 'site.listProdu
 Route::get('/campaign/c{camp_id}/{camp_name}.html',array('as' => 'site.listProductWithCampaign','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithCampaign'));//list sản phẩm theo campagn
 
 
+//Action site
+Route::post('/ajaxAddCart', array('as' => 'site.ajaxAddCart','uses' => DIR_PRO_FRONTEND.'\AjaxActionShopController@ajaxAddCart'));
 
 //Gio hang
 Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCart'));
@@ -41,7 +43,6 @@ Route::get('/dat-hang.html', array('as' => 'site.indexCartOrder1','uses' => DIR_
 Route::get('/xac-nhan-dat-hang.html', array('as' => 'site.indexCartOrder2','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder2'));
 Route::get('/thanh-toan.html', array('as' => 'site.indexCartOrder3','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder3'));
 
-Route::post('/ajaxAddCart', array('as' => 'site.ajaxAddCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@ajaxAddCart'));
 //Route::post('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@cartProduct'));
 //Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@deleteOneItemInCart'));
 //Route::get('/thong-tin-thanh-toan.html', array('as' => 'site.inforRepaymentsOrder','uses' => DIR_PRO_FRONTEND.'\SiteShopController@inforRepaymentsOrder'));
