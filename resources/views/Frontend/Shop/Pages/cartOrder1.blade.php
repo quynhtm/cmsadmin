@@ -17,9 +17,7 @@
                                     <div class="uk-width-1-2 chitiettintuc__boxComment__column">
                                         <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                             <select name="customer_gender" id="customer_gender" required>
-                                                <option value="">Danh xưng *</option>
-                                                <option value="1">Ông (Mr.)</option>
-                                                <option value="2">Bà (Mrs.)</option>
+                                                {!! $optionGender !!}
                                             </select>
                                             <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                 <span></span>
@@ -46,9 +44,7 @@
                                     <div class="uk-width-1-3@s chitiettintuc__boxComment__column">
                                         <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                             <select name="customer_wards" id="customer_wards" required>
-                                                <option value="">Phường/Xã *</option>
-                                                <option value="1">Ông (Mr.)</option>
-                                                <option value="2">Bà (Mrs.)</option>
+                                                {!! $optionWards !!}
                                             </select>
                                             <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                 <span></span>
@@ -59,9 +55,7 @@
                                     <div class="uk-width-1-3@s chitiettintuc__boxComment__column">
                                         <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                             <select name="customer_district" id="customer_district" required>
-                                                <option value="">Quận/ Huyện *</option>
-                                                <option value="1">Ông (Mr.)</option>
-                                                <option value="2">Bà (Mrs.)</option>
+                                                {!! $optionDistrict !!}
                                             </select>
                                             <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                 <span></span>
@@ -72,9 +66,7 @@
                                     <div class="uk-width-1-3@s chitiettintuc__boxComment__column">
                                         <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                             <select name="customer_province" id="customer_province" required>
-                                                <option value="">Tỉnh/ Thành phố</option>
-                                                <option value="1">Ông (Mr.)</option>
-                                                <option value="2">Bà (Mrs.)</option>
+                                                {!! $optionProvince !!}
                                             </select>
                                             <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                 <span></span>

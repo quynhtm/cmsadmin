@@ -7,14 +7,10 @@
 */
 namespace App\Http\Controllers;
 
-use App\Models\OpenId\DepartmentOrg;
-use App\Models\OpenId\MenuSystem;
-use App\Models\OpenId\Province;
-use App\Models\Selling\Campaigns;
 use App\Library\AdminFunction\FunctionLib;
 use Illuminate\Support\Facades\Response;
 
-class AjaxCommonController extends BaseAdminController
+class AjaxCommonController extends Controller
 {
     public function getOptionCommon(){
         $dataRequest = $_POST;

@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Curl;
 use App\Library\AdminFunction\Memcache;
+use App\Models\BackendCms\DefineSystem;
 use App\Models\Shop\Products;
 use App\Models\Web\Banner;
 use App\Models\Web\Category;
@@ -24,6 +25,11 @@ class ServiceCommon
 {
     public function getOptionPartner(){
         return app(Partner::class)->getOptionPartner();
+    }
+
+    public function getSiteOptionTypeDefine($define_code = '', $project_code = DEFINE_ALL, $language = DEFINE_LANGUAGE_VN)
+    {
+        return app(DefineSystem::class)->getOptionTypeDefine($define_code, $project_code, $language);
     }
 
     public function getSiteBannerHeaderBig($partner = STATUS_INT_MOT){

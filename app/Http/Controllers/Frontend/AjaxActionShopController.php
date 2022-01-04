@@ -65,6 +65,7 @@ class AjaxActionShopController extends BaseSiteController
             if (Session::has($this->sessionCart)) {
                 $dataCart = Session::get($this->sessionCart);
                 $data = isset($dataCart['cartProducts']) ? $dataCart['cartProducts'] : [];
+                $cartCustomer = isset($dataCart['cartCustomer']) ? $dataCart['cartCustomer'] : false;
                 if (isset($data[$product_id])) {
                     $data[$product_id]['number'] += $number;
                     if ($data[$product_id]['number'] > LIMIT_RECORD_50) {
@@ -93,7 +94,7 @@ class AjaxActionShopController extends BaseSiteController
                 ];
             }
 
-            Session::put($this->sessionCart, ['cartProducts' => $data], 60 * 24);
+            Session::put($this->sessionCart, ['cartProducts' => $data, 'cartCustomer' => isset($cartCustomer)?$cartCustomer:[]], 60 * 24);
             Session::save();
             $totalCart = 0;
             $dataCart = Session::get($this->sessionCart);
@@ -117,10 +118,11 @@ class AjaxActionShopController extends BaseSiteController
             if (Session::has($this->sessionCart)) {
                 $dataCart = Session::get($this->sessionCart);
                 $data = isset($dataCart['cartProducts']) ? $dataCart['cartProducts'] : [];
+                $cartCustomer = isset($dataCart['cartCustomer']) ? $dataCart['cartCustomer'] : [];
                 if (isset($data[$product_id])) {
                     unset($data[$product_id]);
                 }
-                Session::put($this->sessionCart, ['cartProducts' => $data], 60 * 24);
+                Session::put($this->sessionCart, ['cartProducts' => $data,'cartCustomer' =>$cartCustomer], 60 * 24);
                 Session::save();
                 $result = ['intIsOK' => STATUS_INT_MOT, 'msg' => 'Bỏ sản phẩm ra giỏ hàng thành công'];
             }

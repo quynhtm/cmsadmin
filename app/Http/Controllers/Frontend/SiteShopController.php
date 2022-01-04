@@ -464,10 +464,24 @@ class SiteShopController extends BaseSiteController
                 return Redirect::route('site.indexCartOrder2');
             }
         }
+        $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Danh xưng *'] + $arrGender, isset($dataForm['customer_gender']) ? $dataForm['customer_gender'] : STATUS_INT_MOT);
+
+        $arrWards = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionWards = FunctionLib::getOption([DEFINE_NULL => 'Phường/ Xã *'] + $arrWards, isset($dataForm['customer_wards']) ? $dataForm['customer_wards'] : STATUS_INT_MOT);
+        $arrDistrict = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionDistrict = FunctionLib::getOption([DEFINE_NULL => 'Quận/ Huyện *'] + $arrDistrict, isset($dataForm['customer_district']) ? $dataForm['customer_district'] : STATUS_INT_MOT);
+        $arrProvince = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Tỉnh/ Thành phố *'] + $arrProvince, isset($dataForm['customer_province']) ? $dataForm['customer_province'] : STATUS_INT_MOT);
+
         $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder1', array_merge([
             'cartCustomer' => $cartCustomer,
             'cartShop' => $cartProducts,
+            'optionGender' => $optionGender,
+            'optionWards' => $optionWards,
+            'optionDistrict' => $optionDistrict,
+            'optionProvince' => $optionProvince,
         ], $this->outDataCommon));
     }
 
