@@ -402,7 +402,34 @@ class SiteShopController extends BaseSiteController
     //giỏ hàng
     public function indexCart()
     {
-        return view('Frontend.Shop.Pages.cart');
+        $cartShop = Session::get(SESSION_SHOP_CART);
+        if (empty($cartShop)) {
+            return Redirect::route('site.home');
+        }
+
+        //cập nhật số lượng sản phẩm trong giỏ hàng
+        if (!empty($_POST)) {
+            $token = Request::get('_token', '');
+            $quantity = Request::get('quantity', []);
+            if (Session::token() === $token) {
+                if (!empty($quantity)) {
+                    foreach ($quantity as $pro_id => $number) {
+                        if (isset($cartShop[$pro_id]) && $cartShop[$pro_id]['number'] != $number) {
+                            $cartShop[$pro_id]['number'] = $number;
+                        }
+                    }
+                    Session::put(SESSION_SHOP_CART, $cartShop, 60 * 24);
+                    Session::save();
+                }
+            }
+        }
+        $this->getCommonSite();
+        //$this->commonService->getSeoSite();
+
+        return view('Frontend.Shop.Pages.cart', array_merge([
+            'cartShop' => $cartShop,
+        ], $this->outDataCommon));
+
     }
 
     //đặt hàng

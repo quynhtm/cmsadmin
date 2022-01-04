@@ -17,82 +17,58 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="uk-flex-middle uk-grid-small uk-grid-24-m" uk-grid>
-                                        <div class="uk-width-auto">
-                                            <a href="" class="quantam__table__close"></a>
-                                        </div>
-                                        <div class="uk-width-expand">
-                                            <div class="uk-grid-small uk-grid-20-m uk-flex-middle" uk-grid>
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container quantam__table__cover">
-                                                        <div class="uk-position-cover">
-                                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img3.png" alt="">
+                            <?
+                                $totalMoneyCart = 0;
+                            ?>
+                            @foreach($cartShop as $kyc => $pro_cart)
+                                <?
+                                    $pro_cart = (object)$pro_cart;
+                                    $price_item = $pro_cart->number*$pro_cart->product_price_sell;
+                                    $totalMoneyCart = $totalMoneyCart + $price_item;
+                                ?>
+                                <tr>
+                                    <td>
+                                        <div class="uk-flex-middle uk-grid-small uk-grid-24-m" uk-grid>
+                                            <div class="uk-width-auto">
+                                                <a href="" class="quantam__table__close"></a>
+                                            </div>
+                                            <div class="uk-width-expand">
+                                                <div class="uk-grid-small uk-grid-20-m uk-flex-middle" uk-grid>
+                                                    <div class="uk-width-auto">
+                                                        <div class="uk-cover-container quantam__table__cover">
+                                                            <div class="uk-position-cover">
+                                                                <a href="{{buildLinkDetailProduct($pro_cart->product_id,$pro_cart->product_name,$pro_cart->category_name)}}" title="{{$pro_cart->product_name}}" target="_blank">
+                                                                    <img class="uk-responsive-height uk-responsive-width" src="{{getLinkImageShow(FOLDER_PRODUCT.'/'.$pro_cart->product_id,$pro_cart->product_image)}}" alt="{{$pro_cart->product_name}}">
+                                                                </a>
+                                                            </div>
+                                                            <canvas width="80" height="80"></canvas>
                                                         </div>
-                                                        <canvas width="80" height="80"></canvas>
                                                     </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 quantam__table__title"><a href="">EllaOne Film-Coated tablet Contraception</a></h4>
-                                                    <div class="quantam__table__price">30ml</div>
+                                                    <div class="uk-width-expand">
+                                                        <h4 class="uk-h4 quantam__table__title"><a href="{{buildLinkDetailProduct($pro_cart->product_id,$pro_cart->product_name,$pro_cart->category_name)}}" title="{{$pro_cart->product_name}}" target="_blank">{{$pro_cart->product_name}}</a></h4>
+                                                        <div class="quantam__table__price">{{$pro_cart->category_name}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td><span class="quantam__table__price">310.000đ</span></td>
-                                <td>
-                                    <div class="uk-position-relative uk-display-inline-block">
-                                        <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--minues"></a>
-                                        <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--plus"></a>
-                                        <input class="uk-input uk-form-width-small modal__quickView__input" type="text" placeholder="" value="1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="quantam__table__price quantam__table__price--c1">19.000đ</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="uk-flex-middle uk-grid-small uk-grid-24-m" uk-grid>
-                                        <div class="uk-width-auto">
-                                            <a href="" class="quantam__table__close"></a>
+                                    </td>
+                                    <td><span class="quantam__table__price">{{numberFormat($pro_cart->product_price_sell)}}đ</span></td>
+                                    <td>
+                                        <div class="uk-position-relative uk-display-inline-block">
+                                            <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--minues"></a>
+                                            <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--plus"></a>
+                                            <input class="uk-input uk-form-width-small modal__quickView__input" type="text" placeholder="" value="{{$pro_cart->number}}">
                                         </div>
-                                        <div class="uk-width-expand">
-                                            <div class="uk-grid-small uk-grid-20-m uk-flex-middle" uk-grid>
-                                                <div class="uk-width-auto">
-                                                    <div class="uk-cover-container quantam__table__cover">
-                                                        <div class="uk-position-cover">
-                                                            <img class="uk-responsive-height uk-responsive-width" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/spnoibat/img6.png" alt="">
-                                                        </div>
-                                                        <canvas width="80" height="80"></canvas>
-                                                    </div>
-                                                </div>
-                                                <div class="uk-width-expand">
-                                                    <h4 class="uk-h4 quantam__table__title"><a href="">Ibuprofen 250mg capsules x18</a></h4>
-                                                    <div class="quantam__table__price">Bottle</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><span class="quantam__table__price">320.000đ</span></td>
-                                <td>
-                                    <div class="uk-position-relative uk-display-inline-block">
-                                        <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--minues"></a>
-                                        <a href="javascript: void(0)" class="modal__quickView__btnCount modal__quickView__btnCount--plus"></a>
-                                        <input class="uk-input uk-form-width-small modal__quickView__input" type="text" placeholder="" value="1">
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="quantam__table__price quantam__table__price--c1">27.000đ</span>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <span class="quantam__table__price quantam__table__price--c1">{{numberFormat($price_item)}}đ</span>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <a href="" class="quantam__btnBack uk-button uk-button-default"><span>Tiếp tục mua hàng</span></a>
+                    <a href="{{buildLinkHome()}}" class="quantam__btnBack uk-button uk-button-default"><span>Tiếp tục mua hàng</span></a>
                 </div>
                 <div class="uk-width-1-4@m">
                     <div class="giohang__card uk-card uk-card-default uk-card-body uk-padding-small">
@@ -116,7 +92,7 @@
                                         <span class="quantam__table__title">Tạm tính</span>
                                     </div>
                                     <div class="uk-width-auto">
-                                        <span class="quantam__table__price">402.000đ</span>
+                                        <span class="quantam__table__price" id="totalMoneyCart1">{{numberFormat($totalMoneyCart)}}đ</span>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +112,7 @@
                                         <span class="quantam__table__title">Tổng tiền</span>
                                     </div>
                                     <div class="uk-width-auto">
-                                        <span class="quantam__table__price quantam__table__price--c1 quantam__table__price--c2">402.000đ</span>
+                                        <span class="quantam__table__price quantam__table__price--c1 quantam__table__price--c2" id="totalMoneyCart2">{{numberFormat($totalMoneyCart)}}đ</span>
                                     </div>
                                 </div>
                             </div>
