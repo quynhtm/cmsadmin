@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal__wishList__item">
+                            <div class="modal__wishList__item" style="display: none">
                                 <h3 class="uk-h3 modal__quickView__titleTag">Tags:</h3>
                                 <div class="modal__quickView__boxTag">
                                     <a href="" class="uk-button uk-button-default uk-button-small uk-border-pill">Kem</a>
