@@ -63,7 +63,8 @@ class AjaxActionShopController extends BaseSiteController
                 return Response::json($result);
             }
             if (Session::has($this->sessionCart)) {
-                $data = Session::get($this->sessionCart);
+                $dataCart = Session::get($this->sessionCart);
+                $data = isset($dataCart['cartProducts']) ? $dataCart['cartProducts'] : [];
                 if (isset($data[$product_id])) {
                     $data[$product_id]['number'] += $number;
                     if ($data[$product_id]['number'] > LIMIT_RECORD_50) {
@@ -92,11 +93,11 @@ class AjaxActionShopController extends BaseSiteController
                 ];
             }
 
-            Session::put($this->sessionCart, $data, 60 * 24);
+            Session::put($this->sessionCart, ['cartProducts' => $data], 60 * 24);
             Session::save();
             $totalCart = 0;
             $dataCart = Session::get($this->sessionCart);
-            foreach ($dataCart as $pro => $v) {
+            foreach ($dataCart['cartProducts'] as $pro => $v) {
                 if (isset($v['number']) && $v['number'] > 0) {
                     $totalCart += $v['number'];
                 }
@@ -114,11 +115,12 @@ class AjaxActionShopController extends BaseSiteController
         $product_id = getStrVar($pid);
         if ($product_id > 0) {
             if (Session::has($this->sessionCart)) {
-                $data = Session::get($this->sessionCart);
+                $dataCart = Session::get($this->sessionCart);
+                $data = isset($dataCart['cartProducts']) ? $dataCart['cartProducts'] : [];
                 if (isset($data[$product_id])) {
                     unset($data[$product_id]);
                 }
-                Session::put($this->sessionCart, $data, 60 * 24);
+                Session::put($this->sessionCart, ['cartProducts' => $data], 60 * 24);
                 Session::save();
                 $result = ['intIsOK' => STATUS_INT_MOT, 'msg' => 'Bỏ sản phẩm ra giỏ hàng thành công'];
             }

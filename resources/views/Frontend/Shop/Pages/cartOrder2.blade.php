@@ -10,10 +10,10 @@
                         <h3 class="uk-h3 dathang__box__title">1. Người đặt & địa chỉ giao hàng</h3>
                     </div>
                     <div class="footer__center__item16">
-                        <div class="xacnhandonhang__txt1">Trần Văn A</div>
-                        <div class="xacnhandonhang__txt1">Số 102, Hoàng Đạo Thuý, Trung Hoà Nhân Chính, Cầu Giấy, Hà Nội</div>
+                        <div class="xacnhandonhang__txt1">@if(isset($cartCustomer['customer_name'])) {{$cartCustomer['customer_name']}} @endif</div>
+                        <div class="xacnhandonhang__txt1">@if(isset($cartCustomer['customer_address'])) {{$cartCustomer['customer_address']}} @endif</div>
                     </div>
-                    <a href="" class="uk-position-top-right xacnhandonhang__edit">Chỉnh sửa</a>
+                    <a href="{{URL::route('site.indexCartOrder1')}}" class="uk-position-top-right xacnhandonhang__edit">Chỉnh sửa</a>
                 </div>
                 <div class="dathang__box__item">
                     <div class="footer__center__item16">
@@ -32,126 +32,32 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Hand Creams for Dry, Sensitive Skin</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">310.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Ibuprofen 500mg Capsule</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">49.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Cetirizine 25mg Film-coated Tablets</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">27.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Film-coated tablet 250 mg 30 pieces</a></h4>
-                                                <div class="quantam__table__price">Bottle</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">320.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Solgar ESTER 250 PLUS Kapsul 500MG A50</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">19.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Ibuprofen 150mg Capsule</a></h4>
-                                                <div class="quantam__table__price">Bottle</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">32.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Ibuprofen 250mg capsules x18</a></h4>
-                                                <div class="quantam__table__price">Bottle</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">49.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">EllaOne Film-Coated tablet Contraception</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">19.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">VICHY LIFTACTIV Supreme Serum 10 30ML</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">32.000đ</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="uk-h4 quantam__table__title"><a href="">Bioderma Atoderm Intensive Gel 250ml</a></h4>
-                                                <div class="quantam__table__price">30ml</div>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__title">Số lượng: 1</span>
-                                            </td>
-                                            <td>
-                                                <span class="quantam__table__price quantam__table__price--c1">320.000đ</span>
-                                            </td>
-                                        </tr>
+                                        <?
+                                        $totalMoneyCart = 0;
+                                        ?>
+                                        @foreach($cartShop as $kyc => $pro_cart)
+                                            <?
+                                            $pro_cart = (object)$pro_cart;
+                                            $price_item = $pro_cart->number*$pro_cart->product_price_sell;
+                                            $totalMoneyCart = $totalMoneyCart + $price_item;
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <h4 class="uk-h4 quantam__table__title">
+                                                        <a href="{{buildLinkDetailProduct($pro_cart->product_id,$pro_cart->product_name,$pro_cart->category_name)}}" title="{{$pro_cart->product_name}}" target="_blank">
+                                                            {{$pro_cart->product_name}}
+                                                        </a>
+                                                    </h4>
+                                                    <div class="quantam__table__price">{{$pro_cart->category_name}}</div>
+                                                </td>
+                                                <td>
+                                                    <span class="quantam__table__title">Số lượng: {{$pro_cart->number}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="quantam__table__price quantam__table__price--c1">{{numberFormat($price_item)}}đ</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -174,7 +80,7 @@
                                                 <span class="quantam__table__title">Tạm tính</span>
                                             </div>
                                             <div class="uk-width-auto">
-                                                <span class="quantam__table__price">402.000đ</span>
+                                                <span class="quantam__table__price">{{numberFormat($totalMoneyCart)}}đ</span>
                                             </div>
                                         </div>
                                     </div>
@@ -184,7 +90,7 @@
                                                 <span class="quantam__table__title">Phí vận chuyển</span>
                                             </div>
                                             <div class="uk-width-auto">
-                                                <span class="quantam__table__price">20.000đ</span>
+                                                <span class="quantam__table__price">{{numberFormat($priceShip)}}đ</span>
                                             </div>
                                         </div>
                                     </div>
@@ -204,14 +110,14 @@
                                                 <span class="quantam__table__title">Tổng tiền</span>
                                             </div>
                                             <div class="uk-width-auto">
-                                                <span class="quantam__table__price quantam__table__price--c1 quantam__table__price--c2">422.000đ</span>
+                                                <span class="quantam__table__price quantam__table__price--c1 quantam__table__price--c2">{{numberFormat($totalMoneyCart+$priceShip)}}đ</span>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column marginT20 text-center">
+                                        <a href="{{URL::route('site.indexCartOrder3')}}" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Tiếp tục</span></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="uk-width-1-1 chitiettintuc__boxComment__column">
-                                <a href="{{URL::route('site.indexCartOrder3')}}" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Tiếp tục</span></a>
                             </div>
                         </div>
                     </div>

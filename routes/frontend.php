@@ -40,9 +40,9 @@ Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart',
 
 //Gio hang
 Route::get('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCart'));
-Route::get('/dat-hang.html', array('as' => 'site.indexCartOrder1','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder1'));
-Route::get('/xac-nhan-dat-hang.html', array('as' => 'site.indexCartOrder2','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder2'));
-Route::get('/thanh-toan.html', array('as' => 'site.indexCartOrder3','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder3'));
+Route::match(['GET', 'POST'], '/dat-hang.html', array('as' => 'site.indexCartOrder1','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder1'));
+Route::match(['GET', 'POST'], '/xac-nhan-dat-hang.html', array('as' => 'site.indexCartOrder2','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder2'));
+Route::match(['GET', 'POST'], '/thanh-toan.html', array('as' => 'site.indexCartOrder3','uses' => DIR_PRO_FRONTEND.'\SiteShopController@indexCartOrder3'));
 
 //Route::post('/gio-hang.html', array('as' => 'site.cartProduct','uses' => DIR_PRO_FRONTEND.'\SiteShopController@cartProduct'));
 //Route::post('/deleteOneProductInCart', array('as' => 'site.deleteOneItemInCart','uses' => DIR_PRO_FRONTEND.'\ShopCartController@deleteOneItemInCart'));

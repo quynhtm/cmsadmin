@@ -7,13 +7,17 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
-class BaseSiteController extends Controller{
+class BaseSiteController extends Controller
+{
     private $is_debug = false;
-	public function __construct(){
+
+    public function __construct()
+    {
         CGlobal::$is_debug = false;
     }
 
-	public function header($action = STATUS_INT_KHONG){
+    public function header($action = STATUS_INT_KHONG)
+    {
         $title_search = Request::get('title_search', '');
         $depart_search = (int)Request::get('depart_search', STATUS_INT_KHONG);
 
@@ -31,7 +35,7 @@ class BaseSiteController extends Controller{
             //5=>['url'=>'#','title'=>'Hàng nhập khẩu Nhật','image'=>\Illuminate\Support\Facades\Config::get('config.WEB_ROOT').'/assets/frontend/shop/cuatui/bannerShop/Nhat2.jpg'],
             //5=>['url'=>buildLinkProductWithDepart(4,'Hàng nhập khẩu Úc'),'title'=>'Hàng nhập khẩu Úc','image'=>\Illuminate\Support\Facades\Config::get('config.WEB_ROOT').'/assets/frontend/shop/cuatui/bannerShop/Uc.png'],
             //6=>['url'=>buildLinkProductWithDepart(4,'Hàng nhập khẩu Úc'),'title'=>'Hàng nhập khẩu Úc','image'=>\Illuminate\Support\Facades\Config::get('config.WEB_ROOT').'/assets/frontend/shop/cuatui/bannerShop/Uc2.jpg'],
-            7=>['url'=>'https://shp.ee/gtqm3kr','title'=>'Shoppe voucher','image'=>\Illuminate\Support\Facades\Config::get('config.WEB_ROOT').'/assets/frontend/shop/cuatui/bannerShop/shopee.jpg'],
+            7 => ['url' => 'https://shp.ee/gtqm3kr', 'title' => 'Shoppe voucher', 'image' => \Illuminate\Support\Facades\Config::get('config.WEB_ROOT') . '/assets/frontend/shop/cuatui/bannerShop/shopee.jpg'],
         ];
         $key_banner = 7;
         //$key_banner = rand(1,6);
@@ -47,33 +51,40 @@ class BaseSiteController extends Controller{
             'totalItemCart' => $dataCart['total_cart'],
             'totalMoneyCart' => $dataCart['total_money'],
         ]);
-	}
+    }
 
-    public function footer($action = STATUS_INT_KHONG){
+    public function footer($action = STATUS_INT_KHONG)
+    {
         return View::make('site.SiteLayouts.footer', [
             'action' => $action,
         ]);
-	}
+    }
 
-    public function countNumCart(){
+    public function countNumCart()
+    {
         $dataCart = [];
         $total_cart = $total_money = 0;
-        if(Session::has(SESSION_SHOP_CART)){
+        if (Session::has(SESSION_SHOP_CART)) {
             $dataCart = Session::get(SESSION_SHOP_CART);
-             foreach($dataCart as $pro=>$v){
-                if(isset($v['number']) && $v['number'] > 0){
-                    $total_cart += $v['number'];
-                    $total_money +=($v['product_price_sell']*$v['number']);
+            if(isset($dataCart['cartProducts'])){
+                foreach ($dataCart['cartProducts'] as $pro => $v) {
+                    if (isset($v['number']) && $v['number'] > 0) {
+                        $total_cart += $v['number'];
+                        $total_money += ($v['product_price_sell'] * $v['number']);
+                    }
                 }
             }
         }
-        return ['data'=>$dataCart,'total_cart'=>$total_cart,'total_money'=>$total_money];
+        return ['data' => $dataCart, 'total_cart' => $total_cart, 'total_money' => $total_money];
     }
 
-	public function page403(){
-		echo '403';
-	}
-	public function page404(){
-		echo '404';
-	}
+    public function page403()
+    {
+        echo '403';
+    }
+
+    public function page404()
+    {
+        echo '404';
+    }
 }

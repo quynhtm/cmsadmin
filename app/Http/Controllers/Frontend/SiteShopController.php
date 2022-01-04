@@ -28,6 +28,7 @@ class SiteShopController extends BaseSiteController
     private $outDataCommon = [];
     private $commonService;
     private $partner = STATUS_INT_MOT;
+    private $sessionCart = SESSION_SHOP_CART;
 
     public function __construct()
     {
@@ -35,6 +36,7 @@ class SiteShopController extends BaseSiteController
         $this->commonService = new ServiceCommon();
         $this->getInforCommoneSite();
     }
+
     public function getInforCommoneSite()
     {
         $dataCart = $this->countNumCart();
@@ -426,27 +428,10 @@ class SiteShopController extends BaseSiteController
     public function indexCart()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
+        $cartShop = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
         if (empty($cartShop)) {
             return Redirect::route('site.home');
         }
-
-        //cập nhật số lượng sản phẩm trong giỏ hàng
-        if (!empty($_POST)) {
-            $token = Request::get('_token', '');
-            $quantity = Request::get('quantity', []);
-            if (Session::token() === $token) {
-                if (!empty($quantity)) {
-                    foreach ($quantity as $pro_id => $number) {
-                        if (isset($cartShop[$pro_id]) && $cartShop[$pro_id]['number'] != $number) {
-                            $cartShop[$pro_id]['number'] = $number;
-                        }
-                    }
-                    Session::put(SESSION_SHOP_CART, $cartShop, 60 * 24);
-                    Session::save();
-                }
-            }
-        }
-
         $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cart', array_merge([
             'cartShop' => $cartShop,
@@ -457,27 +442,74 @@ class SiteShopController extends BaseSiteController
     //đặt hàng
     public function indexCartOrder1()
     {
+        $cartShop = Session::get(SESSION_SHOP_CART);
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
+        if (empty($cartProducts)) {
+            return Redirect::route('site.home');
+        }
+        if ($_POST) {
+            $dataForm = $_POST;
+            $dataCustomer = ['customer_gender' => $dataForm['customer_gender'],
+                'customer_name' => $dataForm['customer_name'],
+                'customer_address' => $dataForm['customer_address'],
+                'customer_phone' => $dataForm['customer_phone'],
+                'customer_email' => $dataForm['customer_email'],
+                'customer_wards' => $dataForm['customer_wards'],
+                'customer_district' => $dataForm['customer_district'],
+                'customer_province' => $dataForm['customer_province']];
+            if (Session::has($this->sessionCart)) {
+                Session::put($this->sessionCart, ['cartProducts' => $cartProducts, 'cartCustomer' => $dataCustomer], 60 * 24);
+                Session::save();
+                return Redirect::route('site.indexCartOrder2');
+            }
+        }
         $this->getInforCommoneSite();
-        return view('Frontend.Shop.Pages.cartOrder1');
+        return view('Frontend.Shop.Pages.cartOrder1', array_merge([
+            'cartCustomer' => $cartCustomer,
+            'cartShop' => $cartProducts,
+        ], $this->outDataCommon));
     }
 
     //Xác nhận đơn hàng
     public function indexCartOrder2()
     {
+        $cartShop = Session::get(SESSION_SHOP_CART);
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
+        if (empty($cartProducts)) {
+            return Redirect::route('site.home');
+        }
+        if ($_POST) {
+            return Redirect::route('site.indexCartOrder3');
+        }
         $this->getInforCommoneSite();
-        return view('Frontend.Shop.Pages.cartOrder2');
+        return view('Frontend.Shop.Pages.cartOrder2', array_merge([
+            'cartCustomer' => $cartCustomer,
+            'cartShop' => $cartProducts,
+            'priceShip' => 20000,
+        ], $this->outDataCommon));
     }
 
     //thanh toán
     public function indexCartOrder3()
     {
+        $cartShop = Session::get(SESSION_SHOP_CART);
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
+        if (empty($cartProducts)) {
+            return Redirect::route('site.home');
+        }
+        if ($_POST) {
+            return Redirect::route('site.indexCartOrder3');
+        }
         $this->getInforCommoneSite();
-        return view('Frontend.Shop.Pages.cartOrder3');
+        return view('Frontend.Shop.Pages.cartOrder3', array_merge([
+            'cartCustomer' => $cartCustomer,
+            'cartShop' => $cartProducts,
+            'priceShip' => 20000,
+        ], $this->outDataCommon));
     }
-
-
-
-
 
 
     public function listProductNew()
@@ -819,6 +851,7 @@ class SiteShopController extends BaseSiteController
      */
     public function cartProduct()
     {
+        return;
         $cartShop = Session::get(SESSION_SHOP_CART);
         if (empty($cartShop)) {
             return Redirect::route('site.home');
