@@ -16,6 +16,7 @@ use App\Library\AdminFunction\Security;
 use App\Models\BackendCms\Users;
 use App\Models\Shop\Products;
 use App\Models\Web\News;
+use App\Models\Web\Recruitment;
 use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
@@ -395,9 +396,41 @@ class SiteShopController extends BaseSiteController
 
     //Khác
     public function indexRecruitment()
-    {
+    {   $limit = CGlobal::number_show_10;
+        $page_no = (int)Request::get('page_no', 1);
+        $offset = ($page_no - 1) * $limit;
+        $search['page_no'] = $page_no;
+        $search['limit'] = $limit;
+        $search['p_keyword'] = Security::cleanText(addslashes(Request::get('p_keyword', '')));
+        $search['recruitment_position'] = Request::get('recruitment_position', 0);
+        $search['recruitment_province'] = Request::get('recruitment_province', 0);
+        $search['partner_id'] = $this->partner;
+
+        $result = app(Recruitment::class)->searchByCondition($search, $limit, $offset);
+        $dataList = $result['data'] ?? [];
+        $total = $result['total'] ?? STATUS_INT_KHONG;
+        $paging = $total > 0 ? Pagging::pagingFrontend(3, $page_no, $total, $limit, $search) : '';
+
+        $arrPosition = $this->commonService->getSiteOptionTypeDefine(DEFINE_VI_TRI_TUYEN_DUNG);
+        $optionPosition = FunctionLib::getOption([DEFINE_NULL => 'Chức vụ'] + $arrPosition, isset($search['recruitment_position']) ? $search['recruitment_position'] : DEFINE_NULL);
+
+        $arrProvince = $this->commonService->getSiteOptionTypeDefine(DEFINE_DIA_DIEM_TUYEN_DUNG);
+        $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Địa điểm'] + $arrProvince, isset($search['recruitment_province']) ? $search['recruitment_province'] : DEFINE_NULL);
+
         $this->getInforCommoneSite();
-        return view('Frontend.Shop.Pages.ListRecruitment');
+        return view('Frontend.Shop.Pages.ListRecruitment', array_merge([
+            'dataList' => $dataList,
+            'arrPosition' => $arrPosition,
+            'optionPosition' => $optionPosition,
+            'arrProvince' => $arrProvince,
+            'optionProvince' => $optionProvince,
+            'limit' => $limit,
+            'total' => $total,
+            'search' => $search,
+            'stt' => ($page_no - 1) * $limit,
+            'paging' => $paging,
+            'pageType' => STATUS_INT_MOT,
+        ], $this->outDataCommon));
     }
 
     public function indexDetailRecruitment()
@@ -424,7 +457,7 @@ class SiteShopController extends BaseSiteController
         return view('Frontend.Shop.Pages.registrationShop');
     }
 
-    //giỏ hàng
+    //giỏ hàng - done
     public function indexCart()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
@@ -439,7 +472,7 @@ class SiteShopController extends BaseSiteController
 
     }
 
-    //đặt hàng
+    //đặt hàng - done
     public function indexCartOrder1()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
@@ -486,7 +519,7 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
     }
 
-    //Xác nhận đơn hàng
+    //Xác nhận đơn hàng - done
     public function indexCartOrder2()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
@@ -516,7 +549,7 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
     }
 
-    //thanh toán
+    //thanh toán - done
     public function indexCartOrder3()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
@@ -539,7 +572,14 @@ class SiteShopController extends BaseSiteController
     }
 
 
-    public function listProductNew()
+
+
+
+
+
+
+
+    /*public function listProductNew()
     {
         $titleSearchName = env('PROJECT_NAME') . ' - Sản phẩm mới';
         $pageNo = (int)Request::get('page_no', 1);
@@ -574,7 +614,7 @@ class SiteShopController extends BaseSiteController
             'dataSearch' => $dataSearch,
             'dataCateWithDepart' => []
         ], $this->outDataCommon));
-    }
+    }*/
 
     /**
      * @param $cate_name
@@ -582,7 +622,7 @@ class SiteShopController extends BaseSiteController
      * @param $pro_name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function detailProduct($cate_name, $pro_id, $pro_name)
+    /*public function detailProduct($cate_name, $pro_id, $pro_name)
     {
         if ($pro_id <= 0) {
             return Redirect::route('site.home');
@@ -631,14 +671,14 @@ class SiteShopController extends BaseSiteController
             ], $this->outDataCommon));
         }
         return Redirect::route('site.home');
-    }
+    }*/
 
     /**
      * @param $depart_id
      * @param $name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function listProductWithDepart($depart_id, $name)
+    /*public function listProductWithDepart($depart_id, $name)
     {
         if ($depart_id <= 0) {
             return Redirect::route('site.home');
@@ -688,14 +728,14 @@ class SiteShopController extends BaseSiteController
             }
         }
         return Redirect::route('site.home');
-    }
+    }*/
 
     /**
      * @param $tag_id
      * @param $name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function listProductWithTag($tag_id, $name)
+    /*public function listProductWithTag($tag_id, $name)
     {
         if ($tag_id <= 0) {
             return Redirect::route('site.home');
@@ -745,14 +785,14 @@ class SiteShopController extends BaseSiteController
             }
         }
         return Redirect::route('site.home');
-    }
+    }*/
 
     /**
      * @param $tag_id
      * @param $name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function listProductWithCampaign($camp_id, $name)
+    /*public function listProductWithCampaign($camp_id, $name)
     {
         if ($camp_id <= 0) {
             return Redirect::route('site.home');
@@ -801,14 +841,14 @@ class SiteShopController extends BaseSiteController
             }
         }
         return Redirect::route('site.home');
-    }
+    }*/
 
     /**
      * @param $cate_id
      * @param $name
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function listProductWithCategory($cate_id, $name)
+    /*public function listProductWithCategory($cate_id, $name)
     {
         if ($cate_id <= 0) {
             return Redirect::route('site.home');
@@ -866,7 +906,7 @@ class SiteShopController extends BaseSiteController
             }
         }
         return Redirect::route('site.home');
-    }
+    }*/
 
     /**
      * Search tìm kiếm theo tên sản phẩm
@@ -876,7 +916,7 @@ class SiteShopController extends BaseSiteController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function cartProduct()
+    /*public function cartProduct()
     {
         return;
         $cartShop = Session::get(SESSION_SHOP_CART);
@@ -906,12 +946,12 @@ class SiteShopController extends BaseSiteController
         return view('site.SiteShop.cart', array_merge([
             'cartShop' => $cartShop,
         ], $this->outDataCommon));
-    }
+    }*/
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function inforRepaymentsOrder()
+    /*public function inforRepaymentsOrder()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
         if (empty($cartShop)) {
@@ -922,12 +962,12 @@ class SiteShopController extends BaseSiteController
         return view('site.SiteShop.inforRepaymentsOrder', array_merge([
             'cartShop' => $cartShop,
         ], $this->outDataCommon));
-    }
+    }*/
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function thanksBuy()
+    /*public function thanksBuy()
     {
         $pageNo = (int)Request::get('page_no', 1);
         $limit = LIMIT_RECORD_8;
@@ -960,12 +1000,12 @@ class SiteShopController extends BaseSiteController
             'dataSearch' => $dataSearch,
             'dataCateWithDepart' => []
         ], $this->outDataCommon));
-    }
+    }*/
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function contactShop222()
+    /*public function contactShop222()
     {
         //seo
         $titleSearchName = env('PROJECT_NAME') . ' - ' . ' Liên hệ với shopcuatui';
@@ -1023,7 +1063,7 @@ class SiteShopController extends BaseSiteController
             }
         }
         return $isOk;
-    }
+    }*/
 
     public function getCommonSite($action = STATUS_INT_KHONG)
     {
@@ -1043,7 +1083,7 @@ class SiteShopController extends BaseSiteController
     /***************************************************************************************************
      * Phần tin tức
      *****************************************************************************************************/
-    public function detailNew($cat_id, $new_id, $new_name)
+    /*public function detailNew($cat_id, $new_id, $new_name)
     {
         if ($new_id <= 0) {
             return Redirect::route('site.home');
@@ -1106,5 +1146,5 @@ class SiteShopController extends BaseSiteController
             ], $this->outDataCommon));
         }
         return Redirect::route('site.home');
-    }
+    }*/
 }

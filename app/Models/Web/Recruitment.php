@@ -23,6 +23,12 @@ class Recruitment extends BaseModel
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
+            if (isset($dataSearch['recruitment_position']) && $dataSearch['recruitment_position'] > STATUS_INT_KHONG) {
+                $query->where('recruitment_position', $dataSearch['recruitment_position']);
+            }
+            if (isset($dataSearch['recruitment_province']) && $dataSearch['recruitment_province'] > STATUS_INT_KHONG) {
+                $query->where('recruitment_province', $dataSearch['recruitment_province']);
+            }
             if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
                 $query->where('recruitment_status', $dataSearch['is_active']);
             }

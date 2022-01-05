@@ -3751,7 +3751,7 @@ body {
 
 @media (min-width: 960px) {
     .tuyendung__table__btn {
-        width: inherit
+        /*width: inherit*/
     }
 }
 

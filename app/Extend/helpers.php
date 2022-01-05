@@ -989,6 +989,12 @@ function buildLinkDetailProduct($pro_id = 0,$pro_name = 'sản phẩm',$cat_name
     }
     return '#';
 }
+function buildLinkDetailRecruitment($id = 0,$name = 'sản phẩm',$cat_name = 'tuyen-dung'){
+    if($id > 0){
+        return \Illuminate\Support\Facades\URL::route('site.indexDetailRecruitment', array('cat_name'=>strtolower(safe_title($cat_name)),'id'=>$id,'name'=>strtolower(safe_title($name))));
+    }
+    return '#';
+}
 
 function buildLinkProductWithDepart($depart_id = 0,$depart_name = 'danh muc'){
     if($depart_id > 0){
