@@ -31,6 +31,9 @@
                                     <div class="uk-width-1-1 chitiettintuc__boxComment__column" >
                                         <input class="uk-input chitiettintuc__boxComment__input" type="text" required name="customer_address" id="customer_address" @if(isset($cartCustomer['customer_address'])) value="{{$cartCustomer['customer_address']}}" @endif placeholder="Số nhà, ngõ/ ngách, đường (địa chỉ giao hàng) *">
                                     </div>
+                                    <div class="uk-width-1-1 chitiettintuc__boxComment__column" >
+                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" required name="customer_note" id="customer_note" @if(isset($cartCustomer['customer_note'])) value="{{$cartCustomer['customer_note']}}" @endif placeholder="Ghi chú cho đơn hàng">
+                                    </div>
                                 </div>
                             </div>
                             <div class="uk-width-1-2@s chitiettintuc__boxComment__column">

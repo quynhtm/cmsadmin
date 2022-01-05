@@ -66,9 +66,10 @@
                     <tr class="table-background-header">
                         <th width="4%" class="text-center">TT</th>
                         <th width="10%">Thông tin đơn</th>
+                        <th width="10%">Thông tin khác</th>
 
                         <th width="30%" class="text-center">DS Sản phẩm</th>
-                        <th width="40%" class="text-left">Thông tin khách hàng</th>
+                        <th width="30%" class="text-left">Thông tin khách hàng</th>
                         <th width="10%" class="text-center">Tình trạng</th>
                     </tr>
                     </thead>
@@ -76,13 +77,26 @@
                     @foreach ($data as $key => $item)
                         <tr @if($item->order_status == STATUS_INT_MOT) style="background: #c0a16b" @endif>
                             <td class="text-center text-middle">{{ $stt + $key+1 }}</td>
-                            <td>
+                            <td class="text-middle">
                                 Mã ĐH: <b>{{ $item->id }}</b>
                                 <br/>Tổng SL: <b>{{ $item->order_total_buy }}</b> sp
                                 <div class="clearfix"></div>
                                 <b class="red"> {{ numberFormat($item->order_total_money) }} đ</b>
                             </td>
-                            <td class="text-left">
+                            <td class="text-middle">
+                                @if(trim($item->order_discount_code) != '')
+                                    Voucher: <b>{{ $item->order_discount_code }}</b>
+                                    <div class="clearfix"></div>
+                                @endif
+                                @if($item->order_discount_price > 0)
+                                    Giảm: <b>{{ numberFormat($item->order_discount_price) }} đ</b>
+                                    <div class="clearfix"></div>
+                                @endif
+                                @if($item->order_shipping_fee > 0)
+                                    Ship: <b>{{ numberFormat($item->order_shipping_fee) }} đ</b>
+                                @endif
+                            </td>
+                            <td class="text-left text-middle">
                                 @foreach ($item->list_pro->orders_item as $key2 => $pro_order)
                                     {{$key2+1}}-<a class="image_link display_flex" target="_blank" href="{{buildLinkDetailProduct($pro_order->product_id, $pro_order->product_name, 'danh-muc')}}" title="{{$pro_order->product_name}}">
                                         [<b>{{$pro_order->product_id}}</b>](<b>{{$pro_order->number_buy}}</b>sp) {{$pro_order->product_name}}
@@ -92,7 +106,7 @@
                                     Note ĐH:<span class="red"> {{$item->order_note}}</span>
                                 @endif
                             </td>
-                            <td>
+                            <td class="text-left text-middle">
                                 @if($item->order_customer_name != '')N: <b>{{ $item->order_customer_name }}</b><br/>@endif
                                 @if($item->order_customer_phone != '')P: <a href="tel:{{ $item->order_customer_phone }}">{{ $item->order_customer_phone }}</a><br/>@endif
                                 @if($item->order_customer_email != '')E: {{ $item->order_customer_email }}<br/>@endif

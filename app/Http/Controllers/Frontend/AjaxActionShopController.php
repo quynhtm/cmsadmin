@@ -11,6 +11,8 @@ use App\Http\Controllers\BaseSiteController;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Security;
 
+use App\Models\Shop\Orders;
+use App\Models\Shop\OrdersItem;
 use App\Models\Shop\Products;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
@@ -169,35 +171,45 @@ class AjaxActionShopController extends BaseSiteController
                             $arrProductId[] = (int)trim($pro);
                         }
                         if (!empty($arrProductId)) {
-                            $search2['str_product_id'] = join(',', $arrProductId);
-                            $inforProduct = app(Product::class)->getProductForSite($search2, count($arrProductId), 0, false);
+                            $search['str_product_id'] = join(',', $arrProductId);
+                            $inforProduct = app(Products::class)->getProductForSite($search, count($arrProductId), 0, false);
 
                             if (!empty($inforProduct['data'])) {
+                                $discount_code = $cartCustomer['discount_code'];
+                                $discount_price = $cartCustomer['discount_price'];
+                                $shipping_fee = $cartCustomer['shipping_fee'];
+                                $partner_id = STATUS_INT_MOT;
                                 foreach ($inforProduct['data'] as $k1 => $pro1) {
-                                    $number_buy1 = isset($dataCart[$pro1->product_id]) ? (int)$dataCart[$pro1->product_id] : 0;
+                                    $number_buy1 = isset($cartProducts[$pro1->id]) ? (int)$cartProducts[$pro1->id] : 0;
                                     $total_product += $number_buy1;
                                     $total_money += $number_buy1 * $pro1->product_price_sell;
+                                    $partner_id = $pro1->partner_id;
                                 }
                                 //them vào bảng đơn hàng
                                 $dataUserOrder = array(
+                                    'partner_id' => $partner_id,
                                     'order_customer_name' => $txtName,
                                     'order_customer_phone' => $txtMobile,
                                     'order_customer_email' => $txtEmail,
                                     'order_customer_address' => $txtAddress,
                                     'order_customer_note' => $txtMessage,
                                     'order_product_id' => implode(',', $arrId),
+                                    'order_discount_code' => $discount_code,
+                                    'order_discount_price' => $discount_price,
+                                    'order_shipping_fee' => $shipping_fee,
+                                    'order_payment_methods' => $payment_methods,
                                     'order_total_buy' => $total_product,
-                                    'order_total_money' => $total_money,
+                                    'order_total_money' => (int)($total_money + $shipping_fee - $discount_price),
                                     'order_type' => STATUS_INT_KHONG,
                                     'order_time_creater' => time(),
                                     'order_status' => STATUS_INT_MOT,
                                 );
-                                $order_id = app(Order::class)->createItem($dataUserOrder);
+                                $order_id = app(Orders::class)->editItem($dataUserOrder);
 
                                 foreach ($inforProduct['data'] as $k => $pro) {
-                                    $number_buy = isset($dataCart[$pro->product_id]) ? (int)$dataCart[$pro->product_id] : 0;
-                                    $productOrder[$pro->product_id] = array(
-                                        'product_id' => $pro->product_id,
+                                    $number_buy = isset($cartProducts[$pro->id]) ? (int)$cartProducts[$pro->id] : 0;
+                                    $productOrder[$pro->id] = array(
+                                        'product_id' => $pro->id,
                                         'product_name' => $pro->product_name,
                                         'product_price_sell' => $pro->product_price_sell,
                                         'product_price_input' => $pro->product_price_input,
@@ -210,7 +222,7 @@ class AjaxActionShopController extends BaseSiteController
                                     );
                                 }
                                 if (!empty($productOrder)) {
-                                    app(OrderItem::class)->insertMultiple($productOrder);
+                                    app(OrdersItem::class)->insertMultiple($productOrder);
                                 }
                             }
                         }

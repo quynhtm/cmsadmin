@@ -52,8 +52,9 @@ var ActionSite = {
             data: {payment_methods: payment_methods, _token: _token},
             success: function (data) {
                 if (data.intIsOK === 1) {
-                    alert(data.msg);
-                    //window.location.reload();
+                    //$('#modal-order-success').modal('show');
+                    alert('Đặt hàng thành công');
+                    location.reload();
                 } else {
                     alert(data.msg);
                 }

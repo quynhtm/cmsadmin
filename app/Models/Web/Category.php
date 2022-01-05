@@ -264,4 +264,24 @@ class Category extends BaseModel
             }
         }
     }
+    public function getAllChildCategoryIdByParentId($parentId = 0)
+    {
+        //$data = Memcache::getCache(Memcache::CACHE_ALL_CHILD_CATEGORY_BY_PARENT_ID . $parentId);
+        $data = false;
+        if (!$data && $parentId > 0) {
+            $category = Category::where('id', '>', 0)
+                ->where('category_parent_id', '=', $parentId)
+                ->where('category_status', STATUS_INT_MOT)
+                ->orderBy('category_order', 'asc')->get();
+            if ($category) {
+                foreach ($category as $itm) {
+                    $data[$itm['id']] = $itm['category_name'];
+                }
+            }
+            if ($data) {
+                //Memcache::putCache(Memcache::CACHE_ALL_CHILD_CATEGORY_BY_PARENT_ID . $parentId, $data);
+            }
+        }
+        return $data;
+    }
 }

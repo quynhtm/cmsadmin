@@ -145,7 +145,7 @@
                             </div>
                         </div>
                         <div class="footer__center__item24">
-                            <a href="javascript:void(0)" onclick="ActionSite.submitOrderCart();" uk-toggle class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đặt hàng</span></a>
+                            <a href="javascript:void(0);" onclick="ActionSite.submitOrderCart();" uk-toggle class="uk-button uk-button-default chitiettintuc__boxComment__btn submitOrderCart" id="submitOrderCart"><span>Đặt hàng</span></a>
                         </div>
                     </form>
                 </div>
@@ -171,10 +171,20 @@
                         <div class="modal__order__txt">Cám ơn quý khách đã tin tưởng sử dụng dịch vụ và sản phẩm của chúng tôi.</div>
                     </div>
                     <div class="footer__center__item16">
-                        <a href="{{URL::route('site.home')}}" uk-toggle class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Quay lại trang chủ</span></a>
+                        <a href="{{URL::route('site.home')}}"  uk-toggle class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Quay lại trang chủ</span></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{--<script>
+        function doSomething(){
+            //alert("Click event is triggered on the link.");
+        }
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("a")[0].click();
+            });
+        });
+    </script>--}}
 @stop
