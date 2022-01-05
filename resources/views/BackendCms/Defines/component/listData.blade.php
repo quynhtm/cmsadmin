@@ -38,8 +38,8 @@
                     <th width="10%" class="text-left">{{viewLanguage('Define code')}}</th>
                     <th width="15%" class="text-left">{{viewLanguage('Define name')}}</th>
 
-                    <th width="15%" class="text-left">{{viewLanguage('Type code')}}</th>
-                    <th width="15%" class="text-left">{{viewLanguage('Type name')}}</th>
+                    <th width="10%" class="text-left">{{viewLanguage('Type code')}}</th>
+                    <th width="20%" class="text-left">{{viewLanguage('Type name')}}</th>
                     <th width="5%" class="text-center">{{viewLanguage('Order')}}</th>
                     <th width="5%" class="text-center">{{viewLanguage('Lang')}}</th>
                     <th width="12%" class="text-center"></th>

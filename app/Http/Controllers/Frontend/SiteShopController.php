@@ -443,8 +443,8 @@ class SiteShopController extends BaseSiteController
     public function indexCartOrder1()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
-        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
-        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : [];
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : [];
         if (empty($cartProducts)) {
             return Redirect::route('site.home');
         }
@@ -455,6 +455,7 @@ class SiteShopController extends BaseSiteController
                 'customer_address' => $dataForm['customer_address'],
                 'customer_phone' => $dataForm['customer_phone'],
                 'customer_email' => $dataForm['customer_email'],
+                'customer_note' => $dataForm['customer_note'],
                 'customer_wards' => $dataForm['customer_wards'],
                 'customer_district' => $dataForm['customer_district'],
                 'customer_province' => $dataForm['customer_province']];
@@ -489,19 +490,29 @@ class SiteShopController extends BaseSiteController
     public function indexCartOrder2()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
-        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
-        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : [];
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : [];
         if (empty($cartProducts)) {
             return Redirect::route('site.home');
         }
         if ($_POST) {
+            $dataForm = $_POST;
+
+            $cartCustomer['discount_code'] = $dataForm['discount_code'];
+            $cartCustomer['discount_price'] = (trim($dataForm['discount_code']) != '') ? 15000 : 0;
+            $cartCustomer['shipping_fee'] = $dataForm['shipping_fee'];
+
+            if (Session::has($this->sessionCart)) {
+                Session::put($this->sessionCart, ['cartProducts' => $cartProducts, 'cartCustomer' => $cartCustomer], 60 * 24);
+                Session::save();
+            }
             return Redirect::route('site.indexCartOrder3');
         }
         $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder2', array_merge([
             'cartCustomer' => $cartCustomer,
             'cartShop' => $cartProducts,
-            'priceShip' => 20000,
+            'shipping_fee' => 20000,
         ], $this->outDataCommon));
     }
 
@@ -509,19 +520,21 @@ class SiteShopController extends BaseSiteController
     public function indexCartOrder3()
     {
         $cartShop = Session::get(SESSION_SHOP_CART);
-        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : false;
-        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : false;
+        $cartProducts = isset($cartShop['cartProducts']) ? $cartShop['cartProducts'] : [];
+        $cartCustomer = isset($cartShop['cartCustomer']) ? $cartShop['cartCustomer'] : [];
         if (empty($cartProducts)) {
             return Redirect::route('site.home');
         }
         if ($_POST) {
             return Redirect::route('site.indexCartOrder3');
         }
+        $arrPaymentMethods = $this->commonService->getSiteOptionTypeDefine(DEFINE_PAYMENT_METHODS);
         $this->getInforCommoneSite();
         return view('Frontend.Shop.Pages.cartOrder3', array_merge([
+            'arrPaymentMethods' => $arrPaymentMethods,
             'cartCustomer' => $cartCustomer,
             'cartShop' => $cartProducts,
-            'priceShip' => 20000,
+            'shipping_fee' => 20000,
         ], $this->outDataCommon));
     }
 

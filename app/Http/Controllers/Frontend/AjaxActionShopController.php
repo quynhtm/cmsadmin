@@ -9,13 +9,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\BaseSiteController;
 use App\Library\AdminFunction\CGlobal;
-use App\Library\AdminFunction\FunctionLib;
-use App\Library\AdminFunction\Pagging;
 use App\Library\AdminFunction\Security;
 
 use App\Models\Shop\Products;
-use App\Models\Web\News;
-use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -131,6 +127,127 @@ class AjaxActionShopController extends BaseSiteController
     }
 
     public function sendOrderToCart()
+    {
+        $result = ['intIsOK' => 0, 'msg' => 'Đặt hàng bị lỗi'];
+        $payment_methods = $_POST['payment_methods'];
+        if((int)$payment_methods <= 0){
+            return Response::json($result);
+        }
+        $dataCart = $arrId = $search = $dataItem = array();
+        if (Session::has($this->sessionCart)) {
+            $dataCart = Session::get($this->sessionCart);
+        }
+        $cartProducts = isset($dataCart['cartProducts']) ? $dataCart['cartProducts'] : [];
+        $cartCustomer = isset($dataCart['cartCustomer']) ? $dataCart['cartCustomer'] : [];
+        if (empty($cartProducts)) {
+            return Response::json($result);
+        }
+
+        $arrId = array_keys($cartProducts);
+        if (!empty($_POST) && !empty($arrId)) {
+            $token = $_POST['_token'];
+            if (Session::token() === $token) {
+                $txtName = Security::cleanText(addslashes($cartCustomer['customer_name']));
+                $txtMobile = Security::cleanText(addslashes($cartCustomer['customer_phone']));
+                $txtEmail = Security::cleanText(addslashes($cartCustomer['customer_email']));
+                $txtAddress = Security::cleanText(addslashes($cartCustomer['customer_address']));
+                $txtMessage = Security::cleanText(addslashes($cartCustomer['customer_note']));
+
+                //Check Mail Regex
+                $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/';
+                if (!preg_match($regex, $txtEmail)) {
+                    $txtEmail = '';
+                }
+
+                if ($txtName != '' && $txtMobile != '' && $txtAddress != '') {
+                    $arrOrderProductId = $arrId;
+                    $total_money = $total_product = 0;
+                    $productOrder = $dataOrder = array();
+                    if (!empty($arrId)) {
+                        $arrProductId = array();
+                        foreach ($arrId as $pro) {
+                            $arrProductId[] = (int)trim($pro);
+                        }
+                        if (!empty($arrProductId)) {
+                            $search2['str_product_id'] = join(',', $arrProductId);
+                            $inforProduct = app(Product::class)->getProductForSite($search2, count($arrProductId), 0, false);
+
+                            if (!empty($inforProduct['data'])) {
+                                foreach ($inforProduct['data'] as $k1 => $pro1) {
+                                    $number_buy1 = isset($dataCart[$pro1->product_id]) ? (int)$dataCart[$pro1->product_id] : 0;
+                                    $total_product += $number_buy1;
+                                    $total_money += $number_buy1 * $pro1->product_price_sell;
+                                }
+                                //them vào bảng đơn hàng
+                                $dataUserOrder = array(
+                                    'order_customer_name' => $txtName,
+                                    'order_customer_phone' => $txtMobile,
+                                    'order_customer_email' => $txtEmail,
+                                    'order_customer_address' => $txtAddress,
+                                    'order_customer_note' => $txtMessage,
+                                    'order_product_id' => implode(',', $arrId),
+                                    'order_total_buy' => $total_product,
+                                    'order_total_money' => $total_money,
+                                    'order_type' => STATUS_INT_KHONG,
+                                    'order_time_creater' => time(),
+                                    'order_status' => STATUS_INT_MOT,
+                                );
+                                $order_id = app(Order::class)->createItem($dataUserOrder);
+
+                                foreach ($inforProduct['data'] as $k => $pro) {
+                                    $number_buy = isset($dataCart[$pro->product_id]) ? (int)$dataCart[$pro->product_id] : 0;
+                                    $productOrder[$pro->product_id] = array(
+                                        'product_id' => $pro->product_id,
+                                        'product_name' => $pro->product_name,
+                                        'product_price_sell' => $pro->product_price_sell,
+                                        'product_price_input' => $pro->product_price_input,
+                                        'product_category_id' => $pro->product_category_id,
+                                        'product_category_name' => $pro->product_category_name,
+                                        'product_type_price' => $pro->product_type_price,
+                                        'number_buy' => $number_buy,
+                                        'order_id' => $order_id,
+                                        'product_image' => $pro->product_image,
+                                    );
+                                }
+                                if (!empty($productOrder)) {
+                                    app(OrderItem::class)->insertMultiple($productOrder);
+                                }
+                            }
+                        }
+
+                    }
+
+                    //Gui Mail cho Khach Mua Hang
+                    /*if (!empty($productOrder)) {
+                        $emailCustomer = ($txtEmail != '') ? $txtEmail : CGlobal::emailAdmin;
+                        $dataCustomer = array(
+                            'txtName' => $txtName,
+                            'txtMobile' => $txtMobile,
+                            'txtEmail' => $emailCustomer,
+                            'txtAddress' => $txtAddress,
+                            'txtMessage' => $txtMessage,
+                            'dataItem' => $productOrder,
+
+                            'subjectMail' => 'Bạn đã đặt mua sản phẩm ngày' . date('d/m/Y h:i', time()),
+                            'templateMail' => 'SendOrderToMailCustomer',
+                        );
+
+                        $emailsCustomerShop = [$emailCustomer];
+                        $this->commonService->sendEmailCommon($emailsCustomerShop, $dataCustomer);
+                    }*/
+
+                    if (Session::has($this->sessionCart)) {
+                        Session::forget($this->sessionCart);
+                        $result['intIsOK'] = STATUS_INT_MOT;
+                        return Response::json($result);
+                    }
+                }
+            }
+        }
+        return Response::json($result);
+    }
+
+    public function sendOrderToCartOld()
     {
         $meta_title = $meta_keywords = $meta_description = 'Gửi thông tin đơn hàng';
         $meta_img = '';
