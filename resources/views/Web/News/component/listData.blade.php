@@ -75,7 +75,7 @@
                                 <img src="{{getLinkImageShow(FOLDER_NEWS.'/'.$item->id,$item->news_image)}}" width="70" height="40">
                             </td>
                             <td class="text-left middle">
-                                {{$item->news_title}}
+                                [{{$item->id}}] - {{$item->news_title}}
                                 @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
                             </td>
                             <td class="text-left middle">

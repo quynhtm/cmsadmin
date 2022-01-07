@@ -449,7 +449,7 @@ class SiteShopController extends BaseSiteController
             $titleSearchName = env('PROJECT_NAME') . ' - ' . $recruitment->recruitment_title;
             $meta_title = $titleSearchName;
             $meta_keywords = $titleSearchName;
-            $meta_description = limit_text_word($recruitment->product_sort_desc);
+            $meta_description = limit_text_word($recruitment->recruitment_description);
             $meta_img = '';
             $url_detail = buildLinkDetailRecruitment($recruitment->id, $recruitment->recruitment_title);
             $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
@@ -464,7 +464,7 @@ class SiteShopController extends BaseSiteController
             $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Địa điểm'] + $arrProvince, $recruitment->recruitment_province);
 
             $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
-            $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Danh xưng *'] + $arrGender,  DEFINE_NULL);
+            $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Giới tính'] + $arrGender,  DEFINE_NULL);
 
             $this->getInforCommoneSite();
             return view('Frontend.Shop.Pages.detailRecruitment', array_merge([

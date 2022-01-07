@@ -74,6 +74,8 @@
                                 </div>
                                 <div class="footer__center__item24">
                                     <form class="uk-grid-small uk-grid-30-m" uk-grid>
+                                        <input type="hidden" name="recruitment_id" id="recruitment_id" @if(isset($dataDetail['id']))value="{{$dataDetail['id']}}"@endif>
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                                 <select name="gender">
@@ -98,7 +100,7 @@
 
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select name="recruitment_position">
+                                                <select name="recruitment_position" disabled>
                                                     {!! $optionPosition !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
@@ -109,7 +111,7 @@
                                         </div>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select name="recruitment_province">
+                                                <select name="recruitment_province" disabled>
                                                     {!! $optionProvince !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">

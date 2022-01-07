@@ -28,10 +28,13 @@
                 <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" required>
                     {!! $optionPosition !!}}
                 </select>
+
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tỉnh thành')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="recruitment_province" id="{{$formName}}recruitment_province">
+                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" required>
+                    {!! $optionProvince !!}}
+                </select>
             </div>
         </div>
         <div class="row form-group">

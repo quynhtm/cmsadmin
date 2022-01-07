@@ -28,6 +28,12 @@
             @endif
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
+                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" required>
+                    {!! $optionProvince !!}}
+                </select>
+            </div>
+            <div class="form-group col-lg-2">
+                <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}
                 </select>
@@ -63,7 +69,7 @@
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
                             <td class="text-left middle">
-                                {{$item->recruitment_title}}
+                                [{{$item->id}}] - {{$item->recruitment_title}}
                                 @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
                             </td>
                             <td class="text-left middle">{{$item->recruitment_number}}</td>
@@ -73,7 +79,9 @@
                             <td class="text-left middle">{{$item->recruitment_experience}}</td>
 
                             <td class="text-left middle">{{$item->recruitment_salary}}</td>
-                            <td class="text-left middle">{{$item->recruitment_province}}</td>
+                            <td class="text-left middle">
+                                @if(isset($arrProvince[$item->recruitment_province])){{$arrProvince[$item->recruitment_province]}}@endif
+                            </td>
                             <td class="text-left middle">{{$item->recruitment_date_start}}</td>
                             <td class="text-left middle">{{$item->recruitment_date_end}}</td>
 

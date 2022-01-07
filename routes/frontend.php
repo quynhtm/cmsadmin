@@ -13,7 +13,7 @@ Route::get('tin-tuc/c{cat_id}/{new_id}-{new_name}.html',array('as' => 'site.inde
 Route::get('thong-tin-faq.html',array('as' => 'site.indexDetailFaq','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailFaq'));
 
 Route::match(['GET', 'POST'],'tuyen-dung.html',array('as' => 'site.indexRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRecruitment'));
-Route::get('/chi-tiet/{cat_name}-{id}/{name}.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
+Route::get('/chi-tiet/{cat_name}/{id}-{name}.html',array('as' => 'site.indexDetailRecruitment','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexDetailRecruitment'));
 
 Route::get('dang-nhap.html',array('as' => 'site.indexLoginShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexLoginShop'));
 Route::get('dang-ky.html',array('as' => 'site.indexRegistrationShop','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@indexRegistrationShop'));
