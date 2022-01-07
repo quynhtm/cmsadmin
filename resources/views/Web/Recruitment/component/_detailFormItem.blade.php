@@ -61,21 +61,21 @@
         <div class="row form-group">
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_description" id="recruitment_description"></textarea>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_description" id="recruitment_description">@if(isset($dataDetail['recruitment_description'])){!! $dataDetail['recruitment_description'] !!}@endif</textarea>
             </div>
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_request" id="{{$formName}}recruitment_request"></textarea>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_request" id="recruitment_request">@if(isset($dataDetail['recruitment_request'])){!! $dataDetail['recruitment_request'] !!}@endif</textarea>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Quyền lợi')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_benefits" id="{{$formName}}recruitment_benefits"></textarea>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_benefits" id="recruitment_benefits">@if(isset($dataDetail['recruitment_benefits'])){!! $dataDetail['recruitment_benefits'] !!}@endif</textarea>
             </div>
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu hồ sơ')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_request_profile" id="{{$formName}}recruitment_request_profile"></textarea>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_request_profile" id="recruitment_request_profile">@if(isset($dataDetail['recruitment_request_profile'])){!! $dataDetail['recruitment_request_profile'] !!}@endif</textarea>
             </div>
         </div>
     </div>

@@ -127,7 +127,9 @@ class RecruitmentController extends BaseAdminController
                 $dataDetail = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
+
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
+                    //myDebug($dataDetail);
                 }
 
                 $this->_outDataView($request, $dataDetail);
@@ -157,13 +159,12 @@ class RecruitmentController extends BaseAdminController
         $actionUpdate = 'actionUpdate';
         $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
         $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
-        myDebug($request);
         switch ($actionUpdate) {
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
-                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
-                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
+                if ($this->_validFormData($objectId, $request) && empty($this->error)) {
+                    $isEdit = $this->modelObj->editItem($request, $objectId);
                 }
                 if ($isEdit > 0) {
                     $dataDetail = $this->modelObj->getItemById($isEdit);
