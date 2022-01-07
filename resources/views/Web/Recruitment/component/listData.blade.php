@@ -55,8 +55,8 @@
                         <th width="15%" class="text-left">{{viewLanguage('Vị trí tuyển dụng')}}</th>
                         <th width="10%" class="text-left">{{viewLanguage('Kinh nghiệm')}}</th>
 
-                        <th width="15%" class="text-left">{{viewLanguage('Mức lương')}}</th>
-                        <th width="8%" class="text-left">{{viewLanguage('Tỉnh thành')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Mức lương')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Tỉnh thành')}}</th>
                         <th width="10%" class="text-left">{{viewLanguage('Ngày bắt đầu')}}</th>
                         <th width="10%" class="text-left">{{viewLanguage('Ngày kết thúc')}}</th>
 

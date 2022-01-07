@@ -139,6 +139,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="uk-width-1-3@m">
                         <div class="chitiettuyendung__cardRight uk-card uk-card-body uk-card-default uk-position-z-index" uk-sticky="offset: 100; bottom: true">
                             <div>
@@ -148,32 +149,32 @@
                                 <table class="chitiettuyendung__cardRight__table uk-table uk-table-small">
                                     <tbody>
                                     <tr>
-                                        <th>Vị trí:</th>
-                                        <td>Nhân viên bán hàng</td>
+                                        <th width="40%">Vị trí:</th>
+                                        <td width="60%"> @if(isset($arrPosition[$dataDetail->recruitment_position])){{$arrPosition[$dataDetail->recruitment_position]}}@endif</td>
                                     </tr>
                                     <tr>
                                         <th>Ngày bắt đầu:</th>
-                                        <td>09/10/2019</td>
+                                        <td> {{$dataDetail->recruitment_date_start}}</td>
                                     </tr>
                                     <tr>
                                         <th>Số lượng:</th>
-                                        <td>0/1 người</td>
+                                        <td> {!! $dataDetail->recruitment_number !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Kinh nghiệm:</th>
-                                        <td>2-3 năm</td>
+                                        <td> {!! $dataDetail->recruitment_experience !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Địa điểm:</th>
-                                        <td>Hà Nội</td>
+                                        <td>@if(isset($arrProvince[$dataDetail->recruitment_province])){{$arrProvince[$dataDetail->recruitment_province]}}@endif</td>
                                     </tr>
                                     <tr>
                                         <th>Mức lương:</th>
-                                        <td>Cạnh tranh</td>
+                                        <td> {!! $dataDetail->recruitment_salary !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Hạn nộp hồ sơ:</th>
-                                        <td>31/12/2019</td>
+                                        <td> {!! $dataDetail->recruitment_date_end !!}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -182,6 +183,7 @@
                     </div>
                 </div>
             </div>
+            @if(!empty($arrRecruitmentInvolve))
             <div class="home__item40">
                 <div class="footer__center__item24">
                     <div class="footer__center__item16">
@@ -189,104 +191,38 @@
                             <div class="uk-width-expand">
                                 <h2 class="uk-h2 tintuc__title">Các vị trí đang tuyển</h2>
                             </div>
-                            <div class="uk-width-auto">
-                                <span class="chitiettintuc__boxComment__checkTxt">Hiển thị 5/10 kết quả</span>
-                            </div>
                         </div>
                     </div>
                     <div class="footer__center__item16">
                         <table class="uk-table uk-table-divider uk-table-middle uk-table-small uk-table-responsive tuyendung__table" uk-toggle="cls: uk-table-hover; mode: media; media: @m">
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="tuyendung__table__title"><a href="">Nhân viên bán hàng</a></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">Chuyên viên</span></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
-                                </td>
-                                <td>
-                                    <span class="tuyendung__table__txt">Hạn nộp: 31/12/2020</span>
-                                </td>
-                                <td>
-                                    <a href="chitiettuyendung.php" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tuyendung__table__title"><a href="">Nhân viên bán hàng</a></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">Chuyên viên</span></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
-                                </td>
-                                <td>
-                                    <span class="tuyendung__table__txt">Hạn nộp: 31/12/2020</span>
-                                </td>
-                                <td>
-                                    <a href="chitiettuyendung.php" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tuyendung__table__title"><a href="">Nhân viên bán hàng</a></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">Chuyên viên</span></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
-                                </td>
-                                <td>
-                                    <span class="tuyendung__table__txt">Hạn nộp: 31/12/2020</span>
-                                </td>
-                                <td>
-                                    <a href="chitiettuyendung.php" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tuyendung__table__title"><a href="">Nhân viên bán hàng</a></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">Chuyên viên</span></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
-                                </td>
-                                <td>
-                                    <span class="tuyendung__table__txt">Hạn nộp: 31/12/2020</span>
-                                </td>
-                                <td>
-                                    <a href="chitiettuyendung.php" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="tuyendung__table__title"><a href="">Nhân viên bán hàng</a></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">Chuyên viên</span></div>
-                                </td>
-                                <td>
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
-                                </td>
-                                <td>
-                                    <span class="tuyendung__table__txt">Hạn nộp: 31/12/2020</span>
-                                </td>
-                                <td>
-                                    <a href="chitiettuyendung.php" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
-                                </td>
-                            </tr>
+                            @foreach ($arrRecruitmentInvolve as $key => $item)
+                                <tr>
+                                    <td width="30%">
+                                        <div class="tuyendung__table__title">
+                                            <a href="{{buildLinkDetailRecruitment($item->id,$item->recruitment_title)}}">{{$item->recruitment_title}}</a>
+                                        </div>
+                                    </td>
+                                    <td width="20%">
+                                        <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">@if(isset($arrPosition[$item->recruitment_position])){{$arrPosition[$item->recruitment_position]}}@endif</span></div>
+                                    </td>
+                                    <td width="15%">
+                                        <div class="tuyendung__table__map"><span class="tuyendung__table__txt">@if(isset($arrProvince[$item->recruitment_province])){{$arrProvince[$item->recruitment_province]}}@endif</span></div>
+                                    </td>
+                                    <td width="20%">
+                                        <span class="tuyendung__table__txt">Hạn nộp: {{$item->recruitment_date_end}}</span>
+                                    </td>
+                                    <td width="15%">
+                                        <a href="{{buildLinkDetailRecruitment($item->id,$item->recruitment_title)}}" class="tuyendung__table__btn uk-button uk-button-default"><span>Ứng tuyển ngay</span></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @stop

@@ -72,7 +72,7 @@
                                     <div class="tuyendung__table__catalog"><span class="tuyendung__table__txt">@if(isset($arrPosition[$item->recruitment_position])){{$arrPosition[$item->recruitment_position]}}@endif</span></div>
                                 </td>
                                 <td width="15%">
-                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">Hà Nội</span></div>
+                                    <div class="tuyendung__table__map"><span class="tuyendung__table__txt">@if(isset($arrProvince[$item->recruitment_province])){{$arrProvince[$item->recruitment_province]}}@endif</span></div>
                                 </td>
                                 <td width="20%">
                                     <span class="tuyendung__table__txt">Hạn nộp: {{$item->recruitment_date_end}}</span>

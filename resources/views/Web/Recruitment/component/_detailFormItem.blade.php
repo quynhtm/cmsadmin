@@ -15,22 +15,32 @@
 
         <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
-        <input type="hidden" id="isFormFile" name="isFormFile" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
         <div class="row form-group">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tiêu đề tuyển dụng')}}</label><span class="red"> (*)</span>
                 <input type="text" class="form-control input-sm" maxlength="100" required name="recruitment_title" id="{{$formName}}recruitment_title">
             </div>
-            <div class="col-lg-4">
+            @if($partner_id == 0)
+                <div class="col-lg-6">
+                    <label for="NAME" class="text-right control-label">{{viewLanguage('Đối tác')}}</label>
+                    <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                        {!! $optionPartner !!}}
+                    </select>
+                </div>
+            @else
+                <input type="hidden" name="partner_id"  @if($objectId > 0) id="{{$formName}}partner_id" @else value="{{$partner_id}}" @endif>
+            @endif
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí ứng tuyển')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" required>
                     {!! $optionPosition !!}}
                 </select>
-
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tỉnh thành')}}</label>
                 <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" required>
                     {!! $optionProvince !!}}
@@ -64,21 +74,21 @@
         <div class="row form-group">
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_description" id="recruitment_description">@if(isset($dataDetail['recruitment_description'])){!! $dataDetail['recruitment_description'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" name="recruitment_description" id="recruitment_description">@if(isset($dataDetail['recruitment_description'])){!! $dataDetail['recruitment_description'] !!}@endif</textarea>
             </div>
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_request" id="recruitment_request">@if(isset($dataDetail['recruitment_request'])){!! $dataDetail['recruitment_request'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" name="recruitment_request" id="recruitment_request">@if(isset($dataDetail['recruitment_request'])){!! $dataDetail['recruitment_request'] !!}@endif</textarea>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Quyền lợi')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_benefits" id="recruitment_benefits">@if(isset($dataDetail['recruitment_benefits'])){!! $dataDetail['recruitment_benefits'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" name="recruitment_benefits" id="recruitment_benefits">@if(isset($dataDetail['recruitment_benefits'])){!! $dataDetail['recruitment_benefits'] !!}@endif</textarea>
             </div>
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu hồ sơ')}}</label>
-                <textarea rows="4" class="form-control input-sm" name="recruitment_request_profile" id="recruitment_request_profile">@if(isset($dataDetail['recruitment_request_profile'])){!! $dataDetail['recruitment_request_profile'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" name="recruitment_request_profile" id="recruitment_request_profile">@if(isset($dataDetail['recruitment_request_profile'])){!! $dataDetail['recruitment_request_profile'] !!}@endif</textarea>
             </div>
         </div>
     </div>

@@ -28,6 +28,10 @@ class CGlobal
     const web_keywords = 'CMS';
     const web_description = 'CMS';
 
+    const meta_title = '';
+    const meta_keywords = '';
+    const meta_description = '';
+
     const email_cskh = 'cmsbackend@gmail.com';
     const phone_hotline = '093.84133.68';
     const copy_right = '<b>Copyright</b>&nbsp;CMS backend &copy;2022';

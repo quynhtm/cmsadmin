@@ -92,7 +92,7 @@ class RecruitmentController extends BaseAdminController
             return Redirect::route('admin.dashboard', array('error' => ERROR_PERMISSION));
         }
 
-        $limit = CGlobal::number_show_20;
+        $limit = CGlobal::number_show_15;
         $page_no = (int)Request::get('page_no', 1);
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
@@ -169,8 +169,9 @@ class RecruitmentController extends BaseAdminController
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
-                if ($this->_validFormData($objectId, $request) && empty($this->error)) {
-                    $isEdit = $this->modelObj->editItem($request, $objectId);
+
+                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
+                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
                 }
                 if ($isEdit > 0) {
                     $dataDetail = $this->modelObj->getItemById($isEdit);

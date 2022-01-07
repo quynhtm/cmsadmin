@@ -455,7 +455,7 @@ class SiteShopController extends BaseSiteController
             $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
 
             //sản phẩm liên quan
-            $arrRecruitmentInvolve = $this->commonService->getSiteRecruitment($recruitment->id, CGlobal::number_show_8, $this->partner);
+            $arrRecruitmentInvolve = $this->commonService->getSiteRecruitment($recruitment->id, CGlobal::number_show_5, $this->partner);
 
             $arrPosition = $this->commonService->getSiteOptionTypeDefine(DEFINE_VI_TRI_TUYEN_DUNG);
             $optionPosition = FunctionLib::getOption([DEFINE_NULL => 'Chức vụ'] + $arrPosition,  $recruitment->recruitment_position);
@@ -473,6 +473,8 @@ class SiteShopController extends BaseSiteController
                 'optionPosition' => $optionPosition,
                 'optionProvince' => $optionProvince,
                 'optionGender' => $optionGender,
+                'arrPosition' => $arrPosition,
+                'arrProvince' => $arrProvince,
                 'id' => $id,
             ], $this->outDataCommon));
         }
