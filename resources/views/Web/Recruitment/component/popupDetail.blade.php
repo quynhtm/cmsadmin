@@ -15,7 +15,7 @@
                     <div class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column" style="padding-top: 0px!important;">
 
                         {{---Block 1---}}
-                        <form id="{{$formName}}">
+                        <form id="{{$formName}}" enctype="multipart/form-data">
                             <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">1</span>
                                 <div class="vertical-timeline-element-content bounce-in" >

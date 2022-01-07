@@ -37,7 +37,7 @@ use App\Library\AdminFunction\CGlobal;
         <div class="app-header-left">
             <div class="search-wrapper">
                 <div class="input-holder">
-                    <a class="a_none_color" href="{{URL::route('admin.dashboard')}}" title="Trang chủ">
+                    <a class="a_none_color" href="{{URL::route('site.home')}}" title="Trang chủ">
                         <img src="{{Config::get('config.WEB_ROOT')}}assets/backend/img/LogoHDI.png" alt="" height="30" width="40">
                     </a>
                 </div>

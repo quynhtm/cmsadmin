@@ -17,6 +17,7 @@ use App\Models\Web\Banner;
 use App\Models\Web\Category;
 use App\Models\Web\News;
 use App\Models\Web\Partner;
+use App\Models\Web\Recruitment;
 use App\Models\Web\Reviews;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
@@ -80,6 +81,17 @@ class ServiceCommon
         $search['partner_id'] = $partner;
 
         $result = app(Reviews::class)->searchByCondition($search, $limit, $offset);
+        return ($result['total'] > 0) ? $result['data'] : false;
+    }
+
+    public function getSiteRecruitment($recruitment_id = STATUS_INT_KHONG, $limit = CGlobal::number_show_10,$partner = STATUS_INT_MOT){
+        $offset = STATUS_INT_KHONG;
+        $search['limit'] = $limit;
+        $search['recruitment_status'] = STATUS_INT_MOT;
+        $search['recruitment_id_not'] = $recruitment_id;
+        $search['partner_id'] = $partner;
+
+        $result = app(Recruitment::class)->searchByCondition($search, $limit, $offset);
         return ($result['total'] > 0) ? $result['data'] : false;
     }
 

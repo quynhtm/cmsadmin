@@ -15,6 +15,7 @@
 
         <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
+        <input type="hidden" id="isFormFile" name="isFormFile" value="{{STATUS_INT_MOT}}">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
         <div class="row form-group">
@@ -58,18 +59,77 @@
             </div>
         </div>
         <div class="row form-group">
-            <div class="col-lg-12">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Nội dung tuyển dụng')}}</label>
-                <textarea type="text" class="form-control input-sm" rows="10" name="recruitment_content" id="{{$formName}}recruitment_content"></textarea>
+            <div class="col-lg-6">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_description" id="recruitment_description"></textarea>
+            </div>
+            <div class="col-lg-6">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu')}}</label>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_request" id="{{$formName}}recruitment_request"></textarea>
             </div>
         </div>
-
+        <div class="row form-group">
+            <div class="col-lg-6">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Quyền lợi')}}</label>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_benefits" id="{{$formName}}recruitment_benefits"></textarea>
+            </div>
+            <div class="col-lg-6">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu hồ sơ')}}</label>
+                <textarea rows="4" class="form-control input-sm" name="recruitment_request_profile" id="{{$formName}}recruitment_request_profile"></textarea>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
+    /*CKEDITOR.replace(
+        'recruitment_description',
+        {
+            toolbar: [
+                { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+                { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+            ],
+        },
+        {height:500}
+    );*/
+    /*CKEDITOR.replace(
+        'recruitment_request',
+        {
+            toolbar: [
+                { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+                { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+            ],
+        },
+        {height:500}
+    );
+    CKEDITOR.replace(
+        'recruitment_benefits',
+        {
+            toolbar: [
+                { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+                { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+            ],
+        },
+        {height:500}
+    );
+    CKEDITOR.replace(
+        'recruitment_request_profile',
+        {
+            toolbar: [
+                { name: 'document',    items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+                { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+                { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+            ],
+        },
+        {height:500}
+    );*/
+</script>
+<script type="text/javascript">
+
     $(document).ready(function(){
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});
-
         showDataIntoForm('{{$formName}}');
     });
 </script>

@@ -10,7 +10,7 @@
                             <div>
                                 <div class="uk-flex-middle" uk-grid>
                                     <div class="uk-width-expand">
-                                        <h1 class="uk-h1 tintuc__title">Nhân viên bán hàng</h1>
+                                        <h1 class="uk-h1 tintuc__title">{{$dataDetail->recruitment_title}}</h1>
                                     </div>
                                     <div class="uk-width-auto">
                                         <a href="#my-apply" uk-scroll="offset:100;" class="tuyendung__table__btn uk-button uk-button-default uk-active"><span>Ứng tuyển ngay</span></a>
@@ -18,48 +18,55 @@
                                 </div>
                             </div>
                             <div>
+                                @if(trim($dataDetail->recruitment_description) != '')
                                 <div class="footer__center__item24">
                                     <div class="footer__center__item16">
                                         <h3 class="uk-h3 chitiettuyendung__cardRight__title">Mô tả</h3>
                                     </div>
                                     <div class="footer__center__item16">
                                         <article class="uk-article chitiettuyendung__cardLeft__article">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec tellus eget nibh viverra ullamcorper. Pellentesque ante velit, sollicitudin ac posuere ac, elementum at quam. Donec vestibulum eros ex, vel sollicitudin mi imperdiet finibus. Sed cursus risus sit amet est bibendum, in hendrerit quam lacinia. Aliquam tincidunt arcu eu lorem accumsan, eget venenatis nulla pellentesque. Aenean ut diam vitae magna dictum pulvinar non sed odio. Nulla a purus laoreet, tincidunt arcu ac, ornare ligula. Nam vitae cursus diam. Praesent iaculis sem quis purus blandit, a hendrerit dolor molestie. Aliquam non feugiat nisi, at ullamcorper arcu. Duis consequat pharetra arcu. Nunc suscipit nulla felis, ornare facilisis massa vestibulum ac.</p>
+                                            {!! $dataDetail->recruitment_description !!}
                                         </article>
                                     </div>
                                 </div>
-                                <div class="footer__center__item24">
-                                    <div class="footer__center__item16">
-                                        <h3 class="uk-h3 chitiettuyendung__cardRight__title">Yêu cầu</h3>
+                                @endif
+
+                                @if(trim($dataDetail->recruitment_request) != '')
+                                    <div class="footer__center__item24">
+                                        <div class="footer__center__item16">
+                                            <h3 class="uk-h3 chitiettuyendung__cardRight__title">Yêu cầu</h3>
+                                        </div>
+                                        <div class="footer__center__item16">
+                                            <article class="uk-article chitiettuyendung__cardLeft__article">
+                                                {!! $dataDetail->recruitment_request !!}
+                                            </article>
+                                        </div>
                                     </div>
-                                    <div class="footer__center__item16">
-                                        <article class="uk-article chitiettuyendung__cardLeft__article">
-                                            <p>_ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec tellus eget nibh viverra ullamcorper. Pellentesque ante velit, sollicitudin ac posuere ac, elementum at quam. _ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec tellus eget nibh viverra ullamcorper. Pellentesque ante velit, sollicitudin ac posuere ac, elementum at quam.</p>
-                                            <p>_ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec tellus eget nibh viverra ullamcorper. Pellentesque ante velit, sollicitudin ac posuere ac, elementum at quam.</p>
-                                            <p>_ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec tellus eget nibh viverra ullamcorper. Pellentesque ante velit, sollicitudin ac posuere ac, elementum at quam.</p>
-                                        </article>
+                                @endif
+                                @if(trim($dataDetail->recruitment_benefits) != '')
+                                    <div class="footer__center__item24">
+                                        <div class="footer__center__item16">
+                                            <h3 class="uk-h3 chitiettuyendung__cardRight__title">Quyền lợi</h3>
+                                        </div>
+                                        <div class="footer__center__item16">
+                                            <article class="uk-article chitiettuyendung__cardLeft__article">
+                                                {!! $dataDetail->recruitment_benefits !!}
+                                            </article>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="footer__center__item24">
-                                    <div class="footer__center__item16">
-                                        <h3 class="uk-h3 chitiettuyendung__cardRight__title">QUyền lợi</h3>
+                                @endif
+                                @if(trim($dataDetail->recruitment_request_profile) != '')
+                                    <div class="footer__center__item24">
+                                        <div class="footer__center__item16">
+                                            <h3 class="uk-h3 chitiettuyendung__cardRight__title">Yêu cầu hồ sơ</h3>
+                                        </div>
+                                        <div class="footer__center__item16">
+                                            <article class="uk-article chitiettuyendung__cardLeft__article">
+                                                {!! $dataDetail->recruitment_request_profile !!}
+                                            </article>
+                                        </div>
                                     </div>
-                                    <div class="footer__center__item16">
-                                        <article class="uk-article chitiettuyendung__cardLeft__article">
-                                            <p>Praesent viverra volutpat felis, in tincidunt augue facilisis et. Donec malesuada congue quam eu sollicitudin. Phasellus at metus quis tellus lacinia rhoncus id non est. Fusce porta ex egestas sem fermentum, nec fermentum eros porta. Phasellus ornare ac neque at cursus. Nam et mi a mi feugiat egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut vitae diam accumsan, venenatis erat id, facilisis urna. Sed ac lacus sed sem aliquet vulputate at eu nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pharetra justo sit amet ipsum lacinia, et consectetur lectus malesuada. Vestibulum justo leo, sollicitudin eget ante eget, feugiat vehicula magna. Nam tincidunt eleifend eros, in pellentesque est porta a. Etiam lobortis convallis porttitor. Donec in quam sit amet augue commodo mollis. Nunc suscipit nulla felis, ornare facilisis massa vestibulum ac.</p>
-                                        </article>
-                                    </div>
-                                </div>
-                                <div class="footer__center__item24">
-                                    <div class="footer__center__item16">
-                                        <h3 class="uk-h3 chitiettuyendung__cardRight__title">Yêu cầu hồ sơ</h3>
-                                    </div>
-                                    <div class="footer__center__item16">
-                                        <article class="uk-article chitiettuyendung__cardLeft__article">
-                                            <p>Praesent viverra volutpat felis, in tincidunt augue facilisis et. Donec malesuada congue quam eu sollicitudin. Phasellus at metus quis tellus lacinia rhoncus id non est. Fusce porta ex egestas sem fermentum, nec fermentum eros porta. Phasellus ornare ac neque at cursus. Nam et mi a mi feugiat egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                                        </article>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                             <div id="my-apply">
                                 <div class="footer__center__item24">
@@ -69,10 +76,8 @@
                                     <form class="uk-grid-small uk-grid-30-m" uk-grid>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select>
-                                                    <option value="">Danh xưng *</option>
-                                                    <option value="1">Ông (Mr.)</option>
-                                                    <option value="2">Bà (Mrs.)</option>
+                                                <select name="gender">
+                                                    {!! $optionGender !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                     <span></span>
@@ -81,22 +86,20 @@
                                             </div>
                                         </div>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
-                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Tên người ứng tuyển *">
+                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Tên người ứng tuyển *" name="full_name">
                                         </div>
 
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
-                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Số điện thoại *">
+                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Số điện thoại *" name="phone">
                                         </div>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
-                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Email">
+                                            <input class="uk-input modal__wishList__form__input" type="text" placeholder="Email" name="email">
                                         </div>
 
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select>
-                                                    <option value="">Vị trí ứng tuyển *</option>
-                                                    <option value="1">Ông (Mr.)</option>
-                                                    <option value="2">Bà (Mrs.)</option>
+                                                <select name="recruitment_position">
+                                                    {!! $optionPosition !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                     <span></span>
@@ -106,10 +109,8 @@
                                         </div>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select>
-                                                    <option value="">Địa điểm ứng tuyển *</option>
-                                                    <option value="1">Ông (Mr.)</option>
-                                                    <option value="2">Bà (Mrs.)</option>
+                                                <select name="recruitment_province">
+                                                    {!! $optionProvince !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                     <span></span>
@@ -120,7 +121,7 @@
 
                                         <div class="uk-width-1-1 chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom>
-                                                <input type="file">
+                                                <input type="file" name="files_apply">
                                                 <div class="tuyendung__section1__boxFile">
                                                     <span>Ấn vào đây để chọn File CV *</span>
                                                 </div>

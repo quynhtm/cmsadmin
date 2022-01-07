@@ -23,14 +23,17 @@ class Recruitment extends BaseModel
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
             }
+            if (isset($dataSearch['recruitment_id_not']) && $dataSearch['recruitment_id_not'] > STATUS_INT_KHONG) {
+                $query->where($this->primaryKey, '<>',$dataSearch['recruitment_id_not']);
+            }
             if (isset($dataSearch['recruitment_position']) && $dataSearch['recruitment_position'] > STATUS_INT_KHONG) {
                 $query->where('recruitment_position', $dataSearch['recruitment_position']);
             }
             if (isset($dataSearch['recruitment_province']) && $dataSearch['recruitment_province'] > STATUS_INT_KHONG) {
                 $query->where('recruitment_province', $dataSearch['recruitment_province']);
             }
-            if (isset($dataSearch['is_active']) && $dataSearch['is_active'] > STATUS_INT_AM_MOT) {
-                $query->where('recruitment_status', $dataSearch['is_active']);
+            if (isset($dataSearch['recruitment_status']) && $dataSearch['recruitment_status'] > STATUS_INT_AM_MOT) {
+                $query->where('recruitment_status', $dataSearch['recruitment_status']);
             }
 
             $total = ($is_total) ? $query->count() : STATUS_INT_KHONG;

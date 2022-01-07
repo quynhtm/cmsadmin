@@ -157,7 +157,7 @@ class RecruitmentController extends BaseAdminController
         $actionUpdate = 'actionUpdate';
         $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
         $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
-
+        myDebug($request);
         switch ($actionUpdate) {
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;

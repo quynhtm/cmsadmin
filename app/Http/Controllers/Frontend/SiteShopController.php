@@ -433,10 +433,49 @@ class SiteShopController extends BaseSiteController
         ], $this->outDataCommon));
     }
 
-    public function indexDetailRecruitment()
+    public function indexDetailRecruitment($cat_name = 'tuyển dụng', $id = 0, $name = 'tin tuyển dụng')
     {
-        $this->getInforCommoneSite();
-        return view('Frontend.Shop.Pages.detailRecruitment');
+        if ($id <= 0) {
+            return Redirect::route('site.home');
+        }
+        $recruitment = app(Recruitment::class)->getItemById($id);
+        if (isset($recruitment->id)) {
+            //check sản phẩm lỗi
+            if ((isset($recruitment->recruitment_status) && $recruitment->recruitment_status == STATUS_INT_KHONG)) {
+                return Redirect::route('site.home');
+            }
+
+            //seo
+            $titleSearchName = env('PROJECT_NAME') . ' - ' . $recruitment->recruitment_title;
+            $meta_title = $titleSearchName;
+            $meta_keywords = $titleSearchName;
+            $meta_description = limit_text_word($recruitment->product_sort_desc);
+            $meta_img = '';
+            $url_detail = buildLinkDetailRecruitment($recruitment->id, $recruitment->recruitment_title);
+            $this->commonService->getSeoSite($meta_img, $meta_title, $meta_keywords, $meta_description, $url_detail);
+
+            //sản phẩm liên quan
+            $arrRecruitmentInvolve = $this->commonService->getSiteRecruitment($recruitment->id, CGlobal::number_show_8, $this->partner);
+
+            $arrPosition = $this->commonService->getSiteOptionTypeDefine(DEFINE_VI_TRI_TUYEN_DUNG);
+            $optionPosition = FunctionLib::getOption([DEFINE_NULL => 'Chức vụ'] + $arrPosition,  $recruitment->recruitment_position);
+
+            $arrProvince = $this->commonService->getSiteOptionTypeDefine(DEFINE_DIA_DIEM_TUYEN_DUNG);
+            $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Địa điểm'] + $arrProvince, $recruitment->recruitment_province);
+
+            $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+            $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Danh xưng *'] + $arrGender,  DEFINE_NULL);
+
+            $this->getInforCommoneSite();
+            return view('Frontend.Shop.Pages.detailRecruitment', array_merge([
+                'dataDetail' => $recruitment,
+                'arrRecruitmentInvolve' => $arrRecruitmentInvolve,
+                'optionPosition' => $optionPosition,
+                'optionProvince' => $optionProvince,
+                'optionGender' => $optionGender,
+                'id' => $id,
+            ], $this->outDataCommon));
+        }
     }
 
     public function indexContact()
