@@ -35,15 +35,16 @@ class SiteShopController extends BaseSiteController
     {
         parent::__construct();
         $this->commonService = new ServiceCommon();
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
     }
 
-    public function getInforCommoneSite()
+    public function getInforCommonSite()
     {
         $dataCart = $this->countNumCart();
 
         return $this->outDataCommon = [
             'totalItemCart' => isset($dataCart['total_cart']) ? $dataCart['total_cart'] : STATUS_INT_KHONG,
+            'urlPostSite' => URL::route('users.ajaxPostSite')
         ];
     }
 
@@ -85,7 +86,10 @@ class SiteShopController extends BaseSiteController
         $arrNewCommon = $this->commonService->getSiteNew(News::newsTypeCommon, CGlobal::number_show_4, $this->partner);
         $arrNewSite = $this->commonService->getSiteNew(News::newsTypeSite, CGlobal::number_show_4, $this->partner);
 
-        $this->getInforCommoneSite();
+        $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Giới tính'] + $arrGender,  DEFINE_NULL);
+
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.home', array_merge([
             'arrProductNew' => $arrProductNew,
             'arrProductAd' => $arrProductAd,
@@ -97,6 +101,8 @@ class SiteShopController extends BaseSiteController
 
             'arrNewCommon' => $arrNewCommon,
             'arrNewSite' => $arrNewSite,
+
+            'optionGender' => $optionGender,
         ], $this->outDataCommon));
     }
 
@@ -124,7 +130,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục sản phẩm
         $arrProductCate = $this->commonService->getSiteCategoryProduct($this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'keyword_search' => $p_keyword,
             'dataList' => $dataList,
@@ -157,7 +163,7 @@ class SiteShopController extends BaseSiteController
 
         //banner quảng cáo
         $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'dataList' => $dataList,
             'total' => $total,
@@ -197,7 +203,7 @@ class SiteShopController extends BaseSiteController
 
         //banner quảng cáo
         $arrBannerContent = $this->commonService->getSiteBannerContentProduct($this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.listProduct', array_merge([
             'dataList' => $dataList,
             'total' => $total,
@@ -271,7 +277,7 @@ class SiteShopController extends BaseSiteController
 
             //bình luận và đánh giá sản phẩm
             $arrCommentProduct = $this->commonService->getSiteCommentItem($pro_id, Reviews::typeReviewProduct, $this->partner, CGlobal::number_show_4);
-            $this->getInforCommoneSite();
+            $this->getInforCommonSite();
             return view('Frontend.Shop.Pages.detailProduct', array_merge([
                 'dataDetail' => $product,
                 'arrImagProduct' => $arrImagProduct,
@@ -284,7 +290,7 @@ class SiteShopController extends BaseSiteController
 
     public function indexProductCare()
     {
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.productCare');
     }
 
@@ -306,7 +312,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.listNews', array_merge([
             'dataList' => $dataList,
             'cat_id' => 0,
@@ -340,7 +346,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục tin tức
         $arrCategoryNews = $this->commonService->getSiteCategoryNew($this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.listNews', array_merge([
             'dataList' => $dataList,
             'cat_id' => $cat_id,
@@ -379,7 +385,7 @@ class SiteShopController extends BaseSiteController
 
         //danh mục tin tức
         $arrCommentNews = $this->commonService->getSiteCommentItem($new_id, Reviews::typeReviewNew, $this->partner);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.detailNews', array_merge([
             'dataDetail' => $inforNew,
             'arrCommentNews' => $arrCommentNews,
@@ -390,7 +396,7 @@ class SiteShopController extends BaseSiteController
 
     public function indexDetailFaq()
     {
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.detailFAQ');
     }
 
@@ -417,7 +423,7 @@ class SiteShopController extends BaseSiteController
         $arrProvince = $this->commonService->getSiteOptionTypeDefine(DEFINE_DIA_DIEM_TUYEN_DUNG);
         $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Địa điểm'] + $arrProvince, isset($search['recruitment_province']) ? $search['recruitment_province'] : DEFINE_NULL);
 
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.ListRecruitment', array_merge([
             'dataList' => $dataList,
             'arrPosition' => $arrPosition,
@@ -466,7 +472,7 @@ class SiteShopController extends BaseSiteController
             $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
             $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Giới tính'] + $arrGender,  DEFINE_NULL);
 
-            $this->getInforCommoneSite();
+            $this->getInforCommonSite();
             return view('Frontend.Shop.Pages.detailRecruitment', array_merge([
                 'dataDetail' => $recruitment,
                 'arrRecruitmentInvolve' => $arrRecruitmentInvolve,
@@ -482,19 +488,19 @@ class SiteShopController extends BaseSiteController
 
     public function indexContact()
     {
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.contact');
     }
 
     public function indexLoginShop()
     {
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.loginShop');
     }
 
     public function indexRegistrationShop()
     {
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.registrationShop');
     }
 
@@ -506,7 +512,7 @@ class SiteShopController extends BaseSiteController
         if (empty($cartShop)) {
             return Redirect::route('site.home');
         }
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.cart', array_merge([
             'cartShop' => $cartShop,
         ], $this->outDataCommon));
@@ -549,7 +555,7 @@ class SiteShopController extends BaseSiteController
         $arrProvince = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
         $optionProvince = FunctionLib::getOption([DEFINE_NULL => 'Tỉnh/ Thành phố *'] + $arrProvince, isset($dataForm['customer_province']) ? $dataForm['customer_province'] : STATUS_INT_MOT);
 
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.cartOrder1', array_merge([
             'cartCustomer' => $cartCustomer,
             'cartShop' => $cartProducts,
@@ -582,7 +588,7 @@ class SiteShopController extends BaseSiteController
             }
             return Redirect::route('site.indexCartOrder3');
         }
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.cartOrder2', array_merge([
             'cartCustomer' => $cartCustomer,
             'cartShop' => $cartProducts,
@@ -603,7 +609,7 @@ class SiteShopController extends BaseSiteController
             return Redirect::route('site.indexCartOrder3');
         }
         $arrPaymentMethods = $this->commonService->getSiteOptionTypeDefine(DEFINE_PAYMENT_METHODS);
-        $this->getInforCommoneSite();
+        $this->getInforCommonSite();
         return view('Frontend.Shop.Pages.cartOrder3', array_merge([
             'arrPaymentMethods' => $arrPaymentMethods,
             'cartCustomer' => $cartCustomer,

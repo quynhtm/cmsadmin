@@ -1,9 +1,9 @@
 var ActionSite = {
     detailAddtoCart: function (str_pro_id) {
         var input_quantity = $('#input_quantity').val();
-        if(parseInt(input_quantity) > 0 && str_pro_id.trim() != ''){
-            ActionSite.addOneProductToCart(str_pro_id,input_quantity);
-        }else {
+        if (parseInt(input_quantity) > 0 && str_pro_id.trim() != '') {
+            ActionSite.addOneProductToCart(str_pro_id, input_quantity);
+        } else {
             alert('Bạn chưa chọn được sản phẩm vào giỏ hàng');
         }
     },
@@ -17,7 +17,7 @@ var ActionSite = {
             success: function (data) {
                 if (data.intIsOK === 1) {
                     $('#totalItemCart').html('');
-                    $('#totalItemCart').html(parseInt(data.totalCart)+' sản phẩm');
+                    $('#totalItemCart').html(parseInt(data.totalCart) + ' sản phẩm');
                     $('#totalItemCartHidden').html('');
                     $('#totalItemCartHidden').html(parseInt(data.totalCart));
                     alert(data.msg);
@@ -64,16 +64,62 @@ var ActionSite = {
     submitSearchHome: function () {
         var title_search = $('#title_search').val();
         var depart_search = $('#depart_search').val();
-        if(title_search.trim() != '' || parseInt(depart_search) > 0){
+        if (title_search.trim() != '' || parseInt(depart_search) > 0) {
             $('#search_title_product').submit();
-        }else {
+        } else {
             alert('Bạn chưa chọn tiêu chí tìm kiếm');
         }
     },
-    onchangeViewImageDetail: function (pro_id,url_image) {
-        if(parseInt(pro_id) > 0){
-            $("#img_product_big").attr("src",url_image);
+    onchangeViewImageDetail: function (pro_id, url_image) {
+        if (parseInt(pro_id) > 0) {
+            $("#img_product_big").attr("src", url_image);
         }
-    }
+    },
+    submitFormSite: function (form_id, urlAjax, btnSubmit) {
+        var form = $('#' + form_id)[0];
+        // Create an FormData object
+        var data = new FormData(form);
+        // disabled the submit button
+        //$("#"+btnSubmit).prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: urlAjax,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (res) {
+                ActionSite.showNotificationSite(res.actionSite, (res.success == 1) ? 'success' : 'error');
+            },
+            error: function (e) {
+                ActionSite.showNotificationSite('',  'error');
+            }
+        });
+    },
+    showNotificationSite: function (type, status) {
+        var notiDefault = '<div class="notification__content notification__content--error">' +
+            '<div class="notification__content__txt">Có lỗi gửi thông tin. Quý khách hãy cập nhật lại.</div></div>';
+
+        if (status == 'success') {
+            switch (type) {
+                case 'inputContactSite':
+                    notiDefault = '<div class="notification__content notification__content--success">' +
+                        '<div class="notification__content__txt">Gửi yêu cầu tư vấn thành công. Chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất.</div></div>';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        UIkit.notification({
+            message: notiDefault,
+            status: 'success',
+            pos: 'bottom-left',
+            timeout: 1500
+        });
+        //UIkit.modal('#modal-wishList').hide();
+    },
 }
 

@@ -108,13 +108,16 @@
                                 <p class="home__tuvan__desc">Hãy để lại thông tin và đội ngũ CSKH của chúng tôi sẽ liên lạc để hỗ trợ, tư vấn quý khác 1 cách nhiệt tình nhất</p>
                             </div>
                             <div class="uk-width-expand">
-                                <form class="uk-grid-16 uk-grid-30-m" uk-grid>
+
+                                <?php $form_id_contact = 'submitContactSite'; ?>
+                                <form class="uk-grid-16 uk-grid-30-m" uk-grid id="{{$form_id_contact}}" enctype="multipart/form-data">
+                                    <input type="hidden" id="formId" name="formId" value="{{$form_id_contact}}">
+                                    <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputContactSite">
+                                    {{ csrf_field() }}
                                     <div class="uk-width-1-2 home__tuvan__column">
                                         <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                            <select>
-                                                <option value="">Danh xưng</option>
-                                                <option value="1">Ông (Mr.)</option>
-                                                <option value="2">Bà (Mrs.)</option>
+                                            <select name="contact_gender">
+                                                {!! $optionGender !!}
                                             </select>
                                             <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
                                                 <span></span>
@@ -123,19 +126,19 @@
                                         </div>
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" placeholder="Họ tên *">
+                                        <input class="uk-input modal__wishList__form__input" type="text" required name="contact_user_name_send" maxlength="250" placeholder="Họ tên *">
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" placeholder="Số điện thoại *">
+                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_phone_send" maxlength="20" placeholder="Số điện thoại *">
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" placeholder="Email">
+                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_email_send" maxlength="200" placeholder="Email">
                                     </div>
                                     <div class="uk-width-1-1 home__tuvan__column">
-                                        <textarea class="uk-textarea modal__wishList__form__input" rows="5" placeholder="Lời nhắn *"></textarea>
+                                        <textarea class="uk-textarea modal__wishList__form__input" name="contact_content" rows="5" placeholder="Lời nhắn *"></textarea>
                                     </div>
                                     <div class="uk-width-1-2@s home__tuvan__column">
-                                        <button onclick="wishListNotification()" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
+                                        <button onclick="ActionSite.submitFormSite('{{$form_id_contact}}','{{$urlPostSite}}','btnSubmitContact')" id="btnSubmitContact" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
                                     </div>
                                 </form>
                             </div>

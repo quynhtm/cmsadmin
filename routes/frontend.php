@@ -33,6 +33,8 @@ Route::get('/san-pham-moi.html', array('as' => 'site.listProductNew','uses' => D
 Route::get('/hashtag/tag-{tag_id}/{tag_name}.html',array('as' => 'site.listProductWithTag','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithTag'));//list sản phẩm theo hashtag
 Route::get('/campaign/c{camp_id}/{camp_name}.html',array('as' => 'site.listProductWithCampaign','uses' =>DIR_PRO_FRONTEND.'\SiteShopController@listProductWithCampaign'));//list sản phẩm theo campagn
 
+//Ajax common
+Route::post('ajaxPostSite', array('as' => 'users.ajaxPostSite', 'uses' => DIR_PRO_FRONTEND . '\AjaxActionShopController@ajaxPostSite'));
 
 //Action site
 Route::post('/ajaxAddCart', array('as' => 'site.ajaxAddCart','uses' => DIR_PRO_FRONTEND.'\AjaxActionShopController@ajaxAddCart'));

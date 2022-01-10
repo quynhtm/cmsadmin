@@ -1840,9 +1840,12 @@ body {
 .notification__content--success {
     background: #EBF5EC
 }
+.notification__content--error {
+    background: #eca909;
+}
 
 @media (min-width: 960px) {
-    .notification__content--success {
+    .notification__content--error, .notification__content--success {
         max-width: 343px
     }
 }

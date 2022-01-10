@@ -384,4 +384,24 @@ class AjaxActionShopController extends BaseSiteController
         }
         return Redirect::route('site.inforRepaymentsOrder');
     }
+
+    public function ajaxPostSite()
+    {
+        $dataForm = $_POST;
+        $arrAjax = array('success' => 0, 'html' => '', 'message' => '');
+        $actionUpdate = 'actionUpdate';
+        $actionUpdate = isset($dataForm['actionInputSite']) ? $dataForm['actionInputSite'] : $actionUpdate;
+
+        switch ($actionUpdate) {
+            case 'inputContactSite':
+                $arrAjax['success'] = 1;
+                $arrAjax['actionSite'] = $actionUpdate;
+                $arrAjax['loadPage'] = 1;
+                $arrAjax['divShowInfor'] = '';
+                break;
+            default:
+                break;
+        }
+        return Response::json($arrAjax);
+    }
 }

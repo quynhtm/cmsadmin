@@ -21,4 +21,7 @@
 <script type="text/javascript" src="{{URL::asset('assets/frontend/shop/js/app.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/frontend/shop/js/ActionSite.js')}}"></script>
 
+{{--<script type="text/javascript" src="{{URL::asset('assets/backend/admin/js/jqueryCommon.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/backend/admin/lib/number/autoNumeric.js')}}"></script>--}}
+
 
