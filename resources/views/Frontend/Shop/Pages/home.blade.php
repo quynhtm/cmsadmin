@@ -109,9 +109,9 @@
                             </div>
                             <div class="uk-width-expand">
 
-                                <?php $form_id_contact = 'submitContactSite'; ?>
-                                <form class="uk-grid-16 uk-grid-30-m" uk-grid id="{{$form_id_contact}}" enctype="multipart/form-data">
-                                    <input type="hidden" id="formId" name="formId" value="{{$form_id_contact}}">
+                                <?php $formIdInput = 'submitContactSite'; ?>
+                                <form class="uk-grid-16 uk-grid-30-m" uk-grid id="{{$formIdInput}}" enctype="multipart/form-data">
+                                    <input type="hidden" id="formId" name="formId" value="{{$formIdInput}}">
                                     <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
                                     <input type="hidden" id="contact_title" name="contact_title" value="Liên hệ từ trang chủ">
                                     <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputContactSite">
@@ -140,7 +140,7 @@
                                         <textarea class="uk-textarea modal__wishList__form__input" name="contact_content" rows="5" placeholder="Lời nhắn *"></textarea>
                                     </div>
                                     <div class="uk-width-1-2@s home__tuvan__column">
-                                        <button onclick="ActionSite.submitFormSite('{{$form_id_contact}}','{{$urlPostSite}}','btnSubmitContact')" id="btnSubmitContact" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
+                                        <button onclick="ActionSite.submitFormSite('{{$formIdInput}}','{{$urlPostSite}}','btnSubmitContact')" id="btnSubmitContact" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
                                     </div>
                                 </form>
                             </div>

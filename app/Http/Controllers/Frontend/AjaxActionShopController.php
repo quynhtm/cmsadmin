@@ -15,6 +15,7 @@ use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
 use App\Models\Shop\Products;
 use App\Models\Web\Contact;
+use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -403,8 +404,42 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['contact_title'] = Security::cleanText(addslashes($dataForm['contact_title']));
                 $dataInput['partner_id'] = (int)$dataForm['partner_id'];
 
-                $contact_id = app(Contact::class)->editItem($dataInput);
-                if($contact_id > STATUS_INT_KHONG){
+                $insert_id = app(Contact::class)->editItem($dataInput);
+                if($insert_id > STATUS_INT_KHONG){
+                    $arrAjax['success'] = STATUS_INT_MOT;
+                    $arrAjax['actionSite'] = $actionForm;
+                }
+                break;
+
+            case 'inputCommentNewSite':
+                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['type_review'] = Reviews::typeReviewNew;
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['object_id'] = (int)$dataForm['object_id'];
+                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+
+                $insert_id = app(Reviews::class)->editItem($dataInput);
+                if($insert_id > STATUS_INT_KHONG){
+                    $arrAjax['success'] = STATUS_INT_MOT;
+                    $arrAjax['actionSite'] = $actionForm;
+                }
+                break;
+
+            case 'inputCommentProductSite':
+                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['type_review'] = Reviews::typeReviewProduct;
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['object_id'] = (int)$dataForm['object_id'];
+                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+
+                $insert_id = app(Reviews::class)->editItem($dataInput);
+                if($insert_id > STATUS_INT_KHONG){
                     $arrAjax['success'] = STATUS_INT_MOT;
                     $arrAjax['actionSite'] = $actionForm;
                 }

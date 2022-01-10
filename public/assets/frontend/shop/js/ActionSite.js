@@ -109,6 +109,10 @@ var ActionSite = {
                     notiDefault = '<div class="notification__content notification__content--success">' +
                         '<div class="notification__content__txt">Gửi yêu cầu tư vấn thành công. Chúng tôi sẽ liên hệ quý khách trong thời gian sớm nhất.</div></div>';
                     break;
+                case 'inputCommentNewSite':
+                    notiDefault = '<div class="notification__content notification__content--success">' +
+                        '<div class="notification__content__txt">Bạn đã bình luận tin bài này thành công.</div></div>';
+                    break;
                 default:
                     break;
             }

@@ -126,90 +126,6 @@
                         <div class="uk-padding-small uk-card-body chitietsanpham__cardContent__body">
                             <ul class="uk-switcher" id="my-tab">
                                 <li>{!! $dataDetail->product_content !!}</li>
-                                {{--<li>
-                                    <div class="uk-child-width-1-2 uk-grid-collapse uk-background-default uk-grid" uk-grid="">
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Weight</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">0.25 kg</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Dimensions</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">10 × 15 × 15 cm</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Size</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">100ml, 150ml, 200ml</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Brand</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Bioderma</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Type</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Bottle</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Active substance</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Q10</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Usage</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Hand cream</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="uk-padding-small chitietsanpham__cardContent__body__item">
-                                            <div class="uk-grid-match uk-grid-10" uk-grid="">
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt1">Side Effects</span>
-                                                </div>
-                                                <div>
-                                                    <span class="chitietsanpham__cardContent__body__item__txt2">Non-drowsy</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>--}}
                                 <li>
                                     <div class="uk-child-width-1-2@m" uk-grid>
                                         @if(!empty($arrCommentProduct))
@@ -283,7 +199,14 @@
                                                 <h3 class="uk-h3 home__header__title">Thêm đánh giá</h3>
                                             </div>
                                             <div class="footer__center__item16">
-                                                <form class="uk-grid-small uk-grid-30-m" uk-grid>
+                                                <?php $formIdInput = 'submitCommentProductSite'; ?>
+                                                <form class="uk-grid-small uk-grid-30-m" uk-grid id="{{$formIdInput}}" enctype="multipart/form-data">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" id="formId" name="formId" value="{{$formIdInput}}">
+                                                    <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
+                                                    <input type="hidden" id="object_id" name="object_id" value="{{$dataDetail->id}}">
+                                                    <input type="hidden" id="object_name" name="object_name" value="{{$dataDetail->product_name}}">
+                                                    <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputCommentProductSite">
                                                     <div class="uk-width-1-1 chitiettintuc__boxComment__column">
                                                         <div class="uk-grid-small uk-child-width-auto uk-flex-middle" uk-grid>
                                                             <div>
@@ -291,19 +214,19 @@
                                                             </div>
                                                             <div>
                                                                 <div id="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
+                                                                    <input type="radio" id="star5" name="star_points" value="100" />
                                                                     <label class = "full" for="star5" title="Awesome - 5 stars"></label>
 
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
+                                                                    <input type="radio" id="star4" name="star_points" value="80" />
                                                                     <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
 
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
+                                                                    <input type="radio" id="star3" name="star_points" value="60" />
                                                                     <label class = "full" for="star3" title="Meh - 3 stars"></label>
 
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
+                                                                    <input type="radio" id="star2" name="star_points" value="40" />
                                                                     <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
 
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
+                                                                    <input type="radio" id="star1" name="star_points" value="20" />
                                                                     <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
                                                                 </div>
                                                                 <div class="uk-clearfix"></div>
@@ -318,19 +241,19 @@
                                                         </div>
                                                     </div>
                                                     <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
-                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Họ tên">
+                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" name="assessor" maxlength="150" placeholder="Họ tên">
                                                     </div>
                                                     <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
-                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Email">
+                                                        <input class="uk-input chitiettintuc__boxComment__input" type="text" name="email" maxlength="150" placeholder="Email">
                                                     </div>
                                                     <div class="uk-width-1-1 chitiettintuc__boxComment__column">
-                                                        <textarea class="uk-textarea chitiettintuc__boxComment__textarea" rows="5" placeholder="Bình luận"></textarea>
+                                                        <textarea class="uk-textarea chitiettintuc__boxComment__textarea" rows="5" name="content" maxlength="1000" placeholder="Bình luận"></textarea>
                                                     </div>
                                                     <div class="uk-width-1-1 chitiettintuc__boxComment__column">
                                                         <label class="chitiettintuc__boxComment__label"><input class="uk-checkbox chitiettintuc__boxComment__check" type="checkbox" checked> <span class="chitiettintuc__boxComment__checkTxt">Tôi đồng ý rằng dữ liệu của tôi đã gửi đang được thu thập và lưu trữ. Để biết thêm chi tiết về việc xử lý dữ liệu người dùng, hãy xem Chính sách quyền riêng tư của chúng tôi.</span></label>
                                                     </div>
                                                     <div class="uk-width-1-1 chitiettintuc__boxComment__column">
-                                                        <button type="submit" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đánh giá</span></button>
+                                                        <button onclick="ActionSite.submitFormSite('{{$formIdInput}}','{{$urlPostSite}}','btnSubmitCommentProduct')" id="btnSubmitCommentProduct" type="button" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đánh giá</span></button>
                                                     </div>
                                                 </form>
                                             </div>

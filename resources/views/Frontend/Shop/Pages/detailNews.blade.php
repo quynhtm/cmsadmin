@@ -24,21 +24,29 @@
                                 <div class="footer__center__item24">
                                     <div class="chitiettintuc__boxComment">
                                         <h3 class="uk-h3 home__header__title">Để lại bình luận</h3>
-                                        <form class="uk-grid-small uk-grid-30-m" uk-grid>
+                                        <?php $formIdInput = 'submitCommentNewSite'; ?>
+                                        <form class="uk-grid-small uk-grid-30-m" uk-grid id="{{$formIdInput}}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" id="formId" name="formId" value="{{$formIdInput}}">
+                                            <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
+                                            <input type="hidden" id="object_id" name="object_id" value="{{$dataDetail->id}}">
+                                            <input type="hidden" id="object_name" name="object_name" value="{{$dataDetail->news_title}}">
+                                            <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputCommentNewSite">
+
                                             <div class="uk-width-1-3@s chitiettintuc__boxComment__column">
-                                                <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Họ tên">
+                                                <input class="uk-input chitiettintuc__boxComment__input" type="text" name="assessor" maxlength="150" placeholder="Họ tên">
                                             </div>
                                             <div class="uk-width-1-3@s chitiettintuc__boxComment__column">
-                                                <input class="uk-input chitiettintuc__boxComment__input" type="text" placeholder="Email">
+                                                <input class="uk-input chitiettintuc__boxComment__input" type="text" name="email" maxlength="150" placeholder="Email">
                                             </div>
                                             <div class="uk-width-1-1 chitiettintuc__boxComment__column">
-                                                <textarea class="uk-textarea chitiettintuc__boxComment__textarea" rows="3" placeholder="Bình luận"></textarea>
+                                                <textarea class="uk-textarea chitiettintuc__boxComment__textarea" rows="3" name="content" maxlength="1000" placeholder="Bình luận"></textarea>
                                             </div>
                                             <div class="uk-width-1-1 chitiettintuc__boxComment__column">
                                                 <label class="chitiettintuc__boxComment__label"><input class="uk-checkbox chitiettintuc__boxComment__check" type="checkbox" checked> <span class="chitiettintuc__boxComment__checkTxt">Tôi đồng ý rằng dữ liệu của tôi đã gửi đang được thu thập và lưu trữ. Để biết thêm chi tiết về việc xử lý dữ liệu người dùng, hãy xem Chính sách quyền riêng tư của chúng tôi.</span></label>
                                             </div>
                                             <div class="uk-width-1-1 chitiettintuc__boxComment__column">
-                                                <button type="submit" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đánh giá</span></button>
+                                                <button onclick="ActionSite.submitFormSite('{{$formIdInput}}','{{$urlPostSite}}','btnSubmitCommentNew')" id="btnSubmitCommentNew" type="button" class="uk-button uk-button-default chitiettintuc__boxComment__btn"><span>Đánh giá</span></button>
                                             </div>
                                         </form>
                                     </div>
