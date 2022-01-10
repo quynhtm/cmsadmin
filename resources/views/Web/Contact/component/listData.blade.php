@@ -59,7 +59,7 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
-                            <td class="text-left middle">{{$item->contact_user_name_send}}</td>
+                            <td class="text-left middle">{!! $item->contact_user_name_send !!}</td>
                             <td class="text-left middle">{{$item->contact_phone_send}}</td>
                             <td class="text-left middle">{{$item->contact_email_send}}</td>
                             <td class="text-left middle">

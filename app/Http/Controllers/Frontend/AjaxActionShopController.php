@@ -14,6 +14,7 @@ use App\Library\AdminFunction\Security;
 use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
 use App\Models\Shop\Products;
+use App\Models\Web\Contact;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -388,16 +389,25 @@ class AjaxActionShopController extends BaseSiteController
     public function ajaxPostSite()
     {
         $dataForm = $_POST;
-        $arrAjax = array('success' => 0, 'html' => '', 'message' => '');
-        $actionUpdate = 'actionUpdate';
-        $actionUpdate = isset($dataForm['actionInputSite']) ? $dataForm['actionInputSite'] : $actionUpdate;
+        $arrAjax = array('success' => STATUS_INT_KHONG, 'html' => '', 'message' => '');
+        $actionForm = 'actionUpdate';
+        $actionForm = isset($dataForm['actionInputSite']) ? $dataForm['actionInputSite'] : $actionForm;
 
-        switch ($actionUpdate) {
+        switch ($actionForm) {
             case 'inputContactSite':
-                $arrAjax['success'] = 1;
-                $arrAjax['actionSite'] = $actionUpdate;
-                $arrAjax['loadPage'] = 1;
-                $arrAjax['divShowInfor'] = '';
+                $dataInput['contact_gender'] = (int)$dataForm['contact_gender'];
+                $dataInput['contact_user_name_send'] = Security::cleanText(addslashes($dataForm['contact_user_name_send']));
+                $dataInput['contact_phone_send'] = Security::cleanText(addslashes($dataForm['contact_phone_send']));
+                $dataInput['contact_email_send'] = Security::cleanText(addslashes($dataForm['contact_email_send']));
+                $dataInput['contact_content'] = Security::cleanText(addslashes($dataForm['contact_content']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['contact_title'] = 'Liên hệ tại trang chủ';
+
+                $contact_id = app(Contact::class)->editItem($dataInput);
+                if($contact_id > STATUS_INT_KHONG){
+                    $arrAjax['success'] = STATUS_INT_MOT;
+                    $arrAjax['actionSite'] = $actionForm;
+                }
                 break;
             default:
                 break;

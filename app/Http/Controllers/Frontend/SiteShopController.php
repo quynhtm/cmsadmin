@@ -44,6 +44,7 @@ class SiteShopController extends BaseSiteController
 
         return $this->outDataCommon = [
             'totalItemCart' => isset($dataCart['total_cart']) ? $dataCart['total_cart'] : STATUS_INT_KHONG,
+            'partner_id' => $this->partner,
             'urlPostSite' => URL::route('users.ajaxPostSite')
         ];
     }

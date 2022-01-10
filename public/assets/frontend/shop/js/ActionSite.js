@@ -80,7 +80,7 @@ var ActionSite = {
         // Create an FormData object
         var data = new FormData(form);
         // disabled the submit button
-        //$("#"+btnSubmit).prop("disabled", true);
+        $("#"+btnSubmit).prop("disabled", true);
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
@@ -91,17 +91,18 @@ var ActionSite = {
             cache: false,
             timeout: 600000,
             success: function (res) {
+                $("#"+btnSubmit).prop("disabled", true);
                 ActionSite.showNotificationSite(res.actionSite, (res.success == 1) ? 'success' : 'error');
             },
             error: function (e) {
                 ActionSite.showNotificationSite('',  'error');
             }
         });
+        $("#"+btnSubmit).prop("disabled", false);
     },
     showNotificationSite: function (type, status) {
         var notiDefault = '<div class="notification__content notification__content--error">' +
             '<div class="notification__content__txt">Có lỗi gửi thông tin. Quý khách hãy cập nhật lại.</div></div>';
-
         if (status == 'success') {
             switch (type) {
                 case 'inputContactSite':

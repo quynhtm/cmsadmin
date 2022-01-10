@@ -112,6 +112,7 @@
                                 <?php $form_id_contact = 'submitContactSite'; ?>
                                 <form class="uk-grid-16 uk-grid-30-m" uk-grid id="{{$form_id_contact}}" enctype="multipart/form-data">
                                     <input type="hidden" id="formId" name="formId" value="{{$form_id_contact}}">
+                                    <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
                                     <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputContactSite">
                                     {{ csrf_field() }}
                                     <div class="uk-width-1-2 home__tuvan__column">
@@ -126,13 +127,13 @@
                                         </div>
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" required name="contact_user_name_send" maxlength="250" placeholder="Họ tên *">
+                                        <input class="uk-input modal__wishList__form__input" type="text" required name="contact_user_name_send" maxlength="100" placeholder="Họ tên *">
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_phone_send" maxlength="20" placeholder="Số điện thoại *">
+                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_phone_send" maxlength="15" placeholder="Số điện thoại *">
                                     </div>
                                     <div class="uk-width-1-2 home__tuvan__column">
-                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_email_send" maxlength="200" placeholder="Email">
+                                        <input class="uk-input modal__wishList__form__input" type="text" name="contact_email_send" maxlength="150" placeholder="Email">
                                     </div>
                                     <div class="uk-width-1-1 home__tuvan__column">
                                         <textarea class="uk-textarea modal__wishList__form__input" name="contact_content" rows="5" placeholder="Lời nhắn *"></textarea>
