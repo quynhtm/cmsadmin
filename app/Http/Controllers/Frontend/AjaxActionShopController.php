@@ -400,8 +400,8 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['contact_phone_send'] = Security::cleanText(addslashes($dataForm['contact_phone_send']));
                 $dataInput['contact_email_send'] = Security::cleanText(addslashes($dataForm['contact_email_send']));
                 $dataInput['contact_content'] = Security::cleanText(addslashes($dataForm['contact_content']));
+                $dataInput['contact_title'] = Security::cleanText(addslashes($dataForm['contact_title']));
                 $dataInput['partner_id'] = (int)$dataForm['partner_id'];
-                $dataInput['contact_title'] = 'Liên hệ tại trang chủ';
 
                 $contact_id = app(Contact::class)->editItem($dataInput);
                 if($contact_id > STATUS_INT_KHONG){

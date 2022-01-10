@@ -489,8 +489,13 @@ class SiteShopController extends BaseSiteController
 
     public function indexContact()
     {
+        $arrGender = $this->commonService->getSiteOptionTypeDefine(DEFINE_GIOI_TINH);
+        $optionGender = FunctionLib::getOption([DEFINE_NULL => 'Giới tính'] + $arrGender,  DEFINE_NULL);
+
         $this->getInforCommonSite();
-        return view('Frontend.Shop.Pages.contact');
+        return view('Frontend.Shop.Pages.contact', array_merge([
+            'optionGender' => $optionGender,
+        ], $this->outDataCommon));
     }
 
     public function indexLoginShop()

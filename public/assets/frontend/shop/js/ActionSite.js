@@ -91,8 +91,8 @@ var ActionSite = {
             cache: false,
             timeout: 600000,
             success: function (res) {
-                $("#"+btnSubmit).prop("disabled", true);
                 ActionSite.showNotificationSite(res.actionSite, (res.success == 1) ? 'success' : 'error');
+                $("#"+form_id).trigger("reset");
             },
             error: function (e) {
                 ActionSite.showNotificationSite('',  'error');
@@ -118,7 +118,7 @@ var ActionSite = {
             message: notiDefault,
             status: 'success',
             pos: 'bottom-left',
-            timeout: 1500
+            timeout: 2500
         });
         //UIkit.modal('#modal-wishList').hide();
     },

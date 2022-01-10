@@ -113,6 +113,7 @@
                                 <form class="uk-grid-16 uk-grid-30-m" uk-grid id="{{$form_id_contact}}" enctype="multipart/form-data">
                                     <input type="hidden" id="formId" name="formId" value="{{$form_id_contact}}">
                                     <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
+                                    <input type="hidden" id="contact_title" name="contact_title" value="Liên hệ từ trang chủ">
                                     <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputContactSite">
                                     {{ csrf_field() }}
                                     <div class="uk-width-1-2 home__tuvan__column">

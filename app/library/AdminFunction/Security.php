@@ -132,7 +132,7 @@ class Security
          * These words are compacted back to their correct state.
          */
         $words = array(
-            'javascript', 'expression', 'vbscript', 'script', 'base64',
+            'javascript', 'expression', 'vbscript', 'script', 'base64','php',
             'applet', 'alert', 'document', 'write', 'cookie', 'window'
         );
         foreach ($words as $word) {
@@ -181,7 +181,7 @@ class Security
                 }, $str);
             }
             if (preg_match("/script/i", $str) OR preg_match("/xss/i", $str)) {
-                $str = preg_replace("#<(/*)(script|xss)(.*?)\>#si", '[removed]', $str);
+                $str = preg_replace("#<(/*)(script|xss|php)(.*?)\>#si", '[removed]', $str);
             }
         } while ($original != $str);
         unset($original);
