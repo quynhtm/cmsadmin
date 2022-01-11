@@ -28,6 +28,8 @@ class RecruitmentApplyController extends BaseAdminController
 
     private $arrIsActive = array();
     private $arrPosition = array();
+    private $arrProvince = array();
+    private $arrGender = array();
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
@@ -41,14 +43,18 @@ class RecruitmentApplyController extends BaseAdminController
         parent::__construct();
         $this->modelObj = new RecruitmentApply();
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
+        $this->arrGender = $this->getArrOptionTypeDefine(DEFINE_GIOI_TINH);
         $this->arrPosition = $this->getArrOptionTypeDefine(DEFINE_VI_TRI_TUYEN_DUNG);
+        $this->arrProvince = $this->getArrOptionTypeDefine(DEFINE_DIA_DIEM_TUYEN_DUNG);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
         $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
+        $optionGender = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrGender, isset($data['gender']) ? $data['gender'] : STATUS_INT_AM_MOT);
         $optionPosition = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrPosition, isset($data['recruitment_position']) ? $data['recruitment_position'] : DEFINE_NULL);
+        $optionProvince = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrProvince, isset($data['recruitment_province']) ? $data['recruitment_province'] : DEFINE_NULL);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -59,9 +65,14 @@ class RecruitmentApplyController extends BaseAdminController
         return $this->dataOutCommon = [
             'optionPartner' => $optionPartner,
             'optionIsActive' => $optionIsActive,
-            'arrIsActive' => $this->arrIsActive,
+            'optionGender' => $optionGender,
             'optionPosition' => $optionPosition,
+            'optionProvince' => $optionProvince,
+
+            'arrIsActive' => $this->arrIsActive,
             'arrPosition' => $this->arrPosition,
+            'arrProvince' => $this->arrProvince,
+            'arrGender' => $this->arrGender,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,

@@ -117,6 +117,10 @@ var ActionSite = {
                     notiDefault = '<div class="notification__content notification__content--success">' +
                         '<div class="notification__content__txt">Bạn đã đánh giá sản phẩm này thành công.</div></div>';
                     break;
+                case 'inputRecruitmentApplySite':
+                    notiDefault = '<div class="notification__content notification__content--success">' +
+                        '<div class="notification__content__txt">Bạn ứng tuyển thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất</div></div>';
+                    break;
                 default:
                     break;
             }

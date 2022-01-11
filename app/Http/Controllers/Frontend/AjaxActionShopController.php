@@ -15,6 +15,7 @@ use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
 use App\Models\Shop\Products;
 use App\Models\Web\Contact;
+use App\Models\Web\RecruitmentApply;
 use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
 use Illuminate\Support\Facades\Redirect;
@@ -440,6 +441,26 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
 
                 $insert_id = app(Reviews::class)->editItem($dataInput);
+                if($insert_id > STATUS_INT_KHONG){
+                    $arrAjax['success'] = STATUS_INT_MOT;
+                    $arrAjax['actionSite'] = $actionForm;
+                }
+                break;
+
+            case 'inputRecruitmentApplySite':
+                $dataInput['recruitment_id'] = (int)$dataForm['recruitment_id'];
+                $dataInput['recruitment_title'] = Security::cleanText(addslashes($dataForm['recruitment_title']));
+                $dataInput['recruitment_province'] = Security::cleanText(addslashes($dataForm['recruitment_province']));
+                $dataInput['recruitment_position'] = Security::cleanText(addslashes($dataForm['recruitment_position']));
+                $dataInput['recruitment_data'] = Security::cleanText(addslashes($dataForm['recruitment_data']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['gender'] = Security::cleanText(addslashes($dataForm['gender']));
+                $dataInput['full_name'] = Security::cleanText(addslashes($dataForm['full_name']));
+                $dataInput['phone'] = Security::cleanText(addslashes($dataForm['phone']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+
+                $insert_id = app(RecruitmentApply::class)->editItem($dataInput);
                 if($insert_id > STATUS_INT_KHONG){
                     $arrAjax['success'] = STATUS_INT_MOT;
                     $arrAjax['actionSite'] = $actionForm;

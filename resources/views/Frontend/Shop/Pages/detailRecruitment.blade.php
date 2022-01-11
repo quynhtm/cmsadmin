@@ -73,9 +73,18 @@
                                     <h2 class="uk-h2 tintuc__title uk-text-center">Ứng tuyển ngay</h2>
                                 </div>
                                 <div class="footer__center__item24">
-                                    <form class="uk-grid-small uk-grid-30-m" uk-grid>
+                                    <?php $formIdInput = 'submitCommentProductSite'; ?>
+                                    <form class="uk-grid-small uk-grid-30-m" uk-grid id="{{$formIdInput}}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="formId" name="formId" value="{{$formIdInput}}">
+                                        <input type="hidden" id="partner_id" name="partner_id" value="{{$partner_id}}">
                                         <input type="hidden" name="recruitment_id" id="recruitment_id" @if(isset($dataDetail['id']))value="{{$dataDetail['id']}}"@endif>
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="recruitment_title" id="recruitment_title" @if(isset($dataDetail['recruitment_title']))value="{{$dataDetail['recruitment_title']}}"@endif>
+                                        <input type="hidden" name="recruitment_province" id="recruitment_province" @if(isset($dataDetail['recruitment_province']))value="{{$dataDetail['recruitment_province']}}"@endif>
+                                        <input type="hidden" name="recruitment_position" id="recruitment_position" @if(isset($dataDetail['recruitment_position']))value="{{$dataDetail['recruitment_position']}}"@endif>
+                                        <input type="hidden" id="recruitment_data" name="recruitment_data" value="{{json_encode($dataDetail)}}">
+                                        <input type="hidden" id="actionInputSite" name="actionInputSite" value="inputRecruitmentApplySite">
+
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
                                                 <select name="gender">
@@ -100,7 +109,7 @@
 
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select name="recruitment_position" disabled>
+                                                <select name="recruitment_position2" disabled>
                                                     {!! $optionPosition !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
@@ -111,7 +120,7 @@
                                         </div>
                                         <div class="uk-width-1-2@s chitiettintuc__boxComment__column">
                                             <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
-                                                <select name="recruitment_province" disabled>
+                                                <select name="recruitment_province2" disabled>
                                                     {!! $optionProvince !!}
                                                 </select>
                                                 <button class="modal__wishList__form__btnSelect uk-button uk-button-default uk-width-1-1" type="button" tabindex="-1">
@@ -131,7 +140,7 @@
                                         </div>
                                         <div class="uk-width-1-1 chitiettintuc__boxComment__column">
                                             <div class="uk-text-center">
-                                                <button type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
+                                                <button onclick="ActionSite.submitFormSite('{{$formIdInput}}','{{$urlPostSite}}','btnSubmitRecruitmentApply')" id="btnSubmitRecruitmentApply" type="button" class="uk-button uk-button-default modal__wishList__form__btnSend"><span>Gửi</span></button>
                                             </div>
                                         </div>
                                     </form>

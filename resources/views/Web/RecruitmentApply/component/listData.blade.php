@@ -44,13 +44,13 @@
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
                         <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Tin tuyển dụng')}}</th>
-                        <th width="8%" class="text-left">{{viewLanguage('Họ tên ứng tuyển')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Giới tính')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('Phone')}}</th>
+                        <th width="18%" class="text-left">{{viewLanguage('Tin tuyển dụng')}}</th>
 
-                        <th width="15%" class="text-left">{{viewLanguage('Email')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Ứng tuyển')}}</th>
+                        <th width="15%" class="text-left">{{viewLanguage('Liên hệ')}}</th>
 
+                        <th width="15%" class="text-left">{{viewLanguage('Vị trí ừng tuyển')}}</th>
+                        <th width="10%" class="text-left">{{viewLanguage('Tỉnh thành')}}</th>
 
                         <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
                         <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
@@ -61,30 +61,32 @@
                         <tr>
                             <td class="text-center middle">{{$stt+$key+1}}</td>
                             <td class="text-left middle">
-                                {{$item->recruitment_id}}
+                                [{{$item->recruitment_id}}] - {{$item->recruitment_title}}
                                 @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
                             </td>
-                            <td class="text-left middle">{{$item->full_name}}</td>
                             <td class="text-left middle">
-                                @if(isset($arrPosition[$item->gender])){{$arrPosition[$item->gender]}}@endif
+                                @if(!empty($item->full_name)){{$item->full_name}}<br/>@endif
+                                @if(isset($arrGender[$item->gender]))<span class="font_10">{{$arrGender[$item->gender]}}</span>@endif
                             </td>
-                            <td class="text-left middle">{{$item->phone}}</td>
+                            <td class="text-left middle">
+                                @if(!empty($item->phone)){{$item->phone}}<br/>@endif
+                                @if(!empty($item->email)){{$item->email}}<br/>@endif
+                            </td>
 
-                            <td class="text-left middle">{{$item->email}}</td>
+                            <td class="text-left middle">
+                                @if(isset($arrPosition[$item->recruitment_position])){{$arrPosition[$item->recruitment_position]}}@endif
+                            </td>
+                            <td class="text-left middle">
+                                @if(isset($arrProvince[$item->recruitment_province])){{$arrProvince[$item->recruitment_province]}}@endif
+                            </td>
                             <td class="text-center middle">
                                 @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif
-
                             </td>
                             <td class="text-center middle">
                                 @if($permission_full || $permission_view || $permission_edit || $permission_add)
                                     <a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
                                         <i class="fa fa-eye "></i>
                                     </a>
-                                @endif
-                                @if($permission_full || $permission_remove)
-                                    {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
-                                        <i class="pe-7s-trash fa-2x"></i>
-                                    </a>&nbsp;--}}
                                 @endif
                             </td>
                         </tr>
