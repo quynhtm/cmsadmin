@@ -33,9 +33,9 @@
                 </select>
             </div>
             <div class="form-group col-lg-2">
-                <div class="marginT20 display-none-block" id="show_button_approval_order">
-                    <button class="btn btn-light" type="button" name="approval_order_success" id="approval_order_success" value="3" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Phê duyệt')}}</button>
-                    <button class="btn btn-light" type="button" name="approval_order_cancel" id="approval_order_cancel" value="0" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy')}}</button>
+                <div class="marginT30 display-none-block" id="show_button_approval_order">
+                    <button class="btn btn-light" type="button" name="approval_order_success" id="approval_order_success" value="3" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Phê duyệt tin')}}</button>
+                    <button class="btn btn-light" type="button" name="approval_order_cancel" id="approval_order_cancel" value="0" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy tin')}}</button>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="2%" class="text-center">{{viewLanguage('STT')}} <input type="checkbox" class="check" id="checkAllOrder"></th>
+                        <th width="2%" class="text-center"><input type="checkbox" class="check" id="checkAllOrder"></th>
                         <th width="30%" class="text-left">{{viewLanguage('Đối tượng được đánh giá')}}</th>
                         <th width="15%" class="text-left">{{viewLanguage('Người gửi')}}</th>
 
@@ -63,7 +63,7 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">
-                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="changeColorButton();">
+                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="changeColorButton();"><br>
                                 {{$stt+$key+1}}
                             </td>
                             <td class="text-left middle">
@@ -83,7 +83,7 @@
                                 @if(!empty($item->email)){{$item->email}}@endif
                             </td>
                             <td class="text-left middle">{!! $item->content !!}</td>
-                            <td class="text-left middle">{{$item->star_points}}</td>
+                            <td class="text-center middle">{{$item->star_points}}</td>
                             <td class="text-center middle">{{date('H:i d-m-Y',strtotime($item->created_at))}}</td>
                             <td class="text-center middle">
                                 @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif

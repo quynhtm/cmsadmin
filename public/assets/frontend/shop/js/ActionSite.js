@@ -113,6 +113,10 @@ var ActionSite = {
                     notiDefault = '<div class="notification__content notification__content--success">' +
                         '<div class="notification__content__txt">Bạn đã bình luận tin bài này thành công.</div></div>';
                     break;
+                case 'inputCommentProductSite':
+                    notiDefault = '<div class="notification__content notification__content--success">' +
+                        '<div class="notification__content__txt">Bạn đã đánh giá sản phẩm này thành công.</div></div>';
+                    break;
                 default:
                     break;
             }

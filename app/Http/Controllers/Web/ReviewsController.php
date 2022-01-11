@@ -95,7 +95,7 @@ class ReviewsController extends BaseAdminController
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
         $search['type_review'] = $typeReview;
-        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_MOT)));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 

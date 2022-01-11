@@ -432,6 +432,7 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
                 $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
                 $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
+                $dataInput['star_points'] = (int)$dataForm['star_points'];
                 $dataInput['partner_id'] = (int)$dataForm['partner_id'];
                 $dataInput['type_review'] = Reviews::typeReviewProduct;
                 $dataInput['is_active'] = STATUS_INT_MOT;//mới
