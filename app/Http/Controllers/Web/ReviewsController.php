@@ -162,7 +162,6 @@ class ReviewsController extends BaseAdminController
         $actionUpdate = 'actionUpdate';
         $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
         $actionUpdate = isset($dataForm['actionUpdate']) ? $dataForm['actionUpdate'] : (isset($request['actionUpdate']) ? $request['actionUpdate'] : $actionUpdate);
-
         switch ($actionUpdate) {
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
@@ -177,6 +176,22 @@ class ReviewsController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
+                    $arrAjax['divShowInfor'] = '';
+                }else{
+                    $arrAjax = returnError($this->error);
+                }
+                break;
+            case 'updateStatus':
+                $status = isset($request['status']) ? $request['status'] : STATUS_INT_MOT;
+                $arrId = isset($request['dataId']) ? $request['dataId'] : [];
+                $isEdit = 0;
+                if (!empty($arrId)) {
+                    $isEdit = $this->modelObj->updateStatusByArrId($arrId, $status);
+                }
+                if ($isEdit > 0) {
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = '';
+                    $arrAjax['loadPage'] = 1;
                     $arrAjax['divShowInfor'] = '';
                 }else{
                     $arrAjax = returnError($this->error);

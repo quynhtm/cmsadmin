@@ -21,7 +21,7 @@ class Reviews extends BaseModel
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $str_like = trim($dataSearch['p_keyword']);
                 $query->where('object_name', 'LIKE', '%' . $str_like . '%')
-                    ->orWhere('assessor', 'LIKE', '%' . $str_like. '%');
+                    ->orWhere('assessor', 'LIKE', '%' . $str_like . '%');
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
@@ -56,18 +56,18 @@ class Reviews extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new Reviews(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG) ? new Reviews() : self::getItemById($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
                     }
                 }
-                if($id <= STATUS_INT_KHONG){
+                if ($id <= STATUS_INT_KHONG) {
                     $item->created_id = $this->getUserId();
                     $item->created_name = $this->getUserName();
                     $item->save();
                     $id = $item->id;
-                }else{
+                } else {
                     $item->updated_id = $this->getUserId();
                     $item->updated_name = $this->getUserName();
                     $item->update();
@@ -83,11 +83,11 @@ class Reviews extends BaseModel
 
     public function getItemById($id)
     {
-        $data = Memcache::getCache(Memcache::CACHE_REVIEWS_ID.$id);
+        $data = Memcache::getCache(Memcache::CACHE_REVIEWS_ID . $id);
         if (!$data) {
             $data = Reviews::find($id);
             if ($data) {
-                Memcache::putCache(Memcache::CACHE_REVIEWS_ID.$id,$data);
+                Memcache::putCache(Memcache::CACHE_REVIEWS_ID . $id, $data);
             }
         }
         return $data;
@@ -112,8 +112,23 @@ class Reviews extends BaseModel
     public function removeCache($id = STATUS_INT_KHONG, $data = [])
     {
         if ($id > STATUS_INT_KHONG) {
-            Memcache::forgetCache(Memcache::CACHE_REVIEWS_ID.$id);
+            Memcache::forgetCache(Memcache::CACHE_REVIEWS_ID . $id);
         }
     }
+
     /**************************************************************************************************************************/
+    public function updateStatusByArrId($arrId = [], $status = STATUS_INT_MOT)
+    {
+        if (!empty($arrId)) {
+            $updated_id = $this->getUserId();
+            $updated_name = $this->getUserName();
+            $update = self::whereIn($this->primaryKey, $arrId)
+                ->update(['is_active' => $status, 'updated_id' => $updated_id, 'updated_name' => $updated_name]);
+            foreach ($arrId as $id) {
+                Memcache::forgetCache(Memcache::CACHE_REVIEWS_ID . $id);
+            }
+            return $update;
+        }
+        return false;
+    }
 }

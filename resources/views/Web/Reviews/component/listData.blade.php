@@ -32,6 +32,12 @@
                     {!! $optionIsActive !!}}
                 </select>
             </div>
+            <div class="form-group col-lg-2">
+                <div class="marginT20 display-none-block" id="show_button_approval_order">
+                    <button class="btn btn-light" type="button" name="approval_order_success" id="approval_order_success" value="3" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Phê duyệt')}}</button>
+                    <button class="btn btn-light" type="button" name="approval_order_cancel" id="approval_order_cancel" value="0" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy')}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -43,48 +49,44 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
-                        <th width="15%" class="text-left">{{viewLanguage('Đối tượng được đánh giá')}}</th>
+                        <th width="2%" class="text-center">{{viewLanguage('STT')}} <input type="checkbox" class="check" id="checkAllOrder"></th>
+                        <th width="30%" class="text-left">{{viewLanguage('Đối tượng được đánh giá')}}</th>
                         <th width="15%" class="text-left">{{viewLanguage('Người gửi')}}</th>
-                        <th width="10%" class="text-left">{{viewLanguage('Email')}}</th>
 
                         <th width="30%" class="text-left">{{viewLanguage('Nội dung')}}</th>
                         <th width="5%" class="text-center">{{viewLanguage('Điểm')}}</th>
-
-                        <th width="12%" class="text-center">{{viewLanguage('Ngày đánh giá')}}</th>
-                        <th width="8%" class="text-center">{{viewLanguage('Tình trạng')}}</th>
-                        <th width="5%" class="text-center">{{viewLanguage('Action')}}</th>
+                        <th width="8%" class="text-center">{{viewLanguage('Ngày tạo')}}</th>
+                        <th width="10%" class="text-center">{{viewLanguage('Trạng thái')}}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
-                            <td class="text-center middle">{{$stt+$key+1}}</td>
+                            <td class="text-center middle">
+                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="changeColorButton();">
+                                {{$stt+$key+1}}
+                            </td>
                             <td class="text-left middle">
-                                {{$item->object_name}}
+                                @if($item->type_review == \App\Models\Web\Reviews::typeReviewProduct)
+                                    <a href="{{buildLinkDetailProduct($item->object_id,$item->object_name)}}" title="{{$item->object_name}}" target="_blank">
+                                        [{{$item->object_id}}]-{{$item->object_name}}
+                                    </a>
+                                @else
+                                    <a href="{{buildLinkDetailNew($item->object_id,$item->object_name)}}" title="{{$item->object_name}}" target="_blank">
+                                        [{{$item->object_id}}]-{{$item->object_name}}
+                                    </a>
+                                @endif
                                 @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
                             </td>
-                            <td class="text-left middle">{{$item->assessor}}</td>
-                            <td class="text-left middle">{{$item->email}}</td>
-
+                            <td class="text-left middle">
+                                @if(!empty($item->assessor)){{$item->assessor}} <br/>@endif
+                                @if(!empty($item->email)){{$item->email}}@endif
+                            </td>
                             <td class="text-left middle">{!! $item->content !!}</td>
                             <td class="text-left middle">{{$item->star_points}}</td>
-                            <td class="text-left middle">{{$item->created_at}}</td>
+                            <td class="text-center middle">{{date('H:i d-m-Y',strtotime($item->created_at))}}</td>
                             <td class="text-center middle">
                                 @if(isset($arrIsActive[$item->is_active])){{$arrIsActive[$item->is_active]}}@endif
-                            </td>
-
-                            <td class="text-center middle">
-                                @if($permission_full || $permission_view || $permission_edit || $permission_add)
-                                    {{--<a href="javascript:void(0);"  class="color_hdi" onclick="jqueryCommon.getDataByAjax(this);" data-loading="1" data-show="2" data-div-show="content-page-right" data-form-name="addFormItem" data-url="{{$urlGetData}}" data-function-action="_functionGetData" data-method="post" data-input="{{json_encode(['funcAction'=>'getDetailItem','dataItem'=>$item])}}" data-objectId="{{$item->id}}" title="{{viewLanguage('Thông tin chi tiết')}}">
-                                        <i class="fa fa-eye "></i>
-                                    </a>--}}
-                                @endif
-                                @if($permission_full || $permission_remove)
-                                    {{--<a href="javascript:void(0);" style="color: red" class="sys_delete_item_common" data-form-name="deleteItem" title="{{viewLanguage('Xóa thông tin: ')}}{{$item->GROUP_NAME}}" data-method="post" data-url="{{$urlPostData}}" data-input="{{json_encode(['item'=>$item])}}">
-                                        <i class="pe-7s-trash fa-2x"></i>
-                                    </a>&nbsp;--}}
-                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -103,6 +105,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#checkAllOrder").click(function () {
+            $(".check").prop('checked', $(this).prop('checked'));
+            changeColorButton();
+        });
+
         var config = {
             '.chosen-select'           : {width: "100%"},
             '.chosen-select-deselect'  : {allow_single_deselect:true},
@@ -113,4 +120,63 @@
             $(selector).chosen(config[selector]);
         }
     });
+    function changeColorButton(){
+        var changeColor = 0;
+        $("input[name*='checkItems']").each(function () {
+            if ($(this).is(":checked")) {
+                changeColor = 1;
+            }
+        });
+        if(changeColor == 1){
+            $('#show_button_approval_order').removeClass("display-none-block");
+            $("#approval_order_success").addClass("btn-success");
+            $("#approval_order_success").removeClass("btn-light");
+
+            $("#approval_order_cancel").addClass("btn-danger");
+            $("#approval_order_cancel").removeClass("btn-light");
+        }else {
+            $('#show_button_approval_order').addClass("display-none-block");
+            $("#approval_order_success").removeClass("btn-success");
+            $("#approval_order_success").addClass("btn-light");
+
+            $("#approval_order_cancel").addClass("btn-danger");
+            $("#approval_order_cancel").removeClass("btn-light");
+        }
+    }
+    function clickUpdateStatus(url_ajax,status){
+        var dataId = [];
+        var i = 0;
+        var _token = $('input[name="_token"]').val();
+        $("input[name*='checkItems']").each(function () {
+            if ($(this).is(":checked")) {
+                dataId[i] = $(this).val();
+                i++;
+            }
+        });
+        if (dataId.length == 0) {
+            alert('Bạn chưa chọn đơn để thao tác.');
+            return false;
+        }
+
+        var msg = 'Bạn có muốn thay đổi trạng thái các item này?';
+        jqueryCommon.isConfirm(msg).then((confirmed) => {
+            $('#loader').show();
+            $('#show_button_approval_order').addClass("display-none-block");
+            $.ajax({
+                type: "post",
+                url: url_ajax,
+                data: {_token: _token,dataId: dataId, status: status, actionUpdate: 'updateStatus'},
+                dataType: 'json',
+                success: function (res) {
+                    $('#loader').hide();
+                    if (res.success == 1) {
+                        jqueryCommon.showMsg('success',res.message);
+                        window.location.reload();
+                    } else {
+                        jqueryCommon.showMsgError(res.success,res.message);
+                    }
+                }
+            });
+        });
+    }
 </script>
