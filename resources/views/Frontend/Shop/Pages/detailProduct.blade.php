@@ -62,7 +62,12 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="modal__quickView__desc">(1 đánh giá)</span>
+                                        <span class="modal__quickView__desc">
+                                            <? $numberComment = count($arrCommentProduct);?>
+                                            @if($numberComment>0)
+                                            ({{$numberComment}} đánh giá)
+                                            @endif
+                                        </span>
                                     </div>
                                 </div>
                             </div>

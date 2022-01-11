@@ -75,7 +75,7 @@ class ServiceCommon
     public function getSiteCommentItem($object_id = 0, $type_review = Reviews::typeReviewNew, $partner = STATUS_INT_MOT, $limit = CGlobal::number_show_8){
         $offset = STATUS_INT_KHONG;
         $search['limit'] = $limit;
-        $search['is_active'] = STATUS_INT_MOT;
+        $search['is_active'] = STATUS_INT_BA;
         $search['object_id'] = $object_id;
         $search['type_review'] = $type_review;
         $search['partner_id'] = $partner;
