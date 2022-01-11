@@ -125,7 +125,7 @@ class Reviews extends BaseModel
             $update = self::whereIn($this->primaryKey, $arrId)
                 ->update(['is_active' => $status, 'updated_id' => $updated_id, 'updated_name' => $updated_name]);
             foreach ($arrId as $id) {
-                Memcache::forgetCache(Memcache::CACHE_REVIEWS_ID . $id);
+                self::removeCache($id);
             }
             return $update;
         }

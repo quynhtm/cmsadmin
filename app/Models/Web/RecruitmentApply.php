@@ -111,4 +111,18 @@ class RecruitmentApply extends BaseModel
         }
     }
     /**************************************************************************************************************************/
+    public function updateStatusByArrId($arrId = [], $status = STATUS_INT_MOT)
+    {
+        if (!empty($arrId)) {
+            $updated_id = $this->getUserId();
+            $updated_name = $this->getUserName();
+            $update = self::whereIn($this->primaryKey, $arrId)
+                ->update(['is_active' => $status, 'updated_id' => $updated_id, 'updated_name' => $updated_name]);
+            foreach ($arrId as $id) {
+                self::removeCache($id);
+            }
+            return $update;
+        }
+        return false;
+    }
 }

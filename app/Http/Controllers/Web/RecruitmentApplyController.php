@@ -89,9 +89,6 @@ class RecruitmentApplyController extends BaseAdminController
         ];
     }
 
-    /*********************************************************************************************************
-     * Quản lý đối tác web
-     *********************************************************************************************************/
     public function index()
     {
         if (!$this->checkMultiPermiss([PERMISS_FULL, PERMISS_VIEW])) {
@@ -103,7 +100,7 @@ class RecruitmentApplyController extends BaseAdminController
         $offset = ($page_no - 1) * $limit;
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
-        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_AM_MOT)));
+        $search['is_active'] = trim(addslashes(Request::get('is_active', STATUS_INT_MOT)));
         $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
@@ -183,6 +180,23 @@ class RecruitmentApplyController extends BaseAdminController
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
+                    $arrAjax['divShowInfor'] = '';
+                }else{
+                    $arrAjax = returnError($this->error);
+                }
+                break;
+
+            case 'updateStatus':
+                $status = isset($request['status']) ? $request['status'] : STATUS_INT_MOT;
+                $arrId = isset($request['dataId']) ? $request['dataId'] : [];
+                $isEdit = 0;
+                if (!empty($arrId)) {
+                    $isEdit = $this->modelObj->updateStatusByArrId($arrId, $status);
+                }
+                if ($isEdit > 0) {
+                    $arrAjax['success'] = 1;
+                    $arrAjax['html'] = '';
+                    $arrAjax['loadPage'] = 1;
                     $arrAjax['divShowInfor'] = '';
                 }else{
                     $arrAjax = returnError($this->error);

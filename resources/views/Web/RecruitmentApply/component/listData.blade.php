@@ -32,6 +32,13 @@
                     {!! $optionIsActive !!}}
                 </select>
             </div>
+            <div class="form-group col-lg-4">
+                <div class="marginT30 display-none-block" id="show_button_action_status">
+                    <button class="btn btn-success" type="button"  onclick="jqueryCommon.clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Đã hoàn thành')}}</button>
+                    <button class="btn btn-warning" type="button"  onclick="jqueryCommon.clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_HAI}})"><i class="fa fa-refresh"></i> {{viewLanguage('Đang xử lý')}}</button>
+                    <button class="btn btn-danger" type="button" onclick="jqueryCommon.clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy tin')}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -43,7 +50,7 @@
                 <table class="table table-bordered table-hover">
                     <thead class="thin-border-bottom">
                     <tr class="table-background-header">
-                        <th width="2%" class="text-center">{{viewLanguage('STT')}}</th>
+                        <th width="2%" class="text-center"><input type="checkbox" class="check" id="checkAllOrder"></th>
                         <th width="18%" class="text-left">{{viewLanguage('Tin tuyển dụng')}}</th>
 
                         <th width="15%" class="text-left">{{viewLanguage('Ứng tuyển')}}</th>
@@ -59,7 +66,10 @@
                     <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
-                            <td class="text-center middle">{{$stt+$key+1}}</td>
+                            <td class="text-center middle">
+                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="jqueryCommon.changeColorButton();"><br>
+                                {{$stt+$key+1}}
+                            </td>
                             <td class="text-left middle">
                                 [{{$item->recruitment_id}}] - {{$item->recruitment_title}}
                                 @if($partner_id == 0) @if(isset($arrPartner[$item->partner_id]))<br><span class="font_10">{{$arrPartner[$item->partner_id]}}</span> @endif @endif
@@ -106,6 +116,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#checkAllOrder").click(function () {
+            $(".check").prop('checked', $(this).prop('checked'));
+            jqueryCommon.changeColorButton();
+        });
+
         var config = {
             '.chosen-select'           : {width: "100%"},
             '.chosen-select-deselect'  : {allow_single_deselect:true},

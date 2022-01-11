@@ -879,4 +879,53 @@ var jqueryCommon = {
             }
         });
     },
+    clickUpdateStatus: function(url_ajax,status){
+        var dataId = [];
+        var i = 0;
+        var _token = $('input[name="_token"]').val();
+        $("input[name*='checkItems']").each(function () {
+            if ($(this).is(":checked")) {
+                dataId[i] = $(this).val();
+                i++;
+            }
+        });
+        if (dataId.length == 0) {
+            alert('Bạn chưa chọn đơn để thao tác.');
+            return false;
+        }
+
+        var msg = 'Bạn có muốn thay đổi trạng thái các item này?';
+        jqueryCommon.isConfirm(msg).then((confirmed) => {
+            $('#loader').show();
+            $('#show_button_action_status').addClass("display-none-block");
+            $.ajax({
+                type: "post",
+                url: url_ajax,
+                data: {_token: _token,dataId: dataId, status: status, actionUpdate: 'updateStatus'},
+                dataType: 'json',
+                success: function (res) {
+                    $('#loader').hide();
+                    if (res.success == 1) {
+                        jqueryCommon.showMsg('success',res.message);
+                        window.location.reload();
+                    } else {
+                        jqueryCommon.showMsgError(res.success,res.message);
+                    }
+                }
+            });
+        });
+    },
+    changeColorButton: function(){
+        var changeColor = 0;
+        $("input[name*='checkItems']").each(function () {
+            if ($(this).is(":checked")) {
+                changeColor = 1;
+            }
+        });
+        if(changeColor == 1){
+            $('#show_button_action_status').removeClass("display-none-block");
+        }else {
+            $('#show_button_action_status').addClass("display-none-block");
+        }
+    },
 }

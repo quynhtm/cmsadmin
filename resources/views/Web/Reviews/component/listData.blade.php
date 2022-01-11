@@ -33,9 +33,9 @@
                 </select>
             </div>
             <div class="form-group col-lg-2">
-                <div class="marginT30 display-none-block" id="show_button_approval_order">
-                    <button class="btn btn-light" type="button" name="approval_order_success" id="approval_order_success" value="3" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Phê duyệt tin')}}</button>
-                    <button class="btn btn-light" type="button" name="approval_order_cancel" id="approval_order_cancel" value="0" onclick="clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy tin')}}</button>
+                <div class="marginT30 display-none-block" id="show_button_action_status">
+                    <button class="btn btn-success" type="button" onclick="jqueryCommon.clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_BA}})"><i class="fa fa-check"></i> {{viewLanguage('Phê duyệt tin')}}</button>
+                    <button class="btn btn-danger" type="button" onclick="jqueryCommon.clickUpdateStatus('{{$urlPostData}}',{{STATUS_INT_KHONG}})"><i class="fa fa-times"></i> {{viewLanguage('Hủy tin')}}</button>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td class="text-center middle">
-                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="changeColorButton();"><br>
+                                <input class="check" type="checkbox" name="checkItems[]" value="{{$item->id}}" data-amount="" onchange="jqueryCommon.changeColorButton();"><br>
                                 {{$stt+$key+1}}
                             </td>
                             <td class="text-left middle">
@@ -107,7 +107,7 @@
     $(document).ready(function(){
         $("#checkAllOrder").click(function () {
             $(".check").prop('checked', $(this).prop('checked'));
-            changeColorButton();
+            jqueryCommon.changeColorButton();
         });
 
         var config = {
@@ -120,63 +120,4 @@
             $(selector).chosen(config[selector]);
         }
     });
-    function changeColorButton(){
-        var changeColor = 0;
-        $("input[name*='checkItems']").each(function () {
-            if ($(this).is(":checked")) {
-                changeColor = 1;
-            }
-        });
-        if(changeColor == 1){
-            $('#show_button_approval_order').removeClass("display-none-block");
-            $("#approval_order_success").addClass("btn-success");
-            $("#approval_order_success").removeClass("btn-light");
-
-            $("#approval_order_cancel").addClass("btn-danger");
-            $("#approval_order_cancel").removeClass("btn-light");
-        }else {
-            $('#show_button_approval_order').addClass("display-none-block");
-            $("#approval_order_success").removeClass("btn-success");
-            $("#approval_order_success").addClass("btn-light");
-
-            $("#approval_order_cancel").addClass("btn-danger");
-            $("#approval_order_cancel").removeClass("btn-light");
-        }
-    }
-    function clickUpdateStatus(url_ajax,status){
-        var dataId = [];
-        var i = 0;
-        var _token = $('input[name="_token"]').val();
-        $("input[name*='checkItems']").each(function () {
-            if ($(this).is(":checked")) {
-                dataId[i] = $(this).val();
-                i++;
-            }
-        });
-        if (dataId.length == 0) {
-            alert('Bạn chưa chọn đơn để thao tác.');
-            return false;
-        }
-
-        var msg = 'Bạn có muốn thay đổi trạng thái các item này?';
-        jqueryCommon.isConfirm(msg).then((confirmed) => {
-            $('#loader').show();
-            $('#show_button_approval_order').addClass("display-none-block");
-            $.ajax({
-                type: "post",
-                url: url_ajax,
-                data: {_token: _token,dataId: dataId, status: status, actionUpdate: 'updateStatus'},
-                dataType: 'json',
-                success: function (res) {
-                    $('#loader').hide();
-                    if (res.success == 1) {
-                        jqueryCommon.showMsg('success',res.message);
-                        window.location.reload();
-                    } else {
-                        jqueryCommon.showMsgError(res.success,res.message);
-                    }
-                }
-            });
-        });
-    }
 </script>
