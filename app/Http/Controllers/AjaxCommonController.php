@@ -8,6 +8,9 @@
 namespace App\Http\Controllers;
 
 use App\Library\AdminFunction\FunctionLib;
+use App\Models\BackendCms\Districts;
+use App\Models\BackendCms\Province;
+use App\Models\BackendCms\Wards;
 use Illuminate\Support\Facades\Response;
 
 class AjaxCommonController extends Controller
@@ -20,28 +23,13 @@ class AjaxCommonController extends Controller
         $success = STATUS_INT_KHONG;
         if(trim($object) != '' && trim($type) != ''){
             switch ($type){
-                case 'DEPART':
-                    $data = app(DepartmentOrg::class)->getArrOptionDepartByOrgCode($object);
-                    $optionOut = FunctionLib::getOption(['' => '---Chọn---'] + $data, '');
-                    $success = STATUS_INT_MOT;
-                    break;
-                case 'ORG_BY_CAMPAIGN_CODE':
-                    $data = app(Campaigns::class)->getArrOptionOrgByCampaignCode($object);
-                    $optionOut = FunctionLib::getOption(['' => '---Chọn---'] + $data, '');
-                    $success = STATUS_INT_MOT;
-                    break;
-                case 'OPTION_MENU_PARENT':
-                    $data = app(MenuSystem::class)->getOptionMenuParent($object);
-                    $optionOut = FunctionLib::getOption(['' => '---Chọn---'] + $data, '');
-                    $success = STATUS_INT_MOT;
-                    break;
                 case 'OPTION_DISTRICT_CODE':
-                    $data = app(Province::class)->getOptionDistrict($object);
+                    $data = app(Districts::class)->getOptionDistrict($object);
                     $optionOut = FunctionLib::getOption(['' => '---Chọn---'] + $data, '');
                     $success = STATUS_INT_MOT;
                     break;
                 case 'OPTION_WARD_CODE':
-                    $data = app(Province::class)->getOptionWard($object);
+                    $data = app(Wards::class)->getOptionWard($object);
                     $optionOut = FunctionLib::getOption(['' => '---Chọn---'] + $data, '');
                     $success = STATUS_INT_MOT;
                     break;

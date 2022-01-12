@@ -100,10 +100,37 @@ class Districts extends BaseModel
         if ($id > STATUS_INT_KHONG) {
             //Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
         }
-        if($data){
-
-        }
+        Memcache::forgetCache(Memcache::CACHE_DISTRICT_ALL);
+        if($data){}
     }
 
+    /********************************************************************************************************************************************************************************/
+    public function getDataAll(){
+        $data = Memcache::getCache(Memcache::CACHE_DISTRICT_ALL);
+        if (!$data) {
+            $data = self::where($this->primaryKey, '>', STATUS_INT_KHONG)
+                ->orderBy('position', 'asc')
+                ->get([$this->primaryKey,'title','status']);
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_DISTRICT_ALL, $data);
+            }
+        }
+        return $data;
+    }
+    public function getOptionDistrict($province_id = 0)
+    {
+        $option = [];
+        $dataAll = self::getDataAll();
+        if (isset($dataAll) && !empty($dataAll)) {
+            foreach ($dataAll as $k => $val) {
+                if($province_id == 0){
+                    $option[$val->id] = $val->title;
+                }elseif ($province_id == $val->city_id){
+                    $option[$val->id] = $val->title;
+                }
+            }
+        }
+        return $option;
+    }
 
 }

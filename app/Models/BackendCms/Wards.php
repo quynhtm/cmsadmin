@@ -100,18 +100,37 @@ class Wards extends BaseModel
         if ($id > STATUS_INT_KHONG) {
             //Memcache::forgetCache(Memcache::CACHE_DEFINE_SYSTEM_ID.$id);
         }
+        Memcache::forgetCache(Memcache::CACHE_WARDS_ALL);
         if($data){
 
         }
     }
-
-    public function getDataChild($provice_id = 0)
+    /********************************************************************************************************************************************************************************/
+    public function getDataAll(){
+        $data = Memcache::getCache(Memcache::CACHE_WARDS_ALL);
+        if (!$data) {
+            $data = self::where($this->primaryKey, '>', STATUS_INT_KHONG)
+                ->orderBy('position', 'asc')
+                ->get([$this->primaryKey,'title','status']);
+            if ($data) {
+                Memcache::putCache(Memcache::CACHE_WARDS_ALL, $data);
+            }
+        }
+        return $data;
+    }
+    public function getOptionWards($district_id = 0)
     {
-        if($provice_id > 0)
-            return false;
-        $dataSearch = Wards::where($this->primaryKey, '>', STATUS_INT_KHONG)
-            ->where('is_active', STATUS_INT_MOT)
-            ->orderBy('sort_order', 'asc')->get();
-        return $dataSearch;
+        $option = [];
+        $dataAll = self::getDataAll();
+        if (isset($dataAll) && !empty($dataAll)) {
+            foreach ($dataAll as $k => $val) {
+                if($district_id == 0){
+                    $option[$val->id] = $val->title;
+                }elseif ($district_id == $val->district_id){
+                    $option[$val->id] = $val->title;
+                }
+            }
+        }
+        return $option;
     }
 }
