@@ -16,6 +16,7 @@ use App\Models\BackendCms\MenuSystem;
 use App\Models\BackendCms\PermissionGroup;
 use App\Models\BackendCms\PermissionGroupDetail;
 use App\Models\BackendCms\PermissionUser;
+use App\Models\BackendCms\Province;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -42,7 +43,7 @@ class BackendProviceDistrictController extends BaseAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->modelObj = new PermissionGroup();
+        $this->modelObj = new Province();
         $this->modelDetail = new PermissionGroupDetail();
         $this->arrDefineCode = [];
         $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
@@ -53,19 +54,14 @@ class BackendProviceDistrictController extends BaseAdminController
 
     private function _outDataView($request, $data)
     {
-        $optionIsActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_MOT);
-        $optionDefineCode = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrDefineCode, isset($data['define_code']) ? $data['define_code'] : DEFINE_NULL);
-        $projectCode = isset($data['project_code']) ? $data['project_code']: STATUS_INT_HAI;
-        $optionTypeMenu = FunctionLib::getOption([DEFINE_NULL => '---Chọn---'] + $this->arrTypeMenu, $projectCode);
+        $optionIsActive = FunctionLib::getOption(['' => '---Chọn---'] + $this->arrIsActive, isset($data['status']) ? $data['status'] : STATUS_INT_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
         $objectId = $request['objectId'] ?? 0;
         $this->shareListPermission($this->routerIndex);//lay quyen theo ajax
         return $this->dataOutCommon = [
-            'optionDefineCode' => $optionDefineCode,
             'optionIsActive' => $optionIsActive,
-            'optionTypeMenu' => $optionTypeMenu,
             'arrActionExecute' => $this->arrActionExecute,
 
             'form_id' => $formId,
@@ -73,8 +69,8 @@ class BackendProviceDistrictController extends BaseAdminController
             'objectId' => $objectId,
 
             'urlIndex' => URL::route($this->routerIndex),
-            'urlGetData' => URL::route('permissGroup.ajaxGetData'),
-            'urlPostData' => URL::route('permissGroup.ajaxPostData'),
+            'urlGetData' => URL::route('proviceDistrict.ajaxGetData'),
+            'urlPostData' => URL::route('proviceDistrict.ajaxPostData'),
         ];
     }
 
@@ -90,8 +86,8 @@ class BackendProviceDistrictController extends BaseAdminController
 
         $search['page_no'] = $page_no;
         $search['limit'] = $limit;
-        $search['define_code'] = trim(addslashes(Request::get('define_code', '')));
-        $search['define_name'] = trim(addslashes(Request::get('define_name', '')));
+        $search['status'] = trim(addslashes(Request::get('status', STATUS_INT_MOT)));
+        $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
         $result = $this->modelObj->searchByCondition($search, $limit,$offset);
         $dataList = $result['data'] ?? [];
@@ -155,43 +151,9 @@ class BackendProviceDistrictController extends BaseAdminController
                         'titlePopup' => $titlePopup,
                     ]))->render();
                 break;
-            case 'getListMenuPermission'://danh sách quyền theo menu
-                $dataDetail = false;
-                $projectCodeMenu = isset($request['projectCodeMenu']) ? (int)$request['projectCodeMenu'] : STATUS_INT_KHONG;
-                $typeSearch = isset($request['typeSearch']) ? $request['typeSearch'] : 'permissGroup';
-
-                $arrMenuSystem = $this->arrMenuSystem[$projectCodeMenu];
-                $arrChooseMenu = $arrCheckMenu = [];
-                if($objectId > STATUS_INT_KHONG){
-                    $groupDetail = ($typeSearch == 'permissGroup')?$this->modelDetail->getPermissDetailWithGroupId($objectId): app(PermissionUser::class)->getPermissUserWithUserId($objectId);
-                    if($groupDetail){
-                        foreach ($groupDetail as $k =>$gdetail){
-                            if (isset($arrMenuSystem[$gdetail->menu_id])){
-                                $arrChooseMenu[$gdetail->menu_id] = $arrMenuSystem[$gdetail->menu_id];
-                                $arrCheckMenu[$gdetail->menu_id][] = $gdetail->permiss_code;
-                            }
-                        }
-                    }
-                }
-
-                $this->_outDataView($request, (array)$dataDetail);
-                $htmlView = View::make($this->templateRoot . 'component._listPermission')
-                    ->with(array_merge($this->dataOutCommon,[
-                        //tab1
-                        'arrMenuSystem' => $arrMenuSystem,
-                        'arrCheckMenu' => $arrCheckMenu,
-                        'arrChooseMenu' => $arrChooseMenu,
-
-                        'paramSearch' => $paramSearch,
-                        'objectId' => $objectId,
-                        'formName' => $formName,
-                        'titlePopup' => $titlePopup,
-                    ]))->render();
-                break;
             default:
                 break;
         }
-       // myDebug('xxx');
         return $htmlView;
     }
 
@@ -212,10 +174,8 @@ class BackendProviceDistrictController extends BaseAdminController
         switch ($actionUpdate) {
             case 'updateData':
                 $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
-                //myDebug($dataForm,false);
                 $objectId = isset($dataForm['objectId'])? $dataForm['objectId']:STATUS_INT_KHONG;
                 $idNew = $this->modelObj->editItem($dataForm,$objectId);
-                //myDebug($idNew);
                 if ($idNew > 0) {
                     $dataDetail = $this->modelObj->getItemById($idNew);
                     $this->_outDataView($request, (array)$dataDetail);
@@ -233,23 +193,38 @@ class BackendProviceDistrictController extends BaseAdminController
                     $arrAjax['divShowInfor'] = $dataForm['div_show_edit_success'];
                 }
                 break;
-            case 'updatePermissGroupDetail':
-                $dataForm = isset($request['dataForm']) ? $request['dataForm'] : [];
-                $group_id = isset($dataForm['group_id'])? $dataForm['group_id']:STATUS_INT_KHONG;
-                $project_code = isset($dataForm['s_project_code'])? $dataForm['s_project_code']: STATUS_INT_KHONG;
-                $load_page = isset($dataForm['load_page'])? $dataForm['load_page']: STATUS_INT_KHONG;
+            case 'getDistrictByProviceId':
+                $object_id = isset($request['object_id']) ? $request['object_id'] : STATUS_INT_KHONG;
+                $dataDistrict = $this->modelObj->getDistrictByProviceId($object_id);
+                $divShowChild = 'groupListDistrict'.$object_id;
 
-                $arrMenuSystem = isset($this->arrMenuSystem[$project_code])?$this->arrMenuSystem[$project_code]: [];
-                $arrPermissForm = $this->modelObj->buildInforPermGroup($arrMenuSystem,$this->arrActionExecute,$dataForm);
+                $this->_outDataView($request, []);
+                $htmlView = View::make($this->templateRoot . 'component._listChildDistrict')
+                    ->with(array_merge($this->dataOutCommon,[
+                        'dataDistrict' => $dataDistrict,
+                        'object_id' => $object_id,
+                    ]))->render();
 
-                if($group_id >0 && $project_code >0 ){
-                    $edit = $this->modelDetail->updatePermissGroupDetail($arrPermissForm,$group_id, $project_code);
-                }
-                if ($edit) {
-                    $arrAjax['success'] = 1;
-                    $arrAjax['loadPage'] = $load_page;
-                    $arrAjax['html'] = '';
-                }
+                $arrAjax['success'] = 1;
+                $arrAjax['divShowChild'] = $divShowChild;
+                $arrAjax['html'] = $htmlView;
+                break;
+
+            case 'getWardsByDistrictId':
+                $object_id = isset($request['object_id']) ? $request['object_id'] : STATUS_INT_KHONG;
+                $dataWards = $this->modelObj->getWardsByDistrictsId($object_id);
+                $divShowChild = 'groupListWards'.$object_id;
+
+                $this->_outDataView($request, []);
+                $htmlView = View::make($this->templateRoot . 'component._listChildWards')
+                    ->with(array_merge($this->dataOutCommon,[
+                        'dataWards' => $dataWards,
+                        'object_id' => $object_id,
+                    ]))->render();
+
+                $arrAjax['success'] = 1;
+                $arrAjax['divShowChild'] = $divShowChild;
+                $arrAjax['html'] = $htmlView;
                 break;
             default:
                 break;

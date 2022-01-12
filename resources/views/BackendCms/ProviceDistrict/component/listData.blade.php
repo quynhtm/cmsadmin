@@ -20,7 +20,7 @@
             </div>
             <div class="form-group col-lg-2">
                 <label for="status" class="control-label">{{viewLanguage('Trạng thái')}}</label>
-                <select  class="form-control input-sm" name="IS_ACTIVE" id="IS_ACTIVE">
+                <select  class="form-control input-sm" name="status" id="status">
                     {!! $optionIsActive !!}}
                 </select>
             </div>
@@ -31,52 +31,27 @@
     <div class="card-body">
         @if($data && sizeof($data) > 0)
             <h5 class="clearfix">Danh sách Tỉnh thành, quận huyện, phường xã trên hệ thống </h5>
-            <div class="table-responsive">
-                <ul id="ft-id-1" class="ui-fancytree fancytree-container fancytree-plain" tabindex="0" role="tree" aria-multiselectable="true" aria-activedescendant="ui-id-2">
-                    <div id="blockListProvice" data-children=".item">
-                        <div class="item">
-                            <li role="treeitem" aria-expanded="true" aria-selected="false" id="ui-id-1" class="">
-                                <button type="button" aria-expanded="true" aria-controls="" data-toggle="collapse" href="#childListProvice1" class="m-0 p-0 btn btn-link">
-                                    <b>Tỉnh thành 1</b>
-                                </button>
-                                <div data-parent="#blockListProvice" id="childListProvice1" class="collapse">
-                                    <ul role="group" style="">
-                                        <div id="blockListDistrict" data-children=".itemDistrict">
-                                            <div class="itemDistrict">
-                                                <li role="treeitem" aria-selected="false" class="fancytree-lastsib">
-                                                    <button type="button" aria-expanded="false" aria-controls="" data-toggle="collapse" href="#childListDistrict1" class="m-0 p-0 btn btn-link">
-                                                        <b>Quận huyện 1</b>
-                                                    </button>
-                                                    <div data-parent="#blockListDistrict" id="childListDistrict1" class="collapse">
-                                                        <ul role="group" style="">
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 1</li>
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 1</li>
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 1</li>
-                                                        </ul>
-                                                    </div>
-                                                 </li>
-                                                <li role="treeitem" aria-selected="false" class="fancytree-lastsib">
-                                                    <button type="button" aria-expanded="false" aria-controls="" data-toggle="collapse" href="#childListDistrict2" class="m-0 p-0 btn btn-link">
-                                                        <b>Quận huyện 2</b>
-                                                    </button>
-                                                    <div data-parent="#blockListDistrict" id="childListDistrict2" class="collapse">
-                                                        <ul role="group" style="">
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 2</li>
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 2</li>
-                                                            <li role="treeitem" aria-selected="false" class="fancytree-lastsib">Phường xã 2</li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </li>
 
-                        </div>
+            <ul id="ft-id-1" class="ui-fancytree fancytree-container fancytree-plain" tabindex="0" role="tree" aria-multiselectable="true" aria-activedescendant="ui-id-2">
+                <div id="blockListProvice" data-children=".item">
+                    <div class="item row">
+                        @foreach ($data as $key => $item)
+                        <li role="treeitem" aria-expanded="true" aria-selected="false" id="ui-id-1" class="col-lg-6">
+                            [{{$item->id}}]
+                            <button type="button" aria-expanded="true" aria-controls="" data-toggle="collapse" href="#childListProvice{{$item->id}}" class="m-0 p-0 btn btn-link" onclick="clickGetChild('{{$item->id}}',1,'getDistrictByProviceId','{{$urlPostData}}')">
+                                <b class="green"> {{$item->title}}</b>
+                            </button>
+                            <div data-parent="#blockListProvice" id="childListProvice{{$item->id}}" class="collapse" >
+                                <ul role="group" style="" id="groupListDistrict{{$item->id}}">
+                                    {{-----Call Ajax hiển thị danh sách con----}}
+                                </ul>
+                            </div>
+                        </li>
+                        @endforeach
                     </div>
-                </ul>
-            </div>
+                </div>
+            </ul>
+
         @else
             <div class="alert">
                 Không có dữ liệu
@@ -96,4 +71,36 @@
             $(selector).chosen(config[selector]);
         }
     });
+    function clickGetChild(object_id,type_get, action_get, url_action) {
+
+        if(type_get == 1){
+            var divShowId = 'groupListDistrict'+object_id;
+        }else {
+            var divShowId = 'groupListWards'+object_id;
+        }
+        var isContentHtml = $('#' + divShowId).html();
+
+        if (!$.trim(isContentHtml)) {
+            var _token = $('input[name="_token"]').val();
+            $('#loader').show();
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: url_action,
+                data: {
+                    '_token': _token,
+                    'object_id': object_id,
+                    'actionUpdate': action_get,
+                },
+                success: function (res) {
+                    $('#loader').hide();
+                    if (res.success == 1) {
+                        $('#' + res.divShowChild).html(res.html);
+                    } else {
+                        jqueryCommon.showMsg('error', '', 'Thông báo lỗi', res.msg);
+                    }
+                }
+            });
+        }
+    }
 </script>

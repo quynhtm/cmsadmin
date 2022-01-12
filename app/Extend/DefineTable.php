@@ -14,6 +14,9 @@ define('PREFIX_WEB', 'web_');
 define('PREFIX_SHOP', 'shop_');
 
 //Backend
+define('TABLE_PROVINCE',PREFIX_BACKEND.'pdw_province');
+define('TABLE_DISTRICTS',PREFIX_BACKEND.'pdw_districts');
+define('TABLE_WARDS',PREFIX_BACKEND.'pdw_wards');
 define('TABLE_DEFINE_SYSTEM',PREFIX_BACKEND.'define');
 define('TABLE_MENU_SYSTEM',PREFIX_BACKEND.'menu');
 define('TABLE_PERMISSION_GROUP',PREFIX_BACKEND.'perm_group');
