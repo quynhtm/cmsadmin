@@ -39,6 +39,13 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostData', array('as' => 'permissGroup.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendPermissGroupController@ajaxPostData'));
     });
 
+    /* Quản lý tỉnh thành, quận huyện, phường xã */
+    Route::group(array('prefix' => 'proviceDistrict'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'proviceDistrict.index', 'uses' => DIR_PRO_BACKEND . '\BackendProviceDistrictController@index'));
+        Route::post('ajaxGetData', array('as' => 'proviceDistrict.ajaxGetData', 'uses' => DIR_PRO_BACKEND . '\BackendProviceDistrictController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'proviceDistrict.ajaxPostData', 'uses' => DIR_PRO_BACKEND . '\BackendProviceDistrictController@ajaxPostData'));
+    });
+
     /* Quản lý User admin */
     Route::group(array('prefix' => 'users'), function () {
         Route::match(['GET', 'POST'], 'index', array('as' => 'users.index', 'uses' => DIR_PRO_BACKEND . '\BackendUserController@index'));
