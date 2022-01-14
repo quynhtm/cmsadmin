@@ -143,15 +143,17 @@ class OrdersController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
+                $dataListProOrder = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
+                    $dataListProOrder = isset($dataDetail->orders_item)? $dataDetail->orders_item: false;
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
-
                 $this->_outDataView($request, $dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon, [
                         'dataDetail' => $dataDetail,
+                        'dataListProOrder' => $dataListProOrder,
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,
