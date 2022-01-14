@@ -9556,6 +9556,16 @@ body.md-skin {
 .paddingT15{padding-top: 15px!important;}
 .paddingT20{padding-top: 20px!important;}
 
+.paddingB5{padding-bottom: 5px!important;}
+.paddingB10{padding-bottom: 10px!important;}
+.paddingB15{padding-bottom: 15px!important;}
+.paddingB20{padding-bottom: 20px!important;}
+
+.paddingR5{padding-right: 5px!important;}
+.paddingR10{padding-right: 10px!important;}
+.paddingR15{padding-right: 15px!important;}
+.paddingR20{padding-right: 20px!important;}
+
 .paddingTop-unset{padding-top: 0px!important;}
 .paddingLeft-unset{padding-left: 0px!important;}
 .paddingRight-unset{padding-right: 0px!important;}

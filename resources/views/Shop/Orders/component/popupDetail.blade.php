@@ -5,7 +5,7 @@
         <div class="card-header">
             Chi tiết đơn hàng @if($objectId > 0) - {{$objectId}} @endif
             <div class="btn-actions-pane-right">
-                @include('Layouts.AdminCms.listButtonActionFormEdit')
+                <button type="button"  class="btn color_hdi" onclick="jqueryCommon.hideContentRightPage()" title="{{viewLanguage('Close')}}">&nbsp;&nbsp;<i class="pe-7s-close fa-3x"></i>&nbsp;&nbsp;</button>
             </div>
         </div>
 
