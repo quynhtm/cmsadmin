@@ -150,10 +150,12 @@ class OrdersController extends BaseAdminController
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
                 $this->_outDataView($request, $dataDetail);
+                $arrStatusOrderNotEdit = [STATUS_INT_BA, STATUS_INT_BON];//hoàn thành, hủy
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon, [
                         'dataDetail' => $dataDetail,
                         'dataListProOrder' => $dataListProOrder,
+                        'arrStatusOrderNotEdit' => $arrStatusOrderNotEdit,
 
                         'paramSearch' => $paramSearch,
                         'objectId' => $objectId,

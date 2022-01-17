@@ -13,7 +13,7 @@
 
         <div class="row">
             @if(!empty($dataListProOrder))
-            <div class="col-sm-12 col-lg-8 paddingRight-unset">
+            <div class="col-sm-12 col-lg-8 paddingRight-unset ">
                 <div class="card mb-3">
                     <div class="card-header-tab card-header">
                         <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
@@ -21,15 +21,15 @@
                             Danh sách sản phẩm
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead class="thin-border-bottom">
                             <tr class="table-background-header">
-                                <th width="3%" class="text-center">TT</th>
-                                <th width="55%" class="text-left">Sản phẩm</th>
-                                <th width="14%" class="text-right">Giá bán</th>
+                                <th width="2%" class="text-center"></th>
+                                <th width="56%" class="text-left">Sản phẩm</th>
+                                <th width="15%" class="text-right">Giá bán</th>
                                 <th width="10%" class="text-center">SL</th>
-                                <th width="18%" class="text-right">Tổng tiền</th>
+                                <th width="17%" class="text-right">Tổng tiền</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -48,9 +48,14 @@
                                 ?>
                                 <tr>
                                     <td class="text-center text-middle">{{$key+1}}</td>
-                                    <td class="text-left text-middle">[{{$item->product_id}}] - {{$item->product_name}}</td>
+                                    <td class="text-left text-middle">
+                                        [{{$item->product_id}}]-
+                                        <a href="{{buildLinkDetailProduct($item->product_id, $item->product_name, 'danh-muc')}}" title="{{$item->product_name}}" target="_blank">
+                                            {{limit_text_word($item->product_name,8)}}
+                                        </a>
+                                    </td>
                                     <td class="text-right text-middle">{{numberFormat($item->product_price_sell)}}đ</td>
-                                    <td class="text-center text-middle"><input class="form-control input-sm text-right" type="text" name="numberProduct" value="{{$item->number_buy}}"></td>
+                                    <td class="text-center text-middle"><input class="form-control input-sm text-center" type="text" name="numberProduct" style="width: 50px!important;" value="{{$item->number_buy}}"></td>
                                     <td class="text-right text-middle red">{{numberFormat($tienBanSanPham)}}</td>
                                 </tr>
                             @endforeach
@@ -74,11 +79,13 @@
                                 <td class="text-right text-middle" colspan="4"><b>Tổng tiền thanh toán</b></td>
                                 <td class="text-right text-middle paddingR10"><b class="red">{{numberFormat($tongTienThanhToan)}}</b></td>
                             </tr>
+                            @if(isset($dataDetail['order_status']) && !in_array($dataDetail['order_status'],$arrStatusOrderNotEdit))
                             <tr>
                                 <td class="text-right text-middle" colspan="5">
                                     <button class="btn btn-primary"><i class="pe-7s-diskette"></i> Cập nhật đơn hàng</button>
                                 </td>
                             </tr>
+                            @endif
                         </table>
                     </div>
                 </div>
@@ -89,38 +96,13 @@
                     <div class="card-header-tab card-header">
                         <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
                             <i class="header-icon pe-7s-id icon-gradient bg-happy-itmeo"></i>
-                            Thông tin khách hàng
+                            Thông tin đơn hàng
                         </div>
                     </div>
                     <div class="card-body paddingB10">
                         <div class="row form-group">
                             <div class="col-lg-12">
-                                <input type="text" placeholder="Tên khách hàng" name="order_customer_name" id="{{$formName}}order_customer_name" class="text-left form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <input type="text" placeholder="Số điện thoại" name="order_customer_phone" id="{{$formName}}order_customer_phone" class="text-left form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <input type="text" placeholder="Email" name="order_customer_email" id="{{$formName}}order_customer_email" class="text-left form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <textarea type="text" placeholder="Địa chỉ giao hàng" rows="2" name="order_customer_address" id="{{$formName}}order_customer_address" class="text-left form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <textarea type="text" placeholder="Khách hàng ghi chú" rows="2" name="order_customer_note" id="{{$formName}}order_customer_note" class="text-left form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-lg-12">
-                                <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái đơn hàng')}}</label><span class="red"> (*)</span>
+                                {{--<label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái đơn hàng')}}</label><span class="red"> (*)</span>--}}
                                 <select  class="form-control input-sm" name="order_status" id="order_status" required>
                                     {!! $optionStatusOrder !!}
                                 </select>
@@ -128,25 +110,53 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-lg-12">
+                                {{--<label for="NAME" class="text-right control-label">{{viewLanguage('Tình trạng vận chuyển')}}</label><span class="red"> (*)</span>--}}
+                                <select  class="form-control input-sm" name="order_is_cod" id="order_is_cod" required>
+                                    {!! $optionCodOrder !!}
+                                </select>
+                            </div>
+                        </div>
+                        {{--<div class="row form-group">
+                            <div class="col-lg-12">
                                 <label for="NAME" class="text-right control-label">{{viewLanguage('Đơn hàng từ')}}</label>
                                 <select  class="form-control input-sm" name="order_type" id="order_type" required>
-                                    {!! $optionStatusOrder !!}
+                                    {!! $optionTypeOrder !!}
                                 </select>
+                            </div>
+                        </div>--}}
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <textarea type="text" placeholder="Ghi chú Admin" rows="2"  name="order_note" id="{{$formName}}order_note" class="text-left form-control"></textarea>
+                            </div>
+                        </div>
+                        {{-----Thông tin khách hàng----}}
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <label for="NAME" class="text-right control-label font-bold">{{viewLanguage('Thông tin khách hàng')}}</label>
+                                <input type="text" placeholder="Tên khách hàng" @if($objectId > 0) readonly @endif name="order_customer_name" id="{{$formName}}order_customer_name" class="text-left form-control">
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-lg-12">
-                                <label for="NAME" class="text-right control-label">{{viewLanguage('Tình trạng vận chuyển')}}</label><span class="red"> (*)</span>
-                                <select  class="form-control input-sm" name="order_is_cod" id="order_is_cod" required>
-                                    {!! $optionStatusOrder !!}
-                                </select>
+                                <input type="text" placeholder="Số điện thoại" @if($objectId > 0) readonly @endif name="order_customer_phone" id="{{$formName}}order_customer_phone" class="text-left form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <input type="text" placeholder="Email" @if($objectId > 0) readonly @endif name="order_customer_email" id="{{$formName}}order_customer_email" class="text-left form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <textarea type="text" placeholder="Địa chỉ giao hàng" rows="2" @if($objectId > 0) readonly @endif name="order_customer_address" id="{{$formName}}order_customer_address" class="text-left form-control"></textarea>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <textarea type="text" placeholder="Ghi chú Admin" rows="2" name="order_note" id="{{$formName}}order_note" class="text-left form-control"></textarea>
+                                <textarea type="text" placeholder="Khách hàng ghi chú" @if($objectId > 0) readonly @endif rows="2" name="order_customer_note" id="{{$formName}}order_customer_note" class="text-left form-control"></textarea>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
