@@ -7,6 +7,7 @@
         <input type="hidden" id="data_item" name="data_item" value="{{json_encode($dataDetail)}}">
 
         <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
+        <input type="hidden" id="{{$formName}}order_product_id" name="order_product_id">
         <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
@@ -55,10 +56,18 @@
                                         </a>
                                     </td>
                                     <td class="text-right text-middle">{{numberFormat($item->product_price_sell)}}đ</td>
-                                    <td class="text-center text-middle"><input class="form-control input-sm text-center" type="text" name="numberProduct" style="width: 50px!important;" value="{{$item->number_buy}}"></td>
+                                    <td class="text-center text-middle">
+                                        <input class="form-control input-sm text-center" type="text" id="sys_number_buy_{{$product->product_id}}" name="number_buy_{{$product->product_id}}" style="width: 50px!important;" value="{{$item->number_buy}}" onblur="jqueryCommon.changeNumberOrderBuy({{$product->product_id}})">
+                                        <input type="hidden" id="sys_product_price_sell_{{$product->product_id}}" name="product_price_sell_{{$product->product_id}}" value="{{$product->product_price_sell}}">
+                                        <input type="hidden" id="sys_total_price_pro_{{$product->product_id}}" name="total_price_pro_{{$product->product_id}}" value="{{$tienBanSanPham}}">
+
+                                        <input type="hidden" id="number_buy_old_{{$product->product_id}}" name="number_buy_old_{{$product->product_id}}" value="{{$product->number_buy}}">
+                                        <input type="hidden" id="sys_total_price_pro_old_{{$product->product_id}}" name="total_price_pro_old_{{$product->product_id}}" value="{{$tienBanSanPham}}">
+                                    </td>
                                     <td class="text-right text-middle red">{{numberFormat($tienBanSanPham)}}</td>
                                 </tr>
                             @endforeach
+
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tổng số lượng hàng</td>
                                 <td class="text-right text-middle paddingR10"><b>{{numberFormat($tongSoLuong)}}</b></td>

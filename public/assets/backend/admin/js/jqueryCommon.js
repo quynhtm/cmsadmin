@@ -928,4 +928,16 @@ var jqueryCommon = {
             $('#show_button_action_status').addClass("display-none-block");
         }
     },
+    //action Order
+    changeNumberOrderBuy: function(pro_id){
+        var number_buy = $('#sys_number_buy_'+pro_id).val();
+        var product_price_sell = $('#sys_product_price_sell_'+pro_id).val();
+        var total_price_pro = $('#sys_total_price_pro_'+pro_id).val();
+
+        if(changeColor == 1){
+            $('#show_button_action_status').removeClass("display-none-block");
+        }else {
+            $('#show_button_action_status').addClass("display-none-block");
+        }
+    },
 }
