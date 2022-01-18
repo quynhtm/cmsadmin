@@ -119,6 +119,17 @@ class Products extends BaseModel
         }
     }
     /**************************************************************************************************************************/
+    public function getProductByArrayProId($arrProId = array(), $field_get = array())
+    {
+        if (!empty($arrProId)) {
+            $query = self::where($this->primaryKey, '>', 0);
+            $query->where('product_status', '=', STATUS_INT_MOT);
+            $query->where('is_block', '=', STATUS_INT_MOT);
+            $query->whereIn($this->primaryKey, $arrProId);
+            return $result = (!empty($field_get)) ? $query->get($field_get) : $query->get();
+        }
+        return [];
+    }
     public function getProductForSite($dataSearch = array(), $limit = 0, $offset = 0, $is_total = true)
     {
         try {

@@ -110,7 +110,7 @@
                             @if(isset($dataDetail['order_status']) && !in_array($dataDetail['order_status'],$arrStatusOrderNotEdit))
                             <tr>
                                 <td class="text-right text-middle" colspan="5">
-                                    <button class="btn btn-primary"><i class="pe-7s-diskette"></i> Cập nhật đơn hàng</button>
+                                    <a href="javascript:void ();" class="btn btn-primary" onclick="jqueryCommon.doSubmitForm();"><i class="pe-7s-diskette"></i> Cập nhật đơn hàng</a>
                                 </td>
                             </tr>
                             @endif

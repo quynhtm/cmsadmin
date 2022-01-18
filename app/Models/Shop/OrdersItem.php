@@ -111,4 +111,33 @@ class OrdersItem extends BaseModel
         }
     }
     /**************************************************************************************************************************/
+
+    public  function updateData($orderId = 0, $productId = 0, $dataOrderItem = array())
+    {
+        $order_item_id = 0;
+        if($orderId > 0 && $productId > 0){
+            $order_item_id = self::getIdByOrderIdAndProductId($orderId,$productId);
+        }
+        try {
+            if($order_item_id > 0){
+                if (!empty($dataOrderItem)){
+                    self::editItem($dataOrderItem,$order_item_id);
+                }
+                return $order_item_id;
+            }
+            return $order_item_id;
+        } catch (PDOException $e) {
+            throw $e->getMessage();
+        }
+    }
+    public function getIdByOrderIdAndProductId($order_id,$productId) {
+        $order_item_id = 0;
+        if($order_id > 0 && $productId > 0){
+            $orderItem = self::where('order_id', $order_id)->where('product_id', $productId)->first();
+            if($orderItem){
+                $order_item_id = isset($orderItem->id) ? $orderItem->id : 0;
+            }
+        }
+        return $order_item_id;
+    }
 }

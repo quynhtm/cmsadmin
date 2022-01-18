@@ -13,6 +13,8 @@ use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
 use App\Models\Shop\Orders;
+use App\Models\Shop\OrdersItem;
+use App\Models\Shop\Products;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -106,14 +108,14 @@ class OrdersController extends BaseAdminController
         $search['order_type'] = trim(addslashes(Request::get('order_type', STATUS_INT_AM_MOT)));
         $search['order_product_id'] = trim(addslashes(Request::get('order_product_id', '')));
         $search['order_id'] = trim(addslashes(Request::get('order_id', '')));
-        $search['partner_id'] = ($this->partner_id > 0)? $this->partner_id: trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
+        $search['partner_id'] = ($this->partner_id > 0) ? $this->partner_id : trim(addslashes(Request::get('partner_id', STATUS_INT_AM_MOT)));
         $search['p_keyword'] = trim(addslashes(Request::get('p_keyword', '')));
 
-        $result = $this->modelObj->searchByCondition($search, $limit,$offset);
+        $result = $this->modelObj->searchByCondition($search, $limit, $offset);
         $dataList = $result['data'] ?? [];
         $total = $result['total'] ?? STATUS_INT_KHONG;
-        if($total > 0){
-            foreach ($dataList as $k => &$val){
+        if ($total > 0) {
+            foreach ($dataList as $k => &$val) {
                 $val->list_pro = $this->modelObj->getItemById($val->id);
             }
         }
@@ -146,7 +148,7 @@ class OrdersController extends BaseAdminController
                 $dataListProOrder = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
-                    $dataListProOrder = isset($dataDetail->orders_item)? $dataDetail->orders_item: false;
+                    $dataListProOrder = isset($dataDetail->orders_item) ? $dataDetail->orders_item : false;
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
                 }
                 $this->_outDataView($request, $dataDetail);
@@ -183,19 +185,103 @@ class OrdersController extends BaseAdminController
         switch ($actionUpdate) {
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
+                $dataOrder = array();
+                $productOrder = array();
+                $total_product = 0;
+                $total_money = 0;
                 $isEdit = 0;
-                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
-                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
+
+                $dataOrder['order_customer_name'] = $dataForm['order_customer_name'];
+                $dataOrder['order_customer_phone'] = $dataForm['order_customer_phone'];
+                $dataOrder['order_customer_email'] = $dataForm['order_customer_email'];
+                $dataOrder['order_customer_address'] = $dataForm['order_customer_address'];
+                $dataOrder['order_customer_note'] = $dataForm['order_customer_note'];
+
+                //$dataOrder['order_type'] = (int)$dataForm['order_type'];//nguồn đơn hàng
+                $dataOrder['order_discount_price'] = (int)$dataForm['order_discount_price'];
+                $dataOrder['order_shipping_fee'] = (int)$dataForm['order_shipping_fee'];
+                $dataOrder['order_status'] = (int)$dataForm['order_status'];
+                $dataOrder['order_is_cod'] = (int)$dataForm['order_is_cod'];
+                $dataOrder['order_note'] = $dataForm['order_note'];
+                $dataOrder['order_user_shipper_id'] = !empty($this->user) ? $this->user['user_id'] : 0;
+                $dataOrder['order_user_shipper_name'] = !empty($this->user) ? $this->user['user_name'] : '';
+
+                //gán lại giá trị khi đã xem và cập nhật đơn hàng
+                $dataOrder['order_status'] = ($dataOrder['order_status'] == STATUS_INT_MOT) ? STATUS_INT_HAI : $dataOrder['order_status'];
+                $dataOrder['order_note'] = (trim($dataOrder['order_note']) != '') ? $dataOrder['order_note'] : ((!empty($this->user) ? $this->user['user_name'] : '') . ' đã xem đơn hàng ngày ' . date('H:i d-m-Y'));
+
+                //sản phẩm trong đơn hàng
+                $order_product_id = $dataForm['order_product_id'];
+                if ($order_product_id != '') {
+                    $arrOrderProductId = explode(',', $order_product_id);
+                    $arrProductId = array();
+                    if (!empty($arrOrderProductId)) {
+                        foreach ($arrOrderProductId as $pro) {
+                            $arrProductId[] = (int)trim($pro);
+                        }
+                    }
+                    if (!empty($arrProductId)) {
+                        $field_get = array('id', 'product_code', 'product_name', 'category_name', 'category_id',
+                            'product_price_sell', 'product_price_market', 'product_price_input', 'product_price_provider_sell', 'product_type_price',);
+                        $inforProduct = app(Products::class)->getProductByArrayProId($arrProductId, $field_get);
+
+                        if (!empty($inforProduct)) {
+                            foreach ($inforProduct as $k => $pro) {
+                                $number_buy = isset($dataForm['number_buy_' . $pro->id]) ? (int)$dataForm['number_buy_' . $pro->id] : 1;
+                                $total_product = $total_product + $number_buy;
+                                $total_money = $total_money + $number_buy * $pro->product_price_sell;
+                                $productOrder[$pro->id] = array(
+                                    'product_id' => $pro->id,
+                                    'product_name' => $pro->product_name,
+                                    'product_price_sell' => $pro->product_price_sell,
+                                    'product_price_input' => $pro->product_price_input,
+                                    'product_category_id' => $pro->product_category_id,
+                                    'product_category_name' => $pro->product_category_name,
+                                    'product_type_price' => $pro->product_type_price,
+                                    'number_buy' => $number_buy);
+                            }
+                        }
+                    }
+                    $dataOrder['order_total_money'] = (int)($total_money - $dataOrder['order_discount_price'] + $dataOrder['order_shipping_fee']);
+                    $dataOrder['order_total_buy'] = $total_product;
+                    $dataOrder['order_product_id'] = (!empty($productOrder)) ? join(',', array_keys($productOrder)) : '';
+                }
+
+                if(!empty($productOrder)){
+                    //sửa thông tin đơn hàng
+                    if((int)$objectId > 0){
+                        //cap nhat đơn hàng
+
+                        $orderIdUpdate = app(Orders::class)->editItem($dataOrder,$objectId);
+                        if($orderIdUpdate){
+                            //cập nhât Order Item sản phẩm
+                            foreach($productOrder as $proId => $arrOrderItem){
+                                app(OrdersItem::class)->updateData($objectId,$proId,$arrOrderItem);
+                            }
+                            $isEdit = 1;
+                        }
+                    }
+                    //thêm đơn hàng
+                    elseif((int)$objectId == 0){
+                        $dataOrder['order_time_creater'] = time();
+                        $orderId = app(Orders::class)->editItem($dataOrder);
+                        if($orderId){
+                            $dataAddOrderItem = [];
+                            foreach($productOrder as $proId => $arrOrderItem){
+                                $arrOrderItem['order_id'] = $orderId;
+                                $dataAddOrderItem[$proId] = $arrOrderItem;
+                            }
+                            app(OrdersItem::class)->insertMultiple($dataAddOrderItem);
+                        }
+                        $isEdit = 1;
+                    }
                 }
                 if ($isEdit > 0) {
-                    $dataDetail = $this->modelObj->getItemById($isEdit);
-                    $this->_outDataView($request, (array)$dataDetail);
-
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
-                    $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;
+                    $arrAjax['loadPage'] = 1;
                     $arrAjax['divShowInfor'] = '';
-                }else{
+                } else {
                     $arrAjax = returnError($this->error);
                 }
                 break;

@@ -68,7 +68,7 @@ class Orders extends BaseModel
         try {
             $fieldInput = $this->checkFieldInTable($data);
             if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
-                $item = ($id <= STATUS_INT_KHONG)? new Orders(): self::getItemById($id);
+                $item = ($id <= STATUS_INT_KHONG)? new Orders(): self::getItemByIdModel($id);
                 if (is_array($fieldInput) && count($fieldInput) > STATUS_INT_KHONG) {
                     foreach ($fieldInput as $k => $v) {
                         $item->$k = $v;
@@ -92,7 +92,11 @@ class Orders extends BaseModel
             throw $e->getMessage();
         }
     }
-
+    public function getItemByIdModel($id)
+    {
+        return self::where($this->primaryKey,$id)->first();
+    }
+    //lấy thêm data orders item
     public function getItemById($id)
     {
         $data = Memcache::getCache(Memcache::CACHE_ORDER_ID.$id);

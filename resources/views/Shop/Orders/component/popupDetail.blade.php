@@ -13,7 +13,7 @@
             <div class="main-card mb-3" id="formShowEditSuccess">
                 <div class="card-body paddingTop-unset">
                     {{---Block 1---}}
-                    <form id="{{$formName}}">
+                    <form id="{{$formName}}" method="POST">
                         @include('Shop.Orders.component._detailFormItem')
                     </form>
                 </div>
