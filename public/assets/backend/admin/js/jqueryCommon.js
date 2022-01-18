@@ -959,4 +959,12 @@ var jqueryCommon = {
         $('#sys_total_order_old').val(total_order_new);
         $('#show_total_order').html(jqueryCommon.numberFormat(total_order_new, '.', ','));
     },
+    changeDiscountShippingFeePrice: function(){
+        var total_money_order_old = $('#sys_total_money_order_old').val();
+        var order_discount_price = $('#sys_order_discount_price').val();
+        var order_shipping_fee = $('#sys_order_shipping_fee').val();
+        var total_order_new = parseInt(total_money_order_old) - parseInt(order_discount_price) + parseInt(order_shipping_fee);
+        $('#sys_total_order_old').val(total_order_new);
+        $('#show_total_order').html(jqueryCommon.numberFormat(total_order_new, '.', ','));
+    },
 }

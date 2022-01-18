@@ -90,11 +90,15 @@
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tiền giảm giá</td>
-                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" id="sys_order_discount_price" name="order_discount_price" value="{{$order_discount_price}}" style="padding-right: 2px!important;"></td>
+                                <td class="text-right text-middle">
+                                    <input class="form-control input-sm text-right font-bold" type="text" id="sys_order_discount_price" name="order_discount_price" value="{{$order_discount_price}}" style="padding-right: 2px!important;" onblur="jqueryCommon.changeDiscountShippingFeePrice()">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tiền ship</td>
-                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" id="sys_order_shipping_fee" name="order_shipping_fee" value="{{$order_shipping_fee}}" style="padding-right: 2px!important;"></td>
+                                <td class="text-right text-middle">
+                                    <input class="form-control input-sm text-right font-bold" type="text" id="sys_order_shipping_fee" name="order_shipping_fee" value="{{$order_shipping_fee}}" style="padding-right: 2px!important;" onblur="jqueryCommon.changeDiscountShippingFeePrice()">
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4"><b>Tổng tiền thanh toán</b></td>
