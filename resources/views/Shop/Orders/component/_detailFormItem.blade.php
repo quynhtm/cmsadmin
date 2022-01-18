@@ -39,13 +39,16 @@
                                 $tienBanSanPham = 0;
                                 $tongTienHang = 0;
                                 $tongTienThanhToan = 0;
-                            ?>
+                                $order_discount_price = isset($dataDetail['order_discount_price'])?$dataDetail['order_discount_price']:0;
+                                $order_shipping_fee = isset($dataDetail['order_shipping_fee'])?$dataDetail['order_shipping_fee']:0;
+
+                                ?>
                             @foreach ($dataListProOrder as $key => $item)
                                 <?php
                                     $tongSoLuong = $tongSoLuong+$item->number_buy;
                                     $tienBanSanPham = $item->product_price_sell*$item->number_buy;
                                     $tongTienHang = $tongTienHang+$tienBanSanPham;
-                                    $tongTienThanhToan = $tongTienHang;
+                                    $tongTienThanhToan = $tongTienHang -$order_discount_price + $order_shipping_fee;
                                 ?>
                                 <tr>
                                     <td class="text-center text-middle">{{$key+1}}</td>
@@ -57,36 +60,48 @@
                                     </td>
                                     <td class="text-right text-middle">{{numberFormat($item->product_price_sell)}}đ</td>
                                     <td class="text-center text-middle">
-                                        <input class="form-control input-sm text-center" type="text" id="sys_number_buy_{{$product->product_id}}" name="number_buy_{{$product->product_id}}" style="width: 50px!important;" value="{{$item->number_buy}}" onblur="jqueryCommon.changeNumberOrderBuy({{$product->product_id}})">
-                                        <input type="hidden" id="sys_product_price_sell_{{$product->product_id}}" name="product_price_sell_{{$product->product_id}}" value="{{$product->product_price_sell}}">
-                                        <input type="hidden" id="sys_total_price_pro_{{$product->product_id}}" name="total_price_pro_{{$product->product_id}}" value="{{$tienBanSanPham}}">
+                                        <input class="form-control input-sm text-center" type="text" id="sys_number_buy_{{$item->product_id}}" name="number_buy_{{$item->product_id}}" style="width: 50px!important;" value="{{$item->number_buy}}" onblur="jqueryCommon.changeNumberOrderBuy({{$item->product_id}})">
 
-                                        <input type="hidden" id="number_buy_old_{{$product->product_id}}" name="number_buy_old_{{$product->product_id}}" value="{{$product->number_buy}}">
-                                        <input type="hidden" id="sys_total_price_pro_old_{{$product->product_id}}" name="total_price_pro_old_{{$product->product_id}}" value="{{$tienBanSanPham}}">
+                                        <input type="hidden" id="sys_product_price_sell_{{$item->product_id}}" name="product_price_sell_{{$item->product_id}}" value="{{$item->product_price_sell}}">
+                                        <input type="hidden" id="sys_total_price_pro_{{$item->product_id}}" name="total_price_pro_{{$item->product_id}}" value="{{$tienBanSanPham}}">
+
+                                        <input type="hidden" id="number_buy_old_{{$item->product_id}}" name="number_buy_old_{{$item->product_id}}" value="{{$item->number_buy}}">
+                                        <input type="hidden" id="sys_total_price_pro_old_{{$item->product_id}}" name="total_price_pro_old_{{$item->product_id}}" value="{{$tienBanSanPham}}">
                                     </td>
-                                    <td class="text-right text-middle red">{{numberFormat($tienBanSanPham)}}</td>
+                                    <td class="text-right text-middle red">
+                                        <span id="show_total_price_pro_{{$item->product_id}}">{{numberFormat($tienBanSanPham)}}</span>
+                                    </td>
                                 </tr>
                             @endforeach
 
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tổng số lượng hàng</td>
-                                <td class="text-right text-middle paddingR10"><b>{{numberFormat($tongSoLuong)}}</b></td>
+                                <td class="text-right text-middle paddingR10">
+                                    <input type="hidden" id="sys_total_number_buy" name="total_number_buy" value="{{$tongSoLuong}}">
+                                    <b id="show_total_number_buy">{{numberFormat($tongSoLuong)}}</b>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tiền hàng</td>
-                                <td class="text-right text-middle paddingR10"><b>{{numberFormat($tongTienHang)}}</b></td>
+                                <td class="text-right text-middle paddingR10">
+                                    <input type="hidden" id="sys_total_money_order_old" name="total_money_order_old" value="{{$tongTienHang}}">
+                                    <b id="show_total_money_order">{{numberFormat($tongTienHang)}}</b>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tiền giảm giá</td>
-                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" name="numberProduct" value="5.000" style="padding-right: 2px!important;"></td>
+                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" id="sys_order_discount_price" name="order_discount_price" value="{{$order_discount_price}}" style="padding-right: 2px!important;"></td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4">Tiền ship</td>
-                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" name="numberProduct" value="5.000" style="padding-right: 2px!important;"></td>
+                                <td class="text-right text-middle"><input class="form-control input-sm text-right font-bold" type="text" id="sys_order_shipping_fee" name="order_shipping_fee" value="{{$order_shipping_fee}}" style="padding-right: 2px!important;"></td>
                             </tr>
                             <tr>
                                 <td class="text-right text-middle" colspan="4"><b>Tổng tiền thanh toán</b></td>
-                                <td class="text-right text-middle paddingR10"><b class="red">{{numberFormat($tongTienThanhToan)}}</b></td>
+                                <td class="text-right text-middle paddingR10">
+                                    <input type="hidden" id="sys_total_order_old" name="total_order_old" value="{{$tongTienThanhToan}}">
+                                    <b class="red" id="show_total_order">{{numberFormat(($tongTienThanhToan))}}</b>
+                                </td>
                             </tr>
                             @if(isset($dataDetail['order_status']) && !in_array($dataDetail['order_status'],$arrStatusOrderNotEdit))
                             <tr>

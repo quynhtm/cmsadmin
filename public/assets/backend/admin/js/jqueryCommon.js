@@ -931,13 +931,32 @@ var jqueryCommon = {
     //action Order
     changeNumberOrderBuy: function(pro_id){
         var number_buy = $('#sys_number_buy_'+pro_id).val();
+        var number_buy_old = $('#number_buy_old_'+pro_id).val();
+        var total_number_buy = $('#sys_total_number_buy').val();
         var product_price_sell = $('#sys_product_price_sell_'+pro_id).val();
-        var total_price_pro = $('#sys_total_price_pro_'+pro_id).val();
+        var total_price_pro_old = $('#sys_total_price_pro_old_'+pro_id).val();
 
-        if(changeColor == 1){
-            $('#show_button_action_status').removeClass("display-none-block");
-        }else {
-            $('#show_button_action_status').addClass("display-none-block");
-        }
+        //số lượng mua
+        var total_number_buy_new = parseInt(total_number_buy) - parseInt(number_buy_old) + parseInt(number_buy);
+        $('#number_buy_old_'+pro_id).val(number_buy);
+        $('#sys_total_number_buy').val(total_number_buy_new);
+        $('#show_total_number_buy').html(total_number_buy_new);
+
+        //giá bán sản phẩm
+        var total_money_order_old = $('#sys_total_money_order_old').val();
+        var total_price_pro_new = parseInt(number_buy)*parseInt(product_price_sell);
+        $('#sys_total_price_pro_old_'+pro_id).val(total_price_pro_new);
+        $('#show_total_price_pro_'+pro_id).html(jqueryCommon.numberFormat(total_price_pro_new, '.', ','));
+
+        //tổng giá đơn hàng
+        var total_money_order_new = parseInt(total_money_order_old) - parseInt(total_price_pro_old) + parseInt(total_price_pro_new);
+        $('#sys_total_money_order_old').val(total_money_order_new);
+        $('#show_total_money_order').html(jqueryCommon.numberFormat(total_money_order_new, '.', ','));
+
+        //tổng đơn hàng đã trừ các chi phí
+        var total_order_old = $('#sys_total_order_old').val();
+        var total_order_new = parseInt(total_order_old) - parseInt(total_money_order_old) + parseInt(total_money_order_new);
+        $('#sys_total_order_old').val(total_order_new);
+        $('#show_total_order').html(jqueryCommon.numberFormat(total_order_new, '.', ','));
     },
 }
