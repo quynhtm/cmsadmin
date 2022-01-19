@@ -1,22 +1,9 @@
 {{----Edit và thêm mới----}}
 <div class="formDetailItem" >
     <div class="card-header">
-        @if($objectId > 0)
-            Thông tin &nbsp;<span class="showInforItem" data-field="full_name"></span>
-        @else
-            Thông tin chung
-        @endif
+          Thông tin tuyển dụng
     </div>
     <div class="marginT15">
-        <input type="hidden" id="objectId" name="objectId" value="{{$objectId}}">
-        <input type="hidden" id="url_action" name="url_action" value="{{$urlPostData}}">
-        <input type="hidden" id="formName" name="formName" value="{{$formName}}">
-        <input type="hidden" id="data_item" name="data_item" value="{{json_encode($dataDetail)}}">
-
-        <input type="hidden" id="load_page" name="load_page" value="{{STATUS_INT_MOT}}">
-        <input type="hidden" id="div_show_edit_success" name="div_show_edit_success" value="formShowEditSuccess">
-        <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
-        {{ csrf_field() }}
         <div class="row form-group">
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tiêu đề tuyển dụng')}}</label><span class="red"> (*)</span>

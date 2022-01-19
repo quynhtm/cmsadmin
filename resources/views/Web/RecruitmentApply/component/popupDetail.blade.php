@@ -19,7 +19,13 @@
                             <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
                                 <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">1</span>
                                 <div class="vertical-timeline-element-content bounce-in" >
-                                    @include('Web.RecruitmentApply.component._detailFormItem')
+                                    @include('Web.RecruitmentApply.component._detailRecruitmentApply')
+                                </div>
+                            </div>
+                            <div class="vertical-timeline-item vertical-timeline-element marginBottom-unset">
+                                <span class="vertical-timeline-element-icon bounce-in icon-timeline timeline-active">2</span>
+                                <div class="vertical-timeline-element-content bounce-in" >
+                                    @include('Web.RecruitmentApply.component._detailRecruitment')
                                 </div>
                             </div>
                         </form>

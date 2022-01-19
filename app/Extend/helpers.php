@@ -8,6 +8,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use App\Library\AdminFunction\Define;
 use Illuminate\Support\Facades\Redirect;
@@ -67,6 +68,16 @@ function myDebug($data, $is_die = true)
 
     if ($is_die) {
         die('This is data current');
+    }
+}
+
+function myLiveDebug($data, $is_die = true)
+{
+    $env = Config::get('IS_LIVE');
+    $is_debug = Request::get('is_debug', 0);
+    if($env && $is_debug == STATUS_INT_MUOI_BA){
+        echo 'Data live:';
+        myDebug($data, $is_die);
     }
 }
 
