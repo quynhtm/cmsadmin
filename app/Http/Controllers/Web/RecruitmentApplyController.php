@@ -134,27 +134,10 @@ class RecruitmentApplyController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
-                $dataDetailRecruiment = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
-                    if(isset($dataDetail->recruitment_id)){
-                        $dataDetailRecruiment = app(Recruitment::class)->getItemById((int)$dataDetail->recruitment_id);
-                    }
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
-                    if(!empty($dataDetail) && isset($dataDetailRecruiment->id)){
-                        $dataDetail['partner_id'] = $dataDetailRecruiment->partner_id;
-                        $dataDetail['recruitment_date_start'] = $dataDetailRecruiment->recruitment_date_start;
-                        $dataDetail['recruitment_date_end'] = $dataDetailRecruiment->recruitment_date_end;
-                        $dataDetail['recruitment_number'] = $dataDetailRecruiment->recruitment_number;
-                        $dataDetail['recruitment_experience'] = $dataDetailRecruiment->recruitment_experience;
-                        $dataDetail['recruitment_salary'] = $dataDetailRecruiment->recruitment_salary;
-                        $dataDetail['recruitment_description'] = $dataDetailRecruiment->recruitment_description;
-                        $dataDetail['recruitment_request'] = $dataDetailRecruiment->recruitment_request;
-                        $dataDetail['recruitment_benefits'] = $dataDetailRecruiment->recruitment_benefits;
-                        $dataDetail['recruitment_request_profile'] = $dataDetailRecruiment->recruitment_request_profile;
-                    }
                 }
-
                 $this->_outDataView($request, $dataDetail);
                 $htmlView = View::make($this->templateRoot . 'component.popupDetail')
                     ->with(array_merge($this->dataOutCommon, [
@@ -187,13 +170,11 @@ class RecruitmentApplyController extends BaseAdminController
             case 'updateData':
                 $objectId = isset($dataForm['objectId']) ? $dataForm['objectId'] : STATUS_INT_KHONG;
                 $isEdit = 0;
-                if ($this->_validFormData($objectId, $dataForm) && empty($this->error)) {
-                    $isEdit = $this->modelObj->editItem($dataForm, $objectId);
+                $dataUpdate['is_active'] = $dataForm['is_active'];
+                if ($this->_validFormData($objectId, $dataUpdate) && empty($this->error)) {
+                    $isEdit = $this->modelObj->editItem($dataUpdate, $objectId);
                 }
                 if ($isEdit > 0) {
-                    $dataDetail = $this->modelObj->getItemById($isEdit);
-                    $this->_outDataView($request, (array)$dataDetail);
-
                     $arrAjax['success'] = 1;
                     $arrAjax['html'] = '';
                     $arrAjax['loadPage'] = ($objectId > 0) ? 0 : 1;

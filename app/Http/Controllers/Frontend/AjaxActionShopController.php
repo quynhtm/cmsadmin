@@ -15,6 +15,7 @@ use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
 use App\Models\Shop\Products;
 use App\Models\Web\Contact;
+use App\Models\Web\Recruitment;
 use App\Models\Web\RecruitmentApply;
 use App\Models\Web\Reviews;
 use App\Services\ServiceCommon;
@@ -452,13 +453,30 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['recruitment_title'] = Security::cleanText(addslashes($dataForm['recruitment_title']));
                 $dataInput['recruitment_province'] = Security::cleanText(addslashes($dataForm['recruitment_province']));
                 $dataInput['recruitment_position'] = Security::cleanText(addslashes($dataForm['recruitment_position']));
-                $dataInput['recruitment_data'] = Security::cleanText(addslashes($dataForm['recruitment_data']));
                 $dataInput['partner_id'] = (int)$dataForm['partner_id'];
                 $dataInput['is_active'] = STATUS_INT_MOT;//mới
                 $dataInput['gender'] = Security::cleanText(addslashes($dataForm['gender']));
                 $dataInput['full_name'] = Security::cleanText(addslashes($dataForm['full_name']));
                 $dataInput['phone'] = Security::cleanText(addslashes($dataForm['phone']));
                 $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+
+                //data của tuyển dụng
+                $recruitment = app(Recruitment::class)->getItemById($dataInput['recruitment_id']);
+                if(isset($recruitment->id)){
+                    $dataInput['recruitment_title'] = $recruitment->recruitment_title;
+                    $dataInput['recruitment_province'] = $recruitment->recruitment_province;
+                    $dataInput['recruitment_province'] = $recruitment->recruitment_province;
+                    $dataInput['recruitment_position'] = $recruitment->recruitment_position;
+                    $dataInput['recruitment_date_start'] = $recruitment->recruitment_date_start;
+                    $dataInput['recruitment_date_end'] = $recruitment->recruitment_date_end;
+                    $dataInput['recruitment_number'] = $recruitment->recruitment_number;
+                    $dataInput['recruitment_experience'] = $recruitment->recruitment_experience;
+                    $dataInput['recruitment_salary'] = $recruitment->recruitment_salary;
+                    $dataInput['recruitment_description'] = $recruitment->recruitment_description;
+                    $dataInput['recruitment_request'] = $recruitment->recruitment_request;
+                    $dataInput['recruitment_benefits'] = $recruitment->recruitment_benefits;
+                    $dataInput['recruitment_request_profile'] = $recruitment->recruitment_request_profile;
+                }
 
                 $insert_id = app(RecruitmentApply::class)->editItem($dataInput);
                 if($insert_id > STATUS_INT_KHONG){
