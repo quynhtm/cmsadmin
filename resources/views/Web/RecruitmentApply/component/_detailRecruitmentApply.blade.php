@@ -16,39 +16,39 @@
         <div class="row form-group">
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Người ứng tuyển')}}</label>  <span class="red"> (<a href="#">Click Xem file CV</a>) </span>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="full_name" id="{{$formName}}full_name">
+                <input type="text" class="form-control input-sm" maxlength="100" readonly name="full_name" id="{{$formName}}full_name">
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Số điện thoại')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="phone" id="{{$formName}}phone">
+                <input type="text" class="form-control input-sm" maxlength="100" readonly name="phone" id="{{$formName}}phone">
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Email')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="email" id="{{$formName}}email">
+                <input type="text" class="form-control input-sm" maxlength="100" readonly name="email" id="{{$formName}}email">
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí ứng tuyển')}}</label>
-                <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" required>
+                <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" readonly>
                     {!! $optionPosition !!}}
                 </select>
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tỉnh thành')}}</label>
-                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" required>
+                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" readonly>
                     {!! $optionProvince !!}}
                 </select>
             </div>
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Giới tính')}}</label>
-                <select  class="form-control input-sm" name="gender" id="gender" required>
+                <select  class="form-control input-sm" name="gender" id="gender" readonly>
                     {!! $optionGender !!}}
                 </select>
             </div>
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái ứng tuyển')}}</label>
-                <select  class="form-control input-sm" name="is_active" id="is_active" required>
+                <select  class="form-control input-sm" name="is_active" id="is_active" >
                     {!! $optionIsActive !!}}
                 </select>
             </div>
@@ -59,6 +59,6 @@
 
     $(document).ready(function(){
         var date_time = $('.input-date').datepicker({dateFormat: 'dd/mm/yy'});
-        showDataIntoForm('{{$formName}}');
+        //showDataIntoForm('{{$formName}}');
     });
 </script>

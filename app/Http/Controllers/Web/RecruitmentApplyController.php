@@ -12,6 +12,7 @@ use App\Http\Controllers\BaseAdminController;
 use App\Library\AdminFunction\FunctionLib;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Pagging;
+use App\Models\Web\Recruitment;
 use App\Models\Web\RecruitmentApply;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -133,9 +134,25 @@ class RecruitmentApplyController extends BaseAdminController
         switch ($funcAction) {
             case 'getDetailItem':
                 $dataDetail = false;
+                $dataDetailRecruiment = false;
                 if ($objectId > STATUS_INT_KHONG) {
                     $dataDetail = $this->modelObj->getItemById($objectId);
+                    if(isset($dataDetail->recruitment_id)){
+                        $dataDetailRecruiment = app(Recruitment::class)->getItemById((int)$dataDetail->recruitment_id);
+                    }
                     $dataDetail = ($dataDetail) ? $dataDetail->toArray() : false;
+                    if(!empty($dataDetail) && isset($dataDetailRecruiment->id)){
+                        $dataDetail['partner_id'] = $dataDetailRecruiment->partner_id;
+                        $dataDetail['recruitment_date_start'] = $dataDetailRecruiment->recruitment_date_start;
+                        $dataDetail['recruitment_date_end'] = $dataDetailRecruiment->recruitment_date_end;
+                        $dataDetail['recruitment_number'] = $dataDetailRecruiment->recruitment_number;
+                        $dataDetail['recruitment_experience'] = $dataDetailRecruiment->recruitment_experience;
+                        $dataDetail['recruitment_salary'] = $dataDetailRecruiment->recruitment_salary;
+                        $dataDetail['recruitment_description'] = $dataDetailRecruiment->recruitment_description;
+                        $dataDetail['recruitment_request'] = $dataDetailRecruiment->recruitment_request;
+                        $dataDetail['recruitment_benefits'] = $dataDetailRecruiment->recruitment_benefits;
+                        $dataDetail['recruitment_request_profile'] = $dataDetailRecruiment->recruitment_request_profile;
+                    }
                 }
 
                 $this->_outDataView($request, $dataDetail);

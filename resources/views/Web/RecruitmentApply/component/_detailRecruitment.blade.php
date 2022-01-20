@@ -6,13 +6,13 @@
     <div class="marginT15">
         <div class="row form-group">
             <div class="col-lg-6">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Tiêu đề tuyển dụng')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="recruitment_title" id="{{$formName}}recruitment_title">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Tiêu đề tuyển dụng')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" readonly name="recruitment_title" id="{{$formName}}recruitment_title">
             </div>
             @if($partner_id == 0)
                 <div class="col-lg-6">
                     <label for="NAME" class="text-right control-label">{{viewLanguage('Đối tác')}}</label>
-                    <select  class="form-control input-sm" name="partner_id" id="partner_id">
+                    <select  class="form-control input-sm" name="partner_id" id="partner_id" readonly>
                         {!! $optionPartner !!}}
                     </select>
                 </div>
@@ -22,14 +22,14 @@
         </div>
         <div class="row form-group">
             <div class="col-lg-6">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí ứng tuyển')}}</label><span class="red"> (*)</span>
-                <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" required>
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí ứng tuyển')}}</label>
+                <select  class="form-control input-sm" name="recruitment_position" id="recruitment_position" readonly>
                     {!! $optionPosition !!}}
                 </select>
             </div>
             <div class="col-lg-6">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Tỉnh thành')}}</label>
-                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" required>
+                <select  class="form-control input-sm" name="recruitment_province" id="recruitment_province" readonly>
                     {!! $optionProvince !!}}
                 </select>
             </div>
@@ -37,49 +37,49 @@
         <div class="row form-group">
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Ngày bắt đầu')}}</label>
-                <input type="text" class="form-control input-sm input-date" data-valid = "text" name="recruitment_date_start" id="{{$formName}}recruitment_date_start">
+                <input type="text" class="form-control input-sm input-date" data-valid = "text" name="recruitment_date_start" id="{{$formName}}recruitment_date_start" readonly>
                 <div class="icon_calendar"><i class="fa fa-calendar-alt"></i></div>
             </div>
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Ngày kết thúc')}}</label>
-                <input type="text" class="form-control input-sm input-date" data-valid = "text" name="recruitment_date_end" id="{{$formName}}recruitment_date_end">
+                <input type="text" class="form-control input-sm input-date" data-valid = "text" name="recruitment_date_end" id="{{$formName}}recruitment_date_end" readonly>
                 <div class="icon_calendar"><i class="fa fa-calendar-alt"></i></div>
             </div>
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Số lượng')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="recruitment_number" id="{{$formName}}recruitment_number">
+                <input type="text" class="form-control input-sm" maxlength="100" name="recruitment_number" id="{{$formName}}recruitment_number" readonly>
             </div>
             <div class="col-lg-2">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Kinh nghiệm')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="recruitment_experience" id="{{$formName}}recruitment_experience">
+                <input type="text" class="form-control input-sm" maxlength="100" name="recruitment_experience" id="{{$formName}}recruitment_experience" readonly>
             </div>
             <div class="col-lg-4">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Mức lương')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="200" name="recruitment_salary" id="{{$formName}}recruitment_salary">
+                <input type="text" class="form-control input-sm" maxlength="200" name="recruitment_salary" id="{{$formName}}recruitment_salary" readonly>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-12">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Mô tả')}}</label>
-                <textarea class="form-control input-sm" name="recruitment_description" id="recruitment_description">@if(isset($dataDetail['recruitment_description'])){!! $dataDetail['recruitment_description'] !!}@endif</textarea>
+                <textarea class="form-control input-sm" disabled name="recruitment_description" id="recruitment_description">@if(isset($dataDetail['recruitment_description'])){!! $dataDetail['recruitment_description'] !!}@endif</textarea>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-12">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu')}}</label>
-                <textarea rows="10" class="form-control input-sm" name="recruitment_request" id="recruitment_request">@if(isset($dataDetail['recruitment_request'])){!! $dataDetail['recruitment_request'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" disabled name="recruitment_request" id="recruitment_request">@if(isset($dataDetail['recruitment_request'])){!! $dataDetail['recruitment_request'] !!}@endif</textarea>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-12">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Quyền lợi')}}</label>
-                <textarea rows="10" class="form-control input-sm" name="recruitment_benefits" id="recruitment_benefits">@if(isset($dataDetail['recruitment_benefits'])){!! $dataDetail['recruitment_benefits'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" disabled name="recruitment_benefits" id="recruitment_benefits">@if(isset($dataDetail['recruitment_benefits'])){!! $dataDetail['recruitment_benefits'] !!}@endif</textarea>
             </div>
         </div>
         <div class="row form-group">
             <div class="col-lg-12">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Yêu cầu hồ sơ')}}</label>
-                <textarea rows="10" class="form-control input-sm" name="recruitment_request_profile" id="recruitment_request_profile">@if(isset($dataDetail['recruitment_request_profile'])){!! $dataDetail['recruitment_request_profile'] !!}@endif</textarea>
+                <textarea rows="10" class="form-control input-sm" disabled name="recruitment_request_profile" id="recruitment_request_profile">@if(isset($dataDetail['recruitment_request_profile'])){!! $dataDetail['recruitment_request_profile'] !!}@endif</textarea>
             </div>
         </div>
     </div>
