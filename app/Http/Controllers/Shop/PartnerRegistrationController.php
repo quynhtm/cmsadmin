@@ -27,6 +27,7 @@ class PartnerRegistrationController extends BaseAdminController
     private $modelObj = false;
 
     private $arrIsActive = array();
+    private $arrGender = array();
     private $tabOtherItem1 = 'tabOtherItem1';
     private $tabOtherItem2 = 'tabOtherItem2';
     private $tabOtherItem3 = 'tabOtherItem3';
@@ -39,13 +40,15 @@ class PartnerRegistrationController extends BaseAdminController
     {
         parent::__construct();
         $this->modelObj = new PartnerRegistration();
-        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI_TIN);
+        $this->arrIsActive = $this->getArrOptionTypeDefine(DEFINE_TRANG_THAI);
+        $this->arrGender = $this->getArrOptionTypeDefine(DEFINE_GIOI_TINH);
     }
 
     private function _outDataView($request, $data)
     {
         $optionPartner = FunctionLib::getOption([STATUS_INT_KHONG => '---Tất cả---'] + $this->arrPartner, isset($data['partner_id']) ? $data['partner_id'] : STATUS_INT_MOT);
         $optionIsActive = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrIsActive, isset($data['is_active']) ? $data['is_active'] : STATUS_INT_AM_MOT);
+        $optionGender = FunctionLib::getOption([STATUS_INT_AM_MOT => '---Chọn---'] + $this->arrGender, isset($data['shop_gender']) ? $data['shop_gender'] : STATUS_INT_AM_MOT);
 
         $formId = $request['formName'] ?? 'formPopup';
         $titlePopup = $request['titlePopup'] ?? 'Thông tin chung';
@@ -56,7 +59,9 @@ class PartnerRegistrationController extends BaseAdminController
         return $this->dataOutCommon = [
             'optionPartner' => $optionPartner,
             'optionIsActive' => $optionIsActive,
+            'optionGender' => $optionGender,
             'arrIsActive' => $this->arrIsActive,
+            'arrGender' => $this->arrGender,
 
             'form_id' => $formId,
             'title_popup' => $titlePopup,

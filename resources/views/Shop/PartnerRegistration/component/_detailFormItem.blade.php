@@ -18,46 +18,56 @@
         <input type="hidden" id="actionUpdate" name="actionUpdate" value="updateData">
         {{ csrf_field() }}
         <div class="row form-group">
-            <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Tên đối tác')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="partner_name" id="{{$formName}}partner_name">
+            <div class="col-lg-7">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Tên shop')}}</label><span class="red"> (*)</span>
+                <input type="text" class="form-control input-sm" maxlength="100" required name="shop_name" id="{{$formName}}shop_name">
             </div>
-            <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Web')}}</label><span class="red"> (*)</span>
-                <input type="text" class="form-control input-sm" maxlength="100" required name="partner_web" id="{{$formName}}partner_web">
+            <div class="col-lg-2">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Danh xưng')}}</label>
+                <select  class="form-control input-sm" name="shop_gender" id="shop_gender">
+                    {!! $optionGender !!}}
+                </select>
             </div>
-            <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Phone')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="partner_phone" id="{{$formName}}partner_phone">
+            <div class="col-lg-3">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Người đại diện')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" required name="shop_representative" id="{{$formName}}shop_representative">
             </div>
+
         </div>
         <div class="row form-group">
-            <div class="col-lg-2">
+            <div class="col-lg-4">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Phone')}}</label>
+                <input type="text" class="form-control input-sm" name="shop_phone" id="{{$formName}}shop_phone">
+            </div>
+            <div class="col-lg-4">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Email')}}</label>
+                <input type="text" class="form-control input-sm" name="shop_email" id="{{$formName}}shop_email">
+            </div>
+            <div class="col-lg-4">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('CMND/CCCD')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" name="shop_idcard" id="{{$formName}}shop_idcard">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-12">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('Địa chỉ')}}</label>
+                <input type="text" class="form-control input-sm" maxlength="100" name="shop_address" id="{{$formName}}shop_address">
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-lg-4">
+                <label for="NAME" class="text-right control-label">{{viewLanguage('User đăng nhập')}}</label>
+                <input type="text" class="form-control input-sm" name="user_shop" id="{{$formName}}user_shop">
+            </div>
+            <div class="col-lg-3">
                 <label for="NAME" class="text-right control-label">{{viewLanguage('Trạng thái')}}</label><span class="red"> (*)</span>
                 <select  class="form-control input-sm" name="is_active" id="is_active">
                     {!! $optionIsActive !!}}
                 </select>
             </div>
-            <div class="col-lg-2">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Vị trí')}}</label>
-                <input type="text" class="form-control input-sm" name="partner_order" id="{{$formName}}partner_order">
-            </div>
-            <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Zalo')}}</label>
-                <input type="text" class="form-control input-sm" name="partner_zalo" id="{{$formName}}partner_zalo">
-            </div>
-            <div class="col-lg-4">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Email')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="partner_email" id="{{$formName}}partner_email">
-            </div>
         </div>
-        <div class="row form-group">
-            <div class="col-lg-12">
-                <label for="NAME" class="text-right control-label">{{viewLanguage('Ghi chú')}}</label>
-                <input type="text" class="form-control input-sm" maxlength="100" name="note" id="{{$formName}}note">
-            </div>
-        </div>
-
     </div>
 </div>
 <script type="text/javascript">
