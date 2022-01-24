@@ -13,6 +13,7 @@ use App\Library\AdminFunction\Security;
 
 use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
+use App\Models\Shop\PartnerRegistration;
 use App\Models\Shop\Products;
 use App\Models\Web\Contact;
 use App\Models\Web\Recruitment;
@@ -479,6 +480,27 @@ class AjaxActionShopController extends BaseSiteController
                 }
 
                 $insert_id = app(RecruitmentApply::class)->editItem($dataInput);
+                if($insert_id > STATUS_INT_KHONG){
+                    $arrAjax['success'] = STATUS_INT_MOT;
+                    $arrAjax['actionSite'] = $actionForm;
+                }
+                break;
+
+            case 'inputPartnerRegistrationSite'://thêm đối tác cho site
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['is_active'] = STATUS_INT_KHONG;
+                $dataInput['shop_name'] = Security::cleanText(addslashes($dataForm['shop_name']));
+                $dataInput['shop_representative'] = Security::cleanText(addslashes($dataForm['shop_representative']));
+                $dataInput['shop_email'] = Security::cleanText(addslashes($dataForm['shop_email']));
+                $dataInput['shop_idcard'] = Security::cleanText(addslashes($dataForm['shop_idcard']));
+                $dataInput['shop_phone'] = Security::cleanText(addslashes($dataForm['shop_phone']));
+                $dataInput['shop_gender'] = (int)Security::cleanText(addslashes($dataForm['shop_gender']));
+                $dataInput['shop_address'] = Security::cleanText(addslashes($dataForm['shop_address']));
+
+                $dataInput['user_shop'] = Security::cleanText(addslashes($dataForm['user_shop']));
+                $dataInput['user_password'] = Security::cleanText(addslashes($dataForm['user_password']));
+
+                $insert_id = app(PartnerRegistration::class)->editItem($dataInput);
                 if($insert_id > STATUS_INT_KHONG){
                     $arrAjax['success'] = STATUS_INT_MOT;
                     $arrAjax['actionSite'] = $actionForm;

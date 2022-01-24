@@ -121,6 +121,10 @@ var ActionSite = {
                     notiDefault = '<div class="notification__content notification__content--success">' +
                         '<div class="notification__content__txt">Bạn ứng tuyển thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất</div></div>';
                     break;
+                case 'inputPartnerRegistrationSite':
+                    notiDefault = '<div class="notification__content notification__content--success">' +
+                        '<div class="notification__content__txt">Bạn đã đăng ký thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất</div></div>';
+                    break;
                 default:
                     break;
             }
