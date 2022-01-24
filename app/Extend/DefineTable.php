@@ -27,6 +27,7 @@ define('TABLE_USERS',PREFIX_BACKEND.'users');
 
 //Shop
 define('TABLE_PARTNER_REGISTRATION',PREFIX_SHOP.'partner_registration');
+define('TABLE_CUSTOMER_ADVERTISEMENT',PREFIX_SHOP.'customer_advertisement');
 define('TABLE_PRODUCT',PREFIX_SHOP.'product');
 define('TABLE_ORDERS',PREFIX_SHOP.'orders');
 define('TABLE_ORDERS_ITEM',PREFIX_SHOP.'orders_item');

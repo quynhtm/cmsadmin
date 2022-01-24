@@ -32,5 +32,12 @@ Route::group(array('prefix' => 'backend'), function () {
         Route::post('ajaxPostData', array('as' => 'partnerRegistration.ajaxPostData', 'uses' => DIR_PRO_SHOP . '\PartnerRegistrationController@ajaxPostData'));
     });
 
+    /* Quản lý Khách hàng MKT */
+    Route::group(array('prefix' => 'customerAdvertisement'), function () {
+        Route::match(['GET', 'POST'], 'index', array('as' => 'customerAdvertisement.index', 'uses' => DIR_PRO_SHOP . '\CustomerAdvertisementController@index'));
+        Route::post('ajaxGetData', array('as' => 'customerAdvertisement.ajaxGetData', 'uses' => DIR_PRO_SHOP . '\CustomerAdvertisementController@ajaxGetData'));
+        Route::post('ajaxPostData', array('as' => 'customerAdvertisement.ajaxPostData', 'uses' => DIR_PRO_SHOP . '\CustomerAdvertisementController@ajaxPostData'));
+    });
+
 });
 
