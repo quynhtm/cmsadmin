@@ -23,13 +23,15 @@ class Orders extends BaseModel
 
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $p_keyword = trim($dataSearch['p_keyword']);
-                $query->where('order_note', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_customer_name', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_customer_note', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_customer_phone', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_customer_email', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_customer_address', 'LIKE', '%' . $p_keyword . '%')
-                      ->orWhere('order_user_shipper_name', 'LIKE', '%' . $p_keyword . '%');
+                $query->where(function ($query) use ($p_keyword) {
+                    $$query->where('order_note', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_customer_name', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_customer_note', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_customer_phone', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_customer_email', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_customer_address', 'LIKE', '%' . $p_keyword . '%')
+                        ->orWhere('order_user_shipper_name', 'LIKE', '%' . $p_keyword . '%');
+                });
             }
 
             if (isset($dataSearch['order_type']) && $dataSearch['order_type'] != STATUS_INT_AM_MOT) {

@@ -20,8 +20,10 @@ class Reviews extends BaseModel
             $query = Reviews::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $str_like = trim($dataSearch['p_keyword']);
-                $query->where('object_name', 'LIKE', '%' . $str_like . '%')
-                    ->orWhere('assessor', 'LIKE', '%' . $str_like . '%');
+                $query->where(function ($query) use ($str_like) {
+                    $query->where('object_name', 'LIKE', '%' . $str_like . '%')
+                        ->orWhere('assessor', 'LIKE', '%' . $str_like . '%');
+                });
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);

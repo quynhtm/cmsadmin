@@ -21,8 +21,10 @@ class OrdersItem extends BaseModel
             $query = OrdersItem::where($this->primaryKey, '>', STATUS_INT_KHONG);
             if (isset($dataSearch['p_keyword']) && $dataSearch['p_keyword'] != '') {
                 $str_like = trim($dataSearch['p_keyword']);
-                $query->where('shop_name', 'LIKE', '%' . $str_like . '%')
-                    ->orWhere('shop_representative', 'LIKE', '%' . $str_like. '%');
+                $query->where(function ($query) use ($str_like) {
+                    $query->where('shop_name', 'LIKE', '%' . $str_like . '%')
+                        ->orWhere('shop_representative', 'LIKE', '%' . $str_like. '%');
+                });
             }
             if (isset($dataSearch['partner_id']) && $dataSearch['partner_id'] > STATUS_INT_KHONG) {
                 $query->where('partner_id', $dataSearch['partner_id']);
