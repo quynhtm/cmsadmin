@@ -25,10 +25,12 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 
 class AjaxActionShopController extends BaseSiteController
 {
     private $outDataCommon = [];
+    private $error_msg = [];
     private $commonService;
     private $partner = STATUS_INT_MOT;
     private $sessionCart = SESSION_SHOP_CART;
@@ -393,7 +395,7 @@ class AjaxActionShopController extends BaseSiteController
     public function ajaxPostSite()
     {
         $dataForm = $_POST;
-        $arrAjax = array('success' => STATUS_INT_KHONG, 'html' => '', 'message' => '');
+        $arrAjax = array('success' => STATUS_INT_KHONG, 'html_msg' => '', 'actionSite' => '');
         $actionForm = 'actionUpdate';
         $actionForm = isset($dataForm['actionInputSite']) ? $dataForm['actionInputSite'] : $actionForm;
 
@@ -407,10 +409,12 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['contact_title'] = Security::cleanText(addslashes($dataForm['contact_title']));
                 $dataInput['partner_id'] = (int)$dataForm['partner_id'];
 
-                $insert_id = app(Contact::class)->editItem($dataInput);
-                if($insert_id > STATUS_INT_KHONG){
-                    $arrAjax['success'] = STATUS_INT_MOT;
-                    $arrAjax['actionSite'] = $actionForm;
+                if($this->validateDataInputSite($dataInput,$actionForm) && empty($this->error_msg)){
+                    $insert_id = app(Contact::class)->editItem($dataInput);
+                    if($insert_id > STATUS_INT_KHONG){
+                        $arrAjax['success'] = STATUS_INT_MOT;
+                        $arrAjax['actionSite'] = $actionForm;
+                    }
                 }
                 break;
 
@@ -424,10 +428,12 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['object_id'] = (int)$dataForm['object_id'];
                 $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
 
-                $insert_id = app(Reviews::class)->editItem($dataInput);
-                if($insert_id > STATUS_INT_KHONG){
-                    $arrAjax['success'] = STATUS_INT_MOT;
-                    $arrAjax['actionSite'] = $actionForm;
+                if($this->validateDataInputSite($dataInput,$actionForm) && empty($this->error_msg)){
+                    $insert_id = app(Reviews::class)->editItem($dataInput);
+                    if($insert_id > STATUS_INT_KHONG){
+                        $arrAjax['success'] = STATUS_INT_MOT;
+                        $arrAjax['actionSite'] = $actionForm;
+                    }
                 }
                 break;
 
@@ -442,10 +448,12 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['object_id'] = (int)$dataForm['object_id'];
                 $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
 
-                $insert_id = app(Reviews::class)->editItem($dataInput);
-                if($insert_id > STATUS_INT_KHONG){
-                    $arrAjax['success'] = STATUS_INT_MOT;
-                    $arrAjax['actionSite'] = $actionForm;
+                if($this->validateDataInputSite($dataInput,$actionForm) && empty($this->error_msg)){
+                    $insert_id = app(Reviews::class)->editItem($dataInput);
+                    if($insert_id > STATUS_INT_KHONG){
+                        $arrAjax['success'] = STATUS_INT_MOT;
+                        $arrAjax['actionSite'] = $actionForm;
+                    }
                 }
                 break;
 
@@ -479,10 +487,12 @@ class AjaxActionShopController extends BaseSiteController
                     $dataInput['recruitment_request_profile'] = $recruitment->recruitment_request_profile;
                 }
 
-                $insert_id = app(RecruitmentApply::class)->editItem($dataInput);
-                if($insert_id > STATUS_INT_KHONG){
-                    $arrAjax['success'] = STATUS_INT_MOT;
-                    $arrAjax['actionSite'] = $actionForm;
+                if($this->validateDataInputSite($dataInput,$actionForm) && empty($this->error_msg)){
+                    $insert_id = app(RecruitmentApply::class)->editItem($dataInput);
+                    if($insert_id > STATUS_INT_KHONG){
+                        $arrAjax['success'] = STATUS_INT_MOT;
+                        $arrAjax['actionSite'] = $actionForm;
+                    }
                 }
                 break;
 
@@ -496,19 +506,110 @@ class AjaxActionShopController extends BaseSiteController
                 $dataInput['shop_phone'] = Security::cleanText(addslashes($dataForm['shop_phone']));
                 $dataInput['shop_gender'] = (int)Security::cleanText(addslashes($dataForm['shop_gender']));
                 $dataInput['shop_address'] = Security::cleanText(addslashes($dataForm['shop_address']));
-
                 $dataInput['user_shop'] = Security::cleanText(addslashes($dataForm['user_shop']));
                 $dataInput['user_password'] = Security::cleanText(addslashes($dataForm['user_password']));
 
-                $insert_id = app(PartnerRegistration::class)->editItem($dataInput);
-                if($insert_id > STATUS_INT_KHONG){
-                    $arrAjax['success'] = STATUS_INT_MOT;
-                    $arrAjax['actionSite'] = $actionForm;
+                if($this->validateDataInputSite($dataInput,$actionForm) && empty($this->error_msg)){
+                    $insert_id = app(PartnerRegistration::class)->editItem($dataInput);
+                    if($insert_id > STATUS_INT_KHONG){
+                        $arrAjax['success'] = STATUS_INT_MOT;
+                        $arrAjax['actionSite'] = $actionForm;
+                    }
                 }
                 break;
             default:
                 break;
         }
+        if(!empty($this->error_msg)){
+            $html_error = $this->showMsgError($this->error_msg);
+            $arrAjax['success'] = STATUS_INT_KHONG;
+            $arrAjax['html_msg'] = $html_error;
+            $arrAjax['actionSite'] = $actionForm;
+        }
         return Response::json($arrAjax);
+    }
+    private function validateDataInputSite(&$dataInput = [],$actionForm){
+        switch ($actionForm) {
+            /*case 'inputContactSite':
+                $dataInput['contact_gender'] = (int)$dataForm['contact_gender'];
+                $dataInput['contact_user_name_send'] = Security::cleanText(addslashes($dataForm['contact_user_name_send']));
+                $dataInput['contact_phone_send'] = Security::cleanText(addslashes($dataForm['contact_phone_send']));
+                $dataInput['contact_email_send'] = Security::cleanText(addslashes($dataForm['contact_email_send']));
+                $dataInput['contact_content'] = Security::cleanText(addslashes($dataForm['contact_content']));
+                $dataInput['contact_title'] = Security::cleanText(addslashes($dataForm['contact_title']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                break;
+            case 'inputCommentNewSite':
+                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['type_review'] = Reviews::typeReviewNew;
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['object_id'] = (int)$dataForm['object_id'];
+                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+                break;
+
+            case 'inputCommentProductSite':
+                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
+                $dataInput['star_points'] = (int)$dataForm['star_points'];
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['type_review'] = Reviews::typeReviewProduct;
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['object_id'] = (int)$dataForm['object_id'];
+                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+                break;
+            case 'inputRecruitmentApplySite':
+                $dataInput['recruitment_id'] = (int)$dataForm['recruitment_id'];
+                $dataInput['recruitment_title'] = Security::cleanText(addslashes($dataForm['recruitment_title']));
+                $dataInput['recruitment_province'] = Security::cleanText(addslashes($dataForm['recruitment_province']));
+                $dataInput['recruitment_position'] = Security::cleanText(addslashes($dataForm['recruitment_position']));
+                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
+                $dataInput['is_active'] = STATUS_INT_MOT;//mới
+                $dataInput['gender'] = Security::cleanText(addslashes($dataForm['gender']));
+                $dataInput['full_name'] = Security::cleanText(addslashes($dataForm['full_name']));
+                $dataInput['phone'] = Security::cleanText(addslashes($dataForm['phone']));
+                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
+                break;*/
+
+            case 'inputPartnerRegistrationSite'://thêm đối tác cho site
+                if(isset($dataInput['shop_name']) && trim($dataInput['shop_name']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Tên shop';
+                }
+                if(isset($dataInput['shop_representative']) && trim($dataInput['shop_representative']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Tên người đại diện';
+                }
+                if(isset($dataInput['shop_email']) && trim($dataInput['shop_email']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Email';
+                }
+                if(isset($dataInput['shop_idcard']) && trim($dataInput['shop_idcard']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập CMND/CCCD';
+                }
+                if(isset($dataInput['shop_phone']) && trim($dataInput['shop_phone']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Số điện thoại';
+                }
+                if(isset($dataInput['shop_address']) && trim($dataInput['shop_address']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Địa chỉ của shop';
+                }
+                if(isset($dataInput['user_shop']) && trim($dataInput['user_shop']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập User đăng nhập';
+                }
+                if(isset($dataInput['user_password']) && trim($dataInput['user_password']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Pass đăng nhập';
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+    private function showMsgError($dataMsg = []){
+        $htmlView = View::make('Frontend.Shop.Pages._popupMsgError')
+            ->with( [
+                'dataMsg' => $dataMsg
+            ])->render();
+        return $htmlView;
     }
 }

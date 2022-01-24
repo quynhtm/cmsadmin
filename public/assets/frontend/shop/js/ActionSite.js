@@ -91,8 +91,13 @@ var ActionSite = {
             cache: false,
             timeout: 600000,
             success: function (res) {
-                ActionSite.showNotificationSite(res.actionSite, (res.success == 1) ? 'success' : 'error');
-                $("#"+form_id).trigger("reset");
+                if(res.success == 0){
+                    UIkit.modal('#modal-showErrorSite').show();
+                    $('#show_html_msg_site').html(res.html_msg);
+                }else {
+                    ActionSite.showNotificationSite(res.actionSite, (res.success == 1) ? 'success' : 'error');
+                    $("#"+form_id).trigger("reset");
+                }
             },
             error: function (e) {
                 ActionSite.showNotificationSite('',  'error');

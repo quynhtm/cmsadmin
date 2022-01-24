@@ -249,6 +249,29 @@
         </div>
     </div>
 </div>
+<div id="modal-showErrorSite" uk-modal>
+    <div class="uk-modal-dialog uk-modal-dialog-m uk-modal-body uk-padding-remove">
+        <button class="uk-modal-close-default header__bottom__close" type="button" uk-close></button>
+        <div class="uk-child-width-1-2@m uk-grid-match uk-grid-collapse uk-flex-middle" uk-grid>
+            <div>
+                <div class="uk-cover-container">
+                    <img class="uk-visible@m" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/bg_wishList.png" alt="" uk-cover>
+                    <img class="uk-hidden@m" src="{{Config::get('config.WEB_ROOT')}}assets/frontend/shop/images/bg_wishList_mb.png" alt="" uk-cover>
+                    <canvas class="uk-visible@m" width="385" height="433"></canvas>
+                    <canvas class="uk-hidden@m" width="344" height="172"></canvas>
+                    <div class="modal__wishList__mask uk-position-right"></div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-padding-small modal__wishList__box">
+                    <h2 class="uk-modal-title modal__wishList__title">Có lỗi thao tác</h2>
+                    <p class="modal__wishList__desc">Vui lòng điền các thông tin yêu cầu để chúng tôi phục vụ tốt hơn</p>
+                    <div id="show_html_msg_site"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     // UIkit.modal('#modal-quickView').show();
     // UIkit.modal('#modal-wishList').show();
