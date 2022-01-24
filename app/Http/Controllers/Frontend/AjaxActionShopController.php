@@ -11,6 +11,7 @@ use App\Http\Controllers\BaseSiteController;
 use App\Library\AdminFunction\CGlobal;
 use App\Library\AdminFunction\Security;
 
+use App\Models\Admin\User;
 use App\Models\Shop\Orders;
 use App\Models\Shop\OrdersItem;
 use App\Models\Shop\PartnerRegistration;
@@ -530,49 +531,62 @@ class AjaxActionShopController extends BaseSiteController
     }
     private function validateDataInputSite(&$dataInput = [],$actionForm){
         switch ($actionForm) {
-            /*case 'inputContactSite':
-                $dataInput['contact_gender'] = (int)$dataForm['contact_gender'];
-                $dataInput['contact_user_name_send'] = Security::cleanText(addslashes($dataForm['contact_user_name_send']));
-                $dataInput['contact_phone_send'] = Security::cleanText(addslashes($dataForm['contact_phone_send']));
-                $dataInput['contact_email_send'] = Security::cleanText(addslashes($dataForm['contact_email_send']));
-                $dataInput['contact_content'] = Security::cleanText(addslashes($dataForm['contact_content']));
-                $dataInput['contact_title'] = Security::cleanText(addslashes($dataForm['contact_title']));
-                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
-                break;
-            case 'inputCommentNewSite':
-                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
-                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
-                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
-                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
-                $dataInput['type_review'] = Reviews::typeReviewNew;
-                $dataInput['is_active'] = STATUS_INT_MOT;//mới
-                $dataInput['object_id'] = (int)$dataForm['object_id'];
-                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+            case 'inputContactSite':
+                if(isset($dataInput['contact_gender']) && trim($dataInput['contact_gender']) == ''){
+                    $this->error_msg[] = 'Bạn chưa chọn Danh xưng';
+                }
+                if(isset($dataInput['contact_user_name_send']) && trim($dataInput['contact_user_name_send']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Họ tên';
+                }
+                if(isset($dataInput['contact_phone_send']) && trim($dataInput['contact_phone_send']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Số điện thoại';
+                }
+                if(isset($dataInput['contact_email_send']) && trim($dataInput['contact_email_send']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Email';
+                }
+                if(isset($dataInput['contact_title']) && trim($dataInput['contact_title']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Tiêu đề liên hệ';
+                }
+                if(isset($dataInput['contact_content']) && trim($dataInput['contact_content']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Nội dung';
+                }
                 break;
 
+            case 'inputCommentNewSite':
             case 'inputCommentProductSite':
-                $dataInput['assessor'] = Security::cleanText(addslashes($dataForm['assessor']));
-                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
-                $dataInput['content'] = Security::cleanText(addslashes($dataForm['content']));
-                $dataInput['star_points'] = (int)$dataForm['star_points'];
-                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
-                $dataInput['type_review'] = Reviews::typeReviewProduct;
-                $dataInput['is_active'] = STATUS_INT_MOT;//mới
-                $dataInput['object_id'] = (int)$dataForm['object_id'];
-                $dataInput['object_name'] = Security::cleanText(addslashes($dataForm['object_name']));
+                if(isset($dataInput['assessor']) && trim($dataInput['assessor']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Họ tên';
+                }
+                if(isset($dataInput['object_id']) && trim($dataInput['object_id']) <= 0){
+                    $this->error_msg[] = 'Bạn chưa chọn sản phẩm để đánh giá';
+                }
+                if(isset($dataInput['star_points']) && trim($dataInput['star_points']) <= 0){
+                    $this->error_msg[] = 'Bạn chưa Chọn sao cho sản phẩm này';
+                }
+                if(isset($dataInput['content']) && trim($dataInput['content']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Nội dung đánh giá';
+                }
+                if(isset($dataInput['email']) && trim($dataInput['email']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Email';
+                }
                 break;
             case 'inputRecruitmentApplySite':
-                $dataInput['recruitment_id'] = (int)$dataForm['recruitment_id'];
-                $dataInput['recruitment_title'] = Security::cleanText(addslashes($dataForm['recruitment_title']));
-                $dataInput['recruitment_province'] = Security::cleanText(addslashes($dataForm['recruitment_province']));
-                $dataInput['recruitment_position'] = Security::cleanText(addslashes($dataForm['recruitment_position']));
-                $dataInput['partner_id'] = (int)$dataForm['partner_id'];
-                $dataInput['is_active'] = STATUS_INT_MOT;//mới
-                $dataInput['gender'] = Security::cleanText(addslashes($dataForm['gender']));
-                $dataInput['full_name'] = Security::cleanText(addslashes($dataForm['full_name']));
-                $dataInput['phone'] = Security::cleanText(addslashes($dataForm['phone']));
-                $dataInput['email'] = Security::cleanText(addslashes($dataForm['email']));
-                break;*/
+                if(isset($dataInput['full_name']) && trim($dataInput['full_name']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Họ tên';
+                }
+                if(isset($dataInput['phone']) && trim($dataInput['phone']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Số điện thoại';
+                }
+                if(isset($dataInput['email']) && trim($dataInput['email']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Email';
+                }
+                if(isset($dataInput['gender']) && trim($dataInput['gender']) == ''){
+                    $this->error_msg[] = 'Bạn chưa nhập Danh xưng';
+                }
+                if(isset($dataInput['recruitment_id']) && trim($dataInput['recruitment_id']) <= 0){
+                    $this->error_msg[] = 'Bạn chưa ứng tuyển dụng nào cả?';
+                }
+                break;
 
             case 'inputPartnerRegistrationSite'://thêm đối tác cho site
                 if(isset($dataInput['shop_name']) && trim($dataInput['shop_name']) == ''){
@@ -598,6 +612,8 @@ class AjaxActionShopController extends BaseSiteController
                 }
                 if(isset($dataInput['user_password']) && trim($dataInput['user_password']) == ''){
                     $this->error_msg[] = 'Bạn chưa nhập Pass đăng nhập';
+                }elseif(isset($dataInput['user_shop']) && trim($dataInput['user_shop']) != ''){
+                    $dataInput['user_password'] = app(User::class)->encode_password(trim($dataInput['user_password']).strtoupper(trim($dataInput['user_shop'])));
                 }
                 break;
             default:
