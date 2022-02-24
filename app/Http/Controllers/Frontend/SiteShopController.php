@@ -301,7 +301,7 @@ class SiteShopController extends BaseSiteController
     {
         $this->arrPageBreadCrumb[] = ['url'=>URL::route('site.searchProduct'), 'page_name'=>'Tìm kiếm sản phẩm'];
         $this->getInforCommonSite();
-        return view('Frontend.Shop.Pages.productCare');
+        return view('Frontend.Shop.Pages.productCare',array_merge([], $this->outDataCommon));
     }
 
     //tin tức
